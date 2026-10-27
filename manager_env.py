@@ -122,6 +122,12 @@ class Scene:
         self.md_root = int(self.model.body_rootid[self.duck.bid])
         self.jp_root = int(self.model.body_rootid[self.crab.bid])
         self.lift_qadr = int(self.model.jnt_qposadr[mujoco.mj_name2id(self.model, J, "lift")])
+        G = mujoco.mjtObj.mjOBJ_GEOM
+        self.floor_gid = mujoco.mj_name2id(self.model, G, "floor")
+        self.duck_foot_gids = {g for g in range(self.model.ngeom)
+                               if "foot" in (mujoco.mj_id2name(self.model, G, g) or "")
+                               and int(self.model.body_rootid[self.model.geom_bodyid[g]]) == self.md_root}
+        assert self.duck_foot_gids, "duck foot geoms not found"
         self.free = {}
         for j in range(self.model.njnt):
             if self.model.jnt_type[j] == mujoco.mjtJoint.mjJNT_FREE:
@@ -253,6 +259,7 @@ class Scene:
         self.dock_e_lat = self.dock_skew = float("nan")
         self.contact_lat_duck = self.contact_skew = float("nan")
         self.lifted_z = 0.0
+        self.set_down_height = float("nan")
         self.last_result, self.last_action = "none", None
         self.decisions = []
         d = self.duck
@@ -325,6 +332,15 @@ class Scene:
         # wheel is what clipped the ramp's corner in the baseline runs
         points = (bz_xy + TINE_REACH * f, bz_xy + 0.43 * f + 0.37 * l, bz_xy + 0.43 * f - 0.37 * l)
         return any((x_min - 0.10 < p[0] < x_max + 0.10) and p[1] > y_south - margin for p in points)
+
+    def duck_feet_on_floor(self):
+        """ゆうころ: おろすときは下までおろさない、足がついたら止める - any duck foot touching the floor."""
+        for i in range(self.data.ncon):
+            c = self.data.contact[i]
+            g1, g2 = int(c.geom[0]), int(c.geom[1])
+            if (g1 == self.floor_gid and g2 in self.duck_foot_gids) or (g2 == self.floor_gid and g1 in self.duck_foot_gids):
+                return True
+        return False
 
     def crab_in_path(self):
         duck_xy, _ = self.duck_pose()
@@ -442,6 +458,7 @@ class Scene:
         phase, t0 = "aim2", self.t
         lifted, lifted_z = False, 0.0
         back_start = None
+        free_t0 = None
         while self.t < t_end:
             if phase not in ("duck_up", "duck_walk", "back"):
                 self.duck_sit_cmd()
@@ -478,8 +495,12 @@ class Scene:
                 if self.t - t0 > 4.0:
                     phase, t0 = "lower", self.t
             elif phase == "lower":
-                self.sim.command(0.0, 0.0, -0.4)
-                if self.sim.lift_target <= 0.0 or self.t - t0 > 6.0:
+                # lower only until the duck's feet touch the floor (ゆうころ): set all the way down, the duck sits on
+                # the tines and rides them when BZ reverses; with its feet on the floor it can stand off them
+                feet_down = self.sim.lift_target < 0.25 and self.duck_feet_on_floor()
+                self.sim.command(0.0, 0.0, 0.0 if feet_down else -0.4)
+                if feet_down or self.sim.lift_target <= 0.0 or self.t - t0 > 6.0:
+                    self.set_down_height = float(self.sim.lift_target)
                     phase, t0 = ("duck_up" if release == "walk" else "back"), self.t
                     back_start = bz_xy.copy()
             elif phase == "duck_up":
@@ -507,20 +528,36 @@ class Scene:
                     back_start = bz_xy.copy()
             elif phase == "back":
                 touching = robots_in_contact(self.model, self.data, self.md_root, self.bz_root)
-                if release == "slow":
-                    cmd = -0.08
-                elif release == "pulse":
-                    cmd = -0.3 if ((self.t - t0) % 1.6) < 0.4 else 0.0
+                if self.duck.mode == "FALLEN" and touching and free_t0 is None:
+                    free_t0 = self.t          # fallen onto / against the fork: tines 8 cm up, then reverse (experiment 10/27)
+                if free_t0 is not None:
+                    lift_cmd = 1.0 if self.sim.lift_target < 0.08 else 0.0
+                    cmd = -0.3 if self.t - free_t0 > 2.5 else 0.0
                 else:
-                    cmd = -0.4 if (self.duck.mode == "FALLEN" and touching) else -0.25
-                self.sim.command(cmd, 0.0, 0.0)
+                    lift_cmd = 0.0
+                    if release == "slow":
+                        cmd = -0.08
+                    elif release == "pulse":
+                        cmd = -0.3 if ((self.t - t0) % 1.6) < 0.4 else 0.0
+                    else:
+                        cmd = -0.25
+                self.sim.command(cmd, 0.0, lift_cmd)
                 travelled = float(np.linalg.norm(bz_xy - back_start)) if back_start is not None else 0.0
-                if (dist > 2.0 and not touching) or travelled > 1.6 or self.t - t0 > (24.0 if release != "walk" else 10.0):
+                if (dist > 2.0 and not touching) or travelled > 1.6 or self.t - t0 > (24.0 if release != "walk" else 14.0):
+                    phase, t0 = "settle", self.t
+            elif phase == "settle":                                           # stopped, fork back down
+                self.sim.command(0.0, 0.0, -1.0 if self.sim.lift_target > 0 else 0.0)
+                if self.sim.lift_target <= 0 or self.t - t0 > 3.0:
                     self.sim.command(0, 0, 0)
                     break
             self.tick()
         self.lifted_z = lifted_z
         self.docked = False
+        if self.sim.lift_target > 0:                                          # fork back down whatever happened
+            for _ in range(int(2.0 / CONTROL_DT)):
+                self.duck_sit_cmd()
+                self.sim.command(0, 0, -1.0 if self.sim.lift_target > 0 else 0.0)
+                self.tick()
         return self._lift_outcome(start_xy, lifted)
 
     def skill_push_side(self, max_s=130.0):
@@ -597,15 +634,25 @@ class Scene:
         t_end = self.t + max_s
         t0 = self.t
         back_start, _ = self.bz_pose()
-        while self.t < t_end:                                 # BZ clears off first (faster if a fallen duck is on the fork)
+        # a duck fallen onto / against the fork cannot get up until the fork is out of the way; dragging it does not
+        # work (velstand needs clear floor) - raising the tines 8 cm and then reversing freed it (experiment 10/27)
+        free_t0 = self.t if (self.duck.mode == "FALLEN" and robots_in_contact(self.model, self.data, self.md_root, self.bz_root)) else None
+        while self.t < t_end:                                 # BZ clears off first
             self.duck_sit_cmd()
             duck_xy, _ = self.duck_pose()
             bz_xy, _ = self.bz_pose()
             touching = robots_in_contact(self.model, self.data, self.md_root, self.bz_root)
-            if ((float(np.linalg.norm(duck_xy - bz_xy)) > 1.8 and not touching) or self.t - t0 > 6.0
+            if ((float(np.linalg.norm(duck_xy - bz_xy)) > 1.8 and not touching) or self.t - t0 > 12.0
                     or float(np.linalg.norm(bz_xy - back_start)) > 1.2):          # never far: the scenery is behind
                 break
-            self.sim.command(-0.4 if touching else -0.25, 0.0, -1.0)
+            if free_t0 is not None:
+                self.sim.command(-0.3 if self.t - free_t0 > 2.5 else 0.0, 0.0, 1.0 if self.sim.lift_target < 0.08 else 0.0)
+            else:
+                self.sim.command(-0.25, 0.0, -1.0)
+            self.tick()
+        for _ in range(int(2.5 / CONTROL_DT)):                # stopped, fork back down
+            self.duck_sit_cmd()
+            self.sim.command(0, 0, -1.0 if self.sim.lift_target > 0 else 0.0)
             self.tick()
         self.sim.command(0, 0, 0)
         t0 = self.t
@@ -756,7 +803,8 @@ class ManagerEnv(gym.Env):
                "dock_e_lat": round(s.dock_e_lat, 3), "dock_skew": round(s.dock_skew, 3),
                "contact_lat_duck": round(s.contact_lat_duck, 3), "contact_skew": round(s.contact_skew, 3),
                "course_damage_m": round(s.course_damage, 3), "course_damaged": bool(damaged),
-               "course_moved_body": s.course_moved_body, "draw": s.draw}
+               "course_moved_body": s.course_moved_body, "set_down_height": round(getattr(s, "set_down_height", float("nan")), 3),
+               "draw": s.draw}
         s.decisions.append(rec)
         if self.log_path:
             self.log_path.parent.mkdir(parents=True, exist_ok=True)       # a run dir removed under us must not kill a scene
