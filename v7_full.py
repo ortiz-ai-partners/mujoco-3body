@@ -314,8 +314,9 @@ def main():
                          "lift: the duck turns its back and BZ docks behind it to scoop it up (a 2 cm window - see HANDOVER); "
                          "crab (take 6, ゆうころ 10/28: BZ must not handle the duck): the crab comes back and the manager AI "
                          "chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk")
-    ap.add_argument("--manager", choices=["rule", "ppo"], default="rule", help="who decides in the rescue: fixed rules or the PPO policy")
-    ap.add_argument("--run", default="ppo2_small", help="out/manager_runs/<run>/ppo_manager.zip for --manager ppo")
+    ap.add_argument("--manager", choices=["rule", "ppo", "tabq"], default="rule",
+                    help="who decides in the rescue: fixed rules, the PPO policy, or the learned Q table")
+    ap.add_argument("--run", default="ppo2_small", help="out/manager_runs/<run>/ (ppo_manager.zip for ppo, tabq.json for tabq)")
     ap.add_argument("--rescue-max", type=float, default=240.0, help="simulated seconds the manager gets")
     args = ap.parse_args()
 
@@ -379,6 +380,17 @@ def main():
         ppo = PPO.load(OUT_DIR / "manager_runs" / args.run / "ppo_manager", device="cpu")
         manager_policy = lambda obs: int(ppo.predict(obs, deterministic=True)[0])
         manager_name = f"PPO 方策（{args.run}）"
+    elif args.manager == "tabq":
+        from manager2_tabq import TabQ, state_key
+        tabq = TabQ.load(OUT_DIR / "manager_runs" / args.run / "tabq.json")
+        tabq_rng = np.random.default_rng(1)
+        # state_key reads scene.h / .last_result / .duck / .pushes: the story's helpers and book serve the same
+        tabq_view = types.SimpleNamespace(h=h, duck=duck, last_result="none", pushes=0)
+
+        def manager_policy(obs):
+            tabq_view.last_result, tabq_view.pushes = book.last_result, book.pushes
+            return tabq.act(state_key(tabq_view), 0.0, tabq_rng)
+        manager_name = f"学習済み Q 表（{args.run}）"
     else:
         manager_policy = lambda obs: ch.rule_action(h, book)
         manager_name = "固定ルール"
