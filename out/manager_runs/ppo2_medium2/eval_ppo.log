@@ -1,0 +1,48 @@
+﻿{
+ "ppo": {
+  "episodes": 30,
+  "crossing_rate": 0.633,
+  "landing_rate": 0.767,
+  "median_time_to_cross_s": 82.1,
+  "mean_return": -9.36,
+  "mean_steps": 19.8,
+  "mean_falls": 1.13,
+  "mean_pushes": 0.97,
+  "course_damaged": 0,
+  "mean_wall_s": 48.1,
+  "action_counts": {
+   "WAIT": 13,
+   "SEAT": 176,
+   "PUSH": 29,
+   "BACK_OFF": 5,
+   "STANDUP": 50,
+   "WALK_ON": 321
+  },
+  "by_scenario": {
+   "toe_seated_ok": {
+    "n": 6,
+    "crossed": 5
+   },
+   "toe_seated_wrong": {
+    "n": 8,
+    "crossed": 2
+   },
+   "toe_standing": {
+    "n": 6,
+    "crossed": 3
+   },
+   "toe_fallen": {
+    "n": 3,
+    "crossed": 2
+   },
+   "deck_seated": {
+    "n": 7,
+    "crossed": 7
+   },
+   "deck_fallen": {
+    "n": 0,
+    "crossed": 0
+   }
+  }
+ }
+}
