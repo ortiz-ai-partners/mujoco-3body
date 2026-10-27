@@ -1,0 +1,562 @@
+[
+ {
+  "seed": 5000,
+  "return": -12.22,
+  "steps": 2,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 2.918,
+  "sim_s": 40.7,
+  "wall_s": 13.4,
+  "actions": [
+   "CLEAR",
+   "PUSH_SIDE"
+  ],
+  "results": [
+   "cleared",
+   "shoved"
+  ],
+  "draw": {
+   "lat": -0.266792208685556,
+   "head_err": -2.890532112303603,
+   "duck_yaw_err": 6.076643348672981,
+   "duck_dxy": [
+    -0.0479810013169246,
+    -0.0322690057573947
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.1263500734376441
+  }
+ },
+ {
+  "seed": 5001,
+  "return": 9.76,
+  "steps": 1,
+  "success": true,
+  "course_damaged": false,
+  "course_damage_m": 0.0,
+  "sim_s": 8.0,
+  "wall_s": 1.8,
+  "actions": [
+   "STANDUP"
+  ],
+  "results": [
+   "standing"
+  ],
+  "draw": {
+   "lat": -0.11814011153333315,
+   "head_err": -7.5287880778542355,
+   "duck_yaw_err": 6.696279309240637,
+   "duck_dxy": [
+    0.005491519538095457,
+    -0.003925047705737386
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.2300217284692953
+  }
+ },
+ {
+  "seed": 5002,
+  "return": -7.95,
+  "steps": 2,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.781,
+  "sim_s": 31.7,
+  "wall_s": 9.2,
+  "actions": [
+   "CLEAR",
+   "PUSH_SIDE"
+  ],
+  "results": [
+   "cleared",
+   "lifted"
+  ],
+  "draw": {
+   "lat": -0.07831455181597197,
+   "head_err": 6.8341298113552575,
+   "duck_yaw_err": 9.626583290050746,
+   "duck_dxy": [
+    -0.004044683017252804,
+    0.023311467466632194
+   ],
+   "crab_in_path": true,
+   "crab_lat": -0.23812390122287017
+  }
+ },
+ {
+  "seed": 5003,
+  "return": 9.76,
+  "steps": 1,
+  "success": true,
+  "course_damaged": false,
+  "course_damage_m": 0.0,
+  "sim_s": 8.0,
+  "wall_s": 1.7,
+  "actions": [
+   "STANDUP"
+  ],
+  "results": [
+   "standing"
+  ],
+  "draw": {
+   "lat": -0.056370820409310796,
+   "head_err": -7.532495243009841,
+   "duck_yaw_err": 6.114289225621345,
+   "duck_dxy": [
+    -0.01212400920283059,
+    -0.028127294470825993
+   ],
+   "crab_in_path": false,
+   "crab_lat": -0.14516618855938282
+  }
+ },
+ {
+  "seed": 5004,
+  "return": -13.42,
+  "steps": 2,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.332,
+  "sim_s": 14.1,
+  "wall_s": 3.5,
+  "actions": [
+   "CLEAR",
+   "DOCK"
+  ],
+  "results": [
+   "cleared",
+   "docked"
+  ],
+  "draw": {
+   "lat": -0.11874348297314113,
+   "head_err": 4.573316071451966,
+   "duck_yaw_err": 8.73355174228665,
+   "duck_dxy": [
+    0.0490388693182299,
+    -0.002786573836797167
+   ],
+   "crab_in_path": true,
+   "crab_lat": -0.12127976777526364
+  }
+ },
+ {
+  "seed": 5005,
+  "return": -11.57,
+  "steps": 2,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.591,
+  "sim_s": 35.8,
+  "wall_s": 10.2,
+  "actions": [
+   "WAIT",
+   "DOCK"
+  ],
+  "results": [
+   "waited",
+   "docked"
+  ],
+  "draw": {
+   "lat": -0.2281400899871423,
+   "head_err": -7.6246253435881055,
+   "duck_yaw_err": 8.375394593756052,
+   "duck_dxy": [
+    -0.045699257798688914,
+    0.017848247354391916
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.09793591495083614
+  }
+ },
+ {
+  "seed": 5006,
+  "return": -10.35,
+  "steps": 1,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.333,
+  "sim_s": 11.6,
+  "wall_s": 3.1,
+  "actions": [
+   "DOCK"
+  ],
+  "results": [
+   "docked"
+  ],
+  "draw": {
+   "lat": -0.19340589016488552,
+   "head_err": -7.151822311290088,
+   "duck_yaw_err": 3.977317019555235,
+   "duck_dxy": [
+    0.01863458502253737,
+    -0.020764204571583234
+   ],
+   "crab_in_path": false,
+   "crab_lat": -0.08852552688241624
+  }
+ },
+ {
+  "seed": 5007,
+  "return": -14.56,
+  "steps": 4,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.674,
+  "sim_s": 68.8,
+  "wall_s": 21.9,
+  "actions": [
+   "CLEAR",
+   "CLEAR",
+   "WAIT",
+   "LIFT"
+  ],
+  "results": [
+   "cleared",
+   "cleared",
+   "waited",
+   "tipped"
+  ],
+  "draw": {
+   "lat": 0.22985634330785693,
+   "head_err": 3.96095711130949,
+   "duck_yaw_err": 8.557491683295982,
+   "duck_dxy": [
+    -0.03021327412433135,
+    0.01738049067113817
+   ],
+   "crab_in_path": false,
+   "crab_lat": -0.17912598359973195
+  }
+ },
+ {
+  "seed": 5008,
+  "return": 9.76,
+  "steps": 1,
+  "success": true,
+  "course_damaged": false,
+  "course_damage_m": 0.0,
+  "sim_s": 8.0,
+  "wall_s": 2.6,
+  "actions": [
+   "STANDUP"
+  ],
+  "results": [
+   "standing"
+  ],
+  "draw": {
+   "lat": 0.031193226912172023,
+   "head_err": -6.099219563172733,
+   "duck_yaw_err": 4.90248614555162,
+   "duck_dxy": [
+    0.017153655683706262,
+    -0.049871233683148344
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.2236458489830127
+  }
+ },
+ {
+  "seed": 5009,
+  "return": 3.11,
+  "steps": 2,
+  "success": true,
+  "course_damaged": false,
+  "course_damage_m": 0.0,
+  "sim_s": 13.0,
+  "wall_s": 3.5,
+  "actions": [
+   "WAIT",
+   "STANDUP"
+  ],
+  "results": [
+   "waited",
+   "standing"
+  ],
+  "draw": {
+   "lat": -0.15379931269257813,
+   "head_err": 3.446791872413824,
+   "duck_yaw_err": 2.486810605048557,
+   "duck_dxy": [
+    -0.021572326806041132,
+    -0.01123598151274411
+   ],
+   "crab_in_path": true,
+   "crab_lat": -0.2992776143417073
+  }
+ },
+ {
+  "seed": 5010,
+  "return": -12.51,
+  "steps": 2,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.685,
+  "sim_s": 67.0,
+  "wall_s": 21.0,
+  "actions": [
+   "WAIT",
+   "LIFT"
+  ],
+  "results": [
+   "waited",
+   "tipped"
+  ],
+  "draw": {
+   "lat": -0.06997543653704502,
+   "head_err": -9.742217786963918,
+   "duck_yaw_err": 4.83846634014974,
+   "duck_dxy": [
+    -0.04395932252944423,
+    0.039687386257401466
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.14516871013082766
+  }
+ },
+ {
+  "seed": 5011,
+  "return": 9.76,
+  "steps": 1,
+  "success": true,
+  "course_damaged": false,
+  "course_damage_m": 0.0,
+  "sim_s": 8.0,
+  "wall_s": 2.3,
+  "actions": [
+   "STANDUP"
+  ],
+  "results": [
+   "standing"
+  ],
+  "draw": {
+   "lat": 0.06634204275984212,
+   "head_err": -6.545275550019502,
+   "duck_yaw_err": 9.930022585552333,
+   "duck_dxy": [
+    0.005974460819478319,
+    0.034723291514980534
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.18110649232691522
+  }
+ },
+ {
+  "seed": 5012,
+  "return": -10.48,
+  "steps": 1,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.339,
+  "sim_s": 16.0,
+  "wall_s": 6.2,
+  "actions": [
+   "DOCK"
+  ],
+  "results": [
+   "docked"
+  ],
+  "draw": {
+   "lat": -0.22894449050353838,
+   "head_err": 7.389164762213497,
+   "duck_yaw_err": 9.27870483496827,
+   "duck_dxy": [
+    0.017416684344482333,
+    -0.022458967548380795
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.020927225073401834
+  }
+ },
+ {
+  "seed": 5013,
+  "return": -11.26,
+  "steps": 1,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.373,
+  "sim_s": 42.1,
+  "wall_s": 13.6,
+  "actions": [
+   "LIFT"
+  ],
+  "results": [
+   "missed"
+  ],
+  "draw": {
+   "lat": -0.0035756333196405032,
+   "head_err": 2.8582873915255647,
+   "duck_yaw_err": 4.643783336436995,
+   "duck_dxy": [
+    0.01175402441522759,
+    -0.0239875881888723
+   ],
+   "crab_in_path": false,
+   "crab_lat": -0.1890788528517569
+  }
+ },
+ {
+  "seed": 5014,
+  "return": -11.07,
+  "steps": 1,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.353,
+  "sim_s": 35.6,
+  "wall_s": 12.3,
+  "actions": [
+   "DOCK"
+  ],
+  "results": [
+   "docked"
+  ],
+  "draw": {
+   "lat": -0.19108112627917379,
+   "head_err": 6.765554266581741,
+   "duck_yaw_err": 7.933660550699237,
+   "duck_dxy": [
+    0.03958585325241269,
+    0.04704405732050575
+   ],
+   "crab_in_path": false,
+   "crab_lat": -0.03614525453844708
+  }
+ },
+ {
+  "seed": 5015,
+  "return": 9.76,
+  "steps": 1,
+  "success": true,
+  "course_damaged": false,
+  "course_damage_m": 0.0,
+  "sim_s": 8.0,
+  "wall_s": 1.9,
+  "actions": [
+   "STANDUP"
+  ],
+  "results": [
+   "standing"
+  ],
+  "draw": {
+   "lat": -0.2551803537897347,
+   "head_err": 7.369971289254419,
+   "duck_yaw_err": 9.271694587798141,
+   "duck_dxy": [
+    -0.007984092056906665,
+    0.012724849859011025
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.2957065541403961
+  }
+ },
+ {
+  "seed": 5016,
+  "return": -10.36,
+  "steps": 1,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.331,
+  "sim_s": 12.1,
+  "wall_s": 3.4,
+  "actions": [
+   "DOCK"
+  ],
+  "results": [
+   "docked"
+  ],
+  "draw": {
+   "lat": -0.0019677009708228277,
+   "head_err": -5.7748322489991715,
+   "duck_yaw_err": 6.921119526458423,
+   "duck_dxy": [
+    0.031444261261493675,
+    -0.022216710722052224
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.15223339505608452
+  }
+ },
+ {
+  "seed": 5017,
+  "return": -6.72,
+  "steps": 2,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.616,
+  "sim_s": 57.4,
+  "wall_s": 18.0,
+  "actions": [
+   "CLEAR",
+   "LIFT"
+  ],
+  "results": [
+   "cleared",
+   "lifted"
+  ],
+  "draw": {
+   "lat": -0.2792016619280793,
+   "head_err": 6.56841517583878,
+   "duck_yaw_err": 1.4970306593824656,
+   "duck_dxy": [
+    0.013530156228358597,
+    0.0027154789722190348
+   ],
+   "crab_in_path": false,
+   "crab_lat": 0.018529831008266773
+  }
+ },
+ {
+  "seed": 5018,
+  "return": -14.73,
+  "steps": 1,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.627,
+  "sim_s": 57.5,
+  "wall_s": 20.0,
+  "actions": [
+   "LIFT"
+  ],
+  "results": [
+   "tipped"
+  ],
+  "draw": {
+   "lat": -0.07750650721456023,
+   "head_err": -2.4001995137294685,
+   "duck_yaw_err": 6.912150143578657,
+   "duck_dxy": [
+    -0.015276732668976702,
+    -0.029672223136483013
+   ],
+   "crab_in_path": true,
+   "crab_lat": -0.12202496509831903
+  }
+ },
+ {
+  "seed": 5019,
+  "return": -8.42,
+  "steps": 1,
+  "success": false,
+  "course_damaged": true,
+  "course_damage_m": 0.815,
+  "sim_s": 47.2,
+  "wall_s": 14.2,
+  "actions": [
+   "PUSH_SIDE"
+  ],
+  "results": [
+   "lifted"
+  ],
+  "draw": {
+   "lat": -0.22119558240334974,
+   "head_err": -2.1913339055900334,
+   "duck_yaw_err": 3.740010901485766,
+   "duck_dxy": [
+    0.023892727127293845,
+    -0.044184816447896375
+   ],
+   "crab_in_path": true,
+   "crab_lat": 0.18581408766380386
+  }
+ }
+]

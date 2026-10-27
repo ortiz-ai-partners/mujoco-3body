@@ -41,6 +41,7 @@ os.environ.setdefault("MKL_NUM_THREADS", "1")
 
 import json
 import math
+import re
 import time
 from pathlib import Path
 
@@ -56,7 +57,15 @@ from v7_full import CONTROL_DT, Crab, Duck, make_navigator, official_md_servos, 
 from v7_policies import MD_CONTROL_DT, set_pd_gains
 
 STAGE_XML = OUT_DIR / "v6_stage_built.xml"
-DUCK_SEAT = (1.22, -2.10, math.pi)          # where the duck gives up in the story; facing west = back to the east
+DUCK_SEAT = (1.22, -2.65, math.pi)          # the duck's sulking spot: 0.65 m south of the up-ramp's edge (y=-2.0), facing
+                                            # west = back to the east.  At -2.10 (10 cm from the edge, as in take 5) BZ's
+                                            # docking line crossed the ramp's corner and the tines shoved up_1 by 37 cm;
+                                            # at -2.40 BZ's own right-front wheel clipped the corner (5-12 cm) when the
+                                            # duck faced up to 10 deg off west.  The duck must back off before it sits.
+DUCK_YAW_ERR_DEG = 6.0                      # the duck's own TURN skill aligns to ~3 deg; +-6 keeps BZ's body clear
+BLOCK2_RESCUE_POS = "5.6 -3.9 0.26"         # course-builder's marker block_2 sits at (4,-3), exactly where BZ must stand
+                                            # to dock behind that seat (and where it backs out to); the rescue scene
+                                            # parks it further out, clear of BZ's reversing corridor
 ACTIONS = ["WAIT", "DOCK", "LIFT", "PUSH_SIDE", "STANDUP", "CLEAR"]
 LINES = {
     "WAIT": "ちょっと待とう",
@@ -67,7 +76,8 @@ LINES = {
     "STANDUP": "BZ は離れて。パッカン、自分で立てる？",
     "CLEAR": "カニさん、道を空けてね",
 }
-RESULT_SLOTS = ["none", "docked", "lifted", "shoved", "missed", "tipped", "standing"]
+RESULT_SLOTS = ["none", "docked", "lifted", "shoved", "missed", "tipped", "standing", "aborted"]
+TINE_REACH = 1.3                            # m from BZ's centre to the tine tips
 OBS_DIM = 16 + 3 + len(RESULT_SLOTS) + len(ACTIONS) + 2
 # Reward (per decision).  The job is recovery; the lift is the outcome ゆうころ prefers, so it carries a
 # bonus large enough that attempting it pays when the alignment makes success likely and not otherwise.
@@ -93,7 +103,10 @@ class Scene:
 
     def __init__(self, dt=0.001):
         _, _, tracks_mod = course_builder()
-        self.model, self.data = build_arena(STAGE_XML, md_pose=DUCK_SEAT, jp_pose=(1.4, -3.3, math.pi / 2), timestep=dt)
+        xml, n = re.subn(r'(<body\b[^>]*\bname="block_2"[^>]*\bpos=")[^"]*(")', r'\g<1>' + BLOCK2_RESCUE_POS + r'\2',
+                         STAGE_XML.read_text(encoding="utf-8"), count=1)
+        assert n == 1, "block_2 not found in the stage XML"
+        self.model, self.data = build_arena(xml, md_pose=DUCK_SEAT, jp_pose=(1.4, -3.3, math.pi / 2), timestep=dt)
         official_md_servos(self.model)
         self.sim = ArenaSim(self.model, self.data, tracks_mod)
         self.duck = Duck(self.model, self.data)
@@ -103,6 +116,8 @@ class Scene:
         self.block2_bid = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "block_2")
         self.course_bids = np.array([mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, n) for n in COURSE_BODIES])
         self.up1_xy = self.data.xpos[self.course_bids[0]][:2].copy()      # the up-ramp: the rescue happens at its foot
+        # the up-ramp's footprint (slope_parts.py: 0.5 m half-width, incline 1.5 m + landing 0.5 m along +y)
+        self.ramp_zone = (self.up1_xy[0] - 0.5, self.up1_xy[0] + 0.5, self.up1_xy[1] - 1.0)   # x_min, x_max, south edge
         self.bz_root = int(self.model.body_rootid[self.bz_bid])
         self.md_root = int(self.model.body_rootid[self.duck.bid])
         self.jp_root = int(self.model.body_rootid[self.crab.bid])
@@ -120,6 +135,7 @@ class Scene:
         self.init = (self.data.qpos.copy(), self.data.qvel.copy(), self.data.ctrl.copy(), self.data.act.copy())
         self.dt = dt
         self.aim_left = 0.025          # docking line offset to the duck's left (m); the offset sweep lifted only here
+        self.release_mode = "walk"     # how the tines come out from under the set-down duck (see skill_lift)
         self.substeps = round(CONTROL_DT / dt)
         self.md_every = round(MD_CONTROL_DT / dt)
         self.jp_every = max(1, round(0.005 / dt))
@@ -200,7 +216,9 @@ class Scene:
             self.bz_crab_contact_ticks += 1
         if self.course_ref is not None:
             moved = np.linalg.norm(self.data.xpos[self.course_bids][:, :2] - self.course_ref, axis=1)
-            self.course_damage = max(self.course_damage, float(moved.max()))
+            if float(moved.max()) > self.course_damage:
+                self.course_damage = float(moved.max())
+                self.course_moved_body = COURSE_BODIES[int(np.argmax(moved))]
         if np.any(np.isnan(self.data.qpos)):
             raise FloatingPointError("NaN in qpos")
 
@@ -228,7 +246,7 @@ class Scene:
         self.data.time = 0.0
         self.t, self.sub_k = 0.0, 0
         self.falls = self.bz_crab_contact_ticks = 0
-        self.course_ref, self.course_damage = None, 0.0
+        self.course_ref, self.course_damage, self.course_moved_body = None, 0.0, ""
         self.fell_in_skill = False
         self.attempts = 0
         self.docked = False
@@ -250,7 +268,8 @@ class Scene:
         block2 = self.data.xpos[self.block2_bid][:2]
         for _ in range(50):
             draw = {"lat": float(rng.uniform(-0.30, 0.30)), "head_err": float(rng.uniform(-10, 10)),
-                    "duck_yaw_err": float(rng.uniform(-10, 10)), "duck_dxy": rng.uniform(-0.05, 0.05, 2).tolist(),
+                    "duck_yaw_err": float(rng.uniform(-DUCK_YAW_ERR_DEG, DUCK_YAW_ERR_DEG)),
+                    "duck_dxy": rng.uniform(-0.05, 0.05, 2).tolist(),
                     "crab_in_path": bool(rng.uniform() < 0.30), "crab_lat": float(rng.uniform(-0.3, 0.3))}
             if hard:
                 draw.update(hard)
@@ -295,6 +314,17 @@ class Scene:
         err = wrap(math.atan2(d_aim[1], d_aim[0]) - yaw_bz)   # bearing error to the target point
         dist = float(np.linalg.norm(duck_xy - bz_xy))
         return duck_xy, yaw_d, bz_xy, yaw_bz, f, l, A, e_lat, psi, err, dist
+
+    def tines_threaten_ramp(self, margin=0.08):
+        """Safety stop (ゆうころ: コースを壊さない): True when the tine tips are inside, or about to enter, the
+        up-ramp's footprint.  Checked every tick of the fork skills; the skill then stops and reports 'aborted'."""
+        bz_xy, yaw_bz = self.bz_pose()
+        f, l = unit(yaw_bz), left_of(yaw_bz)
+        x_min, x_max, y_south = self.ramp_zone
+        # the tine tips, and BZ's front corners (0.43 m ahead, 0.27 m half-width plus the wheels): the right-front
+        # wheel is what clipped the ramp's corner in the baseline runs
+        points = (bz_xy + TINE_REACH * f, bz_xy + 0.43 * f + 0.37 * l, bz_xy + 0.43 * f - 0.37 * l)
+        return any((x_min - 0.10 < p[0] < x_max + 0.10) and p[1] > y_south - margin for p in points)
 
     def crab_in_path(self):
         duck_xy, _ = self.duck_pose()
@@ -352,6 +382,10 @@ class Scene:
         while self.t < t_end:
             self.duck_sit_cmd()
             duck_xy, yaw_d, bz_xy, yaw_bz, f, l, A, e_lat, psi, err, dist = self._geometry()
+            if phase in ("dock", "aim2") and self.tines_threaten_ramp():
+                self.sim.command(0, 0, 0)
+                self.dock_e_lat, self.dock_skew = e_lat, psi
+                return "aborted"
             if phase == "retreat":
                 self.sim.command(*nav.action(self.sim))
                 if nav.done or self.t - t0 > 45.0:
@@ -390,8 +424,15 @@ class Scene:
             return "shoved"
         return "missed"
 
-    def skill_lift(self, max_s=80.0):
-        """From the docked pose: creep in holding the aim, scoop, lift gently to 0.30 m, hold, set down, back off."""
+    def skill_lift(self, max_s=90.0, release=None):
+        """From the docked pose: creep in holding the aim, scoop, lift gently to 0.30 m, hold, set down, back off.
+
+        release: how the tines come out from under the set-down duck -
+          "walk"  the duck stands, walks a few steps off the tips, then BZ backs out;
+          "slow"  BZ backs out at a crawl with the duck still seated;
+          "pulse" BZ backs out in short pulses with the duck still seated.
+        BZ never reverses more than 1.6 m from where it lifted (a dragged duck once took it into block_2)."""
+        release = release or self.release_mode
         self.fell_in_skill = False
         self.attempts += 1
         self.contact_lat_duck = self.contact_skew = float("nan")
@@ -400,9 +441,15 @@ class Scene:
         t_end = self.t + max_s
         phase, t0 = "aim2", self.t
         lifted, lifted_z = False, 0.0
+        back_start = None
         while self.t < t_end:
-            self.duck_sit_cmd()
+            if phase not in ("duck_up", "duck_walk", "back"):
+                self.duck_sit_cmd()
             duck_xy, yaw_d, bz_xy, yaw_bz, f, l, A, e_lat, psi, err, dist = self._geometry()
+            if phase in ("aim2", "creep") and self.tines_threaten_ramp():
+                self.sim.command(0, 0, 0)
+                self.docked = False
+                return "aborted"
             if phase == "aim2":                                                # re-check the aim (cheap when docked)
                 turn = 0.0 if abs(err) <= 0.006 else math.copysign(0.5 if abs(err) > 0.08 else 0.22, err)
                 self.sim.command(0.0, turn, -1.0)
@@ -433,10 +480,42 @@ class Scene:
             elif phase == "lower":
                 self.sim.command(0.0, 0.0, -0.4)
                 if self.sim.lift_target <= 0.0 or self.t - t0 > 6.0:
+                    phase, t0 = ("duck_up" if release == "walk" else "back"), self.t
+                    back_start = bz_xy.copy()
+            elif phase == "duck_up":
+                # set down on the tines, the duck stays seated on them and BZ's reverse would carry it off and
+                # topple it onto the fork (smoke 10/27: 1.3 m, then stuck).  So the duck stands first: its feet
+                # land inside the 13 cm tine gap and its hips come clear, then BZ can back out.
+                self.sim.command(0, 0, 0)
+                if self.duck.mode == "SIT":
+                    self.duck.sit.twist[:] = 0                                 # sitstand flag 0: stand up
+                    self.duck.sit.head[:] = 0
+                    if self.t - t0 > 3.5:
+                        self.duck.use("vel")
+                        self.duck.set_mode("STAND", self.t)
+                if (self.duck.mode == "STAND" and self.t - t0 > 5.0) or self.t - t0 > 9.0:
+                    if self.duck.mode == "STAND":
+                        # standing with a foot on a tine, the duck rides along when BZ reverses (smoke 10/27: carried
+                        # 3 m).  It walks a few steps off the tips first, then BZ backs out.
+                        dx, yd = self.duck_pose()
+                        self.duck.walk_to(dx + 0.7 * unit(yd), self.t, stop_dist=0.15)
+                    phase, t0 = "duck_walk", self.t
+            elif phase == "duck_walk":
+                self.sim.command(0, 0, 0)
+                if self.duck.mode != "WALK" or self.t - t0 > 8.0:
                     phase, t0 = "back", self.t
+                    back_start = bz_xy.copy()
             elif phase == "back":
-                self.sim.command(-0.15, 0.0, 0.0)
-                if dist > 2.0 or self.t - t0 > 25.0:
+                touching = robots_in_contact(self.model, self.data, self.md_root, self.bz_root)
+                if release == "slow":
+                    cmd = -0.08
+                elif release == "pulse":
+                    cmd = -0.3 if ((self.t - t0) % 1.6) < 0.4 else 0.0
+                else:
+                    cmd = -0.4 if (self.duck.mode == "FALLEN" and touching) else -0.25
+                self.sim.command(cmd, 0.0, 0.0)
+                travelled = float(np.linalg.norm(bz_xy - back_start)) if back_start is not None else 0.0
+                if (dist > 2.0 and not touching) or travelled > 1.6 or self.t - t0 > (24.0 if release != "walk" else 10.0):
                     self.sim.command(0, 0, 0)
                     break
             self.tick()
@@ -475,6 +554,9 @@ class Scene:
             d = duck_xy - bz_xy
             dist = float(np.linalg.norm(d))
             err = wrap(math.atan2(d[1], d[0]) - yaw_bz)
+            if phase in ("aim", "insert") and self.tines_threaten_ramp():
+                self.sim.command(0, 0, 0)
+                return "aborted"
             if phase == "navigate":
                 self.sim.command(*nav.action(self.sim))
                 if nav.done or self.t - t0 > 60.0:
@@ -514,13 +596,16 @@ class Scene:
         self.docked = False
         t_end = self.t + max_s
         t0 = self.t
-        while self.t < t_end:                                 # BZ clears off first
+        back_start, _ = self.bz_pose()
+        while self.t < t_end:                                 # BZ clears off first (faster if a fallen duck is on the fork)
             self.duck_sit_cmd()
             duck_xy, _ = self.duck_pose()
             bz_xy, _ = self.bz_pose()
-            if float(np.linalg.norm(duck_xy - bz_xy)) > 2.0 or self.t - t0 > 10.0:
+            touching = robots_in_contact(self.model, self.data, self.md_root, self.bz_root)
+            if ((float(np.linalg.norm(duck_xy - bz_xy)) > 1.8 and not touching) or self.t - t0 > 6.0
+                    or float(np.linalg.norm(bz_xy - back_start)) > 1.2):          # never far: the scenery is behind
                 break
-            self.sim.command(-0.25, 0.0, -1.0)
+            self.sim.command(-0.4 if touching else -0.25, 0.0, -1.0)
             self.tick()
         self.sim.command(0, 0, 0)
         t0 = self.t
@@ -644,6 +729,8 @@ class ManagerEnv(gym.Env):
             if not crab_blocked:
                 wasted += -REWARD["wasted"]
             result = s.skill_clear()
+        if result == "aborted":
+            wasted += -REWARD["wait_seated"]                   # the safety stop fired: the fork was heading for the ramp
         damaged = s.course_damage > COURSE_TOLERANCE
         success = (not damaged) and s.duck_standing() and s.confirm_standing(3.0)
         duration = s.t - t_start
@@ -668,9 +755,11 @@ class ManagerEnv(gym.Env):
                "duck_mode": s.duck.mode, "lifted_z": round(s.lifted_z, 3),
                "dock_e_lat": round(s.dock_e_lat, 3), "dock_skew": round(s.dock_skew, 3),
                "contact_lat_duck": round(s.contact_lat_duck, 3), "contact_skew": round(s.contact_skew, 3),
-               "course_damage_m": round(s.course_damage, 3), "course_damaged": bool(damaged), "draw": s.draw}
+               "course_damage_m": round(s.course_damage, 3), "course_damaged": bool(damaged),
+               "course_moved_body": s.course_moved_body, "draw": s.draw}
         s.decisions.append(rec)
         if self.log_path:
+            self.log_path.parent.mkdir(parents=True, exist_ok=True)       # a run dir removed under us must not kill a scene
             with self.log_path.open("a", encoding="utf-8") as fh:
                 fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
         terminated = bool(success or damaged)
@@ -685,10 +774,14 @@ def rule_policy(obs, scene: Scene, max_lifts=2, max_redocks=2):
     """Fixed rules: clear the crab if it blocks; dock, re-dock while badly aligned (twice), lift when docked
     well; after two failed lifts (or once lifted) let the duck stand."""
     if scene.duck.mode == "FALLEN":
+        recent = [d["action"] for d in scene.decisions[-2:]]
+        touching = robots_in_contact(scene.model, scene.data, scene.md_root, scene.bz_root)
+        if touching or recent == ["WAIT", "WAIT"]:
+            return ACTIONS.index("STANDUP")                                # BZ backs off; velstand needs clear floor
         return ACTIONS.index("WAIT")
     if scene.crab_in_path():
         return ACTIONS.index("CLEAR")
-    if scene.last_result == "lifted" or scene.attempts >= max_lifts:
+    if scene.last_result in ("lifted", "aborted") or scene.attempts >= max_lifts:
         return ACTIONS.index("STANDUP")
     if scene.well_docked():
         return ACTIONS.index("LIFT")

@@ -1,0 +1,38 @@
+{
+ "rule": {
+  "episodes": 20,
+  "recovery_rate": 0.0,
+  "median_time_to_recover_s": null,
+  "mean_return": -11.17,
+  "mean_steps": 1.35,
+  "lift_attempts_per_episode": 0.0,
+  "lifted_episodes": 0,
+  "mean_wall_s": 6.0,
+  "action_counts": {
+   "WAIT": 0,
+   "DOCK": 21,
+   "LIFT": 1,
+   "PUSH_SIDE": 0,
+   "STANDUP": 0,
+   "CLEAR": 5
+  }
+ },
+ "random": {
+  "episodes": 20,
+  "recovery_rate": 0.3,
+  "median_time_to_recover_s": 8.0,
+  "mean_return": -5.19,
+  "mean_steps": 1.5,
+  "lift_attempts_per_episode": 0.0,
+  "lifted_episodes": 3,
+  "mean_wall_s": 9.2,
+  "action_counts": {
+   "WAIT": 4,
+   "DOCK": 6,
+   "LIFT": 5,
+   "PUSH_SIDE": 3,
+   "STANDUP": 6,
+   "CLEAR": 6
+  }
+ }
+}
