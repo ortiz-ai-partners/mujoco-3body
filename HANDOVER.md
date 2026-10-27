@@ -27,6 +27,8 @@
 
 **描画版 take 7（`out\3body_arena_v7_take7.mp4`、3:23、6081 フレーム、音声付き；`--manager tabq --run tabq2_small`＝学習済み Q 表が支配人）**：施工〜戻りは take 6 と同じ（265.5 s に支配人へ）→ STANDUP → WALK_ON（坂に向かって歩いて止まる＝学習の癖）→ SEAT → PUSH（天面 364 s）→ BACK_OFF → STANDUP → STANDUP（無駄）→ WALK_ON → **渡り切り 386.5 s** → 応援ダンス 406 s → END 418 s。8 手、コース移動 0。固定ルール版（take 6）と並べて「固定ルール／学習済み方策」の両方を提出素材にできる。
 
+**支配人の学習結果（2026-10-28 早朝、30 シード同一評価）**：固定ルール 25/30 渡り切り／ランダム 9/30／PPO 小（3k 決定、54 分）0/30（WALK_ON に固着）／**表形式 Q（120 エピソード、2 時間）23/30**。2×2 で表形式 Q の失敗 7 本のうち判断の失敗は 1、他はスキル側（天面の継ぎ目での転倒から起きられない等）。詳細と信頼度表は `MANAGER_DESIGN.md` §7.5〜7.6、`out\manager_runs\comparison_v2.md`。PPO 中規模 `ppo2_medium2`（12k 決定、報酬 v2.1）は 05:00 頃完了予定 → `manager2_train.py eval --run ppo2_medium2 --episodes 30` で評価し、`manager2_report.py --runs ppo2_medium2 baselines_v2 tabq2_small` で表を更新する。
+
 ## 0. 2026-10-27 追記（アイランドマスター）— v7「物理のみ」版の現状
 
 **方針転換**：v6 Phase 2〜3（`v6_robots.py` の仮想ハーネス／誘導力＝`xfrc_applied` の外力）はゆうころの指摘で却下。以後、各機体は自分のアクチュエータだけで動かし、公式の立ち方・ポリシーを使う。v6 Phase 1 の施工（course-builder そのまま）だけが外力なしで有効。
