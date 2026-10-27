@@ -1,0 +1,148 @@
+{
+  "mujoco": "3.11.0",
+  "success": true,
+  "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+  "seconds": 199.64,
+  "placement_errors_m": {
+    "up_1": 0.01658493292117886,
+    "down_1": 0.01204817413552782
+  },
+  "parts": [
+    {
+      "part": "up_1",
+      "lift_m": 0.2076074469170039,
+      "carry_m": 2.9840515479562906
+    },
+    {
+      "part": "down_1",
+      "lift_m": 0.20759368282730864,
+      "carry_m": 2.985404122131351
+    }
+  ],
+  "vehicle_rise_m": 0.4399169618681185,
+  "surfaces_touched": 4,
+  "timeline": [
+    {
+      "t": 0.0,
+      "phase": "UP"
+    },
+    {
+      "t": 16.26,
+      "phase": "RAISE_UP"
+    },
+    {
+      "t": 17.92,
+      "phase": "TO_DOWN"
+    },
+    {
+      "t": 57.46,
+      "phase": "PRECISE_LANE"
+    },
+    {
+      "t": 65.82,
+      "phase": "ALIGN"
+    },
+    {
+      "t": 75.56,
+      "phase": "RETREAT_FOR_ALIGNMENT"
+    },
+    {
+      "t": 79.12,
+      "phase": "LOWER"
+    },
+    {
+      "t": 80.76,
+      "phase": "DOWN"
+    },
+    {
+      "t": 104.4,
+      "phase": "RAISE_DOWN"
+    },
+    {
+      "t": 106.06,
+      "phase": "TO_START"
+    },
+    {
+      "t": 177.1,
+      "phase": "CROSS"
+    }
+  ],
+  "poses": {
+    "dozer": {
+      "pos": [
+        1.55034,
+        3.07392,
+        0.29997
+      ],
+      "quat": [
+        0.60192,
+        -7e-06,
+        5e-06,
+        0.798557
+      ]
+    },
+    "up_1": {
+      "pos": [
+        1.48406,
+        -0.99542,
+        0.07999
+      ],
+      "quat": [
+        0.999999,
+        1e-06,
+        -1e-06,
+        -0.001499
+      ]
+    },
+    "down_1": {
+      "pos": [
+        1.48816,
+        1.04777,
+        0.07999
+      ],
+      "quat": [
+        0.99999,
+        -1e-06,
+        -1e-06,
+        -0.004473
+      ]
+    },
+    "block_1": {
+      "pos": [
+        4.0,
+        3.0,
+        0.25999
+      ],
+      "quat": [
+        1.0,
+        -0.0,
+        0.0,
+        -0.0
+      ]
+    },
+    "block_2": {
+      "pos": [
+        4.0,
+        -3.0,
+        0.25999
+      ],
+      "quat": [
+        1.0,
+        0.0,
+        0.0,
+        -0.0
+      ]
+    }
+  },
+  "stage_xml": "D:\\IslandMaster\\mujoco_3body\\out\\v6_stage_built.xml",
+  "stage_xml_settle_drift_m": {
+    "up_1": 2.47222760926082e-06,
+    "down_1": 2.472208721285919e-06
+  },
+  "video": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\v6_phase1_build.mp4",
+    "frames": 1553,
+    "speed": 4.0,
+    "bytes": 7699806
+  }
+}

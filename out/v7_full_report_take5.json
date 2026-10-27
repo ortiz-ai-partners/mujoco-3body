@@ -1,0 +1,1066 @@
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 330.8,
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802548983,
+        "carry_m": 2.9840515528937535
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.2075936829773769,
+        "carry_m": 2.98540412679216
+      }
+    ],
+    "rise_m": 0.4398819645718081,
+    "surfaces": 4
+  },
+  "events": [
+    {
+      "t": 0.0,
+      "video_t": 0.0,
+      "event": "BZ UP"
+    },
+    {
+      "t": 16.26,
+      "video_t": 4.07,
+      "event": "BZ RAISE_UP"
+    },
+    {
+      "t": 17.92,
+      "video_t": 4.5,
+      "event": "BZ TO_DOWN"
+    },
+    {
+      "t": 57.46,
+      "video_t": 14.37,
+      "event": "BZ PRECISE_LANE"
+    },
+    {
+      "t": 65.82,
+      "video_t": 16.47,
+      "event": "BZ ALIGN"
+    },
+    {
+      "t": 75.56,
+      "video_t": 18.9,
+      "event": "BZ RETREAT_FOR_ALIGNMENT"
+    },
+    {
+      "t": 79.12,
+      "video_t": 19.8,
+      "event": "BZ LOWER"
+    },
+    {
+      "t": 80.76,
+      "video_t": 20.2,
+      "event": "BZ DOWN"
+    },
+    {
+      "t": 104.4,
+      "video_t": 26.13,
+      "event": "BZ RAISE_DOWN"
+    },
+    {
+      "t": 106.06,
+      "video_t": 26.53,
+      "event": "BZ TO_START"
+    },
+    {
+      "t": 106.06,
+      "video_t": 26.53,
+      "event": "TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance"
+    },
+    {
+      "t": 106.06,
+      "video_t": 26.53,
+      "event": "MD heads to the waiting spot by the course start; JP to its watch spot"
+    },
+    {
+      "t": 165.04,
+      "video_t": 41.27,
+      "event": "BZ CROSS"
+    },
+    {
+      "t": 165.04,
+      "video_t": 41.27,
+      "event": "stage -> FOLLOW_IN"
+    },
+    {
+      "t": 184.98,
+      "video_t": 51.23,
+      "event": "construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)"
+    },
+    {
+      "t": 184.98,
+      "video_t": 51.23,
+      "event": "physics step -> 0.001"
+    },
+    {
+      "t": 185.04,
+      "video_t": 51.27,
+      "event": "stage -> RAMP"
+    },
+    {
+      "t": 185.04,
+      "video_t": 51.27,
+      "event": "MD: 坂に挑む（1 回目）"
+    },
+    {
+      "t": 199.06,
+      "video_t": 58.27,
+      "event": "MD: いったん後ずさり (reached y=-2.00, ramp toe -1.86)"
+    },
+    {
+      "t": 201.58,
+      "video_t": 59.53,
+      "event": "MD: もう一回挑む（2 回目）"
+    },
+    {
+      "t": 212.6,
+      "video_t": 65.03,
+      "event": "MD: やっぱり無理… (reached y=-2.00)"
+    },
+    {
+      "t": 213.2,
+      "video_t": 65.33,
+      "event": "MD: 諦めて座り込む（sitstand）"
+    },
+    {
+      "t": 214.7,
+      "video_t": 66.1,
+      "event": "MD: 首を振りながら「ぐわぁぁ？」"
+    },
+    {
+      "t": 217.42,
+      "video_t": 67.47,
+      "event": "stage -> CLIMB"
+    },
+    {
+      "t": 217.42,
+      "video_t": 67.47,
+      "event": "JP leaves its watch spot for the foot of the ramp"
+    },
+    {
+      "t": 223.96,
+      "video_t": 73.97,
+      "event": "JP passes beside the sitting duck and starts up the ramp"
+    },
+    {
+      "t": 232.14,
+      "video_t": 82.13,
+      "event": "JP on the crest (z=0.50); duck: ぐわぁぁ？"
+    },
+    {
+      "t": 235.22,
+      "video_t": 85.23,
+      "event": "JP stuck at the crest (y=-0.55 z=0.54); forward jump"
+    },
+    {
+      "t": 236.4,
+      "video_t": 86.4,
+      "event": "JP landed at y=-0.50 z=0.53"
+    },
+    {
+      "t": 239.64,
+      "video_t": 89.63,
+      "event": "JP over the top; duck looks around"
+    },
+    {
+      "t": 242.82,
+      "video_t": 92.83,
+      "event": "JP crossed the course and stops behind BZ (z=0.11)"
+    },
+    {
+      "t": 245.84,
+      "video_t": 95.83,
+      "event": "stage -> CALL"
+    },
+    {
+      "t": 250.86,
+      "video_t": 100.87,
+      "event": "stage -> LIFT"
+    },
+    {
+      "t": 250.86,
+      "video_t": 100.87,
+      "event": "BZ drives back around the course to the duck"
+    },
+    {
+      "t": 276.18,
+      "video_t": 113.53,
+      "event": "BZ arrived (Final position error: 0.137 m); aims at the duck"
+    },
+    {
+      "t": 276.2,
+      "video_t": 113.53,
+      "event": "JP goes round BZ's east side to the duck's south"
+    },
+    {
+      "t": 287.18,
+      "video_t": 119.03,
+      "event": "BZ aimed; lowers the fork and slides it toward the duck (2.05 m)"
+    },
+    {
+      "t": 292.94,
+      "video_t": 121.9,
+      "event": "JP starts its cheering dance beside the duck (official dance policy)"
+    },
+    {
+      "t": 312.2,
+      "video_t": 131.53,
+      "event": "BZ lifts (duck 1.16 m ahead, touching=True)"
+    },
+    {
+      "t": 312.84,
+      "video_t": 131.87,
+      "event": "the fork tips the duck over (tilt 69); velstand takes over"
+    },
+    {
+      "t": 312.84,
+      "video_t": 131.87,
+      "event": "MD fell (tilt 69) at (+1.19,-1.88)"
+    },
+    {
+      "t": 313.6,
+      "video_t": 132.23,
+      "event": "fork up; duck z=0.127 tilt=6"
+    },
+    {
+      "t": 314.12,
+      "video_t": 132.5,
+      "event": "MD is back on its feet by itself (1.3 s)"
+    },
+    {
+      "t": 317.52,
+      "video_t": 134.2,
+      "event": "MD fell (tilt 63) at (+1.04,-2.03)"
+    },
+    {
+      "t": 317.76,
+      "video_t": 134.33,
+      "event": "fork down; duck z=0.056"
+    },
+    {
+      "t": 324.26,
+      "video_t": 137.57,
+      "event": "duck is on its feet; happy"
+    },
+    {
+      "t": 324.26,
+      "video_t": 137.57,
+      "event": "MD is back on its feet by itself (6.8 s)"
+    },
+    {
+      "t": 328.3,
+      "video_t": 139.6,
+      "event": "stage -> END"
+    }
+  ],
+  "md_events": [
+    {
+      "t": 0.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 2.52,
+      "mode": "STAND"
+    },
+    {
+      "t": 4.46,
+      "mode": "WALK"
+    },
+    {
+      "t": 4.6,
+      "mode": "STAND"
+    },
+    {
+      "t": 5.74,
+      "mode": "WALK"
+    },
+    {
+      "t": 5.74,
+      "mode": "STAND"
+    },
+    {
+      "t": 7.56,
+      "mode": "WALK"
+    },
+    {
+      "t": 7.56,
+      "mode": "STAND"
+    },
+    {
+      "t": 9.12,
+      "mode": "WALK"
+    },
+    {
+      "t": 9.12,
+      "mode": "STAND"
+    },
+    {
+      "t": 11.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 11.0,
+      "mode": "STAND"
+    },
+    {
+      "t": 12.48,
+      "mode": "WALK"
+    },
+    {
+      "t": 12.48,
+      "mode": "STAND"
+    },
+    {
+      "t": 15.3,
+      "mode": "WALK"
+    },
+    {
+      "t": 15.3,
+      "mode": "STAND"
+    },
+    {
+      "t": 16.74,
+      "mode": "WALK"
+    },
+    {
+      "t": 40.98,
+      "mode": "STAND"
+    },
+    {
+      "t": 42.6,
+      "mode": "WALK"
+    },
+    {
+      "t": 62.16,
+      "mode": "STAND"
+    },
+    {
+      "t": 64.06,
+      "mode": "WALK"
+    },
+    {
+      "t": 64.06,
+      "mode": "STAND"
+    },
+    {
+      "t": 65.24,
+      "mode": "WALK"
+    },
+    {
+      "t": 65.24,
+      "mode": "STAND"
+    },
+    {
+      "t": 66.6,
+      "mode": "WALK"
+    },
+    {
+      "t": 66.6,
+      "mode": "STAND"
+    },
+    {
+      "t": 68.1,
+      "mode": "WALK"
+    },
+    {
+      "t": 68.1,
+      "mode": "STAND"
+    },
+    {
+      "t": 69.72,
+      "mode": "WALK"
+    },
+    {
+      "t": 69.72,
+      "mode": "STAND"
+    },
+    {
+      "t": 70.82,
+      "mode": "WALK"
+    },
+    {
+      "t": 70.82,
+      "mode": "STAND"
+    },
+    {
+      "t": 72.96,
+      "mode": "WALK"
+    },
+    {
+      "t": 72.96,
+      "mode": "STAND"
+    },
+    {
+      "t": 75.28,
+      "mode": "WALK"
+    },
+    {
+      "t": 75.28,
+      "mode": "STAND"
+    },
+    {
+      "t": 76.94,
+      "mode": "WALK"
+    },
+    {
+      "t": 77.46,
+      "mode": "STAND"
+    },
+    {
+      "t": 79.16,
+      "mode": "WALK"
+    },
+    {
+      "t": 79.16,
+      "mode": "STAND"
+    },
+    {
+      "t": 80.64,
+      "mode": "WALK"
+    },
+    {
+      "t": 80.64,
+      "mode": "STAND"
+    },
+    {
+      "t": 82.46,
+      "mode": "WALK"
+    },
+    {
+      "t": 82.46,
+      "mode": "STAND"
+    },
+    {
+      "t": 83.74,
+      "mode": "WALK"
+    },
+    {
+      "t": 83.74,
+      "mode": "STAND"
+    },
+    {
+      "t": 85.14,
+      "mode": "WALK"
+    },
+    {
+      "t": 85.14,
+      "mode": "STAND"
+    },
+    {
+      "t": 86.76,
+      "mode": "WALK"
+    },
+    {
+      "t": 86.76,
+      "mode": "STAND"
+    },
+    {
+      "t": 88.06,
+      "mode": "WALK"
+    },
+    {
+      "t": 88.06,
+      "mode": "STAND"
+    },
+    {
+      "t": 89.4,
+      "mode": "WALK"
+    },
+    {
+      "t": 89.4,
+      "mode": "STAND"
+    },
+    {
+      "t": 91.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 91.2,
+      "mode": "STAND"
+    },
+    {
+      "t": 92.96,
+      "mode": "WALK"
+    },
+    {
+      "t": 92.96,
+      "mode": "STAND"
+    },
+    {
+      "t": 94.62,
+      "mode": "WALK"
+    },
+    {
+      "t": 94.62,
+      "mode": "STAND"
+    },
+    {
+      "t": 96.38,
+      "mode": "WALK"
+    },
+    {
+      "t": 96.38,
+      "mode": "STAND"
+    },
+    {
+      "t": 97.54,
+      "mode": "WALK"
+    },
+    {
+      "t": 97.54,
+      "mode": "STAND"
+    },
+    {
+      "t": 99.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 99.0,
+      "mode": "STAND"
+    },
+    {
+      "t": 100.56,
+      "mode": "WALK"
+    },
+    {
+      "t": 100.6,
+      "mode": "STAND"
+    },
+    {
+      "t": 101.72,
+      "mode": "WALK"
+    },
+    {
+      "t": 101.72,
+      "mode": "STAND"
+    },
+    {
+      "t": 103.34,
+      "mode": "WALK"
+    },
+    {
+      "t": 103.34,
+      "mode": "STAND"
+    },
+    {
+      "t": 104.48,
+      "mode": "WALK"
+    },
+    {
+      "t": 104.48,
+      "mode": "STAND"
+    },
+    {
+      "t": 106.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 106.0,
+      "mode": "STAND"
+    },
+    {
+      "t": 106.06,
+      "mode": "WALK"
+    },
+    {
+      "t": 132.6,
+      "mode": "STAND"
+    },
+    {
+      "t": 165.04,
+      "mode": "WALK"
+    },
+    {
+      "t": 185.02,
+      "mode": "STAND"
+    },
+    {
+      "t": 185.04,
+      "mode": "WALK"
+    },
+    {
+      "t": 199.06,
+      "mode": "BACK"
+    },
+    {
+      "t": 201.58,
+      "mode": "WALK"
+    },
+    {
+      "t": 212.6,
+      "mode": "SIT"
+    },
+    {
+      "t": 312.84,
+      "mode": "FALLEN"
+    },
+    {
+      "t": 314.1,
+      "mode": "STAND"
+    },
+    {
+      "t": 317.5,
+      "mode": "FALLEN"
+    },
+    {
+      "t": 324.24,
+      "mode": "STAND"
+    }
+  ],
+  "jp_events": [
+    {
+      "t": 0.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 0.0,
+      "mode": "JUMP"
+    },
+    {
+      "t": 1.18,
+      "mode": "WALK"
+    },
+    {
+      "t": 12.64,
+      "mode": "JUMP"
+    },
+    {
+      "t": 13.82,
+      "mode": "WALK"
+    },
+    {
+      "t": 25.56,
+      "mode": "JUMP"
+    },
+    {
+      "t": 26.74,
+      "mode": "WALK"
+    },
+    {
+      "t": 35.62,
+      "mode": "JUMP"
+    },
+    {
+      "t": 36.8,
+      "mode": "WALK"
+    },
+    {
+      "t": 43.68,
+      "mode": "JUMP"
+    },
+    {
+      "t": 44.86,
+      "mode": "WALK"
+    },
+    {
+      "t": 56.0,
+      "mode": "JUMP"
+    },
+    {
+      "t": 57.18,
+      "mode": "WALK"
+    },
+    {
+      "t": 61.26,
+      "mode": "JUMP"
+    },
+    {
+      "t": 62.44,
+      "mode": "WALK"
+    },
+    {
+      "t": 74.44,
+      "mode": "JUMP"
+    },
+    {
+      "t": 75.62,
+      "mode": "WALK"
+    },
+    {
+      "t": 87.02,
+      "mode": "JUMP"
+    },
+    {
+      "t": 88.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 100.1,
+      "mode": "JUMP"
+    },
+    {
+      "t": 101.28,
+      "mode": "WALK"
+    },
+    {
+      "t": 235.22,
+      "mode": "JUMP"
+    },
+    {
+      "t": 236.4,
+      "mode": "WALK"
+    },
+    {
+      "t": 242.82,
+      "mode": "IDLE"
+    },
+    {
+      "t": 245.86,
+      "mode": "WALK"
+    },
+    {
+      "t": 292.94,
+      "mode": "DANCE"
+    }
+  ],
+  "chirps": [
+    [
+      0.0,
+      "trill",
+      1.0503745894058394
+    ],
+    [
+      0.7666666666666667,
+      "quack",
+      0.8746472016539689
+    ],
+    [
+      1.0333333333333334,
+      "trill",
+      1.0554708981990957
+    ],
+    [
+      2.2333333333333334,
+      "sigh",
+      1.0192686439231857
+    ],
+    [
+      3.1666666666666665,
+      "clack",
+      0.9369228249905235
+    ],
+    [
+      3.6,
+      "clack",
+      1.125357769672044
+    ],
+    [
+      4.133333333333334,
+      "quack",
+      1.0141178571978695
+    ],
+    [
+      5.833333333333333,
+      "clack",
+      0.9399559235262452
+    ],
+    [
+      6.4,
+      "trill",
+      0.9136670153504595
+    ],
+    [
+      6.966666666666667,
+      "gwaa",
+      1.055758679233401
+    ],
+    [
+      8.766666666666667,
+      "quack",
+      0.9104343603880014
+    ],
+    [
+      8.933333333333334,
+      "clack",
+      1.1097812120931954
+    ],
+    [
+      9.833333333333334,
+      "trill",
+      1.1012839974729172
+    ],
+    [
+      10.033333333333333,
+      "quack",
+      0.8825154975727915
+    ],
+    [
+      10.933333333333334,
+      "trill",
+      0.9787956867858579
+    ],
+    [
+      11.333333333333334,
+      "quack",
+      1.1793520981280021
+    ],
+    [
+      12.033333333333333,
+      "trill",
+      0.9785799071759632
+    ],
+    [
+      13.166666666666666,
+      "quack",
+      0.8736036265822091
+    ],
+    [
+      14.033333333333333,
+      "trill",
+      1.1113062454253066
+    ],
+    [
+      15.133333333333333,
+      "quack",
+      1.174625908990489
+    ],
+    [
+      15.333333333333334,
+      "clack",
+      0.9359053607783387
+    ],
+    [
+      15.433333333333334,
+      "clack",
+      1.0107827353211742
+    ],
+    [
+      16.666666666666668,
+      "gwaa",
+      1.1546347209651668
+    ],
+    [
+      18.633333333333333,
+      "clack",
+      0.9880165249771532
+    ],
+    [
+      18.966666666666665,
+      "clack",
+      0.9215409726418133
+    ],
+    [
+      19.033333333333335,
+      "quack",
+      1.187187475964439
+    ],
+    [
+      21.766666666666666,
+      "clack",
+      1.0037776202213524
+    ],
+    [
+      21.866666666666667,
+      "gwaa",
+      1.0436340820492305
+    ],
+    [
+      21.966666666666665,
+      "trill",
+      0.9644045413595097
+    ],
+    [
+      24.3,
+      "happy",
+      1.1567598128789987
+    ],
+    [
+      25.033333333333335,
+      "trill",
+      1.0763863809297423
+    ],
+    [
+      25.933333333333334,
+      "trill",
+      1.054233702328242
+    ],
+    [
+      26.766666666666666,
+      "gwaa",
+      1.191058218792059
+    ],
+    [
+      28.066666666666666,
+      "quack",
+      1.1968253296921507
+    ],
+    [
+      28.633333333333333,
+      "trill",
+      1.0046348437544328
+    ],
+    [
+      30.266666666666666,
+      "quack",
+      1.0999530138331775
+    ],
+    [
+      30.833333333333332,
+      "clack",
+      0.9638556591758602
+    ],
+    [
+      32.46666666666667,
+      "quack",
+      1.1181847084157261
+    ],
+    [
+      34.5,
+      "happy",
+      1.108115517227973
+    ],
+    [
+      34.53333333333333,
+      "clack",
+      0.9198981579066859
+    ],
+    [
+      36.666666666666664,
+      "clack",
+      1.02692869843546
+    ],
+    [
+      37.43333333333333,
+      "quack",
+      0.8687213643250183
+    ],
+    [
+      38.56666666666667,
+      "trill",
+      1.084820480282091
+    ],
+    [
+      39.06666666666667,
+      "quack",
+      0.8602214334074653
+    ],
+    [
+      40.4,
+      "happy",
+      1.1561977286684537
+    ],
+    [
+      41.266666666666666,
+      "quack",
+      1.0
+    ],
+    [
+      51.766666666666666,
+      "quack",
+      1.0
+    ],
+    [
+      53.63333333333333,
+      "quack",
+      1.0
+    ],
+    [
+      56.03333333333333,
+      "quack",
+      1.0
+    ],
+    [
+      58.266666666666666,
+      "worried",
+      1.0
+    ],
+    [
+      59.53333333333333,
+      "quack",
+      1.0
+    ],
+    [
+      65.03333333333333,
+      "sigh",
+      1.0
+    ],
+    [
+      66.1,
+      "gwaa",
+      1.0
+    ],
+    [
+      67.46666666666667,
+      "clack",
+      1.0016535034459884
+    ],
+    [
+      73.96666666666667,
+      "worried",
+      1.0
+    ],
+    [
+      82.13333333333334,
+      "gwaa",
+      1.0
+    ],
+    [
+      93.93333333333334,
+      "quack",
+      1.0
+    ],
+    [
+      96.63333333333334,
+      "call",
+      1.0
+    ],
+    [
+      98.86666666666666,
+      "call",
+      1.0
+    ],
+    [
+      121.9,
+      "trill",
+      0.9913355866027697
+    ],
+    [
+      131.86666666666667,
+      "worried",
+      1.0
+    ],
+    [
+      132.23333333333332,
+      "worried",
+      1.0
+    ],
+    [
+      132.5,
+      "happy",
+      1.0
+    ],
+    [
+      134.2,
+      "worried",
+      1.0
+    ],
+    [
+      137.56666666666666,
+      "happy",
+      1.0
+    ],
+    [
+      137.56666666666666,
+      "happy",
+      1.0
+    ]
+  ],
+  "video_silent": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take5_silent.mp4",
+    "frames": 4263,
+    "bytes": 21509649
+  },
+  "video": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take5.mp4",
+    "ffmpeg_rc": 0,
+    "bytes": 21925004
+  }
+}

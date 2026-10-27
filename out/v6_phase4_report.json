@@ -1,0 +1,610 @@
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 330.01,
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744691696129,
+        "carry_m": 2.9840515479562297
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.2075936828388788,
+        "carry_m": 2.985404124509067
+      }
+    ],
+    "rise_m": 0.4399182362139154,
+    "surfaces": 4
+  },
+  "events": [
+    {
+      "t": 0.0,
+      "video_t": 0.0,
+      "event": "BZ UP"
+    },
+    {
+      "t": 16.26,
+      "video_t": 0.0,
+      "event": "BZ RAISE_UP"
+    },
+    {
+      "t": 17.92,
+      "video_t": 0.0,
+      "event": "BZ TO_DOWN"
+    },
+    {
+      "t": 57.46,
+      "video_t": 0.0,
+      "event": "BZ PRECISE_LANE"
+    },
+    {
+      "t": 65.82,
+      "video_t": 0.0,
+      "event": "BZ ALIGN"
+    },
+    {
+      "t": 75.56,
+      "video_t": 0.0,
+      "event": "BZ RETREAT_FOR_ALIGNMENT"
+    },
+    {
+      "t": 79.12,
+      "video_t": 0.0,
+      "event": "BZ LOWER"
+    },
+    {
+      "t": 80.76,
+      "video_t": 0.0,
+      "event": "BZ DOWN"
+    },
+    {
+      "t": 104.4,
+      "video_t": 0.0,
+      "event": "BZ RAISE_DOWN"
+    },
+    {
+      "t": 106.06,
+      "video_t": 0.0,
+      "event": "BZ TO_START"
+    },
+    {
+      "t": 106.06,
+      "video_t": 0.0,
+      "event": "MD heads to the waiting spot by the course start"
+    },
+    {
+      "t": 177.1,
+      "video_t": 0.0,
+      "event": "BZ CROSS"
+    },
+    {
+      "t": 177.1,
+      "video_t": 0.0,
+      "event": "stage -> FOLLOW_IN"
+    },
+    {
+      "t": 189.98,
+      "video_t": 0.0,
+      "event": "stage -> FOLLOW"
+    },
+    {
+      "t": 190.08,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 197.08,
+      "video_t": 0.0,
+      "event": "construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)"
+    },
+    {
+      "t": 197.08,
+      "video_t": 0.0,
+      "event": "physics step -> 0.002"
+    },
+    {
+      "t": 198.88,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 201.2,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 206.28,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 237.12,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 246.82,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 251.48,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 255.68,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 280.6,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 286.86,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 292.68,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 295.08,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    },
+    {
+      "t": 300.38,
+      "video_t": 0.0,
+      "event": "MD stumbled on the course; harness rights it"
+    }
+  ],
+  "md_events": [
+    {
+      "t": 0.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 5.72,
+      "mode": "STAND"
+    },
+    {
+      "t": 7.18,
+      "mode": "WALK"
+    },
+    {
+      "t": 11.28,
+      "mode": "STAND"
+    },
+    {
+      "t": 12.3,
+      "mode": "WALK"
+    },
+    {
+      "t": 18.84,
+      "mode": "STAND"
+    },
+    {
+      "t": 20.46,
+      "mode": "WALK"
+    },
+    {
+      "t": 35.36,
+      "mode": "STAND"
+    },
+    {
+      "t": 37.38,
+      "mode": "WALK"
+    },
+    {
+      "t": 54.62,
+      "mode": "STAND"
+    },
+    {
+      "t": 57.6,
+      "mode": "WALK"
+    },
+    {
+      "t": 77.48,
+      "mode": "STAND"
+    },
+    {
+      "t": 78.58,
+      "mode": "WALK"
+    },
+    {
+      "t": 86.62,
+      "mode": "STAND"
+    },
+    {
+      "t": 89.46,
+      "mode": "WALK"
+    },
+    {
+      "t": 97.22,
+      "mode": "STAND"
+    },
+    {
+      "t": 98.72,
+      "mode": "WALK"
+    },
+    {
+      "t": 118.9,
+      "mode": "STAND"
+    },
+    {
+      "t": 120.64,
+      "mode": "WALK"
+    },
+    {
+      "t": 144.72,
+      "mode": "STAND"
+    },
+    {
+      "t": 147.5,
+      "mode": "WALK"
+    },
+    {
+      "t": 154.16,
+      "mode": "STAND"
+    },
+    {
+      "t": 156.66,
+      "mode": "WALK"
+    },
+    {
+      "t": 165.42,
+      "mode": "STAND"
+    },
+    {
+      "t": 168.18,
+      "mode": "WALK"
+    },
+    {
+      "t": 171.5,
+      "mode": "STAND"
+    },
+    {
+      "t": 172.62,
+      "mode": "WALK"
+    },
+    {
+      "t": 190.08,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 191.08,
+      "mode": "WALK"
+    },
+    {
+      "t": 198.88,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 199.88,
+      "mode": "WALK"
+    },
+    {
+      "t": 201.2,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 202.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 206.28,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 207.3,
+      "mode": "WALK"
+    },
+    {
+      "t": 237.12,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 238.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 246.82,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 247.88,
+      "mode": "WALK"
+    },
+    {
+      "t": 251.48,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 252.5,
+      "mode": "WALK"
+    },
+    {
+      "t": 255.68,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 256.68,
+      "mode": "WALK"
+    },
+    {
+      "t": 280.6,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 281.68,
+      "mode": "WALK"
+    },
+    {
+      "t": 286.86,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 287.9,
+      "mode": "WALK"
+    },
+    {
+      "t": 292.68,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 293.7,
+      "mode": "WALK"
+    },
+    {
+      "t": 295.08,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 296.08,
+      "mode": "WALK"
+    },
+    {
+      "t": 300.38,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 301.4,
+      "mode": "WALK"
+    }
+  ],
+  "jp_events": [],
+  "chirps": [
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ],
+    [
+      0.0,
+      "quack"
+    ]
+  ]
+}

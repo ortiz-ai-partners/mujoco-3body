@@ -1,0 +1,660 @@
+{
+  "video": "D:\\IslandMaster\\mujoco_3body\\out\\v6_phase3_jp_contact.mp4",
+  "frames": 661,
+  "bytes": 2727127,
+  "md_pose": [
+    -0.3,
+    -1.8,
+    1.5707963267948966
+  ],
+  "jp_start": [
+    -2.3,
+    -0.3
+  ],
+  "contact_t": 10.74,
+  "md_events": [
+    {
+      "t": 1.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 7.66,
+      "mode": "STAND"
+    },
+    {
+      "t": 10.74,
+      "mode": "HIT"
+    },
+    {
+      "t": 11.04,
+      "mode": "FALLEN"
+    },
+    {
+      "t": 12.54,
+      "mode": "RECOVER"
+    },
+    {
+      "t": 14.54,
+      "mode": "WALK"
+    },
+    {
+      "t": 16.64,
+      "mode": "STAND"
+    }
+  ],
+  "jp_events": [
+    {
+      "t": 3.0,
+      "mode": "HOP"
+    },
+    {
+      "t": 11.34,
+      "mode": "FLEE"
+    },
+    {
+      "t": 11.56,
+      "mode": "FLIPPED"
+    }
+  ],
+  "events": [
+    {
+      "t": 7.66,
+      "event": "MD stops, looks at JP"
+    },
+    {
+      "t": 10.74,
+      "event": "contact JP-MD"
+    },
+    {
+      "t": 11.04,
+      "event": "MD fell"
+    },
+    {
+      "t": 11.56,
+      "event": "JP flipped onto its back"
+    },
+    {
+      "t": 14.54,
+      "event": "MD walks to the flipped JP"
+    },
+    {
+      "t": 16.64,
+      "event": "MD looks at JP, quacks"
+    }
+  ],
+  "jp_hop_zmax": 0.225,
+  "log": [
+    {
+      "t": 0.0,
+      "md": "STAND",
+      "jp": "STAND",
+      "md_z": 0.122,
+      "md_tilt": 0.0,
+      "jp_z": 0.11,
+      "jp_zmax": 0.0,
+      "jp_tilt": 0.0,
+      "sep": 2.5,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 0.5,
+      "md": "STAND",
+      "jp": "STAND",
+      "md_z": 0.117,
+      "md_tilt": 0.2,
+      "jp_z": 0.105,
+      "jp_zmax": 0.0,
+      "jp_tilt": 0.3,
+      "sep": 2.5,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 1.0,
+      "md": "WALK",
+      "jp": "STAND",
+      "md_z": 0.117,
+      "md_tilt": 0.3,
+      "jp_z": 0.105,
+      "jp_zmax": 0.0,
+      "jp_tilt": 0.3,
+      "sep": 2.5,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 1.5,
+      "md": "WALK",
+      "jp": "STAND",
+      "md_z": 0.11,
+      "md_tilt": 5.3,
+      "jp_z": 0.105,
+      "jp_zmax": 0.0,
+      "jp_tilt": 0.3,
+      "sep": 2.49,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 2.0,
+      "md": "WALK",
+      "jp": "STAND",
+      "md_z": 0.115,
+      "md_tilt": 6.2,
+      "jp_z": 0.105,
+      "jp_zmax": 0.0,
+      "jp_tilt": 0.3,
+      "sep": 2.46,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 2.5,
+      "md": "WALK",
+      "jp": "STAND",
+      "md_z": 0.114,
+      "md_tilt": 9.0,
+      "jp_z": 0.105,
+      "jp_zmax": 0.0,
+      "jp_tilt": 0.3,
+      "sep": 2.43,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 3.0,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.112,
+      "md_tilt": 5.8,
+      "jp_z": 0.105,
+      "jp_zmax": 0.105,
+      "jp_tilt": 0.3,
+      "sep": 2.4,
+      "jp_v": 0.01,
+      "touch": false
+    },
+    {
+      "t": 3.5,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.118,
+      "md_tilt": 13.5,
+      "jp_z": 0.115,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.6,
+      "sep": 2.22,
+      "jp_v": 0.44,
+      "touch": false
+    },
+    {
+      "t": 4.0,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.111,
+      "md_tilt": 10.2,
+      "jp_z": 0.151,
+      "jp_zmax": 0.166,
+      "jp_tilt": 7.8,
+      "sep": 2.1,
+      "jp_v": 0.62,
+      "touch": false
+    },
+    {
+      "t": 4.5,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.116,
+      "md_tilt": 5.3,
+      "jp_z": 0.147,
+      "jp_zmax": 0.166,
+      "jp_tilt": 2.9,
+      "sep": 1.99,
+      "jp_v": 0.39,
+      "touch": false
+    },
+    {
+      "t": 5.0,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.114,
+      "md_tilt": 10.6,
+      "jp_z": 0.108,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.0,
+      "sep": 1.85,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 5.5,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.113,
+      "md_tilt": 7.5,
+      "jp_z": 0.109,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.3,
+      "sep": 1.67,
+      "jp_v": 0.01,
+      "touch": false
+    },
+    {
+      "t": 6.0,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.118,
+      "md_tilt": 15.0,
+      "jp_z": 0.111,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.4,
+      "sep": 1.51,
+      "jp_v": 0.02,
+      "touch": false
+    },
+    {
+      "t": 6.5,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.111,
+      "md_tilt": 10.8,
+      "jp_z": 0.111,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.4,
+      "sep": 1.38,
+      "jp_v": 0.08,
+      "touch": false
+    },
+    {
+      "t": 7.0,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.116,
+      "md_tilt": 5.0,
+      "jp_z": 0.144,
+      "jp_zmax": 0.166,
+      "jp_tilt": 5.8,
+      "sep": 1.26,
+      "jp_v": 0.49,
+      "touch": false
+    },
+    {
+      "t": 7.5,
+      "md": "WALK",
+      "jp": "HOP",
+      "md_z": 0.114,
+      "md_tilt": 10.0,
+      "jp_z": 0.153,
+      "jp_zmax": 0.166,
+      "jp_tilt": 2.5,
+      "sep": 1.17,
+      "jp_v": 0.49,
+      "touch": false
+    },
+    {
+      "t": 8.0,
+      "md": "STAND",
+      "jp": "HOP",
+      "md_z": 0.119,
+      "md_tilt": 6.9,
+      "jp_z": 0.108,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.0,
+      "sep": 1.06,
+      "jp_v": 0.01,
+      "touch": false
+    },
+    {
+      "t": 8.5,
+      "md": "STAND",
+      "jp": "HOP",
+      "md_z": 0.118,
+      "md_tilt": 4.4,
+      "jp_z": 0.109,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.3,
+      "sep": 0.94,
+      "jp_v": 0.01,
+      "touch": false
+    },
+    {
+      "t": 9.0,
+      "md": "STAND",
+      "jp": "HOP",
+      "md_z": 0.118,
+      "md_tilt": 3.9,
+      "jp_z": 0.111,
+      "jp_zmax": 0.166,
+      "jp_tilt": 1.4,
+      "sep": 0.8,
+      "jp_v": 0.01,
+      "touch": false
+    },
+    {
+      "t": 9.5,
+      "md": "STAND",
+      "jp": "HOP",
+      "md_z": 0.118,
+      "md_tilt": 3.8,
+      "jp_z": 0.11,
+      "jp_zmax": 0.166,
+      "jp_tilt": 0.8,
+      "sep": 0.67,
+      "jp_v": 0.22,
+      "touch": false
+    },
+    {
+      "t": 10.0,
+      "md": "STAND",
+      "jp": "HOP",
+      "md_z": 0.118,
+      "md_tilt": 3.6,
+      "jp_z": 0.166,
+      "jp_zmax": 0.168,
+      "jp_tilt": 6.0,
+      "sep": 0.59,
+      "jp_v": 0.67,
+      "touch": false
+    },
+    {
+      "t": 10.5,
+      "md": "STAND",
+      "jp": "HOP",
+      "md_z": 0.118,
+      "md_tilt": 3.4,
+      "jp_z": 0.166,
+      "jp_zmax": 0.168,
+      "jp_tilt": 0.6,
+      "sep": 0.37,
+      "jp_v": 0.68,
+      "touch": false
+    },
+    {
+      "t": 11.0,
+      "md": "HIT",
+      "jp": "HOP",
+      "md_z": 0.117,
+      "md_tilt": 50.3,
+      "jp_z": 0.222,
+      "jp_zmax": 0.225,
+      "jp_tilt": 68.1,
+      "sep": 0.07,
+      "jp_v": 0.59,
+      "touch": true
+    },
+    {
+      "t": 11.5,
+      "md": "FALLEN",
+      "jp": "FLEE",
+      "md_z": 0.072,
+      "md_tilt": 105.8,
+      "jp_z": 0.162,
+      "jp_zmax": 0.225,
+      "jp_tilt": 115.0,
+      "sep": 0.1,
+      "jp_v": 0.63,
+      "touch": true
+    },
+    {
+      "t": 12.0,
+      "md": "FALLEN",
+      "jp": "FLIPPED",
+      "md_z": 0.052,
+      "md_tilt": 94.7,
+      "jp_z": 0.112,
+      "jp_zmax": 0.225,
+      "jp_tilt": 140.6,
+      "sep": 0.23,
+      "jp_v": 0.05,
+      "touch": false
+    },
+    {
+      "t": 12.5,
+      "md": "FALLEN",
+      "jp": "FLIPPED",
+      "md_z": 0.052,
+      "md_tilt": 94.7,
+      "jp_z": 0.073,
+      "jp_zmax": 0.225,
+      "jp_tilt": 166.6,
+      "sep": 0.23,
+      "jp_v": 0.17,
+      "touch": false
+    },
+    {
+      "t": 13.0,
+      "md": "RECOVER",
+      "jp": "FLIPPED",
+      "md_z": 0.051,
+      "md_tilt": 93.6,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.24,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 13.5,
+      "md": "RECOVER",
+      "jp": "FLIPPED",
+      "md_z": 0.129,
+      "md_tilt": 35.3,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.35,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 14.0,
+      "md": "RECOVER",
+      "jp": "FLIPPED",
+      "md_z": 0.124,
+      "md_tilt": 6.2,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.46,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 14.5,
+      "md": "RECOVER",
+      "jp": "FLIPPED",
+      "md_z": 0.117,
+      "md_tilt": 0.7,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.5,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 15.0,
+      "md": "WALK",
+      "jp": "FLIPPED",
+      "md_z": 0.113,
+      "md_tilt": 6.2,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.51,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 15.5,
+      "md": "WALK",
+      "jp": "FLIPPED",
+      "md_z": 0.112,
+      "md_tilt": 4.8,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.45,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 16.0,
+      "md": "WALK",
+      "jp": "FLIPPED",
+      "md_z": 0.117,
+      "md_tilt": 13.4,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.4,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 16.5,
+      "md": "WALK",
+      "jp": "FLIPPED",
+      "md_z": 0.11,
+      "md_tilt": 9.8,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.33,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 17.0,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 8.9,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.33,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 17.5,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.12,
+      "md_tilt": 9.5,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.32,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 18.0,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.12,
+      "md_tilt": 9.2,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.32,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 18.5,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 8.9,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.32,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 19.0,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 8.5,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.32,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 19.5,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 8.3,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.31,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 20.0,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 7.9,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.31,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 20.5,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 7.8,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.31,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 21.0,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 7.4,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.31,
+      "jp_v": 0.0,
+      "touch": false
+    },
+    {
+      "t": 21.5,
+      "md": "STAND",
+      "jp": "FLIPPED",
+      "md_z": 0.119,
+      "md_tilt": 7.3,
+      "jp_z": 0.061,
+      "jp_zmax": 0.225,
+      "jp_tilt": 172.2,
+      "sep": 0.31,
+      "jp_v": 0.0,
+      "touch": false
+    }
+  ]
+}
