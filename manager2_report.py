@@ -57,8 +57,12 @@ def main():
     for run in args.runs:
         for policy in ("ppo", "rule", "random", "tabq"):
             recs = load(run, policy)
-            if recs and policy not in table:
-                table[policy] = (run, recs)
+            if not recs:
+                continue
+            # the same policy kind from several runs (e.g. ppo small / medium) gets one row each
+            label = policy if policy not in table else f"{policy} {run}"
+            if label not in table:
+                table[label] = (run, recs)
     if not table:
         print("no eval_*.json found")
         return
@@ -87,7 +91,7 @@ def main():
         lines.append("| 方策 | 両方渡った | ルールは渡ったが方策は失敗（判断の失敗） | 方策だけ渡った | 両方失敗（スキルの失敗） |")
         lines.append("|---|---|---|---|---|")
         for policy, (run, recs) in table.items():
-            if policy == "rule":
+            if policy.startswith("rule"):
                 continue
             cells = [0, 0, 0, 0]
             for r in recs:

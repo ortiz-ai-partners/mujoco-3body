@@ -1,0 +1,9 @@
+{
+ "run": "ppo2_medium2",
+ "envs": 12,
+ "steps": 12000,
+ "rollout": 48,
+ "wall_s": 15154.2,
+ "episodes": 792,
+ "train_success_rate": 0.677
+}

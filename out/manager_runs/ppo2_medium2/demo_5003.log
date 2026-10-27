@@ -1,0 +1,11 @@
+﻿python.exe : [vost#0:0/libx264 @ 000002c8f8fa0e00] Multiple -pix_fmt options specified for stream 0, only the last opti
+on '-pix_fmt yuv420p' will be used.
+At line:1 char:302
++ ... tch {} } }; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manag ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([vost#0:0/libx2...' will be used.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+{"seed": 5003, "scenario": "toe_seated_wrong", "crab": "behind", "return": 9.9, "steps": 4, "success": true, "landed": true, "falls": 0, "pushes": 1, "course_damaged": false, "course_damage_m": 0.003, "sim_s": 103.3, "wall_s": 71.5, "actions": ["SEAT", "PUSH", "STANDUP", "WALK_ON"], "results": ["seated", "pushed_up", "standing", "crossed"], "stage_end": "north", "draw": {"scenario": "toe_seated_wrong", "dx": -0.04446207322272831, "dy": 0.00045801459070580336, "yaw_err_deg": -4.209720724229628, "gap": 0.7394415279037233, "lat": 0.04218609246457902, "side": -1.0, "wrong_yaw_deg": 220.33466741685808, "any_yaw_deg": 276.49079046471377, "deck_y": 0.2745894375928429, "crab": "behind"}}
+video (WindowsPath('out/manager2_demo_ppo_medium.mp4'), 1611, 6298856)
+{"seed": 5003, "scenario": "toe_seated_wrong", "crab": "behind", "return": 9.9, "steps": 4, "success": true, "landed": true, "falls": 0, "pushes": 1, "course_damaged": false, "course_damage_m": 0.003, "sim_s": 103.3, "wall_s": 71.5, "actions": ["SEAT", "PUSH", "STANDUP", "WALK_ON"], "results": ["seated", "pushed_up", "standing", "crossed"], "stage_end": "north", "draw": {"scenario": "toe_seated_wrong", "dx": -0.04446207322272831, "dy": 0.00045801459070580336, "yaw_err_deg": -4.209720724229628, "gap": 0.7394415279037233, "lat": 0.04218609246457902, "side": -1.0, "wrong_yaw_deg": 220.33466741685808, "any_yaw_deg": 276.49079046471377, "deck_y": 0.2745894375928429, "crab": "behind"}}

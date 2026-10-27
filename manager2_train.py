@@ -25,10 +25,24 @@ from v6_common import OUT_DIR
 RUNS = OUT_DIR / "manager_runs"
 
 
-def make_env(rank, run_dir, max_episode_s):
+def make_env(rank, run_dir, max_episode_s, env_kwargs=None):
     def _init():
-        return ManagerEnv(seed=100 + rank, max_episode_s=max_episode_s, log_path=run_dir / f"train_env{rank}.jsonl")
+        return ManagerEnv(seed=100 + rank, max_episode_s=max_episode_s, log_path=run_dir / f"train_env{rank}.jsonl",
+                          **(env_kwargs or {}))
     return _init
+
+
+def parse_weights(text, valid):
+    """'toe_fallen=0.3,touching=0.4' -> [(name, weight), ...] (names must be in `valid`); None when empty."""
+    if not text:
+        return None
+    table = []
+    for item in text.split(","):
+        name, w = item.split("=")
+        if name.strip() not in valid:
+            raise SystemExit(f"unknown name '{name}' in weights (valid: {sorted(valid)})")
+        table.append((name.strip(), float(w)))
+    return table
 
 
 class CurveCallback:
@@ -53,23 +67,36 @@ def train(args):
     from stable_baselines3 import PPO
     from stable_baselines3.common.vec_env import SubprocVecEnv, DummyVecEnv
     torch.set_num_threads(2)
+    from manager2_env import CRAB_SPOTS_DECK, CRAB_SPOTS_TOE, SCENARIOS
     run_dir = RUNS / args.run
     run_dir.mkdir(parents=True, exist_ok=True)
-    fns = [make_env(i, run_dir, args.max_episode_s) for i in range(args.envs)]
+    env_kwargs = {"scenarios": parse_weights(args.scenario_weights, {s for s, _ in SCENARIOS}),
+                  "crab_spots_toe": parse_weights(args.crab_toe_weights, {s for s, _ in CRAB_SPOTS_TOE}),
+                  "crab_spots_deck": parse_weights(args.crab_deck_weights, {s for s, _ in CRAB_SPOTS_DECK})}
+    fns = [make_env(i, run_dir, args.max_episode_s, env_kwargs) for i in range(args.envs)]
     venv = SubprocVecEnv(fns, start_method="spawn") if args.envs > 1 else DummyVecEnv(fns)
     n_steps = max(8, args.rollout)
-    model = PPO("MlpPolicy", venv, n_steps=n_steps, batch_size=min(64, n_steps * args.envs), n_epochs=6,
-                learning_rate=3e-4, gamma=0.99, gae_lambda=0.95, ent_coef=0.02, clip_range=0.2,
-                policy_kwargs=dict(net_arch=[64, 64]), seed=args.seed, device="cpu", verbose=1)
+    if args.init_from:
+        # continued training: the saved policy/value nets and optimizer, new seed and (optionally) new draw tables
+        model = PPO.load(RUNS / args.init_from / "ppo_manager", env=venv, device="cpu", verbose=1)
+        model.set_random_seed(args.seed)
+        if args.ent_coef is not None:
+            model.ent_coef = args.ent_coef
+    else:
+        model = PPO("MlpPolicy", venv, n_steps=n_steps, batch_size=min(64, n_steps * args.envs), n_epochs=6,
+                    learning_rate=3e-4, gamma=0.99, gae_lambda=0.95, ent_coef=args.ent_coef if args.ent_coef is not None else 0.02,
+                    clip_range=0.2, policy_kwargs=dict(net_arch=[64, 64]), seed=args.seed, device="cpu", verbose=1)
     t0 = time.perf_counter()
     cb = CurveCallback(run_dir / "train_curve.json")
-    model.learn(total_timesteps=args.steps, callback=cb)
+    model.learn(total_timesteps=args.steps, callback=cb, reset_num_timesteps=not args.init_from)
     wall = time.perf_counter() - t0
     model.save(run_dir / "ppo_manager")
     venv.close()
     cb.path.write_text(json.dumps(cb.rows, indent=0), encoding="utf-8")
-    summary = {"run": args.run, "envs": args.envs, "steps": args.steps, "rollout": n_steps, "wall_s": round(wall, 1),
-               "episodes": len(cb.rows), "train_success_rate": round(sum(r["success"] for r in cb.rows) / max(1, len(cb.rows)), 3)}
+    summary = {"run": args.run, "envs": args.envs, "steps": args.steps, "rollout": int(model.n_steps), "wall_s": round(wall, 1),
+               "episodes": len(cb.rows), "train_success_rate": round(sum(r["success"] for r in cb.rows) / max(1, len(cb.rows)), 3),
+               "init_from": args.init_from, "ent_coef": float(model.ent_coef),
+               "draw_tables": {k: v for k, v in env_kwargs.items() if v}}
     (run_dir / "train_summary.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
     print(json.dumps(summary, indent=1))
 
@@ -136,6 +163,11 @@ def main():
     t.add_argument("--rollout", type=int, default=24, help="decisions per env per PPO update")
     t.add_argument("--seed", type=int, default=0)
     t.add_argument("--max-episode-s", type=float, default=240.0)
+    t.add_argument("--init-from", help="continue training from out/manager_runs/<run>/ppo_manager.zip")
+    t.add_argument("--ent-coef", type=float, help="entropy coefficient (default 0.02, or the loaded model's)")
+    t.add_argument("--scenario-weights", help="e.g. toe_seated_ok=0.2,toe_fallen=0.3 (names of SCENARIOS; replaces the table)")
+    t.add_argument("--crab-toe-weights", help="e.g. behind=0.4,beside=0.2,touching=0.4")
+    t.add_argument("--crab-deck-weights", help="e.g. touching=0.7,behind=0.3")
     e = sub.add_parser("eval")
     e.add_argument("--run", default="ppo2_small")
     e.add_argument("--episodes", type=int, default=30)

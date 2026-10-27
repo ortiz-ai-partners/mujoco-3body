@@ -202,10 +202,11 @@ class Scene:
             return stop.value
 
     # ── reset ────────────────────────────────────────────────────────────
-    def reset(self, rng, hard=None):
+    def reset(self, rng, hard=None, scenarios=None, crab_spots_toe=None, crab_spots_deck=None):
         """Place the duck and the crab for one of the scenarios (training-only teleports), then let the duck
         take its starting state physically (stand, or stand then sit).  `hard` overrides the random draw
-        (scenario, crab, dx, dy, yaw_err_deg, gap, lat)."""
+        (scenario, crab, dx, dy, yaw_err_deg, gap, lat).  `scenarios` / `crab_spots_*` replace the default
+        draw tables (continued training with more weight on rare starts; evaluation keeps the defaults)."""
         qpos, qvel, ctrl, act = self.init
         self.data.qpos[:] = qpos
         self.data.qvel[:] = qvel
@@ -228,13 +229,14 @@ class Scene:
         c.loco.hold_home(self.data)
         c.loco.posture[3] = 0.0
 
-        draw = {"scenario": pick(rng, SCENARIOS), "dx": float(rng.uniform(-0.06, 0.06)), "dy": float(rng.uniform(-0.06, 0.06)),
+        draw = {"scenario": pick(rng, scenarios or SCENARIOS), "dx": float(rng.uniform(-0.06, 0.06)), "dy": float(rng.uniform(-0.06, 0.06)),
                 "yaw_err_deg": float(rng.uniform(-10, 10)), "gap": float(rng.uniform(0.55, 1.0)),
                 "lat": float(rng.uniform(-0.15, 0.15)), "side": float(rng.choice([-1.0, 1.0])),
                 "wrong_yaw_deg": float(rng.uniform(40, 320)), "any_yaw_deg": float(rng.uniform(0, 360)),
                 "deck_y": float(rng.choice([rng.uniform(CREST_Y + 0.12, -0.10), rng.uniform(0.16, DECK_N_Y - 0.22)]))}
         # (on the landing, but never seated on the 4 cm seam between its two pieces, y +0.02..+0.06)
-        draw["crab"] = pick(rng, CRAB_SPOTS_DECK if draw["scenario"].startswith("deck") else CRAB_SPOTS_TOE)
+        draw["crab"] = pick(rng, (crab_spots_deck or CRAB_SPOTS_DECK) if draw["scenario"].startswith("deck")
+                            else (crab_spots_toe or CRAB_SPOTS_TOE))
         if hard:
             draw.update(hard)
         self.draw = draw
@@ -311,11 +313,13 @@ class ManagerEnv(gym.Env):
 
     metadata = {"render_modes": []}
 
-    def __init__(self, seed=0, max_episode_s=240.0, log_path=None, dt=0.001):
+    def __init__(self, seed=0, max_episode_s=240.0, log_path=None, dt=0.001, scenarios=None, crab_spots_toe=None,
+                 crab_spots_deck=None):
         super().__init__()
         self.scene = Scene(dt=dt)
         self.max_episode_s = max_episode_s
         self.log_path = Path(log_path) if log_path else None
+        self.draw_tables = dict(scenarios=scenarios, crab_spots_toe=crab_spots_toe, crab_spots_deck=crab_spots_deck)
         self.observation_space = spaces.Box(-np.inf, np.inf, shape=(OBS_DIM,), dtype=np.float32)
         self.action_space = spaces.Discrete(len(ACTIONS))
         self.rng = np.random.default_rng(seed)
@@ -326,7 +330,7 @@ class ManagerEnv(gym.Env):
         if seed is not None:
             self.rng = np.random.default_rng(seed)
         self.episode_id += 1
-        obs = self.scene.reset(self.rng, hard=(options or {}).get("hard"))
+        obs = self.scene.reset(self.rng, hard=(options or {}).get("hard"), **self.draw_tables)
         self.wall0 = time.perf_counter()
         return obs, {"draw": self.scene.draw}
 

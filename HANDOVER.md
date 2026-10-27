@@ -27,7 +27,13 @@
 
 **描画版 take 7（`out\3body_arena_v7_take7.mp4`、3:23、6081 フレーム、音声付き；`--manager tabq --run tabq2_small`＝学習済み Q 表が支配人）**：施工〜戻りは take 6 と同じ（265.5 s に支配人へ）→ STANDUP → WALK_ON（坂に向かって歩いて止まる＝学習の癖）→ SEAT → PUSH（天面 364 s）→ BACK_OFF → STANDUP → STANDUP（無駄）→ WALK_ON → **渡り切り 386.5 s** → 応援ダンス 406 s → END 418 s。8 手、コース移動 0。固定ルール版（take 6）と並べて「固定ルール／学習済み方策」の両方を提出素材にできる。
 
-**支配人の学習結果（2026-10-28 早朝、30 シード同一評価）**：固定ルール 25/30 渡り切り／ランダム 9/30／PPO 小（3k 決定、54 分）0/30（WALK_ON に固着）／**表形式 Q（120 エピソード、2 時間）23/30**。2×2 で表形式 Q の失敗 7 本のうち判断の失敗は 1、他はスキル側（天面の継ぎ目での転倒から起きられない等）。詳細と信頼度表は `MANAGER_DESIGN.md` §7.5〜7.6、`out\manager_runs\comparison_v2.md`。PPO 中規模 `ppo2_medium2`（12k 決定、報酬 v2.1）は 05:00 頃完了予定 → `manager2_train.py eval --run ppo2_medium2 --episodes 30` で評価し、`manager2_report.py --runs ppo2_medium2 baselines_v2 tabq2_small` で表を更新する。
+**支配人の学習結果（2026-10-28 早朝、30 シード同一評価）**：固定ルール 25/30 渡り切り／ランダム 9/30／PPO 小（3k 決定、54 分）0/30（WALK_ON に固着）／**表形式 Q（120 エピソード、2 時間）23/30**。2×2 で表形式 Q の失敗 7 本のうち判断の失敗は 1、他はスキル側（天面の継ぎ目での転倒から起きられない等）。詳細と信頼度表は `MANAGER_DESIGN.md` §7.5〜7.6、`out\manager_runs\comparison_v2.md`。
+
+**PPO 中規模 `ppo2_medium2`（12 並列 × 12096 決定＝792 エピソード、報酬 v2.1、01:32〜05:45、4 時間 13 分）**：学習中の成功率（探索込み、158 エピソードごと）81 → 92 → 119 → 115 → 129/160（51% → 81%）、無駄な手 10.8 → 3.4／エピソード、押し上げ 2.5 → 1.3 回。小規模の 4 倍の予算で PPO も学んだ。決定的方策のデモ（シード 5003、別向き座り）は SEAT → PUSH → STANDUP → WALK_ON の 4 手・103.3 s で渡り切り（`out\manager2_demo_ppo_medium.mp4`）。学んだ手順は固定ルールから **BACK_OFF を省く**（押し上げ直後にカニが密着したまま立たせる）— 報酬に対して正しい近道。学習記録の分析は `MANAGER_DESIGN.md` §7.5b。30 シード評価は `manager2_train.py eval --run ppo2_medium2 --episodes 30 --policies ppo` → `manager2_report.py --runs ppo2_small ppo2_medium2 baselines_v2 tabq2_small`（同じ方策種が複数 run にあっても 1 行ずつ出るよう修正済み）。
+
+**通し検証 take 8（ヘッドレス、`--ending crab --manager ppo --run ppo2_medium2 --tag _take8test`、06:00 頃）**：施工〜戻りは take 6／7 と同じ（281.8 s に支配人へ）→ **PPO 支配人：SEAT 281.8〜293.8 s → PUSH 293.9〜371.4 s（天面 (1.62, −0.41)）→ STANDUP 371.4〜377.0 s（BACK_OFF なしで立つ）→ WALK_ON 377.0〜387.3 s → 渡り切り 387.3 s（y +1.95）＝3 体とも渡った** → 応援ダンス → END 419.7 s。4 手、無駄な手なし、コースの移動なし。固定ルール（5 手）・Q 表（8 手）より短い。
+
+**描画版 take 8（`out\3body_arena_v7_take8.mp4`、3:51、05:55）は失敗（パッカン未達、BZ・カニは渡った、コース移動 0）**：描画時の物理ズレで 1 回目の PUSH が坂の途中（y −1.79）で止まる → PPO は STANDUP を選び（ルールなら BACK_OFF）、坂の上で立ったパッカンが西の縁の外へ → SEAT が座席へ歩き切れず（歩行 0.1 m/s、予算 23 s）座席から 42 cm 西に座って "seated" を返す（SEAT の結果判定は座席到達を見ていない：スキルの報告の粗さ）→ PUSH ×3（stalled、stalled、fell）→ **転倒・カニ密着の状態で SEAT を 9 回連打**（ルール・Q 表なら BACK_OFF）→ 505.5 s 打ち切り。学習記録では転倒状態での PPO の行動分布が最後まで一様（解けていない状態）。→ 継続学習 `ppo2_medium3`（`--init-from ppo2_medium2`、転倒 25%・密着 40% の開始分布、12k 決定、06:00〜約 10:15）を実行し、終わったら同じ 30 シードで評価 → `--test --manager ppo --run ppo2_medium3` → 描画 `--tag _take9`。詳細 `MANAGER_DESIGN.md` §7.5b。
 
 ## 0. 2026-10-27 追記（アイランドマスター）— v7「物理のみ」版の現状
 
