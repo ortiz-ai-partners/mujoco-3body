@@ -88,9 +88,36 @@ def evaluate(args):
     print(json.dumps(report, ensure_ascii=False, indent=1))
 
 
+def demo(args):
+    """Record one episode of a policy (ppo / rule / random) as a video with the manager's speech bubbles."""
+    run_dir = RUNS / args.run
+    env = ManagerEnv(seed=0, max_episode_s=args.max_episode_s, log_path=run_dir / f"demo_{args.policy}.jsonl")
+    if args.policy == "ppo":
+        from stable_baselines3 import PPO
+        model = PPO.load(run_dir / "ppo_manager", device="cpu")
+        pol = lambda o, s: int(model.predict(o, deterministic=True)[0])
+    elif args.policy == "rule":
+        pol = rule_policy
+    else:
+        rng = np.random.default_rng(3)
+        pol = lambda o, s: random_policy(o, s, rng)
+    out = args.video or (run_dir / f"demo_{args.policy}_seed{args.seed}.mp4")
+    env.scene.start_recording(out, speed=args.speed)
+    recs = run_episodes(env, pol, 1, seed0=args.seed)
+    print("video", env.scene.stop_recording())
+    print(json.dumps(recs[0], ensure_ascii=False))
+
+
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
+    d = sub.add_parser("demo")
+    d.add_argument("--run", default="ppo_smoke")
+    d.add_argument("--policy", choices=["ppo", "rule", "random"], default="ppo")
+    d.add_argument("--seed", type=int, default=5000)
+    d.add_argument("--video", type=Path)
+    d.add_argument("--speed", type=float, default=2.0)
+    d.add_argument("--max-episode-s", type=float, default=240.0)
     t = sub.add_parser("train")
     t.add_argument("--run", default="ppo_smoke")
     t.add_argument("--envs", type=int, default=8)
@@ -108,6 +135,8 @@ def main():
     args = ap.parse_args()
     if args.cmd == "train":
         train(args)
+    elif args.cmd == "demo":
+        demo(args)
     else:
         evaluate(args)
 

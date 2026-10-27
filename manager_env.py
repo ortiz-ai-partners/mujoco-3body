@@ -113,6 +113,42 @@ class Scene:
         self.substeps = round(CONTROL_DT / dt)
         self.md_every = round(MD_CONTROL_DT / dt)
         self.jp_every = max(1, round(0.005 / dt))
+        self.rec = False
+        self.bubble_text, self.bubble_sub = "", ""
+
+    # ── recording (demo videos; evaluation runs stay headless) ───────────
+    def start_recording(self, path, speed=2.0):
+        from v6_common import VIDEO_FPS, VIDEO_H, VIDEO_W, Captioner, CameraRig, FrameClock, Video
+        self.renderer = mujoco.Renderer(self.model, height=VIDEO_H, width=VIDEO_W)
+        self.vopt = mujoco.MjvOption()
+        self.vopt.geomgroup[1] = 0
+        self.cap = Captioner()
+        self.cam = CameraRig(lookat=[2.0, -2.0, 0.15], distance=3.4, azimuth=330, elevation=-18, tau=1.0)
+        self.cam.snap()
+        self.clock = FrameClock(VIDEO_FPS, speed)
+        self.fps = VIDEO_FPS
+        self.video = Video(Path(path))
+        self.rec = True
+
+    def stop_recording(self):
+        size = self.video.close()
+        self.renderer.close()
+        self.rec = False
+        return self.video.path, self.video.frames, size
+
+    def _render_frame(self):
+        self.sim.tracks.update(self.model, self.data)
+        mujoco.mj_forward(self.model, self.data)
+        p_md, p_bz = self.duck.pos(self.data), self.data.xpos[self.bz_bid]
+        look = 0.5 * (p_md + p_bz)
+        look[2] = 0.15
+        dist = float(np.linalg.norm(p_md[:2] - p_bz[:2]))
+        self.cam.aim(lookat=look, distance=2.4 + 0.45 * dist, azimuth=330, elevation=-18)
+        self.renderer.update_scene(self.data, self.cam.step(1.0 / self.fps), self.vopt)
+        title = "支配人AI〈アイランドマスター〉 救助の判断 ― 学習環境デモ（スキルは既存コード、物理のみ）"
+        line1 = f"支配人：「{self.bubble_text}」" if self.bubble_text else "支配人：（観察中）"
+        return self.cap.draw(self.renderer.render(), title, [line1, self.bubble_sub],
+                             footer=f"sim {self.t:6.1f} s   x{self.clock.speed:g}")
 
     # ── low level ────────────────────────────────────────────────────────
     def teleport(self, key, xy, yaw, z=None):
@@ -141,6 +177,8 @@ class Scene:
             mujoco.mj_step(self.model, self.data)
             self.sub_k += 1
         self.t += CONTROL_DT
+        if self.rec and self.clock.due(self.data.time):
+            self.video.add(self._render_frame())
         tilt = float(self.duck.tilt(self.data))
         if self.duck.mode == "SIT" and tilt > 60.0:            # tipped while seated: velstand takes over
             self.duck.resume, self.duck.fell_at, self.duck.upright_since = "STAND", self.t, None
@@ -550,6 +588,9 @@ class ManagerEnv(gym.Env):
         action = int(action)
         name = ACTIONS[action]
         bubble = s.bubble(action)
+        s.bubble_text = bubble
+        s.bubble_sub = (f"指示 {name}（{len(s.decisions) + 1} 手目）   直前の結果：{s.last_result}   持ち上げ試行 {s.attempts}   "
+                        f"パッカン：{s.duck.mode}")
         t_start = s.t
         falls0, contact0 = s.falls, s.bz_crab_contact_ticks
         crab_blocked = s.crab_in_path()
@@ -657,11 +698,18 @@ if __name__ == "__main__":
     ap.add_argument("--episodes", type=int, default=2)
     ap.add_argument("--policy", choices=["rule", "random"], default="rule")
     ap.add_argument("--log", type=Path, default=OUT_DIR / "manager_smoke.jsonl")
+    ap.add_argument("--seed0", type=int, default=1000)
+    ap.add_argument("--video", type=Path, help="record the episodes (x2) with the manager's speech bubble as caption")
+    ap.add_argument("--speed", type=float, default=2.0)
     args = ap.parse_args()
     env = ManagerEnv(seed=0, log_path=args.log)
     rng = np.random.default_rng(0)
     pol = rule_policy if args.policy == "rule" else (lambda o, s: random_policy(o, s, rng))
-    recs = run_episodes(env, pol, args.episodes)
+    if args.video:
+        env.scene.start_recording(args.video, speed=args.speed)
+    recs = run_episodes(env, pol, args.episodes, seed0=args.seed0)
+    if args.video:
+        print("video", env.scene.stop_recording())
     print(json.dumps({"episodes": len(recs), "success_rate": sum(r["success"] for r in recs) / len(recs),
                       "mean_return": sum(r["return"] for r in recs) / len(recs),
                       "mean_wall_s": sum(r["wall_s"] for r in recs) / len(recs)}, indent=1))
