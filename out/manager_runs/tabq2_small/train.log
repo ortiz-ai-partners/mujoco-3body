@@ -1,0 +1,250 @@
+﻿
+{"episode": 0, "scenario": "toe_standing", "return": -31.21, "steps": 40, "success": false, "landed": false, "eps": 0.3
+, "wall_s": 93.9}
+{"episode": 1, "scenario": "toe_seated_wrong", "return": -33.71, "steps": 44, "success": false, "landed": false, "eps":
+ 0.296, "wall_s": 207.2}
+{"episode": 2, "scenario": "toe_fallen", "return": -3.23, "steps": 29, "success": true, "landed": true, "eps": 0.293, "
+wall_s": 299.9}
+{"episode": 3, "scenario": "toe_seated_ok", "return": 6.74, "steps": 7, "success": true, "landed": true, "eps": 0.289, 
+"wall_s": 365.9}
+{"episode": 4, "scenario": "toe_standing", "return": 0.35, "steps": 18, "success": true, "landed": true, "eps": 0.286, 
+"wall_s": 443.1}
+{"episode": 5, "scenario": "toe_fallen", "return": -34.98, "steps": 46, "success": false, "landed": false, "eps": 0.282
+, "wall_s": 555.7}
+{"episode": 6, "scenario": "toe_seated_ok", "return": -22.72, "steps": 35, "success": false, "landed": false, "eps": 0.
+279, "wall_s": 657.8}
+{"episode": 7, "scenario": "toe_standing", "return": -6.29, "steps": 28, "success": true, "landed": true, "eps": 0.275,
+ "wall_s": 735.0}
+{"episode": 8, "scenario": "toe_standing", "return": -20.36, "steps": 21, "success": false, "landed": true, "eps": 0.27
+1, "wall_s": 824.0}
+{"episode": 9, "scenario": "toe_seated_ok", "return": -18.73, "steps": 25, "success": false, "landed": true, "eps": 0.2
+68, "wall_s": 925.5}
+{"episode": 10, "scenario": "toe_standing", "return": -34.48, "steps": 41, "success": false, "landed": false, "eps": 0.
+264, "wall_s": 1019.5}
+{"episode": 11, "scenario": "toe_seated_ok", "return": -18.77, "steps": 12, "success": false, "landed": true, "eps": 0.
+261, "wall_s": 1081.0}
+{"episode": 12, "scenario": "toe_standing", "return": 7.34, "steps": 10, "success": true, "landed": true, "eps": 0.257,
+ "wall_s": 1132.7}
+{"episode": 13, "scenario": "toe_standing", "return": -1.79, "steps": 27, "success": true, "landed": true, "eps": 0.254
+, "wall_s": 1232.5}
+{"episode": 14, "scenario": "deck_seated", "return": -24.4, "steps": 39, "success": false, "landed": true, "eps": 0.25,
+ "wall_s": 1333.1}
+{"episode": 15, "scenario": "toe_fallen", "return": 2.46, "steps": 13, "success": true, "landed": true, "eps": 0.246, "
+wall_s": 1402.1}
+{"episode": 16, "scenario": "deck_fallen", "return": 8.67, "steps": 2, "success": true, "landed": true, "eps": 0.243, "
+wall_s": 1405.4}
+{"episode": 17, "scenario": "deck_seated", "return": 3.72, "steps": 11, "success": true, "landed": true, "eps": 0.239, 
+"wall_s": 1436.4}
+{"episode": 18, "scenario": "deck_fallen", "return": 6.35, "steps": 6, "success": true, "landed": true, "eps": 0.236, "
+wall_s": 1443.2}
+{"episode": 19, "scenario": "toe_seated_ok", "return": -19.3, "steps": 33, "success": false, "landed": true, "eps": 0.2
+32, "wall_s": 1553.7}
+{"episode": 20, "scenario": "deck_seated", "return": 2.22, "steps": 13, "success": true, "landed": true, "eps": 0.229, 
+"wall_s": 1595.7}
+{"episode": 21, "scenario": "toe_standing", "return": -23.95, "steps": 32, "success": false, "landed": true, "eps": 0.2
+25, "wall_s": 1708.3}
+{"episode": 22, "scenario": "toe_seated_wrong", "return": -26.77, "steps": 39, "success": false, "landed": false, "eps"
+: 0.221, "wall_s": 1821.8}
+{"episode": 23, "scenario": "toe_seated_ok", "return": 5.75, "steps": 11, "success": true, "landed": true, "eps": 0.218
+, "wall_s": 1884.3}
+{"episode": 24, "scenario": "toe_seated_ok", "return": 4.33, "steps": 11, "success": true, "landed": true, "eps": 0.214
+, "wall_s": 1949.1}
+{"episode": 25, "scenario": "toe_seated_wrong", "return": 2.33, "steps": 12, "success": true, "landed": true, "eps": 0.
+211, "wall_s": 1974.0}
+{"episode": 26, "scenario": "toe_seated_ok", "return": -19.36, "steps": 33, "success": false, "landed": false, "eps": 0
+.207, "wall_s": 2073.6}
+{"episode": 27, "scenario": "toe_standing", "return": 7.05, "steps": 9, "success": true, "landed": true, "eps": 0.204, 
+"wall_s": 2125.0}
+{"episode": 28, "scenario": "deck_seated", "return": 5.1, "steps": 10, "success": true, "landed": true, "eps": 0.2, "wa
+ll_s": 2170.7}
+{"episode": 29, "scenario": "toe_seated_ok", "return": -24.2, "steps": 42, "success": false, "landed": false, "eps": 0.
+196, "wall_s": 2248.5}
+{"episode": 30, "scenario": "deck_fallen", "return": -27.83, "steps": 38, "success": false, "landed": true, "eps": 0.19
+3, "wall_s": 2346.9}
+{"episode": 31, "scenario": "toe_seated_wrong", "return": -23.73, "steps": 24, "success": false, "landed": false, "eps"
+: 0.189, "wall_s": 2426.9}
+{"episode": 32, "scenario": "toe_seated_ok", "return": 3.88, "steps": 14, "success": true, "landed": true, "eps": 0.186
+, "wall_s": 2493.8}
+{"episode": 33, "scenario": "deck_seated", "return": 1.82, "steps": 10, "success": true, "landed": true, "eps": 0.182, 
+"wall_s": 2511.6}
+{"episode": 34, "scenario": "toe_seated_wrong", "return": 2.54, "steps": 14, "success": true, "landed": true, "eps": 0.
+179, "wall_s": 2576.4}
+{"episode": 35, "scenario": "toe_seated_wrong", "return": 1.12, "steps": 17, "success": true, "landed": true, "eps": 0.
+175, "wall_s": 2656.5}
+{"episode": 36, "scenario": "deck_seated", "return": 5.85, "steps": 6, "success": true, "landed": true, "eps": 0.171, "
+wall_s": 2662.9}
+{"episode": 37, "scenario": "toe_seated_ok", "return": 7.89, "steps": 8, "success": true, "landed": true, "eps": 0.168,
+ "wall_s": 2716.5}
+{"episode": 38, "scenario": "toe_fallen", "return": -13.26, "steps": 27, "success": false, "landed": true, "eps": 0.164
+, "wall_s": 2804.5}
+{"episode": 39, "scenario": "toe_seated_ok", "return": 0.8, "steps": 17, "success": true, "landed": true, "eps": 0.161,
+ "wall_s": 2867.6}
+{"episode": 40, "scenario": "deck_seated", "return": -17.31, "steps": 20, "success": false, "landed": true, "eps": 0.15
+7, "wall_s": 2945.0}
+{"episode": 41, "scenario": "toe_standing", "return": 6.84, "steps": 11, "success": true, "landed": true, "eps": 0.154,
+ "wall_s": 2993.5}
+{"episode": 42, "scenario": "toe_standing", "return": 8.03, "steps": 6, "success": true, "landed": true, "eps": 0.15, "
+wall_s": 3032.0}
+{"episode": 43, "scenario": "toe_fallen", "return": 4.78, "steps": 10, "success": true, "landed": true, "eps": 0.146, "
+wall_s": 3064.4}
+{"episode": 44, "scenario": "toe_standing", "return": 9.17, "steps": 4, "success": true, "landed": true, "eps": 0.143, 
+"wall_s": 3096.1}
+{"episode": 45, "scenario": "toe_standing", "return": -16.08, "steps": 28, "success": false, "landed": true, "eps": 0.1
+39, "wall_s": 3206.5}
+{"episode": 46, "scenario": "toe_seated_ok", "return": 5.98, "steps": 9, "success": true, "landed": true, "eps": 0.136,
+ "wall_s": 3276.0}
+{"episode": 47, "scenario": "toe_seated_ok", "return": 2.02, "steps": 16, "success": true, "landed": true, "eps": 0.132
+, "wall_s": 3351.0}
+{"episode": 48, "scenario": "toe_seated_ok", "return": 5.38, "steps": 11, "success": true, "landed": true, "eps": 0.129
+, "wall_s": 3401.5}
+{"episode": 49, "scenario": "toe_seated_wrong", "return": -12.22, "steps": 29, "success": false, "landed": true, "eps":
+ 0.125, "wall_s": 3495.4}
+{"episode": 50, "scenario": "deck_seated", "return": 5.01, "steps": 10, "success": true, "landed": true, "eps": 0.121, 
+"wall_s": 3531.9}
+{"episode": 51, "scenario": "toe_standing", "return": -15.22, "steps": 9, "success": false, "landed": true, "eps": 0.11
+8, "wall_s": 3593.8}
+{"episode": 52, "scenario": "toe_seated_ok", "return": 4.16, "steps": 10, "success": true, "landed": true, "eps": 0.114
+, "wall_s": 3656.1}
+{"episode": 53, "scenario": "toe_fallen", "return": -3.26, "steps": 22, "success": true, "landed": true, "eps": 0.111, 
+"wall_s": 3733.9}
+{"episode": 54, "scenario": "toe_standing", "return": 7.88, "steps": 6, "success": true, "landed": true, "eps": 0.107, 
+"wall_s": 3778.7}
+{"episode": 55, "scenario": "toe_seated_ok", "return": -28.52, "steps": 41, "success": false, "landed": false, "eps": 0
+.104, "wall_s": 3854.7}
+{"episode": 56, "scenario": "toe_seated_ok", "return": 5.51, "steps": 8, "success": true, "landed": true, "eps": 0.1, "
+wall_s": 3898.4}
+{"episode": 57, "scenario": "toe_seated_ok", "return": -23.41, "steps": 39, "success": false, "landed": false, "eps": 0
+.096, "wall_s": 3980.9}
+{"episode": 58, "scenario": "toe_standing", "return": 9.32, "steps": 7, "success": true, "landed": true, "eps": 0.093, 
+"wall_s": 4038.9}
+{"episode": 59, "scenario": "toe_seated_wrong", "return": 4.66, "steps": 8, "success": true, "landed": true, "eps": 0.0
+89, "wall_s": 4123.8}
+{"episode": 60, "scenario": "deck_seated", "return": -19.82, "steps": 38, "success": false, "landed": true, "eps": 0.08
+6, "wall_s": 4230.0}
+{"episode": 61, "scenario": "toe_seated_wrong", "return": 8.65, "steps": 8, "success": true, "landed": true, "eps": 0.0
+82, "wall_s": 4271.4}
+{"episode": 62, "scenario": "toe_seated_ok", "return": 7.5, "steps": 6, "success": true, "landed": true, "eps": 0.079, 
+"wall_s": 4317.5}
+{"episode": 63, "scenario": "deck_fallen", "return": 4.5, "steps": 6, "success": true, "landed": true, "eps": 0.075, "w
+all_s": 4331.3}
+{"episode": 64, "scenario": "toe_seated_ok", "return": 10.71, "steps": 4, "success": true, "landed": true, "eps": 0.071
+, "wall_s": 4368.4}
+{"episode": 65, "scenario": "toe_fallen", "return": 6.63, "steps": 10, "success": true, "landed": true, "eps": 0.068, "
+wall_s": 4413.9}
+{"episode": 66, "scenario": "toe_seated_ok", "return": 5.82, "steps": 10, "success": true, "landed": true, "eps": 0.064
+, "wall_s": 4458.5}
+{"episode": 67, "scenario": "toe_seated_wrong", "return": 9.11, "steps": 8, "success": true, "landed": true, "eps": 0.0
+61, "wall_s": 4496.9}
+{"episode": 68, "scenario": "toe_seated_wrong", "return": 7.74, "steps": 8, "success": true, "landed": true, "eps": 0.0
+57, "wall_s": 4539.5}
+{"episode": 69, "scenario": "toe_fallen", "return": 7.28, "steps": 10, "success": true, "landed": true, "eps": 0.054, "
+wall_s": 4586.9}
+{"episode": 70, "scenario": "deck_seated", "return": 8.46, "steps": 5, "success": true, "landed": true, "eps": 0.05, "w
+all_s": 4607.8}
+{"episode": 71, "scenario": "toe_seated_wrong", "return": 6.11, "steps": 13, "success": true, "landed": true, "eps": 0.
+05, "wall_s": 4662.7}
+{"episode": 72, "scenario": "toe_fallen", "return": 8.81, "steps": 6, "success": true, "landed": true, "eps": 0.05, "wa
+ll_s": 4704.8}
+{"episode": 73, "scenario": "deck_seated", "return": 7.63, "steps": 5, "success": true, "landed": true, "eps": 0.05, "w
+all_s": 4725.5}
+{"episode": 74, "scenario": "toe_seated_ok", "return": -7.53, "steps": 28, "success": true, "landed": true, "eps": 0.05
+, "wall_s": 4819.1}
+{"episode": 75, "scenario": "deck_seated", "return": 9.47, "steps": 2, "success": true, "landed": true, "eps": 0.05, "w
+all_s": 4824.4}
+{"episode": 76, "scenario": "toe_seated_wrong", "return": 8.89, "steps": 8, "success": true, "landed": true, "eps": 0.0
+5, "wall_s": 4868.4}
+{"episode": 77, "scenario": "toe_seated_wrong", "return": 7.55, "steps": 10, "success": true, "landed": true, "eps": 0.
+05, "wall_s": 4913.3}
+{"episode": 78, "scenario": "toe_standing", "return": -18.58, "steps": 37, "success": false, "landed": false, "eps": 0.
+05, "wall_s": 4994.4}
+{"episode": 79, "scenario": "toe_standing", "return": 10.48, "steps": 4, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 5032.9}
+{"episode": 80, "scenario": "toe_seated_ok", "return": -15.86, "steps": 34, "success": false, "landed": true, "eps": 0.
+05, "wall_s": 5115.8}
+{"episode": 81, "scenario": "deck_seated", "return": 2.0, "steps": 11, "success": true, "landed": true, "eps": 0.05, "w
+all_s": 5151.3}
+{"episode": 82, "scenario": "toe_seated_ok", "return": 7.89, "steps": 10, "success": true, "landed": true, "eps": 0.05,
+ "wall_s": 5210.2}
+{"episode": 83, "scenario": "toe_seated_ok", "return": 5.83, "steps": 10, "success": true, "landed": true, "eps": 0.05,
+ "wall_s": 5258.9}
+{"episode": 84, "scenario": "toe_seated_wrong", "return": -21.26, "steps": 31, "success": false, "landed": true, "eps":
+ 0.05, "wall_s": 5340.2}
+{"episode": 85, "scenario": "toe_seated_wrong", "return": 6.89, "steps": 8, "success": true, "landed": true, "eps": 0.0
+5, "wall_s": 5380.7}
+{"episode": 86, "scenario": "toe_seated_ok", "return": 9.47, "steps": 8, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 5424.8}
+{"episode": 87, "scenario": "toe_seated_wrong", "return": -16.12, "steps": 31, "success": false, "landed": true, "eps":
+ 0.05, "wall_s": 5521.0}
+{"episode": 88, "scenario": "toe_seated_ok", "return": 8.98, "steps": 8, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 5554.9}
+{"episode": 89, "scenario": "toe_seated_ok", "return": 8.47, "steps": 8, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 5594.3}
+{"episode": 90, "scenario": "toe_standing", "return": 9.51, "steps": 6, "success": true, "landed": true, "eps": 0.05, "
+wall_s": 5629.0}
+{"episode": 91, "scenario": "toe_seated_ok", "return": -18.29, "steps": 41, "success": false, "landed": false, "eps": 0
+.05, "wall_s": 5700.0}
+{"episode": 92, "scenario": "toe_seated_ok", "return": -1.73, "steps": 23, "success": true, "landed": true, "eps": 0.05
+, "wall_s": 5758.7}
+{"episode": 93, "scenario": "toe_seated_wrong", "return": 7.82, "steps": 9, "success": true, "landed": true, "eps": 0.0
+5, "wall_s": 5798.5}
+{"episode": 94, "scenario": "toe_fallen", "return": 8.79, "steps": 8, "success": true, "landed": true, "eps": 0.05, "wa
+ll_s": 5833.5}
+{"episode": 95, "scenario": "toe_seated_ok", "return": 8.86, "steps": 8, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 5870.6}
+{"episode": 96, "scenario": "toe_seated_wrong", "return": -16.47, "steps": 30, "success": false, "landed": true, "eps":
+ 0.05, "wall_s": 5960.0}
+{"episode": 97, "scenario": "toe_seated_wrong", "return": 7.25, "steps": 9, "success": true, "landed": true, "eps": 0.0
+5, "wall_s": 5997.9}
+{"episode": 98, "scenario": "deck_seated", "return": 8.51, "steps": 5, "success": true, "landed": true, "eps": 0.05, "w
+all_s": 6015.9}
+{"episode": 99, "scenario": "toe_standing", "return": 0.8, "steps": 25, "success": true, "landed": true, "eps": 0.05, "
+wall_s": 6117.2}
+{"episode": 100, "scenario": "toe_seated_ok", "return": 8.02, "steps": 7, "success": true, "landed": true, "eps": 0.05,
+ "wall_s": 6159.9}
+{"episode": 101, "scenario": "toe_standing", "return": 5.5, "steps": 16, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 6228.2}
+{"episode": 102, "scenario": "toe_seated_ok", "return": -18.39, "steps": 25, "success": false, "landed": true, "eps": 0
+.05, "wall_s": 6320.6}
+{"episode": 103, "scenario": "toe_seated_ok", "return": 7.96, "steps": 7, "success": true, "landed": true, "eps": 0.05,
+ "wall_s": 6367.0}
+{"episode": 104, "scenario": "toe_seated_wrong", "return": 6.17, "steps": 8, "success": true, "landed": true, "eps": 0.
+05, "wall_s": 6413.5}
+{"episode": 105, "scenario": "deck_seated", "return": 9.41, "steps": 2, "success": true, "landed": true, "eps": 0.05, "
+wall_s": 6420.9}
+{"episode": 106, "scenario": "toe_seated_ok", "return": 8.8, "steps": 8, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 6458.9}
+{"episode": 107, "scenario": "toe_seated_ok", "return": 10.8, "steps": 3, "success": true, "landed": true, "eps": 0.05,
+ "wall_s": 6495.7}
+{"episode": 108, "scenario": "toe_standing", "return": 9.28, "steps": 6, "success": true, "landed": true, "eps": 0.05, 
+"wall_s": 6538.9}
+{"episode": 109, "scenario": "toe_seated_wrong", "return": 8.74, "steps": 8, "success": true, "landed": true, "eps": 0.
+05, "wall_s": 6584.4}
+{"episode": 110, "scenario": "toe_seated_wrong", "return": 7.14, "steps": 10, "success": true, "landed": true, "eps": 0
+.05, "wall_s": 6631.0}
+{"episode": 111, "scenario": "toe_seated_ok", "return": 5.84, "steps": 11, "success": true, "landed": true, "eps": 0.05
+, "wall_s": 6697.4}
+{"episode": 112, "scenario": "toe_fallen", "return": -19.2, "steps": 37, "success": false, "landed": true, "eps": 0.05,
+ "wall_s": 6795.4}
+{"episode": 113, "scenario": "toe_seated_ok", "return": 7.95, "steps": 9, "success": true, "landed": true, "eps": 0.05,
+ "wall_s": 6862.5}
+{"episode": 114, "scenario": "toe_seated_wrong", "return": 8.25, "steps": 8, "success": true, "landed": true, "eps": 0.
+05, "wall_s": 6904.2}
+{"episode": 115, "scenario": "toe_fallen", "return": 8.98, "steps": 6, "success": true, "landed": true, "eps": 0.05, "w
+all_s": 6944.8}
+{"episode": 116, "scenario": "toe_seated_ok", "return": -24.24, "steps": 41, "success": false, "landed": true, "eps": 0
+.05, "wall_s": 7051.8}
+{"episode": 117, "scenario": "deck_fallen", "return": 6.76, "steps": 5, "success": true, "landed": true, "eps": 0.05, "
+wall_s": 7064.5}
+{"episode": 118, "scenario": "toe_seated_wrong", "return": 8.84, "steps": 6, "success": true, "landed": true, "eps": 0.
+05, "wall_s": 7105.1}
+{"episode": 119, "scenario": "deck_fallen", "return": -8.99, "steps": 30, "success": true, "landed": true, "eps": 0.05,
+ "wall_s": 7166.2}
+{
+ "run": "tabq2_small",
+ "episodes": 120,
+ "states": 314,
+ "train_success_rate": 0.725,
+ "wall_s": 7166.2
+}
+
+
