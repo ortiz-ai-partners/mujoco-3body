@@ -7,18 +7,35 @@
 - 🐦 パッカン（Microduck）：pollen-robotics の公式 ONNX ポリシー（`velstand`：立位・歩行・転倒からの自力起立、`alpha_sitstand`：座る⇄立つ、首操作）。XML の公式サーボ値。
 - 🦀 跳跳（Jumper）：公式バンドルの `locomotion` / `jump` / `dance_crab` ポリシー（`deploy/fsm/src/obs.rs` の契約を転記）。前方ジャンプは公式 jump に股関節ヨーの後方掃きを重ねたもの（関節目標のみ）。
 
-## 筋書き（v4、2026-10-27）
+## 筋書き（v5 = take 6、2026-10-28）— 支配人AI〈アイランドマスター〉が次の一手を選ぶ
 
-施工中はパッカンと跳跳が空き地で戯れる → BZ が峠を渡り始めるとパッカンが後を追う → 16° の坂に 2 回挑んで座り込む（公式ポリシーでは登れない：事実） → 跳跳が横を通って坂を登り、天面で引っかかったら前方ジャンプ、峠を越える → パッカンが BZ を呼ぶ → BZ がコースを回って戻り、跳跳がついて戻って応援ダンス → BZ がフォークで持ち上げを試みる → パッカンは velstand で自力で立ち上がる。
+施工中はパッカンと跳跳が空き地で戯れる → BZ が峠を渡り始めるとパッカンが後を追う → 16° の坂に 2 回挑んで座り込む（公式ポリシーでは登れない：事実） → 跳跳が横を通って坂を登り、天面で引っかかったら前方ジャンプ、峠を越える → パッカンが仲間を呼ぶ → 跳跳がコースの東側を回って戻る（固定プログラム） → **ここから支配人AIが判断**（吹き出しに定型セリフ）：「パッカン、カニさんの方を向いて座って」→「カニさん、そっと押し上げてあげて」（座ったパッカンを跳跳が 0.3 m/s で坂の上まで押す）→「カニさん、少し離れて」→「パッカン、立てる？」→「パッカン、そのまま進んで」（天面を歩いて下り坂を降りる）→ **3 体ともコースを渡った** → 跳跳が回り込んで応援ダンス、BZ はフォークで万歳（固定）。
+
+ブルドーザーはパッカンに触れない（ゆうころ 10/28：首を持ち上げると破損の恐れ）。v4（take 5）の結末「BZ のフォークが押し倒す→自力起立」は `--ending push` で残してある。
+
+### 支配人AI（最終課題の核）
+
+「うまくいかなかったとき、次にどうするか」を選ぶ部分だけを学習する。各機体の動作は既存コード（公式ポリシー＋ルール制御、物理のみ）。
+
+| ファイル | 内容 |
+|---|---|
+| `crab_help.py` | スキル（生成器）WAIT／SEAT／PUSH／BACK_OFF／STANDUP／WALK_ON、観測 45 次元、固定ルール。学習環境と通し動画が共用 |
+| `manager2_env.py` | gymnasium 環境：1 ステップ＝1 スキル、開始状態 6 種（足元で座り／別の向き／立ち／転倒、天面で座り／転倒）、コース監視（4 cm で破損＝失敗）、吹き出し付き録画 |
+| `manager2_train.py` | SB3 PPO（MLP 64×64、12 並列）の学習／同一シード評価（PPO・固定ルール・ランダム）／デモ動画 |
+| `manager_env.py` ほか `manager_*.py` | v1（BZ がフォークで扱う版）。BZ 禁止で凍結、履歴 |
+| `MANAGER_DESIGN.md` | 設計メモ v1〜v1.4（事実・実験・比較） |
 
 ## 動かし方
 
 実行環境は `D:\IslandMaster\jumper\.venv`（Python 3.10、mujoco 3.11.0、onnxruntime 1.23.2、imageio）。隣に `physical-ai-course-builder/`、`jumper/`（公式バンドル `out/bundle_example/jumper/`）、`microduck_rl/` が必要（`v6_common.py` の `BASE` 直下）。
 
 ```powershell
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --test              # ヘッドレス検証（出来事のログ）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --tag _take6       # 描画 → out\3body_arena_v7_take6.mp4（音声付き）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_dance.py --video out\v7_dance_test.mp4
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --test --ending crab              # ヘッドレス検証（出来事のログ）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take6   # 描画 → out\3body_arena_v7_take6.mp4（音声付き）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_crab_push.py --seated --crest --face-crab --crab-vx 0.3 --video out\v7_crab_push_cross.mp4   # 押し上げ実験
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_env.py --episodes 2 --policy rule   # 学習環境の煙試験
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py train --envs 12 --steps 3000 --run ppo2_small
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py eval --run ppo2_small --episodes 30
 ```
 
 | ファイル | 内容 |
