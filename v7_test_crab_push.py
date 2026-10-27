@@ -27,7 +27,10 @@ LANE_X = 1.22
 TOE_Y = -2.0
 
 
-def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.0, approach_vx=0.12):
+def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.0, approach_vx=0.12, seated=False,
+        crest=False):
+    """crest=True (seated push): slow the push near the crest, stop on the landing, let the duck stand up and walk
+    north across the landing and down the far ramp by itself; the crab follows at a distance."""
     model, data = build_arena(STAGE_XML, md_pose=(LANE_X, TOE_Y - 0.35, math.pi / 2),
                               jp_pose=(LANE_X, TOE_Y - 0.35 - gap - 0.3, math.pi / 2), timestep=0.001)
     official_md_servos(model)
@@ -72,25 +75,113 @@ def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.
 
     for _ in range(int(1.0 / CONTROL_DT)):              # settle on their feet
         tick()
-    duck.walk_to((LANE_X, 3.0), t, stop_dist=0.3)
+    if seated:                                            # ゆうころ: the seated duck is pushed (low centre of mass)
+        duck.use("sit")
+        duck.set_mode("SIT", t)
+        duck.sit.twist[:] = (1.0, 0.0, 0.0)
+        duck.sit.head[:] = (0.3, 0.2, 0, 0)
+        for _ in range(int(3.0 / CONTROL_DT)):
+            duck.sit.twist[:] = (1.0, 0.0, 0.0)
+            tick()
+    else:
+        duck.walk_to((LANE_X, 3.0), t, stop_dist=0.3)
     crab.set_mode("WALK", t, model)
     crab.loco.posture[3] = crab_height                    # posture command: body height above neutral (push at trunk level)
     was_fallen = False
+    stood_at = None
+    stage = "push"                                        # crest mode: push -> crest -> landing -> walk -> done
     rec["crab_height"] = crab_height
+    rec["seated"] = seated
+    rec["crest_mode"] = crest
     while t < seconds + 1.0:
         p_md, p_jp = duck.pos(data), crab.pos(data)
-        if duck.mode == "WALK":
+        if seated and crest:
+            if stage == "push" and p_md[1] > -0.80:
+                stage = "crest"
+                rec["events"].append(f"{t:5.1f}s near the crest: slow push")
+            elif stage == "crest" and p_md[1] > -0.42 and p_md[2] > 0.45:
+                stage = "settle"                                       # on the flat: a last gentle push until it sits upright
+                stage_t0 = t
+                rec["events"].append(f"{t:5.1f}s ON THE LANDING (y={p_md[1]:+.2f} z={p_md[2]:.2f}): gentle push until upright")
+            elif stage == "settle":
+                if (float(duck.tilt(data)) < 15 and t - stage_t0 > 1.0) or t - stage_t0 > 4.0:
+                    stage = "backoff"                                  # the crab makes room before the duck stands
+                    stage_t0 = t
+                    rec["events"].append(f"{t:5.1f}s duck upright on the landing (tilt {duck.tilt(data):.0f}); crab backs off")
+            elif stage == "backoff":
+                if (p_md[1] - p_jp[1] > 0.6 and not robots_in_contact(model, data, md_root, jp_root)) or t - stage_t0 > 6.0:
+                    stage = "landing"
+                    stage_t0 = t
+                    duck.sit.twist[:] = 0                              # sitstand flag 0: stand up
+                    duck.sit.head[:] = 0
+                    rec["events"].append(f"{t:5.1f}s crab clear ({p_md[1] - p_jp[1]:.2f} m behind); duck stands")
+            elif stage == "landing":
+                if duck.mode == "SIT":
+                    duck.sit.twist[:] = 0
+                    if t - stage_t0 > 3.5:
+                        duck.use("vel")
+                        duck.set_mode("STAND", t)
+                if duck.mode == "STAND" and t - stage_t0 > 5.0 and float(duck.tilt(data)) < 15:
+                    stage = "walk"
+                    duck.walk_to((LANE_X, 3.0), t, stop_dist=0.3)
+                    rec["events"].append(f"{t:5.1f}s duck walks north by itself (velstand)")
+            elif stage == "walk":
+                if duck.mode == "WALK":
+                    duck.goal = np.array([LANE_X, p_md[1] + 1.0])
+                    duck.steer(data, duck.goal, vx=duck_vx)
+                elif duck.mode == "STAND":
+                    duck.walk_to((LANE_X, p_md[1] + 1.0), t, stop_dist=0.3)
+                if p_md[1] > 2.2 and p_md[2] < 0.16:
+                    rec["events"].append(f"{t:5.1f}s DUCK CROSSED (y={p_md[1]:+.2f} z={p_md[2]:.2f})")
+                    rec["crossed_t"] = round(t, 1)
+                    break
+        if seated and stage in ("push", "crest", "settle", "backoff"):
+            if duck.mode == "SIT":
+                duck.sit.twist[:] = (1.0, 0.0, 0.0)
+                if float(duck.tilt(data)) > 60.0:                      # tipped while seated: velstand takes over
+                    duck.resume, duck.fell_at, duck.upright_since = "STAND", t, None
+                    duck.use("vel")
+                    duck.set_mode("FALLEN", t)
+            elif duck.mode == "STAND":                                 # back on its feet: sit down again to be pushed
+                stood_at = stood_at or t
+                if t - stood_at > 2.0:
+                    duck.use("sit")
+                    duck.set_mode("SIT", t)
+                    duck.sit.twist[:] = (1.0, 0.0, 0.0)
+                    stood_at = None
+        elif seated and stage in ("landing", "walk"):
+            if duck.mode == "SIT" and float(duck.tilt(data)) > 60.0:
+                duck.resume, duck.fell_at, duck.upright_since = "STAND", t, None
+                duck.use("vel")
+                duck.set_mode("FALLEN", t)
+        elif duck.mode == "WALK":
             duck.goal = np.array([LANE_X, p_md[1] + 1.0])              # keep walking up the lane
             duck.steer(data, duck.goal, vx=duck_vx)
         elif duck.mode == "STAND":
             duck.walk_to((LANE_X, p_md[1] + 1.0), t, stop_dist=0.3)
         # the crab aims a little ahead of the duck so it keeps pushing; it holds back when the duck is down
         touching = robots_in_contact(model, data, md_root, jp_root)
-        if duck.mode == "FALLEN":
-            crab.loco.set_command(0, 0, 0)                            # hold still: never shove a fallen duck
+        if seated and crest and stage == "settle":
+            crab.steer(data, (LANE_X, p_md[1] + 0.15), 0.12)          # gentle last push on the flat
+        elif seated and crest and stage == "backoff":
+            crab.loco.set_command(-0.3, 0.0, 0.0)                     # straight back: make room
+        elif seated and crest and stage in ("landing", "walk"):
+            if duck.mode == "FALLEN" and (touching or p_md[1] - p_jp[1] < 0.5):
+                crab.loco.set_command(-0.3, 0.0, 0.0)                 # a fallen duck needs clear floor to get up
+            elif p_jp[1] < p_md[1] - 1.0:
+                crab.steer(data, (LANE_X, p_md[1] - 0.8), 0.3)        # follow at a respectful distance
+            else:
+                crab.loco.set_command(0, 0, 0)
+        elif duck.mode == "FALLEN":
+            if touching:
+                crab.loco.set_command(-0.3, 0.0, 0.0)                 # back off a fallen duck
+            else:
+                crab.loco.set_command(0, 0, 0)
         elif not touching and p_jp[1] < p_md[1] - 0.45:
             crab.steer(data, (LANE_X, p_md[1] + 0.15), approach_vx)   # close the gap gently
         else:
+            # no slowing near the crest: the seated duck rides leaning back on the crab (~40 deg), and easing off
+            # there let it topple (run 10/28 01:xx, fell at y -0.82); keep the push steady until the landing
             crab.steer(data, (LANE_X, p_md[1] + 0.15), crab_vx)       # sustained push, matched to the duck
         tick()
         touching = robots_in_contact(model, data, md_root, jp_root)
@@ -128,12 +219,15 @@ def main():
     ap.add_argument("--duck-vx", type=float, default=0.3)
     ap.add_argument("--seconds", type=float, default=60.0)
     ap.add_argument("--crab-height", type=float, nargs="+", default=[0.0])
+    ap.add_argument("--seated", action="store_true", help="the duck sits (sitstand) and is pushed seated")
+    ap.add_argument("--crest", action="store_true", help="with --seated: slow at the crest, stand on the landing, walk down")
     ap.add_argument("--video", type=Path, help="record the first variant")
     args = ap.parse_args()
     i = 0
     for h in args.crab_height:
         for vx in args.crab_vx:
-            rec = run(vx, args.seconds, video_path=args.video if (i == 0 and args.video) else None, duck_vx=args.duck_vx, crab_height=h)
+            rec = run(vx, args.seconds, video_path=args.video if (i == 0 and args.video) else None, duck_vx=args.duck_vx,
+                      crab_height=h, seated=args.seated, crest=args.crest)
             i += 1
             print(json.dumps({k: v for k, v in rec.items() if k != "events"}), flush=True)
             for e in rec["events"]:
