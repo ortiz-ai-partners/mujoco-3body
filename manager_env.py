@@ -35,6 +35,10 @@ the point: the manager has to learn when the odds are worth another go and when 
 """
 from __future__ import annotations
 
+import os
+os.environ.setdefault("OMP_NUM_THREADS", "1")       # one scene per process; BLAS threads only fight each other
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+
 import json
 import math
 import time

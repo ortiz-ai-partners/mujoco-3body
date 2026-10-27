@@ -20,6 +20,15 @@ from v6_common import BASE
 JP_BUNDLE = BASE / "jumper" / "out" / "bundle_example" / "jumper"
 
 
+def _session(path):
+    """One ONNX session with a single thread: the policies are small MLPs, and many scenes run in
+    parallel for the manager's training - the default (all cores per session) oversubscribes badly."""
+    opts = ort.SessionOptions()
+    opts.intra_op_num_threads = 1
+    opts.inter_op_num_threads = 1
+    return ort.InferenceSession(str(path), sess_options=opts)
+
+
 def projected_gravity(q):
     """World down axis in the body frame, from (w, x, y, z) - obs.rs::projected_gravity."""
     w, x, y, z = q
@@ -33,7 +42,7 @@ class JumperLocomotion:
     def __init__(self, model, data, prefix="jp-", bundle=JP_BUNDLE):
         c = json.loads((bundle / "locomotion.json").read_text(encoding="utf-8"))
         self.c = c
-        self.sess = ort.InferenceSession(str(bundle / "models" / "locomotion.onnx"))
+        self.sess = _session(bundle / "models" / "locomotion.onnx")
         self.in_name = self.sess.get_inputs()[0].name
         self.wire = c["wire_joint_order"]
         self.default = np.array([c["default_joint_pos"][j] for j in self.wire], dtype=np.float32)
@@ -149,7 +158,7 @@ class MicroduckPolicy:
     """
 
     def __init__(self, model, data, onnx_path, prefix="md-", action_scale=1.0):
-        self.sess = ort.InferenceSession(str(onnx_path))
+        self.sess = _session(onnx_path)
         inp = self.sess.get_inputs()[0]
         self.in_name = inp.name
         self.obs_dim = int(inp.shape[1])
@@ -230,7 +239,7 @@ class JumperJump:
     def __init__(self, model, data, prefix="jp-", bundle=JP_BUNDLE):
         c = json.loads((bundle / "jump.json").read_text(encoding="utf-8"))
         self.c = c
-        self.sess = ort.InferenceSession(str(bundle / "models" / "jump.onnx"))
+        self.sess = _session(bundle / "models" / "jump.onnx")
         self.in_name = self.sess.get_inputs()[0].name
         self.wire = c["wire_joint_order"]
         self.default = np.array([c["default_joint_pos"][j] for j in self.wire], dtype=np.float32)
@@ -344,7 +353,7 @@ class JumperDance:
     def __init__(self, model, data, prefix="jp-", bundle=JP_BUNDLE, name="dance_crab"):
         c = json.loads((bundle / f"{name}.json").read_text(encoding="utf-8"))
         self.c = c
-        self.sess = ort.InferenceSession(str(bundle / "models" / f"{name}.onnx"))
+        self.sess = _session(bundle / "models" / f"{name}.onnx")
         self.in_name = self.sess.get_inputs()[0].name
         self.wire = c["wire_joint_order"]
         self.default = np.array([c["default_joint_pos"][j] for j in self.wire], dtype=np.float32)

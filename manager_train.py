@@ -32,8 +32,10 @@ def make_env(rank, run_dir, max_episode_s):
 
 
 def train(args):
+    import torch
     from stable_baselines3 import PPO
     from stable_baselines3.common.vec_env import SubprocVecEnv, DummyVecEnv
+    torch.set_num_threads(2)                        # a 64x64 MLP; leave the cores to the scene processes
     run_dir = RUNS / args.run
     run_dir.mkdir(parents=True, exist_ok=True)
     fns = [make_env(i, run_dir, args.max_episode_s) for i in range(args.envs)]
