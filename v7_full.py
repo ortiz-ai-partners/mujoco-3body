@@ -65,10 +65,12 @@ ASIDE_SPOT = (0.5, 2.0)                # the crab steps here before BZ drives ba
 CHEER_TEXT = {"wait": "BZ の後ろで待つ", "aside": "BZ の進路を空ける", "aside_done": "BZ を見る",
               "follow": "BZ について戻る（locomotion）", "detour": "BZ の東側を回り込む", "spot": "パッカンの南側へ",
               "face": "パッカンの方を向く", "dance": "応援ダンス（公式 dance ポリシー）"}
-SPEED = {"BUILD": 4.0, "FOLLOW_IN": 2.0, "RAMP": 2.0, "CLIMB": 1.0, "CALL": 1.0, "LIFT": 2.0, "END": 1.0}
+SPEED = {"BUILD": 4.0, "FOLLOW_IN": 2.0, "RAMP": 2.0, "CLIMB": 1.0, "CALL": 1.0, "LIFT": 2.0, "END": 1.0,
+         "RETURN": 2.0, "RESCUE": 2.0, "CELEBRATE": 1.0}
 
 MD_TEXT = {"STAND": "立位", "WALK": "歩行", "BACK": "後ずさり", "FALLEN": "転倒 → 自力で起き上がり中（velstand）",
-           "SIT": "お座り（sitstand）", "CALL": "ブルドーザーを呼ぶ", "TURN": "向きを変える（velstand）"}
+           "SIT": "お座り（sitstand）", "CALL": "ブルドーザーを呼ぶ", "TURN": "向きを変える（velstand）",
+           "WALK_ON": "レーンを北へ歩く（velstand）"}
 PLAY_TEXT = {"chase": "パッカンに近づく（locomotion）", "hop": "ぴょん！（jump）", "wander": "うろうろ（locomotion）",
              "rest": "ひと休み、パッカンを見る", "worry": "心配して離れて待つ", "to_watch": "見学位置へ",
              "watch": "見学位置へ", "watching": "見学中", "dance": "ダンス（公式 dance ポリシー）"}
@@ -307,9 +309,14 @@ def main():
     ap.add_argument("--dt-build", type=float, default=0.005)
     ap.add_argument("--dt-action", type=float, default=0.001)
     ap.add_argument("--tag", default="", help="suffix for the output names, e.g. _take5 (keeps earlier takes)")
-    ap.add_argument("--ending", choices=["push", "lift"], default="lift",
+    ap.add_argument("--ending", choices=["push", "lift", "crab"], default="crab",
                     help="push: take 5 - BZ comes at the seated duck's side, the fork tips it over, it gets up by itself; "
-                         "lift: the duck turns its back and BZ docks behind it to scoop it up (a 2 cm window - see HANDOVER)")
+                         "lift: the duck turns its back and BZ docks behind it to scoop it up (a 2 cm window - see HANDOVER); "
+                         "crab (take 6, ゆうころ 10/28: BZ must not handle the duck): the crab comes back and the manager AI "
+                         "chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk")
+    ap.add_argument("--manager", choices=["rule", "ppo"], default="rule", help="who decides in the rescue: fixed rules or the PPO policy")
+    ap.add_argument("--run", default="ppo2_small", help="out/manager_runs/<run>/ppo_manager.zip for --manager ppo")
+    ap.add_argument("--rescue-max", type=float, default=240.0, help="simulated seconds the manager gets")
     args = ap.parse_args()
 
     app, slope_assembly, tracks_mod = course_builder()
@@ -361,6 +368,23 @@ def main():
     cheer = {"phase": "wait"}
     turnback = {"phase": "wait", "t0": 0.0}
     course_ref, course_disturbed = None, {}
+    # the crab ending: the manager AI picks the crab_help skills (shared with the learning environment)
+    import types
+    import crab_help as ch                                   # imported here: crab_help imports this module
+    h = ch.Helpers(model, data, duck, crab)
+    book = types.SimpleNamespace(last_result="none", last_action=None, pushes=0, t0_episode=0.0, course_damage=0.0,
+                                 course_tolerance=0.04)
+    if args.manager == "ppo":
+        from stable_baselines3 import PPO
+        ppo = PPO.load(OUT_DIR / "manager_runs" / args.run / "ppo_manager", device="cpu")
+        manager_policy = lambda obs: int(ppo.predict(obs, deterministic=True)[0])
+        manager_name = f"PPO 方策（{args.run}）"
+    else:
+        manager_policy = lambda obs: ch.rule_action(h, book)
+        manager_name = "固定ルール"
+    ret = {"route": []}
+    mgr = {"gen": None, "n": 0, "name": "", "line": "", "decisions": [], "t0": 0.0, "t_dec": 0.0, "crossed": False}
+    cel = {"phase": "start", "route": [], "t_dance": 0.0}
     RAMP_TEXT = {"try1": "坂に挑む（1 回目）", "back": "いったん後ずさり", "try2": "もう一回挑む（2 回目）",
                  "handover": "やっぱり無理…", "sit": "諦めて座り込む（sitstand）"}
 
@@ -420,10 +444,26 @@ def main():
         if stage == "CLIMB":
             return ("v7 | 跳跳が横から坂を登る ― 公式 locomotion、物理のみ",
                     [f"跳跳: {climb['phase']}  高さ {p_jp[2]:.2f} m（天面 ≈0.54）", f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}、カニを目で追う"])
+        if stage == "CALL" and args.ending == "crab":
+            return ("v7 | パッカンが仲間を呼ぶ（固定プログラム）",
+                    ["パッカン: ぐわっ！ぐわっ！（渡り切った跳跳の方を向く）", "跳跳: 振り返ってパッカンを見る"])
         if stage == "CALL":
             duck_line = ("パッカン: ぐわっ！ぐわっ！（ブルドーザーの方を向く）" if turnback["phase"] == "wait"
                          else "パッカン: 坂に背を向けて座り直す（ふてくされ）")
             return ("v7 | パッカンがブルドーザーを呼ぶ", [duck_line, f"跳跳: {CHEER_TEXT.get(cheer['phase'], cheer['phase'])}"])
+        if stage == "RETURN":
+            return ("v7 | 跳跳がコースの東側を回って戻ってくる（固定プログラム）― BZ は触れない",
+                    [f"跳跳: locomotion 0.5 m/s  残り経由点 {len(ret['route'])}", f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}、跳跳を目で追う"])
+        if stage == "RESCUE":
+            touch = "接触あり" if h.touching() else "接触なし"
+            line1 = (f"支配人（{manager_name}）：「{mgr['line']}」  {mgr['n']} 手目 {mgr['name']}" if mgr["gen"] is not None
+                     else f"支配人（{manager_name}）：（観察中）  直前の結果 {book.last_result}")
+            return ("v7 | 支配人AI〈アイランドマスター〉が次の一手を選ぶ ― 手助けは跳跳、物理のみ",
+                    [line1, f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}  {h.stage()}  傾き {duck.tilt(data):3.0f}°   跳跳: {touch}  押し上げ {book.pushes} 回"])
+        if stage == "CELEBRATE":
+            return ("v7 | 3 体ともコースを渡った！ 跳跳の応援ダンス、BZ はフォークで万歳（固定プログラム）",
+                    [f"跳跳: {'応援ダンス（公式 dance ポリシー）' if cel['phase'] == 'dance' else '回り込んでパッカンのそばへ'}",
+                     f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}  北側の床 y={p_md[1]:+.2f}   BZ: {'フォーク万歳' if cel['phase'] == 'dance' else '見守る'}"])
         return (("v7 | BZ が後ろからフォークで持ち上げる、跳跳は応援ダンス ― 物理のみ" if args.ending == "lift"
                  else "v7 | BZ が戻ってきてフォークで持ち上げを試みる、跳跳は応援ダンス ― 物理のみ"),
                 [f"BZ: {lift_phase or 'navigating'}   跳跳: {CHEER_TEXT.get(cheer['phase'], cheer['phase'])}",
@@ -454,6 +494,18 @@ def main():
                 cam.aim(lookat=[p_jp[0], p_jp[1], p_jp[2]], distance=2.4, azimuth=15, elevation=-12)
         elif stage == "CALL":
             cam.aim(lookat=[p_md[0], p_md[1], 0.10], distance=1.1, azimuth=135, elevation=-10)
+        elif stage == "RETURN":
+            look = 0.5 * p_md + 0.5 * p_jp
+            look[2] = 0.2
+            cam.aim(lookat=look, distance=3.2 + 0.5 * float(np.linalg.norm(p_md[:2] - p_jp[:2])), azimuth=100, elevation=-24)
+        elif stage == "RESCUE":
+            look = 0.5 * p_md + 0.5 * p_jp                                  # the crab-push experiment's framing
+            look[2] = 0.2 + 0.5 * max(0.0, p_md[2] - 0.15)
+            cam.aim(lookat=look, distance=2.6 + 0.5 * float(np.linalg.norm(p_md[:2] - p_jp[:2])), azimuth=15, elevation=-14)
+        elif stage == "CELEBRATE":
+            look = 0.6 * p_md + 0.4 * p_bz
+            look[2] = 0.2
+            cam.aim(lookat=look, distance=3.4, azimuth=150, elevation=-18)
         else:
             look = 0.5 * p_bz + 0.5 * p_md
             look[2] = 0.15
@@ -507,7 +559,7 @@ def main():
                             event(t, f"  contact {names[0]} <-> {names[1]} at ({c.pos[0]:+.2f},{c.pos[1]:+.2f},{c.pos[2]:.2f})")
                 model.opt.timestep = args.dt_action
                 event(t, f"physics step -> {args.dt_action}")
-        elif stage != "LIFT":
+        elif stage not in ("LIFT", "CELEBRATE"):
             sim.command(0, 0, 0)
 
         # ── stages ────────────────────────────────────────────────────
@@ -748,6 +800,116 @@ def main():
                 crab.set_mode("IDLE", t, model)
                 set_stage(t, "CALL")
                 call_t0 = t
+        elif stage == "CALL" and args.ending == "crab":
+            # the duck calls toward its friend across the course; the crab turns and looks back
+            rel = t - call_t0
+            duck.sit.twist[:] = (1.0, 0.0, 0.0)
+            duck.look_at(data, p_jp, pitch=0.0)
+            if crab.mode != "WALK":
+                crab.set_mode("WALK", t, model)
+            crab.steer(data, p_md[:2], 0.0)
+            if rel > 0.8 and "c1" not in climb:
+                climb["c1"] = True
+                quack("call")
+            if rel > 3.0 and "c2" not in climb:
+                climb["c2"] = True
+                quack("call")
+            if rel > 5.0:
+                set_stage(t, "RETURN")
+                ret["route"] = [(3.0, 2.4), (3.0, -2.4), (2.6, -3.2)]      # east of the course, then south-east of the seat
+                cry("crab")
+                event(t, "JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)")
+        elif stage == "RETURN":
+            duck.sit.twist[:] = (1.0, 0.0, 0.0)
+            duck.look_at(data, p_jp, pitch=0.0)
+            if ret["route"]:
+                if crab_go(ret["route"][0], 0.5, stop=0.35):
+                    ret["route"].pop(0)
+            if not ret["route"] or t - stage_t0 > 70.0:
+                crab.loco.set_command(0, 0, 0)
+                set_stage(t, "RESCUE")
+                mgr.update(gen=None, n=0, t0=t)
+                book.t0_episode = t
+                event(t, f"the manager ({manager_name}) takes over: duck {duck.mode}/{h.stage()} at ({p_md[0]:+.2f},{p_md[1]:+.2f}), "
+                         f"crab at ({p_jp[0]:+.2f},{p_jp[1]:+.2f}), {h.crab_dist():.2f} m")
+        elif stage == "RESCUE":
+            if course_disturbed:
+                book.course_damage = max(course_disturbed.values())
+            if mgr["gen"] is None:                             # a decision point: observe, choose, speak, start the skill
+                obs = ch.observation(h, book)
+                a = manager_policy(obs)
+                name = ch.ACTIONS[a]
+                mgr.update(gen=ch.SKILLS[name](h), action=a, name=name, line=ch.bubble_line(a, book), t_dec=t, n=mgr["n"] + 1)
+                mgr["decisions"].append({"n": mgr["n"], "t": round(t, 1), "video_t": round(video_t(), 1), "action": name,
+                                         "bubble": mgr["line"], "duck": duck.mode, "stage": h.stage(),
+                                         "touching": bool(h.touching()), "crab_dist": round(h.crab_dist(), 2),
+                                         "last_result": book.last_result})
+                event(t, f"MANAGER #{mgr['n']}: {name} 「{mgr['line']}」 (duck {duck.mode}/{h.stage()}, crab {h.crab_dist():.2f} m, "
+                         f"touching={h.touching()}, last={book.last_result})")
+                if name in ("SEAT", "STANDUP", "WALK_ON"):
+                    quack("quack")
+                elif name == "PUSH":
+                    cry("crab")
+            try:
+                next(mgr["gen"])
+            except StopIteration as stop:
+                result = stop.value
+                book.last_result, book.last_action = result, mgr["action"]
+                if mgr["name"] == "PUSH" and result != "nothing":
+                    book.pushes += 1
+                mgr["decisions"][-1].update(result=result, duration_s=round(t - mgr["t_dec"], 1))
+                mgr["gen"] = None
+                event(t, f"MANAGER result: {mgr['name']} -> {result} (duck {duck.mode}/{h.stage()} at ({p_md[0]:+.2f},{p_md[1]:+.2f}) z={p_md[2]:.2f})")
+                if result == "pushed_up":
+                    quack("happy")
+                if result == "crossed":
+                    mgr["crossed"] = True
+                    quack("happy")
+                    event(t, f"DUCK CROSSED THE COURSE (y={p_md[1]:+.2f} z={p_md[2]:.3f}) - all three have crossed")
+                    set_stage(t, "CELEBRATE")
+                    cel.update(phase="start")
+            if ch.check_seated_fall(h):
+                event(t, f"MD tipped over while seated (tilt {duck.tilt(data):.0f}); velstand takes over")
+            if stage == "RESCUE" and t - mgr["t0"] > args.rescue_max:
+                event(t, f"RESCUE timeout after {args.rescue_max:.0f} s: duck {duck.mode}/{h.stage()}")
+                set_stage(t, "END")
+        elif stage == "CELEBRATE":
+            if cel["phase"] == "start":
+                cel.update(phase="descend", route=[(2.8, -3.0), (2.9, 1.2), (p_md[0] + 0.9, p_md[1] - 0.1)])
+                if crab.mode != "WALK":
+                    crab.set_mode("WALK", t, model)
+                event(t, "JP backs down the ramp, goes round the course to the duck; then the cheering dance")
+            elif cel["phase"] == "descend":                 # straight back down the ramp's centre line, never off its side
+                if p_jp[2] < 0.13 and p_jp[1] < ch.TOE_Y - 0.3 or t - stage_t0 > 25.0:
+                    crab.loco.set_command(0, 0, 0)
+                    cel["phase"] = "around"
+                else:
+                    ch.reverse_command(h)
+            elif cel["phase"] == "around":
+                if cel["route"] and crab_go(cel["route"][0], 0.5, stop=0.35):
+                    cel["route"].pop(0)
+                if not cel["route"] or t - stage_t0 > 60.0:
+                    cel["phase"] = "face"
+            elif cel["phase"] == "face":
+                _, err = crab.steer(data, p_md[:2], 0.0)
+                if abs(err) < 0.2 or t - stage_t0 > 70.0:
+                    cel.update(phase="dance", t_dance=t)
+                    crab.set_mode("DANCE", t, model)
+                    cry("crab")
+                    quack("happy")
+                    event(t, "JP dances beside the duck (official dance policy); BZ raises its fork twice")
+            elif cel["phase"] == "dance":
+                rel = t - cel["t_dance"]
+                if rel < 6.0:
+                    sim.command(0.0, 0.0, 1.0 if (rel % 3.0) < 1.5 else -1.0)      # fork up, down, up, down
+                else:
+                    sim.command(0.0, 0.0, -1.0 if sim.lift_target > 0 else 0.0)
+                if rel > 12.0:
+                    set_stage(t, "END")
+            if cel["phase"] != "dance":
+                sim.command(0, 0, 0)
+            if duck.mode == "STAND":
+                duck.gaze = p_jp[:2]
         elif stage == "CALL":
             rel = t - call_t0
             if cheer["phase"] == "wait":                     # the crab clears BZ's turning circle
@@ -1046,6 +1208,9 @@ def main():
               "construction": {"success": bool(pilot.success), "reason": pilot.reason,
                                "parts": pilot.results, "rise_m": pilot.max_rise, "surfaces": len(pilot.touched)},
               "course_disturbed": course_disturbed,
+              "ending": args.ending,
+              "manager": {"policy": manager_name, "decisions": mgr["decisions"], "duck_crossed": mgr["crossed"]},
+              "three_crossed": {"bz": bool(pilot.success), "crab": climb["phase"] == "done", "duck": mgr["crossed"]},
               "events": events, "md_events": duck.events, "jp_events": crab.events, "chirps": chirps.events}
     if video is not None:
         size = video.close()

@@ -1,0 +1,23 @@
+﻿
+{"crab_vx": 0.3, "duck_vx": 0.3, "max_y": 2.2, "max_z": 0.566, "falls": 1, "recoveries": 1, "contact_s": 44.9, "crab_he
+ight": 0.0, "seated": true, "crest_mode": true, "face_crab": true, "duck_pitch": 0.0, "lean_samples": [6.0, 12.0, 9.0, 
+10.0, 6.0, 6.0, 8.0, 8.0, 8.0, 8.0, 7.0, 11.0], "landing_t": 81.4, "crossed_t": 86.6, "end_y": 2.2, "end_z": 0.125, "en
+d_mode": "WALK"}
+     10.0s duck y=-2.00 z=0.07 tilt= 12 SIT | crab y=-2.21 z=0.11 | touching=True
+     20.0s duck y=-1.77 z=0.13 tilt= 10 SIT | crab y=-2.01 z=0.13 | touching=True
+     30.0s duck y=-1.55 z=0.19 tilt=  6 SIT | crab y=-1.79 z=0.18 | touching=True
+     40.0s duck y=-1.10 z=0.32 tilt=  8 SIT | crab y=-1.36 z=0.31 | touching=True
+     50.0s duck y=-0.78 z=0.41 tilt=  8 SIT | crab y=-1.03 z=0.40 | touching=True
+     60.0s duck y=-0.47 z=0.50 tilt= 11 SIT | crab y=-0.71 z=0.50 | touching=True
+     62.1s ON THE LANDING (y=-0.42 z=0.50): gentle push until upright
+     63.1s duck upright on the landing (tilt 6); crab backs off
+     64.2s crab clear (0.60 m behind); duck stands
+     69.2s duck walks north by itself (velstand)
+     70.0s duck y=-0.43 z=0.56 tilt=  4 WALK | crab y=-1.05 z=0.39 | touching=False
+     76.1s duck fell at y=+0.13 z=0.48
+     77.9s duck back up at y=-0.03
+     80.0s duck y=+0.18 z=0.56 tilt=  3 WALK | crab y=-0.83 z=0.46 | touching=False
+     81.4s DUCK ON THE LANDING (y=+0.30, z=0.56)
+     86.6s DUCK CROSSED (y=+2.20 z=0.12)
+
+

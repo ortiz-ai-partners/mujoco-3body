@@ -28,10 +28,13 @@ TOE_Y = -2.0
 
 
 def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.0, approach_vx=0.12, seated=False,
-        crest=False):
-    """crest=True (seated push): slow the push near the crest, stop on the landing, let the duck stand up and walk
-    north across the landing and down the far ramp by itself; the crab follows at a distance."""
-    model, data = build_arena(STAGE_XML, md_pose=(LANE_X, TOE_Y - 0.35, math.pi / 2),
+        crest=False, face_crab=False, duck_pitch=0.0):
+    """crest=True (seated push): push steadily onto the landing, settle, the crab backs off, the duck stands up and
+    walks north across the landing and down the far ramp by itself; the crab follows at a distance.
+    face_crab: the duck sits facing the crab (south) so its lean while pushed is uphill, not onto the crab.
+    duck_pitch: body pitch command to the seated duck while pushed (sitstand 13-D command, body[4])."""
+    duck_yaw = -math.pi / 2 if face_crab else math.pi / 2
+    model, data = build_arena(STAGE_XML, md_pose=(LANE_X, TOE_Y - 0.35, duck_yaw),
                               jp_pose=(LANE_X, TOE_Y - 0.35 - gap - 0.3, math.pi / 2), timestep=0.001)
     official_md_servos(model)
     duck, crab = Duck(model, data), Crab(model, data)
@@ -93,6 +96,9 @@ def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.
     rec["crab_height"] = crab_height
     rec["seated"] = seated
     rec["crest_mode"] = crest
+    rec["face_crab"] = face_crab
+    rec["duck_pitch"] = duck_pitch
+    rec["lean_samples"] = []
     while t < seconds + 1.0:
         p_md, p_jp = duck.pos(data), crab.pos(data)
         if seated and crest:
@@ -138,6 +144,9 @@ def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.
         if seated and stage in ("push", "crest", "settle", "backoff"):
             if duck.mode == "SIT":
                 duck.sit.twist[:] = (1.0, 0.0, 0.0)
+                duck.sit.body[4] = duck_pitch if stage in ("push", "crest") else 0.0
+                if k % int(5.0 / 0.001) == 0:
+                    rec["lean_samples"].append(round(float(duck.tilt(data)), 0))
                 if float(duck.tilt(data)) > 60.0:                      # tipped while seated: velstand takes over
                     duck.resume, duck.fell_at, duck.upright_since = "STAND", t, None
                     duck.use("vel")
@@ -198,10 +207,11 @@ def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.
         if k % int(5.0 / 0.001) == 0:
             rec["events"].append(f"{t:5.1f}s duck y={p_md[1]:+.2f} z={p_md[2]:.2f} tilt={duck.tilt(data):3.0f} {duck.mode} | "
                                  f"crab y={p_jp[1]:+.2f} z={p_jp[2]:.2f} | touching={touching}")
-        if p_md[1] > 0.3 and p_md[2] > 0.4:
+        if p_md[1] > 0.3 and p_md[2] > 0.4 and "landing_t" not in rec:
             rec["events"].append(f"{t:5.1f}s DUCK ON THE LANDING (y={p_md[1]:+.2f}, z={p_md[2]:.2f})")
             rec["landing_t"] = round(t, 1)
-            break
+            if not crest:                                              # crest mode goes on: walk down the far ramp
+                break
         if np.any(np.isnan(data.qpos)):
             rec["events"].append("NaN")
             break
@@ -220,18 +230,21 @@ def main():
     ap.add_argument("--seconds", type=float, default=60.0)
     ap.add_argument("--crab-height", type=float, nargs="+", default=[0.0])
     ap.add_argument("--seated", action="store_true", help="the duck sits (sitstand) and is pushed seated")
-    ap.add_argument("--crest", action="store_true", help="with --seated: slow at the crest, stand on the landing, walk down")
+    ap.add_argument("--crest", action="store_true", help="with --seated: push onto the landing, stand, walk down")
+    ap.add_argument("--face-crab", action="store_true", help="the duck sits facing the crab (its lean goes uphill)")
+    ap.add_argument("--duck-pitch", type=float, nargs="+", default=[0.0], help="body pitch command while pushed")
     ap.add_argument("--video", type=Path, help="record the first variant")
     args = ap.parse_args()
     i = 0
     for h in args.crab_height:
         for vx in args.crab_vx:
-            rec = run(vx, args.seconds, video_path=args.video if (i == 0 and args.video) else None, duck_vx=args.duck_vx,
-                      crab_height=h, seated=args.seated, crest=args.crest)
-            i += 1
-            print(json.dumps({k: v for k, v in rec.items() if k != "events"}), flush=True)
-            for e in rec["events"]:
-                print("   ", e, flush=True)
+            for pitch in args.duck_pitch:
+                rec = run(vx, args.seconds, video_path=args.video if (i == 0 and args.video) else None, duck_vx=args.duck_vx,
+                          crab_height=h, seated=args.seated, crest=args.crest, face_crab=args.face_crab, duck_pitch=pitch)
+                i += 1
+                print(json.dumps({k: v for k, v in rec.items() if k != "events"}), flush=True)
+                for e in rec["events"]:
+                    print("   ", e, flush=True)
 
 
 if __name__ == "__main__":
