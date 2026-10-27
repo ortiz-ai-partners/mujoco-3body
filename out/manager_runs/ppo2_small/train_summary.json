@@ -1,0 +1,9 @@
+{
+ "run": "ppo2_small",
+ "envs": 12,
+ "steps": 3000,
+ "rollout": 24,
+ "wall_s": 3216.0,
+ "episodes": 118,
+ "train_success_rate": 0.381
+}

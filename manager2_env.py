@@ -43,6 +43,8 @@ STAGE_XML = OUT_DIR / "v6_stage_built.xml"
 BZ_PARK = (3.4, -1.6, math.pi)              # BZ watches from the east, well off the lane; it never moves here
 REWARD = {"success": 10.0, "per_second": -0.03, "landing_bonus": 3.0, "fall": -1.0, "wasted": -1.0,
           "wait_idle": -0.5, "timeout": -5.0, "course_damaged": -10.0}
+# (10/28 01:40: "wasted" now also covers a skill that ends stalled / slipped - reward v2.1; ppo2_small and
+#  baselines_v2 were run under v2.0 without it, their returns differ by that term only)
 COURSE_BODIES = ("up_1", "down_1", "block_1", "block_2")
 COURSE_TOLERANCE = 0.04                     # m, course-builder's own "Placed slope disturbed" tolerance
 SCENARIOS = [("toe_seated_ok", 0.30), ("toe_seated_wrong", 0.20), ("toe_standing", 0.20), ("toe_fallen", 0.10),
@@ -346,6 +348,9 @@ class ManagerEnv(gym.Env):
             wasted += 1.0
         if name in ("PUSH", "BACK_OFF", "STANDUP", "WALK_ON") and result == "nothing":
             wasted += 1.0
+        if result in ("stalled", "slipped"):
+            wasted += 1.0                                    # a futile call (e.g. WALK_ON into the ramp): the small PPO
+                                                             # run of 10/28 repeated it 24 times at -0.9 each (time only)
         if name == "WAIT" and mode0 != "FALLEN" and stage0 != "north":
             wasted += -REWARD["wait_idle"]
         if name == "PUSH" and result != "nothing":
