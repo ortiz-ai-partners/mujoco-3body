@@ -13,9 +13,14 @@ Stages (ゆうころ 10/27 夜の筋書き)
              crest at full speed), crosses and comes down behind BZ.  MD watches,
              "ぐわぁぁ？", looks around.
   CALL       MD calls BZ; JP steps out of BZ's turning circle.
-  LIFT       BZ drives back around the course with JP trailing it; BZ tries to lift the duck with
-             the fork (and tips it over - the duck gets up by itself, velstand) while JP goes round
-             to the duck's south side and cheers it with the official dance policy.
+  LIFT       BZ drives back around the course with JP trailing it, and JP goes round to the duck's
+             south side and cheers it with the official dance policy while BZ works the fork:
+               --ending push  (take 5) from the duck's side, fork at 6 cm: tips the seated duck over,
+                              velstand gets it back on its feet by itself.
+               --ending lift  the duck first turns its back on the ramp and sits again; BZ docks
+                              straight behind it (line following, fine aim, creep) and scoops it up
+                              with both tines under its hips - a 2 cm window (see HANDOVER.md), so
+                              whether it lifts, shoves or misses is decided by the physics of the take.
 
     <jumper venv python> v7_full.py --test            # no render
     <jumper venv python> v7_full.py --preview DIR     # stills
@@ -302,6 +307,9 @@ def main():
     ap.add_argument("--dt-build", type=float, default=0.005)
     ap.add_argument("--dt-action", type=float, default=0.001)
     ap.add_argument("--tag", default="", help="suffix for the output names, e.g. _take5 (keeps earlier takes)")
+    ap.add_argument("--ending", choices=["push", "lift"], default="lift",
+                    help="push: take 5 - BZ comes at the seated duck's side, the fork tips it over, it gets up by itself; "
+                         "lift: the duck turns its back and BZ docks behind it to scoop it up (a 2 cm window - see HANDOVER)")
     args = ap.parse_args()
 
     app, slope_assembly, tracks_mod = course_builder()
@@ -351,7 +359,7 @@ def main():
     call_t0 = lift_t0 = None
     lift_phase = None
     cheer = {"phase": "wait"}
-    turnback = {"phase": "start", "t0": 0.0}
+    turnback = {"phase": "wait", "t0": 0.0}
     RAMP_TEXT = {"try1": "坂に挑む（1 回目）", "back": "いったん後ずさり", "try2": "もう一回挑む（2 回目）",
                  "handover": "やっぱり無理…", "sit": "諦めて座り込む（sitstand）"}
 
@@ -412,9 +420,11 @@ def main():
             return ("v7 | 跳跳が横から坂を登る ― 公式 locomotion、物理のみ",
                     [f"跳跳: {climb['phase']}  高さ {p_jp[2]:.2f} m（天面 ≈0.54）", f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}、カニを目で追う"])
         if stage == "CALL":
-            return ("v7 | パッカンがブルドーザーを呼ぶ", ["パッカン: ぐわっ！ぐわっ！（ブルドーザーの方を向く）",
-                                                  f"跳跳: {CHEER_TEXT.get(cheer['phase'], cheer['phase'])}"])
-        return ("v7 | BZ が後ろからフォークで持ち上げる、跳跳は応援ダンス ― 物理のみ",
+            duck_line = ("パッカン: ぐわっ！ぐわっ！（ブルドーザーの方を向く）" if turnback["phase"] == "wait"
+                         else "パッカン: 坂に背を向けて座り直す（ふてくされ）")
+            return ("v7 | パッカンがブルドーザーを呼ぶ", [duck_line, f"跳跳: {CHEER_TEXT.get(cheer['phase'], cheer['phase'])}"])
+        return (("v7 | BZ が後ろからフォークで持ち上げる、跳跳は応援ダンス ― 物理のみ" if args.ending == "lift"
+                 else "v7 | BZ が戻ってきてフォークで持ち上げを試みる、跳跳は応援ダンス ― 物理のみ"),
                 [f"BZ: {lift_phase or 'navigating'}   跳跳: {CHEER_TEXT.get(cheer['phase'], cheer['phase'])}",
                  f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}  高さ {p_md[2]:.3f} m"])
 
@@ -446,10 +456,14 @@ def main():
         else:
             look = 0.5 * p_bz + 0.5 * p_md
             look[2] = 0.15
-            # from the west-north-west: the duck faces west once it has turned its back on the ramp, so its
-            # face is toward the camera, BZ comes up behind it, the crab dances on the right
-            cam.aim(lookat=look, distance=2.6 if lift_phase in ("insert", "lift", "hold", "lower", "back", "wait") else 3.4,
-                    azimuth=330, elevation=-16)
+            if args.ending == "lift":
+                # from the west-north-west: the duck faces west once it has turned its back on the ramp, so its
+                # face is toward the camera, BZ comes up behind it, the crab dances on the right
+                cam.aim(lookat=look, distance=2.6 if lift_phase in ("dock", "aim2", "creep", "lift", "hold", "lower", "back", "wait") else 3.4,
+                        azimuth=330, elevation=-16)
+            else:                                                       # take 5's shot, from the south-east
+                cam.aim(lookat=look, distance=2.6 if lift_phase in ("insert", "lift", "hold", "lower", "back", "wait") else 3.4,
+                        azimuth=135, elevation=-18)
         renderer.update_scene(data, cam.step(1.0 / VIDEO_FPS), opt)
         title, lines = caption()
         return cap.draw(renderer.render(), title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}")
@@ -732,8 +746,6 @@ def main():
                 set_stage(t, "CALL")
                 call_t0 = t
         elif stage == "CALL":
-            duck.sit.twist[:] = (1.0, 0.0, 0.0)
-            duck.look_at(data, p_bz, pitch=0.0)
             rel = t - call_t0
             if cheer["phase"] == "wait":                     # the crab clears BZ's turning circle
                 cheer["phase"] = "aside"
@@ -748,16 +760,63 @@ def main():
             if rel > 3.0 and "c2" not in climb:
                 climb["c2"] = True
                 quack("call")
-            if rel > 5.0:
+            # then the duck turns its back on the ramp and sits down again (sulking), so that BZ can come up
+            # behind it: v7_test_fork.py lifts the seated duck cleanly only with both tines under its hips
+            # (approach from straight behind, centreline 1.5-3 cm to the duck's left); from the side one tine
+            # hooks it at best and the set-down tips it.  ゆうころ 10/27: being lifted is the heart-warming ending.
+            tb = turnback["phase"]
+            if tb == "wait":
+                duck.sit.twist[:] = (1.0, 0.0, 0.0)
+                duck.look_at(data, p_bz, pitch=0.0)
+                if rel > 4.0 and args.ending == "lift":
+                    turnback.update(phase="start", t0=t)
+            elif tb == "start":
+                duck.sit.twist[:] = 0                                   # sitstand flag 0: stand up
+                duck.sit.head[:] = 0
+                if t - turnback["t0"] > 3.0:
+                    duck.use("vel")
+                    duck.set_mode("TURN", t)
+                    turnback.update(phase="turn", t0=t)
+            elif tb == "turn" and duck.mode == "TURN":
+                err_w = wrap(math.pi - duck.yaw(data))                 # face west: back to the east, where BZ will come from
+                wz = math.copysign(min(1.2, max(0.35, 2.0 * abs(err_w))), err_w) if abs(err_w) >= 0.05 else 0.0
+                duck.vel.twist[:] = (0.0, 0.0, wz)
+                if (abs(err_w) < 0.05 and t - turnback["t0"] > 1.0) or t - turnback["t0"] > 10.0:
+                    duck.vel.twist[:] = 0
+                    duck.use("sit")
+                    duck.set_mode("SIT", t)
+                    duck.sit.twist[:] = (1.0, 0.0, 0.0)
+                    duck.sit.head[:] = (0.3, 0.4, 0, 0)
+                    turnback.update(phase="seated", t0=t)
+                    quack("sigh")
+                    event(t, f"duck turns its back on the ramp and sits down again (yaw {math.degrees(duck.yaw(data)):.0f} deg)")
+            elif tb == "turn" and duck.mode == "STAND":                # stumbled and got up (velstand): sit anyway
+                if t - turnback["t0"] > 10.0:
+                    turnback["t0"] = t - 9.0
+            elif tb == "seated":
+                duck.sit.twist[:] = (1.0, 0.0, 0.0)
+                duck.sit.head[:] = (0.3, 0.4, 0, 0)
+            if (tb == "seated" and t - turnback["t0"] > 2.5) or (args.ending == "push" and rel > 5.0):
                 set_stage(t, "LIFT")
                 lift_phase = "navigate"
                 lift_t0 = t
                 cheer["phase"] = "follow"
                 crab.set_mode("WALK", t, model)
-                turnback.update(phase="start", t0=t)
-                approach = np.array([p_md[0] + 1.9, p_md[1]])      # come at the duck from the east
+                if args.ending == "lift":
+                    yaw_d = duck.yaw(data)
+                    facing = np.array([math.cos(yaw_d), math.sin(yaw_d)])
+                    left_d = np.array([-math.sin(yaw_d), math.cos(yaw_d)])
+                    turnback["axis_u"] = facing                         # BZ docks along the duck's facing direction...
+                    turnback["axis_p"] = p_md[:2] + 0.022 * left_d      # ...on a line 2.2 cm to the duck's left (tines under both hips)
+                    approach = p_md[:2] - 3.2 * facing                  # 3.2 m straight behind: room to line up while docking
+                    event(t, f"BZ drives back around the course to behind the duck ({approach[0]:+.2f},{approach[1]:+.2f}); "
+                             f"duck yaw {math.degrees(yaw_d):.0f} deg")
+                else:                                                   # "push" (take 5): at the seated duck's right side, from the east
+                    turnback["axis_u"] = np.array([-1.0, 0.0])
+                    turnback["axis_p"] = p_md[:2].copy()
+                    approach = np.array([p_md[0] + 1.9, p_md[1]])
+                    event(t, "BZ drives back around the course to the duck's east side")
                 nav = make_navigator(sim, [[3.3, 3.0], [float(approach[0]), float(approach[1])]])
-                event(t, "BZ drives back around the course to the duck")
         elif stage == "LIFT":
             # the crab comes back with BZ and cheers the duck with a dance (ゆうころ 10/27 深夜):
             # trail BZ at 1.7 m, then go round BZ's east side to the duck's south, face it, dance.
@@ -766,7 +825,7 @@ def main():
                 crab.steer(data, p_bz[:2], 0.6 if d_bz > 1.7 else 0.0)
                 if lift_phase != "navigate":
                     cheer["phase"] = "detour"
-                    cheer["route"] = [(4.8, p_md[1] - 0.3), (4.8, p_md[1] - 1.7), (3.0, p_md[1] - 1.6)]
+                    cheer["route"] = [(5.6, p_md[1] + 0.7), (5.6, p_md[1] - 1.8), (3.0, p_md[1] - 1.7)]   # clear of BZ (3.2 m behind the duck) and block_2
                     event(t, "JP goes round BZ's east side to the duck's south")
             elif cheer["phase"] == "detour":
                 if crab_go(cheer["route"][0], 0.5, stop=0.35):
@@ -783,31 +842,7 @@ def main():
                     crab.set_mode("DANCE", t, model)
                     cry("crab")
                     event(t, "JP starts its cheering dance beside the duck (official dance policy)")
-            # the duck turns its back on the ramp and sits down again (sulking) while BZ drives round, so BZ
-            # can scoop it from behind: v7_test_fork.py lifts it cleanly only with both tines under its hips
-            # (approach from behind, centreline 1.5-3 cm to the duck's left); from the side one tine hooks it
-            # at best and the set-down tips it.  ゆうころ 10/27: being lifted is the heart-warming ending.
-            tb = turnback["phase"]
-            if tb == "start" and duck.mode == "SIT":
-                duck.sit.twist[:] = 0                                   # sitstand flag 0: stand up
-                duck.sit.head[:] = 0
-                if t - turnback["t0"] > 3.0:
-                    duck.use("vel")
-                    duck.set_mode("TURN", t)
-                    turnback.update(phase="turn", t0=t)
-            elif tb == "turn" and duck.mode == "TURN":
-                err_w = wrap(math.pi - duck.yaw(data))                 # face west: back to the east, where BZ comes from
-                duck.vel.twist[:] = (0.0, 0.0, float(np.clip(2.0 * err_w, -1.2, 1.2)))
-                if abs(err_w) < 0.15 or t - turnback["t0"] > 8.0:
-                    duck.vel.twist[:] = 0
-                    duck.use("sit")
-                    duck.set_mode("SIT", t)
-                    duck.sit.twist[:] = (1.0, 0.0, 0.0)
-                    duck.sit.head[:] = (0.3, 0.4, 0, 0)
-                    turnback.update(phase="seated", t0=t)
-                    quack("sigh")
-                    event(t, f"duck turns its back on the ramp and sits down again (yaw {math.degrees(duck.yaw(data)):.0f} deg)")
-            if duck.mode == "SIT" and tb != "start":
+            if duck.mode == "SIT":
                 duck.sit.twist[:] = (1.0, 0.0, 0.0)
                 if lift_phase == "hold":                                # up on the fork: look around
                     duck.sit.head[:] = (0.1, -0.1, 0.7 * math.sin(2 * math.pi * 0.5 * (t - lift_t0)), 0.0)
@@ -824,11 +859,14 @@ def main():
                 duck.gaze = p_bz[:2]
             yaw_bz = quat_to_yaw(data.xquat[bz_bid])
             left_bz = np.array([-math.sin(yaw_bz), math.cos(yaw_bz)])
-            aim_pt = p_md[:2] + 0.022 * left_bz          # centreline 2.2 cm to BZ's left of the duck (= the duck's left)
-            d = aim_pt - p_bz[:2]
+            A, u = turnback["axis_p"], turnback["axis_u"]           # docking line: through A, direction u (BZ travels along u)
+            rel_bz = p_bz[:2] - A
+            e_lat = float(u[0] * rel_bz[1] - u[1] * rel_bz[0])      # BZ's offset from the line, + = left of travel
+            psi = wrap(yaw_bz - math.atan2(u[1], u[0]))             # BZ's heading error against the line
+            d = A - p_bz[:2]
             dist_bz = float(np.linalg.norm(p_md[:2] - p_bz[:2]))
-            err = wrap(math.atan2(d[1], d[0]) - yaw_bz)
-            lat_bz = float(left_bz @ (p_md[:2] - p_bz[:2]))   # the duck's offset to BZ's left; -0.022 is the target
+            err = wrap(math.atan2(d[1], d[0]) - yaw_bz)             # bearing error to A (coarse aim)
+            lat_bz = float(left_bz @ (p_md[:2] - p_bz[:2]))         # the duck's offset to BZ's left; -0.022 is the target
             if lift_phase == "navigate":
                 sim.command(*nav.action(sim))
                 if nav.done:
@@ -836,31 +874,61 @@ def main():
                     lift_t0 = t
                     event(t, f"BZ arrived ({nav.reason}); aims at the duck")
             elif lift_phase == "aim":
-                # line the tines up with the duck's centre: the fork experiment (v7_test_fork.py) tips the duck
-                # only within ~5 cm of centre; further off it slides it along, or lifts and drops it
-                turn = 0.0 if abs(err) <= 0.012 else math.copysign(0.7 if abs(err) > 0.1 else 0.3, err)
+                # coarse aim at the target; for "lift" the fine alignment is the docking controller's job
+                turn = 0.0 if abs(err) <= 0.03 else math.copysign(0.7 if abs(err) > 0.1 else 0.3, err)
                 sim.command(0.0, turn, 0.0)
-                if (abs(err) <= 0.012 and turnback["phase"] == "seated") or t - lift_t0 > 25.0:
-                    lift_phase = "insert"
+                if abs(err) <= 0.03 or t - lift_t0 > 20.0:
+                    lift_phase = "dock" if args.ending == "lift" else "insert"
                     lift_t0 = t
-                    event(t, f"BZ aimed (err {err:+.3f} rad, duck {lat_bz:+.3f} m left of the centreline); "
-                             f"slides the fork in at floor level ({dist_bz:.2f} m)")
+                    event(t, f"BZ aimed (bearing {err:+.3f} rad, {e_lat:+.3f} m off the line, heading {psi:+.3f}); "
+                             + ("docks along the line at floor level" if args.ending == "lift" else "slides the fork in at 6 cm")
+                             + f" ({dist_bz:.2f} m)")
             elif lift_phase == "insert":
-                # tines at floor level, pursuit steering onto the aim point (v7_test_fork.py from behind: both
-                # tines slide under the hips and lift the duck when the centreline is 1.5-3 cm to its left;
-                # 0 or 4.5 cm shoves / tips it, 6 cm misses).  Whatever happens next is the physics.
-                sim.command(0.12, float(np.clip(3.0 * err, -0.3, 0.3)), -1.0)
-                if dist_bz < 1.25 and "lat_logged" not in climb:
-                    climb["lat_logged"] = True
-                    event(t, f"tines reach the duck: duck {lat_bz:+.3f} m left of BZ's centreline (target -0.022)")
-                if dist_bz < 0.98 or t - lift_t0 > 30:
+                # "push" ending (take 5): fork held ~6 cm up while sliding in from the side.  At floor level the
+                # tines shove the seated duck along (v7_test_fork.py: pushed 0.3 m, no tip); at 6 cm they catch it
+                # above its seat and tip it over (tilt 92) - and velstand gets it back on its feet by itself.
+                lift_cmd = 1.0 if sim.lift_target < 0.06 else (-1.0 if sim.lift_target > 0.075 else 0.0)
+                sim.command(0.15, float(np.clip(2.0 * err, -0.3, 0.3)), lift_cmd)
+                if dist_bz < 0.98 or t - lift_t0 > 25:
                     lift_phase = "lift"
                     lift_t0 = t
-                    event(t, f"BZ lifts (duck {dist_bz:.2f} m ahead, {lat_bz:+.3f} m left, "
+                    event(t, f"BZ lifts (duck {dist_bz:.2f} m ahead, touching={robots_in_contact(model, data, md_root, bz_root)})")
+            elif lift_phase == "dock":
+                # line following onto the docking line (lateral + heading feedback), tines at floor level.
+                # v7_test_fork.py from straight behind: both tines slide under the hips and lift the duck when
+                # the centreline is 1.5-3 cm to its left; 0 or 4.5 cm shoves / tips it, 6 cm misses.  Test #17:
+                # pure pursuit left 3.7 cm and ~4 deg of skew at contact -> lifted crooked (tilt 35) and dropped.
+                # Test #18: line following alone still arrived 5 cm / 4 deg off -> three steps: follow the line
+                # to 1.55 m, stop and aim the centreline at the hips (0.006 rad ~ 1 cm at the tines), creep in.
+                fwd = 0.12                                                        # slow: the line follower is better damped
+                turn = float(np.clip(-(1.5 * e_lat + 3.0 * psi), -0.45, 0.45))    # #19/#20 overshot (6-10 cm, 7 deg) at 0.15-0.2
+                sim.command(fwd, turn, -1.0)
+                if dist_bz < 1.50 or t - lift_t0 > 90:
+                    lift_phase = "aim2"
+                    lift_t0 = t
+                    event(t, f"BZ stops at {dist_bz:.2f} m ({e_lat:+.3f} m off the line, heading {psi:+.3f} rad); fine aim at the hips")
+            elif lift_phase == "aim2":
+                turn = 0.0 if abs(err) <= 0.006 else math.copysign(0.5 if abs(err) > 0.08 else 0.22, err)
+                sim.command(0.0, turn, -1.0)
+                if abs(err) <= 0.006 or t - lift_t0 > 25.0:
+                    lift_phase = "creep"
+                    lift_t0 = t
+                    event(t, f"BZ aimed (bearing {err:+.4f} rad, skew {psi:+.3f} rad, {e_lat:+.3f} m off the line); creeps in")
+            elif lift_phase == "creep":
+                sim.command(0.10, float(np.clip(2.0 * err, -0.2, 0.2)), -1.0)     # keep the centreline on the hips
+                if dist_bz < 1.40 and "lat_logged" not in climb:
+                    climb["lat_logged"] = True
+                    event(t, f"tines reach the duck: BZ {e_lat:+.3f} m off the line, heading {psi:+.3f} rad; "
+                             f"duck {lat_bz:+.3f} m left of BZ's centreline (target -0.022)")
+                if dist_bz < 0.98 or t - lift_t0 > 40:
+                    lift_phase = "lift"
+                    lift_t0 = t
+                    event(t, f"BZ lifts (duck {dist_bz:.2f} m ahead, {lat_bz:+.3f} m left, {e_lat:+.3f} m off the line, "
                              f"touching={robots_in_contact(model, data, md_root, bz_root)})")
             elif lift_phase == "lift":
-                sim.command(0.0, 0.0, 0.6)                              # gently, to 0.30 m
-                if sim.lift_target >= 0.30 - 1e-6 or t - lift_t0 > 4.0:
+                gentle = args.ending == "lift"
+                sim.command(0.0, 0.0, 0.6 if gentle else 1.0)           # lift: gently to 0.30 m; push: to the top (take 5)
+                if sim.lift_target >= (0.30 if gentle else 0.49) - 1e-6 or t - lift_t0 > 4.0:
                     lift_phase = "hold"
                     lift_t0 = t
                     lifted = p_md[2] > 0.15
@@ -869,21 +937,26 @@ def main():
                     quack("happy" if lifted else "worried")
             elif lift_phase == "hold":
                 sim.command(0.0, 0.0, 0.0)
-                if 1.8 < t - lift_t0 < 2.0 and "hold_quack" not in climb:
+                if 1.8 < t - lift_t0 < 2.0 and "hold_quack" not in climb and args.ending == "lift":
                     climb["hold_quack"] = True
                     quack("quack", 1.1)
-                if t - lift_t0 > 4.0:
+                if t - lift_t0 > (4.0 if args.ending == "lift" else 2.5):
                     lift_phase = "lower"
                     lift_t0 = t
             elif lift_phase == "lower":
-                sim.command(0.0, 0.0, -0.4)                             # gently down
+                sim.command(0.0, 0.0, -0.4 if args.ending == "lift" else -1.0)     # lift: gently down
                 if sim.lift_target <= 0.0 or t - lift_t0 > 6.0:
                     lift_phase = "back"
                     lift_t0 = t
                     event(t, f"fork down; duck z={p_md[2]:.3f} tilt={duck.tilt(data):.0f}")
             elif lift_phase == "back":
-                sim.command(-0.15, 0.0, 0.0)                            # slowly, until the tines are clear
-                if t - lift_t0 > 6.0:
+                if args.ending == "lift":
+                    sim.command(-0.15, 0.0, 0.0)                        # slowly, until the tines are clear of the duck
+                    done_back = dist_bz > 2.0 or t - lift_t0 > 25.0
+                else:
+                    sim.command(-0.25, 0.0, 0.0)                        # take 5
+                    done_back = t - lift_t0 > 2.5
+                if done_back:
                     sim.command(0, 0, 0)
                     lift_phase = "wait"
                     lift_t0 = t
@@ -904,7 +977,7 @@ def main():
                     climb["end_quack"] = True
                     quack("happy")
                     event(t, "duck is on its feet; happy")
-                if (duck.mode == "STAND" and t - lift_t0 > 8.0) or t - lift_t0 > 16.0:
+                if (duck.mode == "STAND" and t - lift_t0 > 8.0) or t - lift_t0 > 45.0:
                     set_stage(t, "END")
         if stage == args.until and args.until != "END":
             set_stage(t, "END")

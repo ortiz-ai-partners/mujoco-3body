@@ -27,7 +27,7 @@ STAGE_XML = OUT_DIR / "v6_stage_built.xml"
 MD_SEAT = (1.22, -2.10, math.pi / 2)        # where the duck sits in the story, facing the ramp
 
 
-def run(dy, lift_h, tracks_mod, mode="tip", height=0.49, back_speed=0.25, hold=2.5, side="east"):
+def run(dy, lift_h, tracks_mod, mode="tip", height=0.49, back_speed=0.25, hold=2.5, side="east", standing=False):
     """mode 'tip': the story's original sequence (full-rate lift to 0.49, back at 0.25).
     mode 'lift': the gentle one (ゆうころ 10/27: lifting the duck is the heart-warming ending) -
     lift at 0.6 rate to `height`, hold, lower at 0.4 rate, back off at `back_speed`."""
@@ -52,7 +52,7 @@ def run(dy, lift_h, tracks_mod, mode="tip", height=0.49, back_speed=0.25, hold=2
     mujoco.mj_forward(model, data)
 
     md_every = round(MD_CONTROL_DT / model.opt.timestep)
-    stats = {"mode": mode, "from": side, "dy": dy, "lift": lift_h, "height": height, "back": back_speed,
+    stats = {"mode": mode, "from": side, "standing": standing, "dy": dy, "lift": lift_h, "height": height, "back": back_speed,
              "max_tilt": 0.0, "max_z": 0.0, "fell_at": None, "up_at": None, "events": []}
     gentle = mode == "lift"
     start = duck.pos(data).copy()
@@ -80,9 +80,10 @@ def run(dy, lift_h, tracks_mod, mode="tip", height=0.49, back_speed=0.25, hold=2
             sim.command(0, 0, 0)
             if t > 1.0:
                 phase, t0 = "sit_in", t
-                duck.use("sit")
-                duck.set_mode("SIT", t)
-                duck.sit.head[:] = (0.3, 0.5, 0, 0)
+                if not standing:                     # --standing: the duck stays on its feet (velstand, zero twist)
+                    duck.use("sit")
+                    duck.set_mode("SIT", t)
+                    duck.sit.head[:] = (0.3, 0.5, 0, 0)
         elif phase == "sit_in":
             sim.command(0, 0, 1.0 if sim.lift_target < lift_h else 0.0)
             if t - t0 > 3.0:
@@ -153,12 +154,13 @@ def main():
     ap.add_argument("--hold", type=float, default=2.5)
     ap.add_argument("--from", dest="side", choices=["east", "south"], default="east",
                     help="east: at the duck's right side (the story so far); south: from behind the duck")
+    ap.add_argument("--standing", action="store_true", help="the duck stays standing (velstand) instead of sitting")
     args = ap.parse_args()
     _, _, tracks_mod = course_builder()
     for lift_h in args.lift:
         for dy in args.dy:
             s = run(dy, lift_h, tracks_mod, mode=args.mode, height=args.height, back_speed=args.back_speed,
-                    hold=args.hold, side=args.side)
+                    hold=args.hold, side=args.side, standing=args.standing)
             print(json.dumps({k: v for k, v in s.items() if k != "events"}), flush=True)
             for e in s["events"]:
                 print("   ", e, flush=True)
