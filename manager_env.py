@@ -64,11 +64,15 @@ LINES = {
     "CLEAR": "カニさん、道を空けてね",
 }
 RESULT_SLOTS = ["none", "docked", "lifted", "shoved", "missed", "tipped", "standing"]
-OBS_DIM = 16 + 2 + len(RESULT_SLOTS) + len(ACTIONS) + 2
+OBS_DIM = 16 + 3 + len(RESULT_SLOTS) + len(ACTIONS) + 2
 # Reward (per decision).  The job is recovery; the lift is the outcome ゆうころ prefers, so it carries a
 # bonus large enough that attempting it pays when the alignment makes success likely and not otherwise.
+# The course is the whole point of the scene (ゆうころ: コースを壊さないようにしなきゃ): a slope part or block
+# moved by more than course-builder's own 4 cm tolerance ends the episode as a failure.
 REWARD = {"success": 10.0, "per_second": -0.03, "lift_bonus": 6.0, "wasted": -1.0, "wait_seated": -0.5,
-          "collision": -3.0, "bz_tips_duck": -3.0, "timeout": -5.0}
+          "collision": -3.0, "bz_tips_duck": -3.0, "timeout": -5.0, "course_damaged": -10.0}
+COURSE_BODIES = ("up_1", "down_1", "block_1", "block_2")
+COURSE_TOLERANCE = 0.04                     # m, the same as SlopeAssembly's "Placed slope disturbed"
 GOOD_ALIGN = (0.02, math.radians(4.0))      # |e_lat| m, |skew| rad: "docked well enough to try"
 
 
@@ -93,6 +97,8 @@ class Scene:
         J = mujoco.mjtObj.mjOBJ_JOINT
         self.bz_bid = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "dozer")
         self.block2_bid = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "block_2")
+        self.course_bids = np.array([mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, n) for n in COURSE_BODIES])
+        self.up1_xy = self.data.xpos[self.course_bids[0]][:2].copy()      # the up-ramp: the rescue happens at its foot
         self.bz_root = int(self.model.body_rootid[self.bz_bid])
         self.md_root = int(self.model.body_rootid[self.duck.bid])
         self.jp_root = int(self.model.body_rootid[self.crab.bid])
@@ -188,6 +194,9 @@ class Scene:
             self.fell_in_skill = True
         if robots_in_contact(self.model, self.data, self.jp_root, self.bz_root):
             self.bz_crab_contact_ticks += 1
+        if self.course_ref is not None:
+            moved = np.linalg.norm(self.data.xpos[self.course_bids][:, :2] - self.course_ref, axis=1)
+            self.course_damage = max(self.course_damage, float(moved.max()))
         if np.any(np.isnan(self.data.qpos)):
             raise FloatingPointError("NaN in qpos")
 
@@ -215,6 +224,7 @@ class Scene:
         self.data.time = 0.0
         self.t, self.sub_k = 0.0, 0
         self.falls = self.bz_crab_contact_ticks = 0
+        self.course_ref, self.course_damage = None, 0.0
         self.fell_in_skill = False
         self.attempts = 0
         self.docked = False
@@ -263,6 +273,8 @@ class Scene:
         d.use("sit"); d.set_mode("SIT", self.t); d.sit.twist[:] = (1.0, 0.0, 0.0); d.sit.head[:] = (0.3, 0.4, 0, 0)
         self.run(3.0)
         self.falls = self.bz_crab_contact_ticks = 0                      # nothing before the first decision counts
+        self.course_ref = self.data.xpos[self.course_bids][:, :2].copy()  # the course as built: must not move from here
+        self.course_damage = 0.0
         self.t0_episode = self.t
         return self.observation()
 
@@ -434,8 +446,20 @@ class Scene:
         self.attempts += 1
         self.docked = False
         start_xy, yaw_d = self.duck_pose()
-        right = -left_of(yaw_d)
-        approach = start_xy + 1.9 * right
+        # The duck sits 14 cm from the ramp's toe, so the tines must never point at the ramp when they pass
+        # the duck (ゆうころ: コースを壊さないようにしなきゃ; the first try from the south shoved up_1 by 9 cm).
+        # Candidates around the duck; keep those whose tine direction is not toward the ramp and whose start
+        # is clear of it; prefer the duck's front (a genuinely different method from the lift from behind).
+        f, l = unit(yaw_d), left_of(yaw_d)
+        to_ramp = self.up1_xy - start_xy
+        to_ramp = to_ramp / max(float(np.linalg.norm(to_ramp)), 1e-6)
+        candidates = []
+        for p in (start_xy + 1.9 * f, start_xy + 1.9 * l, start_xy - 1.9 * l, start_xy - 1.9 * f):
+            d = start_xy - p
+            d = d / float(np.linalg.norm(d))
+            if float(d @ to_ramp) < 0.5 and float(np.linalg.norm(p - self.up1_xy)) > 1.6:
+                candidates.append(p)
+        approach = candidates[0] if candidates else start_xy + 1.9 * f
         nav = make_navigator(self.sim, [[float(approach[0]), float(approach[1])]])
         t_end = self.t + max_s
         phase, t0 = "navigate", self.t
@@ -539,6 +563,7 @@ class Scene:
             float(crel @ f) / 3.0, float(crel @ l) / 3.0,                    # crab in the duck's frame
             float(self.crab_in_path()), float(np.linalg.norm(crab_xy - bz_xy)) / 3.0,
             float(np.clip(e_lat / 0.3, -2.0, 2.0)), float(self.docked),      # alignment to the docking line, docked?
+            min(self.course_damage, COURSE_TOLERANCE) / COURSE_TOLERANCE,      # how far the course has been nudged
         ]
         res = [0.0] * len(RESULT_SLOTS)
         res[RESULT_SLOTS.index(self.last_result if self.last_result in RESULT_SLOTS else "none")] = 1.0
@@ -615,7 +640,8 @@ class ManagerEnv(gym.Env):
             if not crab_blocked:
                 wasted += -REWARD["wasted"]
             result = s.skill_clear()
-        success = s.duck_standing() and s.confirm_standing(3.0)
+        damaged = s.course_damage > COURSE_TOLERANCE
+        success = (not damaged) and s.duck_standing() and s.confirm_standing(3.0)
         duration = s.t - t_start
         timeout = (s.t - s.t0_episode) >= self.max_episode_s
         collisions = 1.0 if (s.bz_crab_contact_ticks - contact0) > 5 else 0.0
@@ -624,7 +650,9 @@ class ManagerEnv(gym.Env):
                   + REWARD["bz_tips_duck"] * bz_tipped_duck)
         if result == "lifted":
             reward += REWARD["lift_bonus"]
-        if success:
+        if damaged:
+            reward += REWARD["course_damaged"]                             # the course is the point: hard failure
+        elif success:
             reward += REWARD["success"]
         elif timeout:
             reward += REWARD["timeout"]
@@ -636,14 +664,15 @@ class ManagerEnv(gym.Env):
                "duck_mode": s.duck.mode, "lifted_z": round(s.lifted_z, 3),
                "dock_e_lat": round(s.dock_e_lat, 3), "dock_skew": round(s.dock_skew, 3),
                "contact_lat_duck": round(s.contact_lat_duck, 3), "contact_skew": round(s.contact_skew, 3),
-               "draw": s.draw}
+               "course_damage_m": round(s.course_damage, 3), "course_damaged": bool(damaged), "draw": s.draw}
         s.decisions.append(rec)
         if self.log_path:
             with self.log_path.open("a", encoding="utf-8") as fh:
                 fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
-        terminated = bool(success)
-        truncated = bool(timeout and not success)
-        info = {"result": result, "bubble": bubble, "success": success, "wall_s": time.perf_counter() - self.wall0}
+        terminated = bool(success or damaged)
+        truncated = bool(timeout and not terminated)
+        info = {"result": result, "bubble": bubble, "success": success, "course_damaged": damaged,
+                "course_damage_m": s.course_damage, "wall_s": time.perf_counter() - self.wall0}
         return obs, float(reward), terminated, truncated, info
 
 
@@ -683,6 +712,7 @@ def run_episodes(env: ManagerEnv, policy, n, seed0=1000, verbose=True):
             steps += 1
             done = term or trunc
         rec = {"seed": seed0 + i, "return": round(total, 2), "steps": steps, "success": bool(info["success"]),
+               "course_damaged": bool(info.get("course_damaged", False)), "course_damage_m": round(float(info.get("course_damage_m", 0.0)), 3),
                "sim_s": round(env.scene.t - env.scene.t0_episode, 1), "wall_s": round(time.perf_counter() - t_wall, 1),
                "actions": [d["action"] for d in env.scene.decisions], "results": [d["result"] for d in env.scene.decisions],
                "draw": env.scene.draw}

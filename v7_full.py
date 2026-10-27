@@ -360,6 +360,7 @@ def main():
     lift_phase = None
     cheer = {"phase": "wait"}
     turnback = {"phase": "wait", "t0": 0.0}
+    course_ref, course_disturbed = None, {}
     RAMP_TEXT = {"try1": "坂に挑む（1 回目）", "back": "いったん後ずさり", "try2": "もう一回挑む（2 回目）",
                  "handover": "やっぱり無理…", "sit": "諦めて座り込む（sitstand）"}
 
@@ -494,6 +495,8 @@ def main():
                     event(t, "TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance")
             if pilot.done:
                 event(t, f"construction done: success={pilot.success} ({pilot.reason})")
+                course_ref = {n: data.xpos[mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, n)][:2].copy()
+                              for n in ("up_1", "down_1", "block_1", "block_2")}     # the course as built
                 if not pilot.success:                         # diagnostic: what did BZ touch?
                     G = mujoco.mjtObj.mjOBJ_GEOM
                     for i in range(data.ncon):
@@ -981,6 +984,13 @@ def main():
                     set_stage(t, "END")
         if stage == args.until and args.until != "END":
             set_stage(t, "END")
+        # the course must survive the rescue (ゆうころ): report any part nudged beyond course-builder's 4 cm
+        if course_ref is not None:
+            for n, p0 in course_ref.items():
+                moved = float(np.linalg.norm(data.xpos[mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, n)][:2] - p0))
+                if moved > 0.04 and n not in course_disturbed:
+                    course_disturbed[n] = round(moved, 3)
+                    event(t, f"COURSE DISTURBED: {n} moved {moved:.3f} m")
         if duck.mode != duck_prev_mode:
             if duck.mode == "FALLEN":
                 event(t, f"MD fell (tilt {duck.tilt(data):.0f}) at ({p_md[0]:+.2f},{p_md[1]:+.2f})")
@@ -1035,6 +1045,7 @@ def main():
     report = {"mujoco": mujoco.__version__, "sim_seconds": round(float(data.time), 2),
               "construction": {"success": bool(pilot.success), "reason": pilot.reason,
                                "parts": pilot.results, "rise_m": pilot.max_rise, "surfaces": len(pilot.touched)},
+              "course_disturbed": course_disturbed,
               "events": events, "md_events": duck.events, "jp_events": crab.events, "chirps": chirps.events}
     if video is not None:
         size = video.close()
