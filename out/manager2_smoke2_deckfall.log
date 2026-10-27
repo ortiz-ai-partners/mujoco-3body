@@ -1,0 +1,47 @@
+{"seed": 1005, "scenario": "deck_fallen", "crab": "behind", "return": 9.52, "steps": 2, "success": true, "landed": true, "falls": 0, "pushes": 0, "course_damaged": false, "course_damage_m": 0.0, "sim_s": 16.0, "wall_s": 12.6, "actions": ["WAIT", "WALK_ON"], "results": ["waited", "crossed"], "stage_end": "north", "draw": {"scenario": "deck_fallen", "dx": 0.05166744508663243, "dy": -0.025525916595867545, "yaw_err_deg": 2.7711609724099713, "gap": 0.925656726044839, "lat": 0.1430166010359121, "side": -1.0, "wrong_yaw_deg": 179.10530333803925, "any_yaw_deg": 258.05776860056295, "crab": "behind"}}
+{
+ "episodes": 1,
+ "crossing_rate": 1.0,
+ "landing_rate": 1.0,
+ "median_time_to_cross_s": 16.0,
+ "mean_return": 9.52,
+ "mean_steps": 2.0,
+ "mean_falls": 0.0,
+ "mean_pushes": 0.0,
+ "course_damaged": 0,
+ "mean_wall_s": 12.6,
+ "action_counts": {
+  "WAIT": 1,
+  "SEAT": 0,
+  "PUSH": 0,
+  "BACK_OFF": 0,
+  "STANDUP": 0,
+  "WALK_ON": 1
+ },
+ "by_scenario": {
+  "toe_seated_ok": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_seated_wrong": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_standing": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_fallen": {
+   "n": 0,
+   "crossed": 0
+  },
+  "deck_seated": {
+   "n": 0,
+   "crossed": 0
+  },
+  "deck_fallen": {
+   "n": 1,
+   "crossed": 1
+  }
+ }
+}

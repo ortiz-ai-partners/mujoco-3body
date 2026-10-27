@@ -1,0 +1,47 @@
+{"seed": 2001, "scenario": "deck_seated", "crab": "touching", "return": -13.24, "steps": 60, "success": false, "landed": true, "falls": 1, "pushes": 1, "course_damaged": false, "course_damage_m": 0.011, "sim_s": 241.4, "wall_s": 63.8, "actions": ["PUSH", "BACK_OFF", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT"], "results": ["fell", "cleared", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited"], "stage_end": "deck", "draw": {"scenario": "deck_seated", "dx": -0.03555305828649774, "dy": -0.0029879693739102847, "yaw_err_deg": 9.24296901106026, "gap": 0.7443905230489548, "lat": -0.04878389986467295, "side": 1.0, "wrong_yaw_deg": 259.23131402429266, "any_yaw_deg": 79.23778681935498, "deck_y": 0.04606156091264774, "crab": "touching"}}
+{
+ "episodes": 1,
+ "crossing_rate": 0.0,
+ "landing_rate": 1.0,
+ "median_time_to_cross_s": null,
+ "mean_return": -13.24,
+ "mean_steps": 60.0,
+ "mean_falls": 1.0,
+ "mean_pushes": 1.0,
+ "course_damaged": 0,
+ "mean_wall_s": 63.8,
+ "action_counts": {
+  "WAIT": 58,
+  "SEAT": 0,
+  "PUSH": 1,
+  "BACK_OFF": 1,
+  "STANDUP": 0,
+  "WALK_ON": 0
+ },
+ "by_scenario": {
+  "toe_seated_ok": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_seated_wrong": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_standing": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_fallen": {
+   "n": 0,
+   "crossed": 0
+  },
+  "deck_seated": {
+   "n": 1,
+   "crossed": 0
+  },
+  "deck_fallen": {
+   "n": 0,
+   "crossed": 0
+  }
+ }
+}

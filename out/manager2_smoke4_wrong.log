@@ -1,0 +1,47 @@
+{"seed": 1003, "scenario": "toe_seated_wrong", "crab": "behind", "return": -10.26, "steps": 38, "success": false, "landed": true, "falls": 1, "pushes": 1, "course_damaged": false, "course_damage_m": 0.01, "sim_s": 241.9, "wall_s": 102.8, "actions": ["SEAT", "PUSH", "BACK_OFF", "STANDUP", "WALK_ON", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT", "WAIT"], "results": ["seated", "pushed_up", "cleared", "standing", "walked", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited", "waited"], "stage_end": "deck", "draw": {"scenario": "toe_seated_wrong", "dx": -0.029195302773741345, "dy": -0.0006384807373378404, "yaw_err_deg": 3.215831149683705, "gap": 0.8884507877542346, "lat": 0.06692936044190304, "side": -1.0, "wrong_yaw_deg": 207.31136477948374, "any_yaw_deg": 349.4077605043461, "deck_y": -0.18065636137165503, "crab": "behind"}}
+{
+ "episodes": 1,
+ "crossing_rate": 0.0,
+ "landing_rate": 1.0,
+ "median_time_to_cross_s": null,
+ "mean_return": -10.26,
+ "mean_steps": 38.0,
+ "mean_falls": 1.0,
+ "mean_pushes": 1.0,
+ "course_damaged": 0,
+ "mean_wall_s": 102.8,
+ "action_counts": {
+  "WAIT": 33,
+  "SEAT": 1,
+  "PUSH": 1,
+  "BACK_OFF": 1,
+  "STANDUP": 1,
+  "WALK_ON": 1
+ },
+ "by_scenario": {
+  "toe_seated_ok": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_seated_wrong": {
+   "n": 1,
+   "crossed": 0
+  },
+  "toe_standing": {
+   "n": 0,
+   "crossed": 0
+  },
+  "toe_fallen": {
+   "n": 0,
+   "crossed": 0
+  },
+  "deck_seated": {
+   "n": 0,
+   "crossed": 0
+  },
+  "deck_fallen": {
+   "n": 0,
+   "crossed": 0
+  }
+ }
+}

@@ -224,6 +224,7 @@ def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.
 
 
 def main():
+    global LANE_X
     ap = argparse.ArgumentParser()
     ap.add_argument("--crab-vx", type=float, nargs="+", default=[0.3, 0.5])
     ap.add_argument("--duck-vx", type=float, default=0.3)
@@ -234,7 +235,9 @@ def main():
     ap.add_argument("--face-crab", action="store_true", help="the duck sits facing the crab (its lean goes uphill)")
     ap.add_argument("--duck-pitch", type=float, nargs="+", default=[0.0], help="body pitch command while pushed")
     ap.add_argument("--video", type=Path, help="record the first variant")
+    ap.add_argument("--lane-x", type=float, default=LANE_X, help="the push line (1.22 = the duck's ramp lane; 1.45 = course centre)")
     args = ap.parse_args()
+    LANE_X = args.lane_x
     i = 0
     for h in args.crab_height:
         for vx in args.crab_vx:

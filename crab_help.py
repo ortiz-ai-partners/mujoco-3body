@@ -44,7 +44,13 @@ TOE_Y = -2.0                       # the up-ramp's toe
 CREST_Y = -0.495                   # top edge of the up-ramp (landing surface z = 0.44)
 DECK_N_Y = 0.548                   # top edge of the down-ramp
 DOWN_TOE_Y = 2.05                  # the down-ramp's toe
-SEAT_Y = TOE_Y - 0.35              # where the duck sits to be pushed
+SEAT_Y = TOE_Y - 0.13              # where the duck sits to be pushed: 13 cm before the ramp's lip.  Seated 35 cm
+                                   # before it, the duck toppled at the lip in 20/20 pushes on 10/28 (its seated
+                                   # posture degrades while it slides); seated 15 cm before it, it climbed 3/3
+SEAT_TOL = 0.12                    # "seated at the seat" within this (m)
+PUSH_TO_Y = CREST_Y + 0.08         # the push ends once the duck sits on the landing.  Pushing it on past the seam of
+                                   # the two deck pieces (4 cm gap at y +0.02..+0.06) was tried on 10/28: the crab
+                                   # itself stalls where its body straddles the crest, so the duck walks the landing
 FACE_SOUTH = -math.pi / 2          # the duck faces the crab: back to the slope
 FACING_TOL = math.radians(15.0)
 CRAB_PUSH_VX = 0.3                 # the only speed that climbed (0.2 leaned and fell, 0.4 fell, 0.5 fell)
@@ -138,6 +144,13 @@ class Helpers:
     def duck_up(self):
         return self.duck.mode in ("STAND", "WALK", "WALK_ON", "TURN") and self.tilt() < 15.0
 
+    def at_seat(self):
+        p = self.duck_xyz()
+        return abs(p[0] - LANE_X) < SEAT_TOL and abs(p[1] - SEAT_Y) < SEAT_TOL
+
+    def seated_for_push(self):
+        return self.duck.mode == "SIT" and self.facing_ok() and self.at_seat()
+
     def crossed(self):
         return self.stage() == "north" and self.duck_up()
 
@@ -195,14 +208,29 @@ def skill_seat(h, max_s=32.0):
     for _ in range(int(1.0 / CONTROL_DT)):                   # on its feet: a moment to steady
         yield
     p = h.duck_xyz()
-    if h.stage() in ("toe", "beside") and float(np.linalg.norm(p[:2] - (LANE_X, SEAT_Y))) > 0.30:
+    if h.stage() in ("toe", "beside") and not h.at_seat():
         goals = [(LANE_X, SEAT_Y)]
         if h.stage() == "beside":                            # off the course's side: round its foot, never up its side
             side = 1.0 if p[0] >= LANE_X else -1.0
-            goals.insert(0, (LANE_X + 0.9 * side, SEAT_Y - 0.1))
-        for g in goals:
-            d.walk_to(g, now(h), stop_dist=0.22)
-            while d.mode in ("WALK", "FALLEN") and now(h) - t0 < max_s - 9.0:
+            goals.insert(0, (LANE_X + 0.9 * side, SEAT_Y - 0.2))
+        for i, g in enumerate(goals):
+            tol = 0.25 if i < len(goals) - 1 else 0.07       # the seat itself precisely: the push needs the lip close
+            if float(np.linalg.norm(h.duck_xyz()[:2] - g)) <= tol:
+                continue
+            d.use("vel")
+            d.set_mode("WALK_ON", now(h))                    # steered here each tick, stops within `tol`
+            while now(h) - t0 < max_s - 9.0:
+                if d.mode == "STAND":
+                    d.set_mode("WALK_ON", now(h))
+                if d.mode == "WALK_ON":
+                    dist, _ = d.steer(h.data, g, vx=0.3)
+                    if dist <= tol:
+                        break
+                yield
+            if d.mode in ("WALK_ON", "WALK"):
+                d.pol.twist[:] = 0
+                d.set_mode("STAND", now(h))
+            for _ in range(int(0.6 / CONTROL_DT)):
                 yield
     d.use("vel")
     d.set_mode("TURN", now(h))
@@ -242,10 +270,12 @@ def skill_seat(h, max_s=32.0):
     return "seated" if (d.mode == "SIT" and h.facing_ok() and h.tilt() < 25.0) else "nothing"
 
 
-def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX):
+def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_vx=None, duck_pitch=0.0, lip_pause=False):
     """The crab gets behind the duck in the lane (swinging out to the side if it is in front), closes in at
     0.12 m/s until it touches, pushes at `vx` until the duck is on the landing, then a gentle push until the
-    duck sits upright.  Result: pushed_up / fell / stalled / slipped / nothing (never pushes a fallen duck)."""
+    duck sits upright.  Result: pushed_up / fell / stalled / slipped / nothing (never pushes a fallen duck).
+    start: the first phase (experiments); gate: "far" = the experiment's rule (0.12 only while more than
+    0.45 m behind the duck), "contact" = `vx` only while touching."""
     d, c = h.duck, h.crab
     t0 = now(h)
     if d.mode == "FALLEN":
@@ -255,9 +285,9 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX):
     if c.mode != "WALK":
         c.set_mode("WALK", now(h), h.model)
     c.loco.posture[3] = 0.0                                  # neutral body height: the only height that climbs
-    phase, t_phase = "behind", now(h)
+    phase, t_phase = start, now(h)
     y_best, t_best = h.duck_xyz()[1], now(h)
-    settle_t0 = None
+    lip_done = h.duck_xyz()[1] > TOE_Y - 0.10
     while now(h) - t0 < max_s:
         hold_seated(h)
         h.push_phase = phase                                 # for the logs: where a push ended
@@ -279,6 +309,8 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX):
             beside_course = (TOE_Y - 0.3 < q[1] < DOWN_TOE_Y + 0.3) and abs(q[0] - LANE_X) > 0.45
             if beside_course:                                # on the floor beside the course: round its foot first
                 dist, _ = c.steer(h.data, (LANE_X + 0.9 * side, TOE_Y - 0.9), 0.3)
+            elif q[1] < p[1] - 0.25 and abs(q[0] - tx) < 0.35:   # already behind it (touching or near): just square up
+                phase, t_phase = "align", now(h)
             elif q[1] > p[1] - 0.30 and p[1] < TOE_Y + 0.1:  # in front of / beside the duck at the foot: swing out
                 dist, _ = c.steer(h.data, (LANE_X + 0.85 * side, p[1] - 0.75), 0.3)
             elif q[1] > p[1] - 0.30:                         # on the course ahead of the duck: back down past it
@@ -297,10 +329,10 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX):
             # speed beyond 0.4 rad of bearing error) and the push stalls (smoke 10/28, seeds 1000/1002).
             e_yaw = wrap(math.pi / 2 - c.yaw(h.data))
             e_lat = tx - q[0]                                # + : the line is to the crab's right (it faces north)
-            e_fwd = (p[1] - 0.60) - q[1]
-            c.loco.set_command(float(np.clip(1.0 * e_fwd, -0.15, 0.15)), float(np.clip(-1.5 * e_lat, -0.15, 0.15)),
+            e_fwd = max(0.0, (p[1] - 0.60) - q[1])           # never backs up here: closer than 0.6 m is fine
+            c.loco.set_command(float(np.clip(1.0 * e_fwd, 0.0, 0.15)), float(np.clip(-1.5 * e_lat, -0.15, 0.15)),
                                float(np.clip(3.0 * e_yaw, -1.0, 1.0)))
-            if abs(e_yaw) < 0.08 and abs(e_lat) < 0.03 and abs(e_fwd) < 0.15:
+            if abs(e_yaw) < 0.08 and abs(e_lat) < 0.03 and e_fwd < 0.15:
                 phase, t_phase = "approach", now(h)
             elif now(h) - t_phase > 15.0:
                 c.loco.set_command(0, 0, 0)
@@ -315,12 +347,33 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX):
                 c.loco.set_command(0, 0, 0)
                 yield from _hold(h, 0.5)
                 return "stalled"
+        elif phase == "pause":                               # a fresh approach-then-push right at the ramp's lip
+            c.loco.set_command(0, 0, 0)
+            if now(h) - t_phase > 1.0:
+                phase, t_phase = "approach", now(h)
+        elif phase == "push" and lip_pause and not lip_done and p[1] > TOE_Y - 0.09:
+            # (experiment 10/28, off by default: a stop-and-re-approach at the lip did not save a push that had
+            # started 0.35 m before it - 6/6 still toppled.  What matters is how far the seated duck slides on
+            # the flat before the lip: see SEAT_Y)
+            lip_done = True
+            phase, t_phase = "pause", now(h)
+            c.loco.set_command(0, 0, 0)
         elif phase == "push":
-            # push at `vx` only while in contact; after losing contact close in again at 0.12 (the experiment's
-            # rule).  Keeping 0.3 through a lost contact rammed the duck at the ramp's lip: 8/8 toppled at
-            # y -1.95 in the 10/28 sweep, whatever the facing or the lateral offset
-            c.steer(h.data, (tx, p[1] + 0.15), vx if h.touching() else 0.12)
-            if p[1] > CREST_Y + 0.07 and p[2] > 0.45:
+            if gate == "far":                                # the experiment's rule
+                v = 0.12 if (not h.touching() and q[1] < p[1] - 0.45) else vx
+            else:
+                v = vx if h.touching() else 0.12
+            if toe_vx is not None and p[1] < TOE_Y + 0.12:   # creep over the ramp's lip
+                v = min(v, toe_vx)
+            if d.mode == "SIT":
+                d.sit.body[4] = duck_pitch                   # body pitch command while pushed (experiments)
+            # (no burst over the crest: the crab's 0.8 m/s push-through moved the far ramp 7 cm in one run and
+            # toppled the seated duck on the landing in another, 10/28; the push ends at the landing's edge)
+            c.steer(h.data, (tx, p[1] + 0.15), v)
+            # keep pushing across the landing until the duck is past the seam between the two deck pieces: the
+            # pieces stand 4 cm apart there (raycast 10/28: floor at y +0.02..+0.06) and a walking duck's foot
+            # drops into the slot - it tripped at y +0.07/+0.13 in every run and once could not get up
+            if p[1] > PUSH_TO_Y and p[2] > 0.45:
                 phase, t_phase = "settle", now(h)
             if p[1] > y_best + 0.03:
                 y_best, t_best = p[1], now(h)
@@ -333,12 +386,15 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX):
                 yield from _hold(h, 0.5)
                 return "slipped"
         elif phase == "settle":
+            if d.mode == "SIT":
+                d.sit.body[4] = 0.0
             c.steer(h.data, (tx, p[1] + 0.15), 0.12)         # a last gentle push until it sits upright
             if (h.tilt() < 15.0 and now(h) - t_phase > 1.0) or now(h) - t_phase > 4.0:
                 c.loco.set_command(0, 0, 0)
                 yield from _hold(h, 0.5)
                 return "pushed_up"
         yield
+    d.sit.body[4] = 0.0
     c.loco.set_command(0, 0, 0)
     yield from _hold(h, 0.5)
     return "stalled"
@@ -480,16 +536,21 @@ def rule_action(h, book):
     stage = h.stage()
     close = h.touching() or h.crab_dist() < 0.5
     if d.mode == "FALLEN":
-        return ACTIONS.index("BACK_OFF" if close else "WAIT")
+        if close and not (book.last_action == ACTIONS.index("BACK_OFF") and book.last_result == "stalled"):
+            return ACTIONS.index("BACK_OFF")
+        return ACTIONS.index("WAIT")
     if stage == "north":
         return ACTIONS.index("WAIT")
     if stage in ("deck", "ramp_down"):
         if d.mode == "SIT":
-            return ACTIONS.index("BACK_OFF" if close else "STANDUP")
+            pushed_and_stalled = book.last_action == ACTIONS.index("PUSH") and book.last_result in ("stalled", "slipped")
+            if h.duck_xyz()[1] < PUSH_TO_Y - 0.05 and stage == "deck" and not pushed_and_stalled:
+                return ACTIONS.index("PUSH")                 # seated short of the seam: the crab pushes it past
+            return ACTIONS.index("BACK_OFF" if close else "STANDUP")   # (or: walk it across after a stalled push)
         return ACTIONS.index("WALK_ON")
     # at the foot, on the up-ramp, or beside the course
     if book.last_result in ("stalled", "slipped") and close:
         return ACTIONS.index("BACK_OFF")
-    if d.mode == "SIT" and h.facing_ok() and stage in ("toe", "ramp_up"):
-        return ACTIONS.index("PUSH")
+    if d.mode == "SIT" and h.facing_ok() and (h.at_seat() or stage == "ramp_up"):
+        return ACTIONS.index("PUSH")                         # seated at the lip (or already on the ramp), facing the crab
     return ACTIONS.index("SEAT")

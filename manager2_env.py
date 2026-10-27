@@ -31,8 +31,8 @@ import mujoco
 import numpy as np
 from gymnasium import spaces
 
-from crab_help import (ACTIONS, CREST_Y, FACE_SOUTH, LANE_X, OBS_DIM, RESULT_SLOTS, SEAT_Y, SKILLS, STAGES, TOE_Y,
-                       Helpers, bubble_line, check_seated_fall, hold_seated, observation, rule_action)
+from crab_help import (ACTIONS, CREST_Y, DECK_N_Y, FACE_SOUTH, LANE_X, OBS_DIM, RESULT_SLOTS, SEAT_Y, SKILLS, STAGES,
+                       TOE_Y, Helpers, bubble_line, check_seated_fall, hold_seated, observation, rule_action)
 from v6_common import OUT_DIR, course_builder
 from v6_phase4_full import ArenaSim
 from v6_robots import build_arena
@@ -229,7 +229,9 @@ class Scene:
         draw = {"scenario": pick(rng, SCENARIOS), "dx": float(rng.uniform(-0.06, 0.06)), "dy": float(rng.uniform(-0.06, 0.06)),
                 "yaw_err_deg": float(rng.uniform(-10, 10)), "gap": float(rng.uniform(0.55, 1.0)),
                 "lat": float(rng.uniform(-0.15, 0.15)), "side": float(rng.choice([-1.0, 1.0])),
-                "wrong_yaw_deg": float(rng.uniform(40, 320)), "any_yaw_deg": float(rng.uniform(0, 360))}
+                "wrong_yaw_deg": float(rng.uniform(40, 320)), "any_yaw_deg": float(rng.uniform(0, 360)),
+                "deck_y": float(rng.choice([rng.uniform(CREST_Y + 0.12, -0.10), rng.uniform(0.16, DECK_N_Y - 0.22)]))}
+        # (on the landing, but never seated on the 4 cm seam between its two pieces, y +0.02..+0.06)
         draw["crab"] = pick(rng, CRAB_SPOTS_DECK if draw["scenario"].startswith("deck") else CRAB_SPOTS_TOE)
         if hard:
             draw.update(hard)
@@ -237,7 +239,7 @@ class Scene:
         sc = draw["scenario"]
         on_deck = sc.startswith("deck")
         if on_deck:
-            duck_xy = np.array([LANE_X + draw["dx"], CREST_Y + 0.14 + draw["dy"]])
+            duck_xy = np.array([LANE_X + draw["dx"], draw["deck_y"]])
             z_floor = 0.44
         else:
             duck_xy = np.array([LANE_X + draw["dx"], SEAT_Y + draw["dy"]])
@@ -272,7 +274,9 @@ class Scene:
         self.teleport("jp", crab_xy, yaw_c, z=ramp_z(crab_xy[1]) + 0.115 + (0.03 if on_incline else 0.0),
                       pitch=(-SLOPE * math.cos(yaw_c - math.pi / 2)) if on_incline else 0.0)
         mujoco.mj_forward(self.model, self.data)
-        c.set_mode("WALK", self.t, self.model)
+        # the crab holds its home pose (PD) until a skill walks it, as in the experiment; standing under the
+        # locomotion policy with a zero command for the 4 s of the duck's sit changed its state enough that
+        # every push then toppled the duck at the ramp's lip (sweeps 10/28: 0/14 vs the experiment's 2/2)
         c.loco.set_command(0, 0, 0)
         if fallen:
             d.resume, d.fell_at, d.upright_since = "STAND", self.t, None
@@ -335,7 +339,7 @@ class ManagerEnv(gym.Env):
         t_start = s.t
         falls0 = s.falls
         stage0, mode0 = h.stage(), s.duck.mode
-        already_seated = s.duck.mode == "SIT" and h.facing_ok() and stage0 in ("toe", "ramp_up")
+        already_seated = h.seated_for_push() or (s.duck.mode == "SIT" and h.facing_ok() and stage0 == "ramp_up")
         result = s.run_skill(SKILLS[name](h))
         wasted = 0.0
         if name == "SEAT" and already_seated:
