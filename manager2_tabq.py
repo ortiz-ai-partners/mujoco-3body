@@ -99,13 +99,15 @@ def train(args):
 
 def evaluate(args):
     run_dir = RUNS / args.run
+    out_dir = RUNS / (args.out or args.run)                # --out keeps an earlier evaluation of the same table
+    out_dir.mkdir(parents=True, exist_ok=True)
     agent = TabQ.load(run_dir / "tabq.json")
-    env = ManagerEnv(seed=0, max_episode_s=args.max_episode_s, log_path=run_dir / "eval_decisions.jsonl")
+    env = ManagerEnv(seed=0, max_episode_s=args.max_episode_s, log_path=out_dir / "eval_decisions.jsonl")
     rng = np.random.default_rng(1)
     recs = run_episodes(env, lambda o, s: agent.act(state_key(s), 0.0, rng), args.episodes, seed0=args.seed0)
     report = {"tabq": summarize(recs)}
-    (run_dir / "eval_tabq.json").write_text(json.dumps(recs, ensure_ascii=False, indent=1), encoding="utf-8")
-    (run_dir / "eval_summary.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out_dir / "eval_tabq.json").write_text(json.dumps(recs, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out_dir / "eval_summary.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=1))
 
 
@@ -126,6 +128,7 @@ def main():
     e.add_argument("--episodes", type=int, default=30)
     e.add_argument("--seed0", type=int, default=5000)
     e.add_argument("--max-episode-s", type=float, default=240.0)
+    e.add_argument("--out", help="output directory under out/manager_runs/ (default: the run's own)")
     args = ap.parse_args()
     train(args) if args.cmd == "train" else evaluate(args)
 

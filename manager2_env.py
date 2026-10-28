@@ -219,6 +219,11 @@ class Scene:
         (scenario, crab, dx, dy, yaw_err_deg, gap, lat, ramp_y).  `scenarios` / `crab_spots_*` replace the default
         draw tables (continued training with more weight on rare starts; evaluation keeps the defaults)."""
         qpos, qvel, ctrl, act = self.init
+        # a full MjData reset first (10/28 noon): restoring only qpos/qvel/ctrl/act left the solver's warm start and
+        # the rest of MjData from the previous episode, so an episode's physics depended on the episodes run before
+        # it in the same process (seed 5009's first push: 66.0 s fresh, 63.8 s after seed 5008; with this reset 68.2 s
+        # either way).  Episodes are now independent and reproducible one by one - evaluation v3
+        mujoco.mj_resetData(self.model, self.data)
         self.data.qpos[:] = qpos
         self.data.qvel[:] = qvel
         self.data.ctrl[:] = ctrl
