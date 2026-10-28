@@ -70,7 +70,41 @@ SPEED = {"BUILD": 4.0, "FOLLOW_IN": 2.0, "RAMP": 2.0, "CLIMB": 1.0, "CALL": 1.0,
 
 MD_TEXT = {"STAND": "立位", "WALK": "歩行", "BACK": "後ずさり", "FALLEN": "転倒 → 自力で起き上がり中（velstand）",
            "SIT": "お座り（sitstand）", "CALL": "ブルドーザーを呼ぶ", "TURN": "向きを変える（velstand）",
-           "WALK_ON": "レーンを北へ歩く（velstand）"}
+           "WALK_ON": "レーンを北へ歩く（velstand）", "CHEER": "パタパタ（velstand の旋回＋首振り）"}
+
+# ── the goal celebration (ゆうころ 10/28 朝: 「坂を降り始めたらカニも後を追いかけて、ゴールで BZ もアームを上げて、
+#    パッカンもパタパタして、カニも腕を上げるダンス」) ──
+ARM_SLOTS = slice(0, 10)        # the crab's two front arms in the policies' wire order: LF_J0..J4, RF_J0..J4
+# the official dance keeps the claws low for its first 4 s and has both up (0.21 m) from 8 to 13 s (v7_test_cheer.py
+# --dance-only); at 12.4 s the dance is frozen - the policy's last joint targets are held - for the final "banzai".
+# (Writing that frame's joint angles as plain PD targets did not hold the arms up: without the policy's
+#  compensation the claws sagged to 0.07 m, test 2.)
+CHEER_DANCE_S = 12.4            # the official dance (its claws go up), then
+CHEER_HOLD_S = 3.0              # the pose held with the fork up and the duck flapping
+
+
+def cheer_tick(rel, duck, crab, sim, model, data, t):
+    """One control tick of the goal celebration (rel = seconds since it began).  BZ pumps its fork twice, then raises
+    it and keeps it up; the duck "flaps": velstand turns it left and right while its head bobs and rolls; the crab
+    does the official dance and then holds both arms up.  Policy commands and joint targets only (no external
+    forces).  Returns True once the celebration is over."""
+    if rel < 4.0:
+        sim.command(0.0, 0.0, 1.0 if (rel % 2.0) < 1.0 else -1.0)           # two pumps
+    else:
+        sim.command(0.0, 0.0, 1.0 if sim.lift_target < 0.5 else 0.0)        # up, and stays up
+    if duck.mode in ("STAND", "WALK", "TURN"):
+        duck.set_mode("CHEER", t)
+    if duck.mode == "CHEER":
+        wz = 1.0 * math.sin(2 * math.pi * 0.5 * rel)                        # a slow left-right twist
+        bob = 0.25 * math.sin(2 * math.pi * 2.5 * rel)                       # the head bobs ...
+        roll = 0.45 * math.sin(2 * math.pi * 2.5 * rel + math.pi / 2)       # ... and rolls: the flap
+        duck.cheer = (np.array([0.0, 0.0, wz], dtype=np.float32), np.array([bob, 0.15, 0.0, roll], dtype=np.float32))
+    if rel < CHEER_DANCE_S:
+        if crab.mode != "DANCE":
+            crab.set_mode("DANCE", t, model)
+    elif crab.mode != "FREEZE":
+        crab.set_mode("FREEZE", t, model)                                   # holds the dance's last targets: claws up
+    return rel >= CHEER_DANCE_S + CHEER_HOLD_S
 PLAY_TEXT = {"chase": "パッカンに近づく（locomotion）", "hop": "ぴょん！（jump）", "wander": "うろうろ（locomotion）",
              "rest": "ひと休み、パッカンを見る", "worry": "心配して離れて待つ", "to_watch": "見学位置へ",
              "watch": "見学位置へ", "watching": "見学中", "dance": "ダンス（公式 dance ポリシー）"}
@@ -156,6 +190,7 @@ class Duck:
         self.goal = None
         self.stop_dist = 0.25
         self.gaze = None
+        self.cheer = None                               # (twist, head) while CHEER (set by cheer_tick)
         self.fell_at = None
         self.upright_since = None
         self.resume = "STAND"
@@ -183,9 +218,10 @@ class Duck:
             new.last_action[:] = self.pol.last_action
             self.pol = new
 
-    def walk_to(self, xy, t, stop_dist=0.25):
+    def walk_to(self, xy, t, stop_dist=0.25, vx=0.3):
         self.goal = np.asarray(xy, dtype=float)
         self.stop_dist = stop_dist
+        self.walk_vx = vx
         self.set_mode("WALK", t)
 
     def steer(self, data, target_xy, vx=0.3):
@@ -222,7 +258,7 @@ class Duck:
                 self.upright_since = None
             return
         if self.mode == "WALK":
-            dist, err = self.steer(data, self.goal)
+            dist, err = self.steer(data, self.goal, vx=getattr(self, "walk_vx", 0.3))
             if dist < self.stop_dist:
                 self.pol.twist[:] = 0
                 self.set_mode("STAND", t)
@@ -232,7 +268,11 @@ class Duck:
             self.pol.twist[:] = (-0.3, 0.0, 0.0)
         elif self.mode == "TURN":
             pass                                        # twist set by the stage logic (turning in place)
-        if self.mode != "SIT":
+        elif self.mode == "CHEER":                      # the goal celebration: twist and head from cheer_tick
+            self.pol.twist[:] = self.cheer[0] if self.cheer is not None else 0.0
+        if self.mode == "CHEER" and self.cheer is not None:
+            self.pol.head[:] = self.cheer[1]
+        elif self.mode != "SIT":
             if self.gaze is not None:
                 self.look_at(data, self.gaze)
             else:
@@ -268,7 +308,7 @@ class Crab:
                 self.dance.reset(t_start=self.dance_start)
                 self.dance_k = 0
                 set_pd_gains(model, self.dance.act_ids, self.dance.kp, self.dance.kd)
-            elif self.mode in ("JUMP", "HOLD", "DANCE"):
+            elif self.mode in ("JUMP", "HOLD", "DANCE", "FREEZE"):
                 self.loco.reset()
                 set_pd_gains(model, self.loco.act_ids, 10.0, 0.5)
             self.events.append({"t": round(t, 2), "mode": mode})
@@ -296,6 +336,8 @@ class Crab:
             if self.dance_k % self.dance_every == 0:
                 self.dance.step(model, data)
             self.dance_k += 1
+        elif self.mode == "FREEZE":
+            pass                                        # the last joint targets stay (the celebration's final pose)
         else:
             self.loco.step(model, data)
 
@@ -318,6 +360,10 @@ def main():
                     help="who decides in the rescue: fixed rules, the PPO policy, or the learned Q table")
     ap.add_argument("--run", default="ppo2_small", help="out/manager_runs/<run>/ (ppo_manager.zip for ppo, tabq.json for tabq)")
     ap.add_argument("--rescue-max", type=float, default=240.0, help="simulated seconds the manager gets")
+    ap.add_argument("--finale", choices=["procession", "around"], default="procession",
+                    help="procession (ゆうころ 10/28 朝): once the duck starts down the far ramp the crab follows it, and at the "
+                         "goal BZ raises its fork, the duck flaps and the crab dances with its arms up; "
+                         "around (take 6/7): the crab backs down the up-ramp and walks round the course to the duck")
     args = ap.parse_args()
 
     app, slope_assembly, tracks_mod = course_builder()
@@ -396,7 +442,7 @@ def main():
         manager_name = "固定ルール"
     ret = {"route": []}
     mgr = {"gen": None, "n": 0, "name": "", "line": "", "decisions": [], "t0": 0.0, "t_dec": 0.0, "crossed": False}
-    cel = {"phase": "start", "route": [], "t_dance": 0.0}
+    cel = {"phase": "start", "route": [], "t_dance": 0.0, "following": False, "mark": (0.0, -9.0), "boost_until": -1.0}
     RAMP_TEXT = {"try1": "坂に挑む（1 回目）", "back": "いったん後ずさり", "try2": "もう一回挑む（2 回目）",
                  "handover": "やっぱり無理…", "sit": "諦めて座り込む（sitstand）"}
 
@@ -440,6 +486,24 @@ def main():
             return True
         return False
 
+    def crab_follow(t, keep=0.8, vmax=0.45):
+        """Procession finale: the crab walks the lane north behind the duck, its speed set by the gap (it stops `keep` m
+        behind), and pushes through at 0.8 m/s for 3 s when it stalls on the landing (the seams catch its feet) while
+        the duck is well ahead.  (Headless test 2: a "stall" counted while the crab was deliberately slow close behind
+        the duck sent it charging at 0.8 m/s into the duck's back at the far ramp's lip; the duck fell.)"""
+        q_md, q_jp = duck.pos(data), crab.pos(data)
+        gap = float(q_md[1] - q_jp[1])
+        vx = float(np.clip(0.8 * (gap - keep), 0.0, vmax))
+        if t < cel["boost_until"]:
+            vx = 0.8 if gap > 1.0 else vx                            # never charge at a duck closer than 1 m
+        elif vx < 0.2 or q_jp[1] > cel["mark"][1] + 0.03:
+            cel["mark"] = (t, float(q_jp[1]))                         # moving, or holding back on purpose: no stall
+        elif t - cel["mark"][0] > 2.5 and q_jp[2] > 0.45 and gap > 1.2:
+            cel["boost_until"] = t + 3.0
+            cel["mark"] = (t, float(q_jp[1]))
+            event(t, f"JP stalls on the landing at y={q_jp[1]:+.2f}; full speed 0.8 for 3 s")
+        crab.steer(data, (ch.LANE_X, q_jp[1] + 1.0), vx)
+
     def caption():
         p_md, p_jp = duck.pos(data), crab.pos(data)
         if stage == "BUILD":
@@ -472,9 +536,15 @@ def main():
                      else f"支配人（{manager_name}）：（観察中）  直前の結果 {book.last_result}")
             return ("v7 | 支配人AI〈アイランドマスター〉が次の一手を選ぶ ― 手助けは跳跳、物理のみ",
                     [line1, f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}  {h.stage()}  傾き {duck.tilt(data):3.0f}°   跳跳: {touch}  押し上げ {book.pushes} 回"])
-        if stage == "CELEBRATE":
-            return ("v7 | 3 体ともコースを渡った！ 跳跳の応援ダンス、BZ はフォークで万歳（固定プログラム）",
-                    [f"跳跳: {'応援ダンス（公式 dance ポリシー）' if cel['phase'] == 'dance' else '回り込んでパッカンのそばへ'}",
+        if stage == "CELEBRATE" or (stage == "END" and args.ending == "crab" and mgr["crossed"]):
+            jp_text = {"start": "…", "follow": "パッカンの後について坂を降りる（locomotion）", "gather": "パッカンの横へ",
+                       "face": "パッカンの方を向く", "descend": "坂を後ろ向きに降りる", "around": "回り込んでパッカンのそばへ",
+                       "dance": ("腕を上げて応援ダンス（公式 dance ポリシー）→ 両腕を上げて万歳" if args.finale == "procession"
+                                 else "応援ダンス（公式 dance ポリシー）")}
+            title = ("v7 | 3 体ともコースを渡った！ ゴールで三人そろって万歳（固定プログラム）" if args.finale == "procession"
+                     else "v7 | 3 体ともコースを渡った！ 跳跳の応援ダンス、BZ はフォークで万歳（固定プログラム）")
+            return (title,
+                    [f"跳跳: {jp_text.get(cel['phase'], cel['phase'])}",
                      f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}  北側の床 y={p_md[1]:+.2f}   BZ: {'フォーク万歳' if cel['phase'] == 'dance' else '見守る'}"])
         return (("v7 | BZ が後ろからフォークで持ち上げる、跳跳は応援ダンス ― 物理のみ" if args.ending == "lift"
                  else "v7 | BZ が戻ってきてフォークで持ち上げを試みる、跳跳は応援ダンス ― 物理のみ"),
@@ -514,6 +584,12 @@ def main():
             look = 0.5 * p_md + 0.5 * p_jp                                  # the crab-push experiment's framing
             look[2] = 0.2 + 0.5 * max(0.0, p_md[2] - 0.15)
             cam.aim(lookat=look, distance=2.6 + 0.5 * float(np.linalg.norm(p_md[:2] - p_jp[:2])), azimuth=15, elevation=-14)
+        elif stage == "CELEBRATE" and args.finale == "procession" and cel["following"]:
+            pts = [p_md, p_jp] if cel["phase"] == "follow" else [p_md, p_jp, p_bz]   # the procession, then the three
+            look = np.mean(pts, axis=0)
+            look[2] = 0.25
+            spread = max(float(np.linalg.norm(a[:2] - b[:2])) for a in pts for b in pts)
+            cam.aim(lookat=look, distance=2.4 + 0.6 * spread, azimuth=150, elevation=-18)
         elif stage == "CELEBRATE":
             look = 0.6 * p_md + 0.4 * p_bz
             look[2] = 0.2
@@ -874,12 +950,29 @@ def main():
                 event(t, f"MANAGER result: {mgr['name']} -> {result} (duck {duck.mode}/{h.stage()} at ({p_md[0]:+.2f},{p_md[1]:+.2f}) z={p_md[2]:.2f})")
                 if result == "pushed_up":
                     quack("happy")
-                if result == "crossed":
+                # crossed: WALK_ON says so, or the duck is on its feet on the north floor after any other skill (it
+                # fell on the far ramp, slid down and got up by itself: headless test 2 kept WAITing there until the
+                # time limit - the learning environment checks h.crossed() after every skill, so does the story now)
+                if result == "crossed" or (h.crossed() and not mgr["crossed"]):
                     mgr["crossed"] = True
                     quack("happy")
-                    event(t, f"DUCK CROSSED THE COURSE (y={p_md[1]:+.2f} z={p_md[2]:.3f}) - all three have crossed")
+                    event(t, f"DUCK CROSSED THE COURSE (y={p_md[1]:+.2f} z={p_md[2]:.3f}) - all three have crossed"
+                             + ("" if result == "crossed" else f" (on its feet on the north floor after {mgr['name']} -> {result})"))
                     set_stage(t, "CELEBRATE")
                     cel.update(phase="start")
+            # procession finale: once the duck walks on across the landing, the crab (in the lane behind it) follows
+            # 0.8 m behind, over the top and down the far ramp.  (Starting only at the far ramp's lip left the crab
+            # at the crest when the duck was already down: a 30 s gap, headless test 1.)
+            if (mgr["gen"] is not None and args.finale == "procession" and mgr["name"] == "WALK_ON" and duck.mode == "WALK_ON"
+                    and p_md[1] > ch.CREST_Y + 0.05
+                    and (cel["following"] or (abs(p_jp[0] - ch.LANE_X) < 0.4 and p_jp[1] < p_md[1]))):
+                if not cel["following"]:
+                    cel.update(following=True, mark=(t, float(p_jp[1])))
+                    if crab.mode != "WALK":
+                        crab.set_mode("WALK", t, model)
+                    cry("crab")
+                    event(t, f"JP follows the duck across the landing and down the far ramp (procession finale), {h.crab_dist():.2f} m behind")
+                crab_follow(t)
             if ch.check_seated_fall(h):
                 event(t, f"MD tipped over while seated (tilt {duck.tilt(data):.0f}); velstand takes over")
             if stage == "RESCUE" and t - mgr["t0"] > args.rescue_max:
@@ -887,37 +980,70 @@ def main():
                 set_stage(t, "END")
         elif stage == "CELEBRATE":
             if cel["phase"] == "start":
-                cel.update(phase="descend", route=[(2.8, -3.0), (2.9, 1.2), (p_md[0] + 0.9, p_md[1] - 0.1)])
-                if crab.mode != "WALK":
-                    crab.set_mode("WALK", t, model)
-                event(t, "JP backs down the ramp, goes round the course to the duck; then the cheering dance")
+                if args.finale == "procession" and not cel["following"] and p_jp[1] > ch.CREST_Y and abs(p_jp[0] - ch.LANE_X) < 0.4:
+                    cel.update(following=True, mark=(t, float(p_jp[1])))   # already past the crest in the lane: come down
+                    if crab.mode != "WALK":
+                        crab.set_mode("WALK", t, model)
+                if args.finale == "procession" and cel["following"]:
+                    cel["phase"] = "follow"
+                    event(t, "JP comes down the far ramp after the duck, which walks on toward BZ; the three meet at the goal")
+                else:
+                    cel.update(phase="descend", route=[(2.8, -3.0), (2.9, 1.2), (p_md[0] + 0.9, p_md[1] - 0.1)])
+                    if crab.mode != "WALK":
+                        crab.set_mode("WALK", t, model)
+                    event(t, "JP backs down the ramp, goes round the course to the duck; then the cheering dance")
+            elif cel["phase"] == "follow":                  # down the far ramp on the lane, 0.5 m behind the duck
+                if not cel.get("walked") and t - stage_t0 > 1.5 and duck.mode == "STAND":
+                    cel["walked"] = True                     # a few gentle steps on toward BZ: clears the ramp's foot for
+                    duck.walk_to((ch.LANE_X, 2.5), t, stop_dist=0.2, vx=0.2)   # the crab (walking off at once from the
+                    # ramp's last 8 cm at 0.3 m/s tripped it in headless test 3: tilt 74, up again in 1.6 s)
+                crab_follow(t, keep=0.5)
+                if (p_jp[1] > ch.DOWN_TOE_Y - 0.3 and p_jp[2] < 0.26) or t - stage_t0 > 40.0:
+                    cel.update(phase="gather", route=[(p_md[0] + 0.9, p_md[1] - 0.15)])
+                    event(t, f"JP is down the far ramp (y={p_jp[1]:+.2f} z={p_jp[2]:.2f}); goes to the duck's side")
             elif cel["phase"] == "descend":                 # straight back down the ramp's centre line, never off its side
                 if p_jp[2] < 0.13 and p_jp[1] < ch.TOE_Y - 0.3 or t - stage_t0 > 25.0:
                     crab.loco.set_command(0, 0, 0)
                     cel["phase"] = "around"
                 else:
                     ch.reverse_command(h)
-            elif cel["phase"] == "around":
-                if cel["route"] and crab_go(cel["route"][0], 0.5, stop=0.35):
+            elif cel["phase"] in ("around", "gather"):
+                if cel["route"] and crab_go(cel["route"][0], 0.5 if cel["phase"] == "around" else 0.4, stop=0.35):
                     cel["route"].pop(0)
                 if not cel["route"] or t - stage_t0 > 60.0:
                     cel["phase"] = "face"
             elif cel["phase"] == "face":
                 _, err = crab.steer(data, p_md[:2], 0.0)
                 if abs(err) < 0.2 or t - stage_t0 > 70.0:
-                    cel.update(phase="dance", t_dance=t)
-                    crab.set_mode("DANCE", t, model)
+                    cel.update(phase="dance", t_dance=t, last_cry=-9.0)
                     cry("crab")
                     quack("happy")
-                    event(t, "JP dances beside the duck (official dance policy); BZ raises its fork twice")
+                    if args.finale == "procession":
+                        event(t, "the three cheer at the goal: BZ's fork up, the duck flaps, the crab dances with its arms up")
+                    else:
+                        crab.set_mode("DANCE", t, model)
+                        event(t, "JP dances beside the duck (official dance policy); BZ raises its fork twice")
             elif cel["phase"] == "dance":
                 rel = t - cel["t_dance"]
-                if rel < 6.0:
-                    sim.command(0.0, 0.0, 1.0 if (rel % 3.0) < 1.5 else -1.0)      # fork up, down, up, down
+                if args.finale == "procession":
+                    if cheer_tick(rel, duck, crab, sim, model, data, t):
+                        duck.cheer = None
+                        if duck.mode == "CHEER":
+                            duck.set_mode("STAND", t)
+                        set_stage(t, "END")
+                    elif rel - cel["last_cry"] > 1.6:
+                        cel["last_cry"] = rel
+                        if int(rel / 1.6) % 2 == 0:
+                            quack("happy", float(rng.uniform(0.9, 1.15)))
+                        else:
+                            cry("crab")
                 else:
-                    sim.command(0.0, 0.0, -1.0 if sim.lift_target > 0 else 0.0)
-                if rel > 12.0:
-                    set_stage(t, "END")
+                    if rel < 6.0:
+                        sim.command(0.0, 0.0, 1.0 if (rel % 3.0) < 1.5 else -1.0)      # fork up, down, up, down
+                    else:
+                        sim.command(0.0, 0.0, -1.0 if sim.lift_target > 0 else 0.0)
+                    if rel > 12.0:
+                        set_stage(t, "END")
             if cel["phase"] != "dance":
                 sim.command(0, 0, 0)
             if duck.mode == "STAND":
