@@ -1,0 +1,1042 @@
+﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
+At line:1 char:368
++ ... joco_3body; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+timestep: parent has 0.005, child has 0.001, keeping parent value
+
+MuJoCo 3.11.0 | v7 full | dt=0.005 nq=90 nu=41
+  t=   0.00s  [BUILD] BZ UP
+  t=  10.0s [BUILD] BZ UP: CARRY @(+0.22,-0.75) MD(STAND) @(+4.10,+0.61) z=0.116 tilt= 0.7 JP(WALK) @(+4.46,+1.03) z=0.11 wall     1s
+  t=  16.26s  [BUILD] BZ RAISE_UP
+  t=  17.92s  [BUILD] BZ TO_DOWN
+  t=  20.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.64,-0.69) MD(WALK) @(+3.54,+0.64) z=0.120 tilt= 3.1 JP(WALK) @(+3.66,+1.35) z=0.11 wall     2s
+  t=  30.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.41,-0.71) MD(WALK) @(+3.72,+0.18) z=0.121 tilt= 4.0 JP(WALK) @(+3.56,+0.75) z=0.11 wall     3s
+  t=  40.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-3.11,-0.81) MD(WALK) @(+4.07,-0.52) z=0.118 tilt= 1.8 JP(WALK) @(+3.85,+0.03) z=0.11 wall     4s
+  t=  50.0s [BUILD] BZ TO_DOWN: FORWARD 2/2 @(-3.46,+0.45) MD(WALK) @(+3.50,-1.26) z=0.121 tilt= 2.9 JP(WALK) @(+3.93,-0.05) z=0.11 wall     5s
+  t=  57.46s  [BUILD] BZ PRECISE_LANE
+  t=  60.0s [BUILD] BZ PRECISE_LANE @(-3.38,+0.72) MD(WALK) @(+3.54,-0.66) z=0.118 tilt= 2.2 JP(JUMP) @(+3.53,+0.19) z=0.09 wall     6s
+  t=  65.82s  [BUILD] BZ ALIGN
+  t=  70.0s [BUILD] BZ ALIGN @(-3.39,+0.69) MD(STAND) @(+3.69,+0.09) z=0.116 tilt= 1.0 JP(JUMP) @(+3.99,+0.79) z=0.09 wall     7s
+  t=  75.56s  [BUILD] BZ RETREAT_FOR_ALIGNMENT
+  t=  79.12s  [BUILD] BZ LOWER
+  t=  80.0s [BUILD] BZ LOWER @(-4.51,+0.79) MD(WALK) @(+3.98,-0.57) z=0.119 tilt= 0.8 JP(WALK) @(+3.91,+0.02) z=0.11 wall     8s
+  t=  80.76s  [BUILD] BZ DOWN
+  t=  90.0s [BUILD] BZ DOWN: LIFT @(-2.75,+0.80) MD(WALK) @(+4.22,-1.15) z=0.120 tilt= 4.2 JP(WALK) @(+3.74,-0.37) z=0.11 wall     9s
+  t= 100.0s [BUILD] BZ DOWN: LOWER @(+0.23,+0.81) MD(WALK) @(+4.39,-0.32) z=0.120 tilt= 1.8 JP(WALK) @(+3.80,+0.26) z=0.11 wall    10s
+  t= 104.40s  [BUILD] BZ RAISE_DOWN
+  t= 106.06s  [BUILD] BZ TO_START
+  t= 106.06s  [BUILD] TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+  t= 106.06s  [BUILD] MD heads to the waiting spot by the course start; JP to its watch spot
+  t= 110.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.61,+0.91) MD(WALK) @(+4.41,+0.01) z=0.115 tilt= 2.0 JP(WALK) @(+4.34,-1.46) z=0.11 wall    11s
+  t= 120.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.39,+0.79) MD(WALK) @(+3.97,-0.85) z=0.118 tilt= 2.2 JP(WALK) @(+4.47,-1.88) z=0.11 wall    12s
+  t= 130.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.90,+0.61) MD(WALK) @(+3.56,-1.73) z=0.120 tilt= 3.0 JP(WALK) @(+4.48,-1.87) z=0.11 wall    13s
+  t= 140.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-1.08,+0.63) MD(STAND) @(+3.28,-2.37) z=0.116 tilt= 0.4 JP(WALK) @(+4.50,-1.85) z=0.11 wall    14s
+  t= 150.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-1.05,+0.87) MD(STAND) @(+3.28,-2.37) z=0.116 tilt= 0.4 JP(WALK) @(+4.51,-1.85) z=0.11 wall    15s
+  t= 160.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.91,-2.55) MD(STAND) @(+3.28,-2.37) z=0.116 tilt= 0.4 JP(WALK) @(+4.52,-1.85) z=0.11 wall    17s
+  t= 170.0s [BUILD] BZ TO_START: FORWARD 3/3 @(-1.08,-3.07) MD(STAND) @(+3.28,-2.37) z=0.116 tilt= 0.4 JP(WALK) @(+4.52,-1.85) z=0.11 wall    18s
+  t= 177.12s  [BUILD] BZ CROSS
+  t= 177.12s  [FOLLOW_IN] stage -> FOLLOW_IN
+  t= 180.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.43,-3.11) MD(WALK) @(+3.01,-2.47) z=0.121 tilt= 3.0 JP(WALK) @(+4.55,-1.84) z=0.11 wall    19s
+  t= 190.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.68,+0.17) MD(WALK) @(+2.10,-2.74) z=0.115 tilt= 0.9 JP(WALK) @(+4.15,-1.99) z=0.11 wall    20s
+  t= 196.80s  [FOLLOW_IN] construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+  t= 196.80s  [FOLLOW_IN] physics step -> 0.001
+  t= 197.24s  [RAMP] stage -> RAMP
+  t= 197.24s  [RAMP] MD: 坂に挑む（1 回目）
+  t= 197.26s  [RAMP] JP cheers the duck on with its dance, claws up (official dance policy)
+  t= 200.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.36,-2.73) z=0.118 tilt= 1.0 JP(DANCE) @(+2.70,-2.66) z=0.12 wall    21s
+  t= 210.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.24,-2.00) z=0.117 tilt= 1.7 JP(DANCE) @(+2.71,-2.65) z=0.14 wall    23s
+  t= 211.26s  [RAMP] MD: いったん後ずさり (reached y=-2.00, ramp toe -1.86)
+  t= 213.78s  [RAMP] MD: もう一回挑む（2 回目）
+  t= 220.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.21,-2.00) z=0.120 tilt= 3.1 JP(DANCE) @(+2.72,-2.65) z=0.11 wall    25s
+  t= 224.80s  [RAMP] MD: やっぱり無理… (reached y=-2.00)
+  t= 224.82s  [RAMP] JP pre-positions at the foot of its lane while the duck sits down
+  t= 225.42s  [RAMP] MD: 諦めて座り込む（sitstand）
+  t= 226.92s  [RAMP] MD: 首を振りながら「ぐわぁぁ？」
+  t= 229.64s  [CLIMB] stage -> CLIMB
+  t= 229.64s  [CLIMB] JP sets off from the foot of its lane
+  t= 229.66s  [CLIMB] JP passes beside the sitting duck and starts up the ramp
+  t= 230.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.21,-2.08) z=0.060 tilt= 6.4 JP(WALK) @(+1.88,-3.21) z=0.11 wall    27s
+  t= 236.86s  [CLIMB] JP on the crest (z=0.50); duck: ぐわぁぁ？
+  t= 240.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.21,-2.08) z=0.060 tilt= 7.9 JP(WALK) @(+1.72,-0.54) z=0.54 wall    29s
+  t= 245.22s  [CLIMB] JP stuck at the crest (y=-0.54 z=0.54); forward jump
+  t= 246.40s  [CLIMB] JP landed at y=-0.47 z=0.53
+  t= 249.26s  [CLIMB] JP over the top; duck looks around
+  t= 250.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.21,-2.08) z=0.060 tilt= 7.9 JP(WALK) @(+1.51,+0.97) z=0.43 wall    32s
+  t= 252.40s  [CLIMB] JP crossed the course and stops behind BZ (z=0.11)
+  t= 255.42s  [CALL] stage -> CALL
+  t= 256.94s  [CALL] JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+  t= 260.0s [CALL] BZ done @(+1.55,+3.08) MD(SIT) @(+1.21,-2.09) z=0.060 tilt= 4.0 JP(WALK) @(+2.70,+2.36) z=0.11 wall    34s
+  t= 260.44s  [RETURN] stage -> RETURN
+  t= 260.44s  [RETURN] JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+  t= 270.0s [RETURN] BZ done @(+1.55,+3.08) MD(SIT) @(+1.21,-2.08) z=0.060 tilt= 4.4 JP(WALK) @(+2.34,-3.06) z=0.11 wall    36s
+  t= 271.12s  [RESCUE] stage -> RESCUE
+  t= 271.12s  [RESCUE] the manager (PPO 方策（ppo2_v22）) takes over: duck SIT/toe at (+1.21,-2.08), crab at (+1.79,-2.99), 1.07 m
+  t= 271.14s  [RESCUE] MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 1.07 m, touching=False, last=none)
+  t= 280.0s [RESCUE] BZ done @(+1.55,+3.08) MD(TURN) @(+1.39,-2.14) z=0.119 tilt= 0.2 JP(WALK) @(+1.77,-2.99) z=0.11 wall    38s
+  t= 283.16s  [RESCUE] MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.06) z=0.06)
+  t= 283.18s  [RESCUE] MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 1.00 m, touching=False, last=seated)
+  t= 290.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.39,-2.06) z=0.060 tilt= 6.1 JP(WALK) @(+1.42,-2.38) z=0.11 wall    40s
+  t= 300.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.36,-1.78) z=0.124 tilt= 9.3 JP(WALK) @(+1.39,-2.02) z=0.13 wall    44s
+  t= 310.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.36,-1.63) z=0.164 tilt= 7.9 JP(WALK) @(+1.33,-1.87) z=0.15 wall    47s
+  t= 320.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.42,-1.26) z=0.273 tilt=10.4 JP(WALK) @(+1.38,-1.50) z=0.26 wall    51s
+  t= 330.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.49,-0.86) z=0.387 tilt= 7.2 JP(WALK) @(+1.44,-1.10) z=0.38 wall    55s
+  t= 340.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.53,-0.48) z=0.498 tilt=12.6 JP(WALK) @(+1.49,-0.72) z=0.49 wall    59s
+  t= 344.96s  [RESCUE] MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.55,-0.40) z=0.50)
+  t= 344.98s  [RESCUE] MANAGER #3: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.26 m, touching=False, last=pushed_up)
+  t= 345.76s  [RESCUE] MD tipped over while seated (tilt 62); velstand takes over
+  t= 345.76s  [RESCUE] MD fell (tilt 62) at (+1.55,-0.11)
+  t= 346.88s  [RESCUE] MD is back on its feet by itself (1.1 s)
+  t= 350.0s [RESCUE] BZ done @(+1.55,+3.08) MD(STAND) @(+1.63,-0.08) z=0.556 tilt= 0.8 JP(WALK) @(+1.53,-0.67) z=0.51 wall    62s
+  t= 350.52s  [RESCUE] MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.63,-0.08) z=0.56)
+  t= 350.54s  [RESCUE] MANAGER #4: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.60 m, touching=False, last=standing)
+  t= 350.54s  [RESCUE] JP follows the duck across the landing and down the far ramp (procession finale), 0.60 m behind
+  t= 350.54s  [RESCUE] BZ raises its fork while the duck walks on (pre-positioning for the circle)
+  t= 350.56s  [RESCUE] BZ's fork is up; it turns round on the spot to face the goal
+  t= 352.12s  [RESCUE] MD fell (tilt 78) at (+1.72,+0.10)
+  t= 357.98s  [RESCUE] JP stalls on the landing at y=-0.76; full speed 0.8 for 3 s
+  t= 357.98s  [RESCUE] MD is back on its feet by itself (5.9 s)
+  t= 360.0s [RESCUE] BZ done @(+1.48,+3.35) MD(WALK_ON) @(+1.72,+0.19) z=0.560 tilt= 0.8 JP(WALK) @(+1.51,-0.53) z=0.54 wall    65s
+  t= 361.76s  [RESCUE] BZ faces south: the circle is complete
+  t= 364.40s  [RESCUE] MD fell (tilt 78) at (+1.65,+0.81)
+  t= 370.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.56,+1.06) z=0.340 tilt=87.9 JP(WALK) @(+1.50,-0.61) z=0.52 wall    68s
+  t= 380.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.56,+1.08) z=0.335 tilt=88.6 JP(WALK) @(+1.50,-0.61) z=0.52 wall    70s
+  t= 380.56s  [RESCUE] MANAGER result: WALK_ON -> walked (duck FALLEN/ramp_down at (+1.56,+1.08) z=0.33)
+  t= 380.58s  [RESCUE] MANAGER #5: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.69 m, touching=False, last=walked)
+  t= 384.60s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.56,+1.08) z=0.33)
+  t= 384.62s  [RESCUE] MANAGER #6: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.70 m, touching=False, last=waited)
+  t= 385.64s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.56,+1.09) z=0.33)
+  t= 385.66s  [RESCUE] MANAGER #7: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.70 m, touching=False, last=nothing)
+  t= 389.68s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.09) z=0.33)
+  t= 389.70s  [RESCUE] MANAGER #8: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.71 m, touching=False, last=waited)
+  t= 390.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.10) z=0.329 tilt=89.3 JP(WALK) @(+1.50,-0.62) z=0.52 wall    73s
+  t= 390.72s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.10) z=0.33)
+  t= 390.74s  [RESCUE] MANAGER #9: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.72 m, touching=False, last=nothing)
+  t= 394.76s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.10) z=0.33)
+  t= 394.78s  [RESCUE] MANAGER #10: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.72 m, touching=False, last=waited)
+  t= 395.80s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.10) z=0.33)
+  t= 395.82s  [RESCUE] MANAGER #11: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.72 m, touching=False, last=nothing)
+  t= 399.84s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.11) z=0.33)
+  t= 399.86s  [RESCUE] MANAGER #12: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.73 m, touching=False, last=waited)
+  t= 400.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.11) z=0.325 tilt=89.2 JP(WALK) @(+1.50,-0.62) z=0.52 wall    76s
+  t= 400.88s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.11) z=0.32)
+  t= 400.90s  [RESCUE] MANAGER #13: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.73 m, touching=False, last=nothing)
+  t= 404.92s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+  t= 404.94s  [RESCUE] MANAGER #14: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.74 m, touching=False, last=waited)
+  t= 405.96s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+  t= 405.98s  [RESCUE] MANAGER #15: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.74 m, touching=False, last=nothing)
+  t= 410.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.12) z=0.321 tilt=89.2 JP(WALK) @(+1.50,-0.62) z=0.52 wall    78s
+  t= 410.00s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+  t= 410.02s  [RESCUE] MANAGER #16: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.74 m, touching=False, last=waited)
+  t= 411.04s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+  t= 411.06s  [RESCUE] MANAGER #17: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.75 m, touching=False, last=nothing)
+  t= 415.08s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.13) z=0.32)
+  t= 415.10s  [RESCUE] MANAGER #18: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.75 m, touching=False, last=waited)
+  t= 416.12s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.13) z=0.32)
+  t= 416.14s  [RESCUE] MANAGER #19: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.76 m, touching=False, last=nothing)
+  t= 420.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.14) z=0.317 tilt=89.1 JP(WALK) @(+1.50,-0.62) z=0.52 wall    81s
+  t= 420.16s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.32)
+  t= 420.18s  [RESCUE] MANAGER #20: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.76 m, touching=False, last=waited)
+  t= 421.20s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.32)
+  t= 421.22s  [RESCUE] MANAGER #21: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.76 m, touching=False, last=nothing)
+  t= 425.24s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.32)
+  t= 425.26s  [RESCUE] MANAGER #22: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.77 m, touching=False, last=waited)
+  t= 426.28s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.31)
+  t= 426.30s  [RESCUE] MANAGER #23: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.77 m, touching=False, last=nothing)
+  t= 430.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.15) z=0.313 tilt=89.0 JP(WALK) @(+1.50,-0.62) z=0.52 wall    83s
+  t= 430.32s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.15) z=0.31)
+  t= 430.34s  [RESCUE] MANAGER #24: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.78 m, touching=False, last=waited)
+  t= 431.36s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.15) z=0.31)
+  t= 431.38s  [RESCUE] MANAGER #25: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.78 m, touching=False, last=nothing)
+  t= 435.40s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.16) z=0.31)
+  t= 435.42s  [RESCUE] MANAGER #26: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.78 m, touching=False, last=waited)
+  t= 436.44s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.16) z=0.31)
+  t= 436.46s  [RESCUE] MANAGER #27: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.79 m, touching=False, last=nothing)
+  t= 440.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.16) z=0.309 tilt=89.0 JP(WALK) @(+1.50,-0.62) z=0.52 wall    86s
+  t= 440.48s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.16) z=0.31)
+  t= 440.50s  [RESCUE] MANAGER #28: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.79 m, touching=False, last=waited)
+  t= 441.52s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.17) z=0.31)
+  t= 441.54s  [RESCUE] MANAGER #29: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.79 m, touching=False, last=nothing)
+  t= 445.56s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.17) z=0.31)
+  t= 445.58s  [RESCUE] MANAGER #30: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.80 m, touching=False, last=waited)
+  t= 446.60s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.17) z=0.31)
+  t= 446.62s  [RESCUE] MANAGER #31: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.80 m, touching=False, last=nothing)
+  t= 450.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.18) z=0.305 tilt=88.9 JP(WALK) @(+1.50,-0.63) z=0.52 wall    89s
+  t= 450.64s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.18) z=0.30)
+  t= 450.66s  [RESCUE] MANAGER #32: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.81 m, touching=False, last=waited)
+  t= 451.68s  [RESCUE] MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.18) z=0.30)
+  t= 451.70s  [RESCUE] MANAGER #33: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.81 m, touching=False, last=nothing)
+  t= 455.72s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.19) z=0.30)
+  t= 455.74s  [RESCUE] MANAGER #34: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.82 m, touching=False, last=waited)
+  t= 459.76s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.19) z=0.30)
+  t= 459.78s  [RESCUE] MANAGER #35: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.82 m, touching=False, last=waited)
+  t= 460.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.19) z=0.301 tilt=88.9 JP(WALK) @(+1.50,-0.63) z=0.52 wall    91s
+  t= 463.80s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.20) z=0.30)
+  t= 463.82s  [RESCUE] MANAGER #36: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.83 m, touching=False, last=waited)
+  t= 467.84s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.20) z=0.30)
+  t= 467.86s  [RESCUE] MANAGER #37: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.83 m, touching=False, last=waited)
+  t= 470.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.21) z=0.297 tilt=89.0 JP(WALK) @(+1.50,-0.63) z=0.52 wall    94s
+  t= 471.88s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.21) z=0.30)
+  t= 471.90s  [RESCUE] MANAGER #38: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.84 m, touching=False, last=waited)
+  t= 475.92s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.21) z=0.29)
+  t= 475.94s  [RESCUE] MANAGER #39: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.85 m, touching=False, last=waited)
+  t= 479.96s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.22) z=0.29)
+  t= 479.98s  [RESCUE] MANAGER #40: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.86 m, touching=False, last=waited)
+  t= 480.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.22) z=0.293 tilt=89.0 JP(WALK) @(+1.50,-0.63) z=0.52 wall    96s
+  t= 484.00s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.22) z=0.29)
+  t= 484.02s  [RESCUE] MANAGER #41: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.86 m, touching=False, last=waited)
+  t= 488.04s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.23) z=0.29)
+  t= 488.06s  [RESCUE] MANAGER #42: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.87 m, touching=False, last=waited)
+  t= 490.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.23) z=0.289 tilt=89.0 JP(WALK) @(+1.50,-0.64) z=0.52 wall    99s
+  t= 492.08s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.24) z=0.29)
+  t= 492.10s  [RESCUE] MANAGER #43: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.87 m, touching=False, last=waited)
+  t= 496.12s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.24) z=0.29)
+  t= 496.14s  [RESCUE] MANAGER #44: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.88 m, touching=False, last=waited)
+  t= 500.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.25) z=0.285 tilt=89.0 JP(WALK) @(+1.50,-0.64) z=0.52 wall   101s
+  t= 500.16s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.25) z=0.28)
+  t= 500.18s  [RESCUE] MANAGER #45: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.89 m, touching=False, last=waited)
+  t= 504.20s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.25) z=0.28)
+  t= 504.22s  [RESCUE] MANAGER #46: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.89 m, touching=False, last=waited)
+  t= 508.24s  [RESCUE] MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.26) z=0.28)
+  t= 508.26s  [RESCUE] MANAGER #47: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.90 m, touching=False, last=waited)
+  t= 510.0s [RESCUE] BZ done @(+1.45,+3.35) MD(FALLEN) @(+1.57,+1.26) z=0.281 tilt=89.0 JP(WALK) @(+1.50,-0.64) z=0.51 wall   104s
+  t= 511.14s  [RESCUE] RESCUE timeout after 240 s: duck FALLEN/ramp_down
+  t= 511.14s  [END] stage -> END
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 511.14,
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802549377,
+        "carry_m": 2.984051548019637
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.207593682664809,
+        "carry_m": 2.9854041207378157
+      }
+    ],
+    "rise_m": 0.43989271227410237,
+    "surfaces": 4
+  },
+  "course_disturbed": {},
+  "ending": "crab",
+  "manager": {
+    "policy": "PPO 方策（ppo2_v22）",
+    "decisions": [
+      {
+        "n": 1,
+        "t": 271.1,
+        "video_t": 0.0,
+        "action": "SEAT",
+        "bubble": "パッカン、カニさんの方を向いて座って",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.07,
+        "last_result": "none",
+        "result": "seated",
+        "duration_s": 12.0
+      },
+      {
+        "n": 2,
+        "t": 283.2,
+        "video_t": 0.0,
+        "action": "PUSH",
+        "bubble": "カニさん、そっと押し上げてあげて",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.0,
+        "last_result": "seated",
+        "result": "pushed_up",
+        "duration_s": 61.8
+      },
+      {
+        "n": 3,
+        "t": 345.0,
+        "video_t": 0.0,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.26,
+        "last_result": "pushed_up",
+        "result": "standing",
+        "duration_s": 5.5
+      },
+      {
+        "n": 4,
+        "t": 350.5,
+        "video_t": 0.0,
+        "action": "WALK_ON",
+        "bubble": "パッカン、そのまま進んで",
+        "duck": "STAND",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.6,
+        "last_result": "standing",
+        "result": "walked",
+        "duration_s": 30.0
+      },
+      {
+        "n": 5,
+        "t": 380.6,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.69,
+        "last_result": "walked",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 6,
+        "t": 384.6,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.7,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 7,
+        "t": 385.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.7,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 8,
+        "t": 389.7,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.71,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 9,
+        "t": 390.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.72,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 10,
+        "t": 394.8,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.72,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 11,
+        "t": 395.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.72,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 12,
+        "t": 399.9,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.73,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 13,
+        "t": 400.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.73,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 14,
+        "t": 404.9,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.74,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 15,
+        "t": 406.0,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.74,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 16,
+        "t": 410.0,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.74,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 17,
+        "t": 411.1,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.75,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 18,
+        "t": 415.1,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.75,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 19,
+        "t": 416.1,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.76,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 20,
+        "t": 420.2,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.76,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 21,
+        "t": 421.2,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.76,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 22,
+        "t": 425.3,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.77,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 23,
+        "t": 426.3,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.77,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 24,
+        "t": 430.3,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.78,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 25,
+        "t": 431.4,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.78,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 26,
+        "t": 435.4,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.78,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 27,
+        "t": 436.5,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.79,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 28,
+        "t": 440.5,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.79,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 29,
+        "t": 441.5,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.79,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 30,
+        "t": 445.6,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.8,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 31,
+        "t": 446.6,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.8,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 32,
+        "t": 450.7,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.81,
+        "last_result": "waited",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 33,
+        "t": 451.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.81,
+        "last_result": "nothing",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 34,
+        "t": 455.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.82,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 35,
+        "t": 459.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.82,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 36,
+        "t": 463.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.83,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 37,
+        "t": 467.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.83,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 38,
+        "t": 471.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.84,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 39,
+        "t": 475.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.85,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 40,
+        "t": 480.0,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.86,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 41,
+        "t": 484.0,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.86,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 42,
+        "t": 488.1,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.87,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 43,
+        "t": 492.1,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.87,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 44,
+        "t": 496.1,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.88,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 45,
+        "t": 500.2,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.89,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 46,
+        "t": 504.2,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.89,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 47,
+        "t": 508.3,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "ramp_down",
+        "touching": false,
+        "crab_dist": 1.9,
+        "last_result": "waited"
+      }
+    ],
+    "duck_crossed": false
+  },
+  "three_crossed": {
+    "bz": true,
+    "crab": true,
+    "duck": false
+  }
+}
+     0.00s  BZ UP
+    16.26s  BZ RAISE_UP
+    17.92s  BZ TO_DOWN
+    57.46s  BZ PRECISE_LANE
+    65.82s  BZ ALIGN
+    75.56s  BZ RETREAT_FOR_ALIGNMENT
+    79.12s  BZ LOWER
+    80.76s  BZ DOWN
+   104.40s  BZ RAISE_DOWN
+   106.06s  BZ TO_START
+   106.06s  TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+   106.06s  MD heads to the waiting spot by the course start; JP to its watch spot
+   177.12s  BZ CROSS
+   177.12s  stage -> FOLLOW_IN
+   196.80s  construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+   196.80s  physics step -> 0.001
+   197.24s  stage -> RAMP
+   197.24s  MD: 坂に挑む（1 回目）
+   197.26s  JP cheers the duck on with its dance, claws up (official dance policy)
+   211.26s  MD: いったん後ずさり (reached y=-2.00, ramp toe -1.86)
+   213.78s  MD: もう一回挑む（2 回目）
+   224.80s  MD: やっぱり無理… (reached y=-2.00)
+   224.82s  JP pre-positions at the foot of its lane while the duck sits down
+   225.42s  MD: 諦めて座り込む（sitstand）
+   226.92s  MD: 首を振りながら「ぐわぁぁ？」
+   229.64s  stage -> CLIMB
+   229.64s  JP sets off from the foot of its lane
+   229.66s  JP passes beside the sitting duck and starts up the ramp
+   236.86s  JP on the crest (z=0.50); duck: ぐわぁぁ？
+   245.22s  JP stuck at the crest (y=-0.54 z=0.54); forward jump
+   246.40s  JP landed at y=-0.47 z=0.53
+   249.26s  JP over the top; duck looks around
+   252.40s  JP crossed the course and stops behind BZ (z=0.11)
+   255.42s  stage -> CALL
+   256.94s  JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+   260.44s  stage -> RETURN
+   260.44s  JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+   271.12s  stage -> RESCUE
+   271.12s  the manager (PPO 方策（ppo2_v22）) takes over: duck SIT/toe at (+1.21,-2.08), crab at (+1.79,-2.99), 1.07 m
+   271.14s  MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 1.07 m, touching=False, last=none)
+   283.16s  MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.06) z=0.06)
+   283.18s  MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 1.00 m, touching=False, last=seated)
+   344.96s  MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.55,-0.40) z=0.50)
+   344.98s  MANAGER #3: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.26 m, touching=False, last=pushed_up)
+   345.76s  MD tipped over while seated (tilt 62); velstand takes over
+   345.76s  MD fell (tilt 62) at (+1.55,-0.11)
+   346.88s  MD is back on its feet by itself (1.1 s)
+   350.52s  MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.63,-0.08) z=0.56)
+   350.54s  MANAGER #4: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.60 m, touching=False, last=standing)
+   350.54s  JP follows the duck across the landing and down the far ramp (procession finale), 0.60 m behind
+   350.54s  BZ raises its fork while the duck walks on (pre-positioning for the circle)
+   350.56s  BZ's fork is up; it turns round on the spot to face the goal
+   352.12s  MD fell (tilt 78) at (+1.72,+0.10)
+   357.98s  JP stalls on the landing at y=-0.76; full speed 0.8 for 3 s
+   357.98s  MD is back on its feet by itself (5.9 s)
+   361.76s  BZ faces south: the circle is complete
+   364.40s  MD fell (tilt 78) at (+1.65,+0.81)
+   380.56s  MANAGER result: WALK_ON -> walked (duck FALLEN/ramp_down at (+1.56,+1.08) z=0.33)
+   380.58s  MANAGER #5: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.69 m, touching=False, last=walked)
+   384.60s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.56,+1.08) z=0.33)
+   384.62s  MANAGER #6: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.70 m, touching=False, last=waited)
+   385.64s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.56,+1.09) z=0.33)
+   385.66s  MANAGER #7: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.70 m, touching=False, last=nothing)
+   389.68s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.09) z=0.33)
+   389.70s  MANAGER #8: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.71 m, touching=False, last=waited)
+   390.72s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.10) z=0.33)
+   390.74s  MANAGER #9: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.72 m, touching=False, last=nothing)
+   394.76s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.10) z=0.33)
+   394.78s  MANAGER #10: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.72 m, touching=False, last=waited)
+   395.80s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.10) z=0.33)
+   395.82s  MANAGER #11: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.72 m, touching=False, last=nothing)
+   399.84s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.11) z=0.33)
+   399.86s  MANAGER #12: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.73 m, touching=False, last=waited)
+   400.88s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.11) z=0.32)
+   400.90s  MANAGER #13: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.73 m, touching=False, last=nothing)
+   404.92s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+   404.94s  MANAGER #14: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.74 m, touching=False, last=waited)
+   405.96s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+   405.98s  MANAGER #15: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.74 m, touching=False, last=nothing)
+   410.00s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+   410.02s  MANAGER #16: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.74 m, touching=False, last=waited)
+   411.04s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.12) z=0.32)
+   411.06s  MANAGER #17: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.75 m, touching=False, last=nothing)
+   415.08s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.13) z=0.32)
+   415.10s  MANAGER #18: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.75 m, touching=False, last=waited)
+   416.12s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.13) z=0.32)
+   416.14s  MANAGER #19: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.76 m, touching=False, last=nothing)
+   420.16s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.32)
+   420.18s  MANAGER #20: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.76 m, touching=False, last=waited)
+   421.20s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.32)
+   421.22s  MANAGER #21: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.76 m, touching=False, last=nothing)
+   425.24s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.32)
+   425.26s  MANAGER #22: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.77 m, touching=False, last=waited)
+   426.28s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.14) z=0.31)
+   426.30s  MANAGER #23: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.77 m, touching=False, last=nothing)
+   430.32s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.15) z=0.31)
+   430.34s  MANAGER #24: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.78 m, touching=False, last=waited)
+   431.36s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.15) z=0.31)
+   431.38s  MANAGER #25: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.78 m, touching=False, last=nothing)
+   435.40s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.16) z=0.31)
+   435.42s  MANAGER #26: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.78 m, touching=False, last=waited)
+   436.44s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.16) z=0.31)
+   436.46s  MANAGER #27: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.79 m, touching=False, last=nothing)
+   440.48s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.16) z=0.31)
+   440.50s  MANAGER #28: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.79 m, touching=False, last=waited)
+   441.52s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.17) z=0.31)
+   441.54s  MANAGER #29: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.79 m, touching=False, last=nothing)
+   445.56s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.17) z=0.31)
+   445.58s  MANAGER #30: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.80 m, touching=False, last=waited)
+   446.60s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.17) z=0.31)
+   446.62s  MANAGER #31: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.80 m, touching=False, last=nothing)
+   450.64s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.18) z=0.30)
+   450.66s  MANAGER #32: BACK_OFF 「カニさん、少し離れて」 (duck FALLEN/ramp_down, crab 1.81 m, touching=False, last=waited)
+   451.68s  MANAGER result: BACK_OFF -> nothing (duck FALLEN/ramp_down at (+1.57,+1.18) z=0.30)
+   451.70s  MANAGER #33: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.81 m, touching=False, last=nothing)
+   455.72s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.19) z=0.30)
+   455.74s  MANAGER #34: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.82 m, touching=False, last=waited)
+   459.76s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.19) z=0.30)
+   459.78s  MANAGER #35: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.82 m, touching=False, last=waited)
+   463.80s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.20) z=0.30)
+   463.82s  MANAGER #36: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.83 m, touching=False, last=waited)
+   467.84s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.20) z=0.30)
+   467.86s  MANAGER #37: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.83 m, touching=False, last=waited)
+   471.88s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.21) z=0.30)
+   471.90s  MANAGER #38: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.84 m, touching=False, last=waited)
+   475.92s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.21) z=0.29)
+   475.94s  MANAGER #39: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.85 m, touching=False, last=waited)
+   479.96s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.22) z=0.29)
+   479.98s  MANAGER #40: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.86 m, touching=False, last=waited)
+   484.00s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.22) z=0.29)
+   484.02s  MANAGER #41: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.86 m, touching=False, last=waited)
+   488.04s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.23) z=0.29)
+   488.06s  MANAGER #42: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.87 m, touching=False, last=waited)
+   492.08s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.24) z=0.29)
+   492.10s  MANAGER #43: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.87 m, touching=False, last=waited)
+   496.12s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.24) z=0.29)
+   496.14s  MANAGER #44: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.88 m, touching=False, last=waited)
+   500.16s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.25) z=0.28)
+   500.18s  MANAGER #45: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.89 m, touching=False, last=waited)
+   504.20s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.25) z=0.28)
+   504.22s  MANAGER #46: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.89 m, touching=False, last=waited)
+   508.24s  MANAGER result: WAIT -> waited (duck FALLEN/ramp_down at (+1.57,+1.26) z=0.28)
+   508.26s  MANAGER #47: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.90 m, touching=False, last=waited)
+   511.14s  RESCUE timeout after 240 s: duck FALLEN/ramp_down
+   511.14s  stage -> END

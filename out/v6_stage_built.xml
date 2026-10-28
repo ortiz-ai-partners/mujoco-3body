@@ -34,7 +34,7 @@
     <geom class="decor" type="box" pos="2.5 0 0.002" size="0.55 0.65 0.002" rgba="0.3 0.75 0.57 0.6" />
     <geom class="decor" type="box" pos="2.5 1.6 0.002" size="0.55 0.65 0.002" rgba="0.3 0.75 0.57 0.6" />
     <geom class="decor" type="box" pos="2.5 -1.6 0.002" size="0.55 0.65 0.002" rgba="0.3 0.75 0.57 0.6" />
-    <body name="dozer" pos="1.55034 3.07392 0.29997" quat="0.601920 -0.000007 0.000005 0.798557">
+    <body name="dozer" pos="1.54855 3.07668 0.29997" quat="0.601152 -0.000007 0.000005 0.799135">
       <freejoint name="base" />
       <geom name="chassis" type="box" size="0.43 0.27 0.13" mass="15" material="yellow" />
       <geom class="decor" type="box" pos="-0.13 0 0.25" size="0.23 0.24 0.19" material="dark" />
@@ -154,19 +154,19 @@
       <geom name="track_right_36" class="decor" type="box" pos="-0.397468901431801 -0.34 0.009129528865561343" quat="-0.9403797498907804 0 0.34012633828528077 0" size=".025 .082 .012" rgba=".12 .145 .16 1" />
       <geom name="track_right_37" class="decor" type="box" pos="-0.34714122483192733 -0.34 0.03798379798165108" quat="-0.9849821698616631 0 0.17265608895897636 0" size=".025 .082 .012" rgba=".12 .145 .16 1" />
     </body>
-    <body name="block_1" pos="4.00000 3.00000 0.25999" quat="1.000000 -0.000000 0.000000 -0.000000">
+    <body name="block_1" pos="4.00000 3.00000 0.25999" quat="1.000000 0.000000 -0.000000 -0.000000">
       <freejoint />
       <geom type="box" size="0.22 0.24 0.18" mass="0.7" rgba="0.95 0.36 0.28 1" />
       <geom type="box" pos="0 -0.205 -0.22" size="0.22 0.035 0.04" mass="0.06" rgba="0.22 0.18 0.14 1" />
       <geom type="box" pos="0 0.205 -0.22" size="0.22 0.035 0.04" mass="0.06" rgba="0.22 0.18 0.14 1" />
     </body>
-    <body name="block_2" pos="4.00000 -3.00000 0.25999" quat="1.000000 0.000000 0.000000 -0.000000">
+    <body name="block_2" pos="4.00000 -3.00000 0.25999" quat="1.000000 -0.000000 -0.000000 -0.000000">
       <freejoint />
       <geom type="box" size="0.22 0.24 0.18" mass="0.7" rgba="0.25 0.57 0.90 1" />
       <geom type="box" pos="0 -0.205 -0.22" size="0.22 0.035 0.04" mass="0.06" rgba="0.22 0.18 0.14 1" />
       <geom type="box" pos="0 0.205 -0.22" size="0.22 0.035 0.04" mass="0.06" rgba="0.22 0.18 0.14 1" />
     </body>
-    <body name="up_1" pos="1.48406 -0.99542 0.07999" quat="0.999999 0.000001 -0.000001 -0.001499"><freejoint name="up_1_free" /><geom name="up_1_incline" type="mesh" mesh="up_1_mesh" mass="0.7" rgba="0.23 0.65 0.74 1" friction="1.2 0.005 0.0001" /><geom name="up_1_landing" type="box" pos="0 0.75 0.33999999999999997" size="0.5 0.25 0.02" mass="0.3" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /><geom type="box" pos="-0.43 0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom type="box" pos="0.43 0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom name="up_1_pickup" type="box" pos="0 0.25 0.025" size="0.45 0.20 0.025" mass="0.2" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /></body><body name="down_1" pos="1.48816 1.04777 0.07999" quat="0.999990 -0.000001 -0.000001 -0.004473"><freejoint name="down_1_free" /><geom name="down_1_incline" type="mesh" mesh="down_1_mesh" mass="0.7" rgba="0.23 0.65 0.74 1" friction="1.2 0.005 0.0001" /><geom name="down_1_landing" type="box" pos="0 -0.75 0.33999999999999997" size="0.5 0.25 0.02" mass="0.3" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /><geom type="box" pos="-0.43 -0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom type="box" pos="0.43 -0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom name="down_1_pickup" type="box" pos="0 -0.25 0.025" size="0.45 0.20 0.025" mass="0.2" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /></body></worldbody>
+    <body name="up_1" pos="1.48576 -0.99865 0.07999" quat="1.000000 0.000001 -0.000001 -0.000400"><freejoint name="up_1_free" /><geom name="up_1_incline" type="mesh" mesh="up_1_mesh" mass="0.7" rgba="0.23 0.65 0.74 1" friction="1.2 0.005 0.0001" /><geom name="up_1_landing" type="box" pos="0 0.75 0.33999999999999997" size="0.5 0.25 0.02" mass="0.3" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /><geom type="box" pos="-0.43 0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom type="box" pos="0.43 0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom name="up_1_pickup" type="box" pos="0 0.25 0.025" size="0.45 0.20 0.025" mass="0.2" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /></body><body name="down_1" pos="1.48475 1.00880 0.07999" quat="0.999987 -0.000001 -0.000001 -0.005143"><freejoint name="down_1_free" /><geom name="down_1_incline" type="mesh" mesh="down_1_mesh" mass="0.7" rgba="0.23 0.65 0.74 1" friction="1.2 0.005 0.0001" /><geom name="down_1_landing" type="box" pos="0 -0.75 0.33999999999999997" size="0.5 0.25 0.02" mass="0.3" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /><geom type="box" pos="-0.43 -0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom type="box" pos="0.43 -0.85 0.12" size="0.045 0.08 0.20" mass="0.15" rgba="0.18 0.3 0.32 1" /><geom name="down_1_pickup" type="box" pos="0 -0.25 0.025" size="0.45 0.20 0.025" mass="0.2" rgba="0.97 0.73 0.24 1" friction="1.2 0.005 0.0001" /></body></worldbody>
   <actuator>
     <velocity name="drive_lf" joint="lf" kv="8" ctrlrange="-8 8" forcerange="-15 15" />
     <velocity name="drive_lr" joint="lr" kv="8" ctrlrange="-8 8" forcerange="-15 15" />
