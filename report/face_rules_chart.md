@@ -92,3 +92,19 @@ flowchart TD
 ## コースと 3 体の動線（オルティス作、10/28 夜）
 
 `report/course_plan_ortiz.png`：上から見た全体図とコース拡大図。座標は `crab_help.py`（TOE_Y −2.0、CREST_Y −0.495、DECK_N_Y 0.548、DOWN_TOE_Y 2.05、LANE_X 1.45、SEAT_Y −2.13）と `v7_full.py`（MD_START、WAIT_SPOT、DUCK_LANE_X 1.2、CRAB_LANE_X 1.72、JP_PARK、CRAB_WATCH、CHEER_SPOT、CIRCLE_*）、`scene_fork_tracks.xml`（ブロック 4 個・ボール）に一致することを確認済み。
+
+## 気分ネットの学習データと学習の流れ（オルティス作、10/28 夜）
+
+`report/mood_net_pipeline_ortiz.png`：学習環境で走らせる（固定ルール 2・PPO 2・ランダム 1 シード × 7 場面＝35 話）→ 0.1 秒ごとに記録（46＋6＋1＝53 個、結末と渡り切りを正解に、47,952 サンプル・23 分）→ 学習・モデル選択（53-32-32-5、softmax 4＋sigmoid 1、CE＋BCE、Adam、450 エポック目、検証用 4 分類 0.80・成功 vs 失敗 0.83、CPU 1 分）→ 本番（0.02 秒ごと約 5,000 回、スキルごとの 2 本の線）。スキル別の推論の平均も `out/manager_runs/mood_net/report.md` と一致することを確認済み。
+
+## レポート用の図の一覧（10/28 夜時点）
+
+| 図 | ファイル | 作者 |
+|---|---|---|
+| 全体の仕組み（2 つの AI と 3 体） | `system_overview_ortiz.png` | オルティス（島の依頼文から） |
+| 表情の決め方（17 規則のチャート） | `face_rules_chart_ortiz.png`（元 `face_rules_chart.md` の Mermaid） | オルティス |
+| 支配人 AI の比較（30 シード、2×2） | `results_managers_ortiz.png` | オルティス |
+| コースと 3 体の動線（平面図） | `course_plan_ortiz.png` | オルティス |
+| 気分ネットの学習データと学習の流れ | `mood_net_pipeline_ortiz.png` | オルティス |
+| 表情 11 種の一覧（描画そのもの） | `faces_sheet_ja.png`（`analysis/face_sheet.py`） | 島 |
+| 動画の構成タイムライン | （依頼文は会話に、未着） | — |
