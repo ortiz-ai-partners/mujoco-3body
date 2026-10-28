@@ -25,6 +25,7 @@ The expression table ("AI 管理": a function of the manager's chosen action and
   | entering, waiting, playing                    | BUILD / FOLLOW_IN; WAIT in the rescue| neutral  |
   | walking to its post, climbing, jumping        | WALK / JUMP outside the play         | serious  |
   | pushing                                       | the PUSH skill running               | cross    |
+  | pushing for 5 s and more (ゆうころ 10/28 夕)    | PUSH, 5 s of contact with the duck   | sweat    |
   | the push did not work (stalled / slipped /    | the skill after a failed PUSH        | sweat    |
   |   nothing / the duck fell)                    |                                      |          |
   | seating, backing off, standing the duck up    | SEAT / BACK_OFF / STANDUP / WALK_ON  | serious  |
@@ -55,10 +56,12 @@ TILT_ON, TILT_OFF = 50.0, 35.0      # deg from upright: spiral on above / off be
 SPIRAL_HOLD = 0.6                   # s the spiral stays after a fall (readable at 2x)
 HOLD = 0.35                         # s an expression stays at least, so the face does not flicker
 
-# the face monitor: a camera in front of the panel, rendered into a small inset
-PIP_W, PIP_H = 320, 160
+# the face monitor: a camera in front of the panel, rendered into a small inset.  320x160 at the bottom-left in takes
+# 30-33; smaller and at the top-right from take 34 (ゆうころ 10/28 夕: 「もう少し小さくして右上の空欄に」)
+PIP_W, PIP_H = 240, 120
 CAM_DIST = 0.30                     # m in front of the panel (beyond the renderer's near plane, in front of the folded arms)
 PIP_FILL = 0.72                     # the panel's 10 cm fill this much of the inset's width
+PUSH_SWEAT_S = 5.0                  # s of pushing (PUSH skill, in contact with the duck) after which the face sweats
 
 FAILED_PUSH = ("stalled", "slipped", "nothing", "fell")
 RESULT_JA = {"stalled": "動かない", "slipped": "滑った", "nothing": "変化なし", "fell": "転んだ"}
@@ -219,11 +222,13 @@ class FaceDriver:
         self.cam_name = prefix + "face_cam"
         self.expr, self.reason, self.since = "neutral", "登場", -1e9
         self.spiral_until = -1e9
+        self.push_contact_s = 0.0                    # s spent pushing the duck (PUSH skill, in contact) in the current skill
+        self.t_prev = None
         self.log = []                                # [t, expression, reason] at every change
         self.model.geom_matid[self.gid] = self.mat[self.expr]
 
     def choose(self, t, s):
-        """(expression, reason) for state `s`: stage, crab_mode, tilt, skill, last_action, last_result, crossed."""
+        """(expression, reason) for state `s`: stage, crab_mode, tilt, skill, touching, last_action, last_result, crossed."""
         if s["tilt"] > TILT_ON or (self.expr == "spiral" and s["tilt"] > TILT_OFF):
             self.spiral_until = t + SPIRAL_HOLD
         if t < self.spiral_until:
@@ -236,6 +241,8 @@ class FaceDriver:
             if s["skill"] is None:                  # between two skills (one control step): keep the face, no blink
                 return self.expr, self.reason
             if s["skill"] == "PUSH":
+                if self.push_contact_s >= PUSH_SWEAT_S:
+                    return "sweat", "押し上げ中、5 秒超"
                 return "cross", "押し上げ中"
             if s["last_action"] == "PUSH" and s["last_result"] in FAILED_PUSH:
                 return "sweat", f"押し上げ → {RESULT_JA.get(s['last_result'], s['last_result'])}"
@@ -250,6 +257,13 @@ class FaceDriver:
         return "neutral", "待機"
 
     def update(self, t, **state):
+        dt = 0.0 if self.t_prev is None else max(0.0, t - self.t_prev)
+        self.t_prev = t
+        if state.get("skill") == "PUSH":
+            if state.get("touching"):
+                self.push_contact_s += dt
+        elif state.get("skill") is not None:        # the next skill: the count starts again (None = between two skills)
+            self.push_contact_s = 0.0
         want, reason = self.choose(t, state)
         if want != self.expr and (want == "spiral" or t - self.since >= HOLD):
             self.expr, self.since = want, t

@@ -1,0 +1,909 @@
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 522.5,
+  "state_digest": "8b1170b18ce16a12e98945504a814f7f73ce29b385adfbe44638e45fa280fa3a",
+  "ngeom": 291,
+  "face": {
+    "on": true,
+    "log": [
+      [
+        0.0,
+        "neutral",
+        "戯れ・待機"
+      ]
+    ]
+  },
+  "cuts": [
+    [
+      22.0,
+      54.0,
+      "BZ が空荷で保管場所へ戻る"
+    ],
+    [
+      110.0,
+      172.0,
+      "BZ が空荷でスタート地点へ回る（パッカンと跳跳は待機場所へ）"
+    ]
+  ],
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802545736,
+        "carry_m": 2.984051547897827
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.20759360336687518,
+        "carry_m": 2.98530445347616
+      }
+    ],
+    "rise_m": 0.4399192127508366,
+    "surfaces": 4
+  },
+  "course_disturbed": {},
+  "ending": "crab",
+  "manager": {
+    "policy": "学習済み Q 表（tabq2_small）",
+    "decisions": [],
+    "duck_crossed": false
+  },
+  "three_crossed": {
+    "bz": true,
+    "crab": false,
+    "duck": false
+  },
+  "events": [
+    {
+      "t": 0.0,
+      "video_t": 0.0,
+      "event": "BZ UP"
+    },
+    {
+      "t": 16.26,
+      "video_t": 8.13,
+      "event": "BZ RAISE_UP"
+    },
+    {
+      "t": 17.92,
+      "video_t": 8.97,
+      "event": "BZ TO_DOWN"
+    },
+    {
+      "t": 54.0,
+      "video_t": 11.03,
+      "event": "JUMP CUT: sim 22-54 s not shown (BZ が空荷で保管場所へ戻る)"
+    },
+    {
+      "t": 61.8,
+      "video_t": 14.97,
+      "event": "BZ PRECISE_LANE"
+    },
+    {
+      "t": 73.26,
+      "video_t": 20.67,
+      "event": "BZ ALIGN"
+    },
+    {
+      "t": 82.88,
+      "video_t": 25.5,
+      "event": "BZ RETREAT_FOR_ALIGNMENT"
+    },
+    {
+      "t": 86.56,
+      "video_t": 27.33,
+      "event": "BZ LOWER"
+    },
+    {
+      "t": 88.2,
+      "video_t": 28.17,
+      "event": "BZ DOWN"
+    },
+    {
+      "t": 111.88,
+      "video_t": 39.07,
+      "event": "BZ RAISE_DOWN"
+    },
+    {
+      "t": 113.54,
+      "video_t": 39.07,
+      "event": "BZ TO_START"
+    },
+    {
+      "t": 113.54,
+      "video_t": 39.07,
+      "event": "TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance"
+    },
+    {
+      "t": 113.54,
+      "video_t": 39.07,
+      "event": "MD heads to the waiting spot by the course start; JP to its watch spot"
+    },
+    {
+      "t": 116.28,
+      "video_t": 39.07,
+      "event": "MD fell (tilt 73) at (+4.48,-0.23)"
+    },
+    {
+      "t": 120.7,
+      "video_t": 39.07,
+      "event": "MD is back on its feet by itself (4.4 s)"
+    },
+    {
+      "t": 121.76,
+      "video_t": 39.07,
+      "event": "MD fell (tilt 60) at (+4.60,-1.24)"
+    },
+    {
+      "t": 123.98,
+      "video_t": 39.07,
+      "event": "MD is back on its feet by itself (2.2 s)"
+    },
+    {
+      "t": 124.68,
+      "video_t": 39.07,
+      "event": "MD fell (tilt 62) at (+4.65,-1.66)"
+    },
+    {
+      "t": 172.07,
+      "video_t": 39.07,
+      "event": "JUMP CUT: sim 110-172 s not shown (BZ が空荷でスタート地点へ回る（パッカンと跳跳は待機場所へ）)"
+    },
+    {
+      "t": 180.66,
+      "video_t": 43.37,
+      "event": "BZ CROSS"
+    },
+    {
+      "t": 180.66,
+      "video_t": 43.37,
+      "event": "stage -> FOLLOW_IN"
+    },
+    {
+      "t": 180.66,
+      "video_t": 43.37,
+      "event": "MD is back on its feet by itself (56.0 s)"
+    },
+    {
+      "t": 180.68,
+      "video_t": 43.4,
+      "event": "MD fell (tilt 76) at (+4.59,-1.76)"
+    },
+    {
+      "t": 200.54,
+      "video_t": 53.33,
+      "event": "construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)"
+    },
+    {
+      "t": 200.54,
+      "video_t": 53.33,
+      "event": "physics step -> 0.001"
+    }
+  ],
+  "md_events": [
+    {
+      "t": 0.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 2.54,
+      "mode": "STAND"
+    },
+    {
+      "t": 4.48,
+      "mode": "WALK"
+    },
+    {
+      "t": 4.56,
+      "mode": "STAND"
+    },
+    {
+      "t": 5.7,
+      "mode": "WALK"
+    },
+    {
+      "t": 5.7,
+      "mode": "STAND"
+    },
+    {
+      "t": 7.52,
+      "mode": "WALK"
+    },
+    {
+      "t": 7.56,
+      "mode": "STAND"
+    },
+    {
+      "t": 9.12,
+      "mode": "WALK"
+    },
+    {
+      "t": 10.4,
+      "mode": "STAND"
+    },
+    {
+      "t": 12.28,
+      "mode": "WALK"
+    },
+    {
+      "t": 13.18,
+      "mode": "STAND"
+    },
+    {
+      "t": 14.34,
+      "mode": "WALK"
+    },
+    {
+      "t": 14.34,
+      "mode": "STAND"
+    },
+    {
+      "t": 15.56,
+      "mode": "WALK"
+    },
+    {
+      "t": 15.56,
+      "mode": "STAND"
+    },
+    {
+      "t": 16.58,
+      "mode": "WALK"
+    },
+    {
+      "t": 16.58,
+      "mode": "STAND"
+    },
+    {
+      "t": 18.44,
+      "mode": "WALK"
+    },
+    {
+      "t": 18.44,
+      "mode": "STAND"
+    },
+    {
+      "t": 19.54,
+      "mode": "WALK"
+    },
+    {
+      "t": 19.54,
+      "mode": "STAND"
+    },
+    {
+      "t": 20.58,
+      "mode": "WALK"
+    },
+    {
+      "t": 20.58,
+      "mode": "STAND"
+    },
+    {
+      "t": 22.32,
+      "mode": "WALK"
+    },
+    {
+      "t": 22.32,
+      "mode": "STAND"
+    },
+    {
+      "t": 23.4,
+      "mode": "WALK"
+    },
+    {
+      "t": 23.4,
+      "mode": "STAND"
+    },
+    {
+      "t": 25.22,
+      "mode": "WALK"
+    },
+    {
+      "t": 25.22,
+      "mode": "STAND"
+    },
+    {
+      "t": 26.54,
+      "mode": "WALK"
+    },
+    {
+      "t": 26.54,
+      "mode": "STAND"
+    },
+    {
+      "t": 27.6,
+      "mode": "WALK"
+    },
+    {
+      "t": 27.6,
+      "mode": "STAND"
+    },
+    {
+      "t": 29.02,
+      "mode": "WALK"
+    },
+    {
+      "t": 29.02,
+      "mode": "STAND"
+    },
+    {
+      "t": 30.88,
+      "mode": "WALK"
+    },
+    {
+      "t": 30.88,
+      "mode": "STAND"
+    },
+    {
+      "t": 32.04,
+      "mode": "WALK"
+    },
+    {
+      "t": 32.04,
+      "mode": "STAND"
+    },
+    {
+      "t": 33.84,
+      "mode": "WALK"
+    },
+    {
+      "t": 33.84,
+      "mode": "STAND"
+    },
+    {
+      "t": 35.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 35.2,
+      "mode": "STAND"
+    },
+    {
+      "t": 37.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 37.2,
+      "mode": "STAND"
+    },
+    {
+      "t": 38.94,
+      "mode": "WALK"
+    },
+    {
+      "t": 38.94,
+      "mode": "STAND"
+    },
+    {
+      "t": 41.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 52.9,
+      "mode": "STAND"
+    },
+    {
+      "t": 54.06,
+      "mode": "WALK"
+    },
+    {
+      "t": 58.86,
+      "mode": "STAND"
+    },
+    {
+      "t": 61.42,
+      "mode": "WALK"
+    },
+    {
+      "t": 63.48,
+      "mode": "STAND"
+    },
+    {
+      "t": 65.72,
+      "mode": "WALK"
+    },
+    {
+      "t": 65.72,
+      "mode": "STAND"
+    },
+    {
+      "t": 68.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 68.0,
+      "mode": "STAND"
+    },
+    {
+      "t": 70.62,
+      "mode": "WALK"
+    },
+    {
+      "t": 70.88,
+      "mode": "STAND"
+    },
+    {
+      "t": 72.4,
+      "mode": "WALK"
+    },
+    {
+      "t": 72.4,
+      "mode": "STAND"
+    },
+    {
+      "t": 74.52,
+      "mode": "WALK"
+    },
+    {
+      "t": 74.74,
+      "mode": "STAND"
+    },
+    {
+      "t": 76.66,
+      "mode": "WALK"
+    },
+    {
+      "t": 76.66,
+      "mode": "STAND"
+    },
+    {
+      "t": 78.46,
+      "mode": "WALK"
+    },
+    {
+      "t": 78.46,
+      "mode": "STAND"
+    },
+    {
+      "t": 80.28,
+      "mode": "WALK"
+    },
+    {
+      "t": 80.28,
+      "mode": "STAND"
+    },
+    {
+      "t": 82.16,
+      "mode": "WALK"
+    },
+    {
+      "t": 82.16,
+      "mode": "STAND"
+    },
+    {
+      "t": 84.02,
+      "mode": "WALK"
+    },
+    {
+      "t": 84.02,
+      "mode": "STAND"
+    },
+    {
+      "t": 85.54,
+      "mode": "WALK"
+    },
+    {
+      "t": 85.54,
+      "mode": "STAND"
+    },
+    {
+      "t": 86.56,
+      "mode": "WALK"
+    },
+    {
+      "t": 86.56,
+      "mode": "STAND"
+    },
+    {
+      "t": 88.02,
+      "mode": "WALK"
+    },
+    {
+      "t": 88.02,
+      "mode": "STAND"
+    },
+    {
+      "t": 91.04,
+      "mode": "WALK"
+    },
+    {
+      "t": 91.4,
+      "mode": "STAND"
+    },
+    {
+      "t": 92.84,
+      "mode": "WALK"
+    },
+    {
+      "t": 92.94,
+      "mode": "STAND"
+    },
+    {
+      "t": 94.02,
+      "mode": "WALK"
+    },
+    {
+      "t": 94.02,
+      "mode": "STAND"
+    },
+    {
+      "t": 95.4,
+      "mode": "WALK"
+    },
+    {
+      "t": 95.4,
+      "mode": "STAND"
+    },
+    {
+      "t": 96.62,
+      "mode": "WALK"
+    },
+    {
+      "t": 96.62,
+      "mode": "STAND"
+    },
+    {
+      "t": 98.36,
+      "mode": "WALK"
+    },
+    {
+      "t": 98.36,
+      "mode": "STAND"
+    },
+    {
+      "t": 99.42,
+      "mode": "WALK"
+    },
+    {
+      "t": 99.42,
+      "mode": "STAND"
+    },
+    {
+      "t": 100.8,
+      "mode": "WALK"
+    },
+    {
+      "t": 100.88,
+      "mode": "STAND"
+    },
+    {
+      "t": 102.04,
+      "mode": "WALK"
+    },
+    {
+      "t": 102.04,
+      "mode": "STAND"
+    },
+    {
+      "t": 103.96,
+      "mode": "WALK"
+    },
+    {
+      "t": 103.96,
+      "mode": "STAND"
+    },
+    {
+      "t": 105.26,
+      "mode": "WALK"
+    },
+    {
+      "t": 105.26,
+      "mode": "STAND"
+    },
+    {
+      "t": 106.78,
+      "mode": "WALK"
+    },
+    {
+      "t": 106.78,
+      "mode": "STAND"
+    },
+    {
+      "t": 108.28,
+      "mode": "WALK"
+    },
+    {
+      "t": 108.28,
+      "mode": "STAND"
+    },
+    {
+      "t": 110.22,
+      "mode": "WALK"
+    },
+    {
+      "t": 110.26,
+      "mode": "STAND"
+    },
+    {
+      "t": 111.86,
+      "mode": "WALK"
+    },
+    {
+      "t": 111.86,
+      "mode": "STAND"
+    },
+    {
+      "t": 112.9,
+      "mode": "WALK"
+    },
+    {
+      "t": 113.08,
+      "mode": "STAND"
+    },
+    {
+      "t": 113.54,
+      "mode": "WALK"
+    },
+    {
+      "t": 116.26,
+      "mode": "FALLEN"
+    },
+    {
+      "t": 120.68,
+      "mode": "WALK"
+    },
+    {
+      "t": 121.74,
+      "mode": "FALLEN"
+    },
+    {
+      "t": 123.96,
+      "mode": "WALK"
+    },
+    {
+      "t": 124.66,
+      "mode": "FALLEN"
+    },
+    {
+      "t": 180.66,
+      "mode": "WALK"
+    },
+    {
+      "t": 180.66,
+      "mode": "FALLEN"
+    }
+  ],
+  "jp_events": [
+    {
+      "t": 0.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 0.0,
+      "mode": "JUMP"
+    },
+    {
+      "t": 1.18,
+      "mode": "WALK"
+    },
+    {
+      "t": 12.42,
+      "mode": "JUMP"
+    },
+    {
+      "t": 13.6,
+      "mode": "WALK"
+    },
+    {
+      "t": 24.94,
+      "mode": "JUMP"
+    },
+    {
+      "t": 26.12,
+      "mode": "WALK"
+    },
+    {
+      "t": 37.38,
+      "mode": "JUMP"
+    },
+    {
+      "t": 38.56,
+      "mode": "WALK"
+    },
+    {
+      "t": 50.98,
+      "mode": "JUMP"
+    },
+    {
+      "t": 52.16,
+      "mode": "WALK"
+    },
+    {
+      "t": 56.48,
+      "mode": "JUMP"
+    },
+    {
+      "t": 57.66,
+      "mode": "WALK"
+    },
+    {
+      "t": 61.32,
+      "mode": "JUMP"
+    },
+    {
+      "t": 62.5,
+      "mode": "WALK"
+    },
+    {
+      "t": 73.6,
+      "mode": "JUMP"
+    },
+    {
+      "t": 74.78,
+      "mode": "WALK"
+    },
+    {
+      "t": 87.12,
+      "mode": "JUMP"
+    },
+    {
+      "t": 88.3,
+      "mode": "WALK"
+    },
+    {
+      "t": 100.26,
+      "mode": "JUMP"
+    },
+    {
+      "t": 101.44,
+      "mode": "WALK"
+    },
+    {
+      "t": 113.08,
+      "mode": "JUMP"
+    },
+    {
+      "t": 114.26,
+      "mode": "WALK"
+    }
+  ],
+  "chirps": [
+    [
+      0.0,
+      "trill",
+      1.0503745894058394
+    ],
+    [
+      1.5333333333333334,
+      "quack",
+      0.8746472016539689
+    ],
+    [
+      2.033333333333333,
+      "trill",
+      1.0554708981990957
+    ],
+    [
+      4.466666666666667,
+      "sigh",
+      1.0192686439231857
+    ],
+    [
+      6.233333333333333,
+      "trill",
+      1.0074871730119588
+    ],
+    [
+      7.2,
+      "trill",
+      0.9864369684389098
+    ],
+    [
+      8.233333333333333,
+      "quack",
+      1.1987525564388846
+    ],
+    [
+      12.3,
+      "trill",
+      1.1004689913211623
+    ],
+    [
+      14.7,
+      "clack",
+      1.0974351286233777
+    ],
+    [
+      15.466666666666667,
+      "quack",
+      0.9500377516729397
+    ],
+    [
+      17.666666666666668,
+      "clack",
+      0.989313229388544
+    ],
+    [
+      20.066666666666666,
+      "quack",
+      1.1927835552733956
+    ],
+    [
+      20.866666666666667,
+      "clack",
+      0.9387282715230064
+    ],
+    [
+      22.933333333333334,
+      "quack",
+      1.048027564232135
+    ],
+    [
+      24.5,
+      "clack",
+      0.9928178736844641
+    ],
+    [
+      25.633333333333333,
+      "gwaa",
+      1.065927183259539
+    ],
+    [
+      27.6,
+      "clack",
+      1.1436130134228992
+    ],
+    [
+      28.4,
+      "trill",
+      0.9518400176110693
+    ],
+    [
+      29.6,
+      "quack",
+      1.1534419055628318
+    ],
+    [
+      34.166666666666664,
+      "clack",
+      1.132281077091157
+    ],
+    [
+      34.766666666666666,
+      "sigh",
+      1.0821736052795947
+    ],
+    [
+      35.13333333333333,
+      "clack",
+      1.1419025545065797
+    ],
+    [
+      42.333333333333336,
+      "trill",
+      0.9962045915885278
+    ],
+    [
+      42.96666666666667,
+      "quack",
+      0.9855869433946208
+    ],
+    [
+      43.36666666666667,
+      "quack",
+      1.0
+    ],
+    [
+      43.36666666666667,
+      "happy",
+      1.0
+    ],
+    [
+      43.4,
+      "worried",
+      1.0
+    ]
+  ],
+  "video_silent": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take36_silent.mp4",
+    "frames": 6429,
+    "seconds": 214.3,
+    "bytes": 20425574
+  },
+  "video": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take36.mp4",
+    "ffmpeg_rc": 0,
+    "bytes": 20676850
+  }
+}

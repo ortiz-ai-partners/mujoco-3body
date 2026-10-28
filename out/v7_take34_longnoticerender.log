@@ -1,0 +1,396 @@
+﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
+At line:1 char:368
++ ... joco_3body; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+timestep: parent has 0.005, child has 0.001, keeping parent value
+
+MuJoCo 3.11.0 | v7 full | dt=0.005 nq=90 nu=41 ngeom=291 face=on
+  t=   0.00s  [BUILD] BZ UP
+[vost#0:0/libx264 @ 000001bc9ba46180] Multiple -pix_fmt options specified for stream 0, only the last option '-pix_fmt 
+yuv420p' will be used.
+  t=  10.0s [BUILD] BZ UP: CARRY @(+0.22,-0.75) MD(WALK) @(+4.11,+0.59) z=0.120 tilt= 0.9 JP(WALK) @(+4.46,+1.03) z=0.11 wall     3s
+  t=  16.26s  [BUILD] BZ RAISE_UP
+  t=  17.92s  [BUILD] BZ TO_DOWN
+  t=  20.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.64,-0.69) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.47,+1.05) z=0.11 wall     7s
+  t=  30.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.41,-0.71) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.48,+1.06) z=0.11 wall     9s
+  t=  40.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-3.11,-0.81) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.49,+1.07) z=0.11 wall    10s
+  t=  50.0s [BUILD] BZ TO_DOWN: FORWARD 2/2 @(-3.46,+0.45) MD(STAND) @(+4.13,+0.67) z=0.116 tilt= 0.7 JP(JUMP) @(+4.50,+1.07) z=0.08 wall    11s
+  t=  54.00s  [BUILD] JUMP CUT: sim 22-54 s not shown (BZ が空荷で保管場所へ戻る)
+  t=  57.46s  [BUILD] BZ PRECISE_LANE
+  t=  60.0s [BUILD] BZ PRECISE_LANE @(-3.38,+0.72) MD(WALK) @(+3.52,+0.12) z=0.118 tilt= 2.4 JP(WALK) @(+3.45,+0.84) z=0.11 wall    14s
+  t=  65.82s  [BUILD] BZ ALIGN
+  t=  70.0s [BUILD] BZ ALIGN @(-3.39,+0.69) MD(STAND) @(+3.41,+0.06) z=0.116 tilt= 0.7 JP(WALK) @(+3.52,+0.62) z=0.11 wall    17s
+  t=  75.56s  [BUILD] BZ RETREAT_FOR_ALIGNMENT
+  t=  79.12s  [BUILD] BZ LOWER
+  t=  80.0s [BUILD] BZ LOWER @(-4.51,+0.79) MD(STAND) @(+3.44,+0.09) z=0.116 tilt= 0.8 JP(WALK) @(+3.53,+0.63) z=0.11 wall    21s
+  t=  80.76s  [BUILD] BZ DOWN
+  t=  90.0s [BUILD] BZ DOWN: LIFT @(-2.75,+0.80) MD(STAND) @(+3.44,+0.09) z=0.116 tilt= 0.8 JP(WALK) @(+3.54,+0.63) z=0.11 wall    24s
+  t= 100.0s [BUILD] BZ DOWN: LOWER @(+0.23,+0.81) MD(WALK) @(+3.60,-0.28) z=0.117 tilt= 2.5 JP(WALK) @(+3.54,+0.65) z=0.11 wall    29s
+  t= 104.40s  [BUILD] BZ RAISE_DOWN
+  t= 106.06s  [BUILD] BZ TO_START
+  t= 106.06s  [BUILD] TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+  t= 106.06s  [BUILD] MD heads to the waiting spot by the course start; JP to its watch spot
+  t= 110.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.61,+0.91) MD(WALK) @(+3.73,-1.14) z=0.121 tilt= 2.6 JP(WALK) @(+4.46,-0.34) z=0.11 wall    33s
+  t= 120.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.39,+0.79) MD(WALK) @(+3.41,-2.05) z=0.115 tilt= 1.2 JP(WALK) @(+4.52,-1.82) z=0.11 wall    34s
+  t= 130.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.92,+0.62) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.53,-1.80) z=0.11 wall    36s
+  t= 140.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-1.09,+0.71) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.54,-1.80) z=0.11 wall    37s
+  t= 150.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.98,+0.96) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.58,-1.80) z=0.11 wall    39s
+  t= 160.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.94,-2.77) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.3 JP(WALK) @(+4.59,-1.80) z=0.11 wall    41s
+  t= 170.0s [BUILD] BZ TO_START: FORWARD 3/3 @(-1.05,-3.06) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.3 JP(WALK) @(+4.62,-1.80) z=0.11 wall    42s
+  t= 172.07s  [BUILD] JUMP CUT: sim 110-172 s not shown (BZ が空荷でスタート地点へ回る（パッカンと跳跳は待機場所へ）)
+  t= 176.38s  [BUILD] BZ CROSS
+  t= 176.38s  [FOLLOW_IN] stage -> FOLLOW_IN
+  t= 180.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.46,-3.10) MD(WALK) @(+2.96,-2.47) z=0.121 tilt= 2.7 JP(WALK) @(+4.64,-1.80) z=0.11 wall    47s
+  t= 190.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.68,+0.69) MD(WALK) @(+2.04,-2.75) z=0.116 tilt= 2.2 JP(WALK) @(+3.92,-2.09) z=0.11 wall    52s
+  t= 196.08s  [FOLLOW_IN] construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+  t= 196.08s  [FOLLOW_IN] physics step -> 0.001
+  t= 196.46s  [RAMP] stage -> RAMP
+  t= 196.46s  [RAMP] MD: 坂に挑む（1 回目）
+  t= 196.48s  [RAMP] JP cheers the duck on with its dance, claws up (official dance policy)
+  t= 200.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.34,-2.65) z=0.117 tilt= 2.8 JP(DANCE) @(+2.70,-2.61) z=0.14 wall    58s
+  t= 210.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.23,-1.99) z=0.122 tilt= 3.5 JP(DANCE) @(+2.71,-2.61) z=0.12 wall    65s
+  t= 210.48s  [RAMP] MD: いったん後ずさり (reached y=-1.99, ramp toe -1.86)
+  t= 213.00s  [RAMP] MD: もう一回挑む（2 回目）
+  t= 220.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.23,-2.00) z=0.120 tilt= 2.7 JP(DANCE) @(+2.72,-2.60) z=0.11 wall    72s
+  t= 224.02s  [RAMP] MD: やっぱり無理… (reached y=-2.00)
+  t= 224.04s  [RAMP] JP pre-positions at the foot of its lane while the duck sits down
+  t= 224.64s  [RAMP] MD: 諦めて座り込む（sitstand）
+  t= 226.14s  [RAMP] MD: 首を振りながら「ぐわぁぁ？」
+  t= 228.86s  [CLIMB] stage -> CLIMB
+  t= 228.86s  [CLIMB] JP sets off from the foot of its lane
+  t= 228.88s  [CLIMB] JP passes beside the sitting duck and starts up the ramp
+  t= 230.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.14) z=0.060 tilt= 6.7 JP(WALK) @(+1.79,-2.82) z=0.11 wall    79s
+  t= 236.10s  [CLIMB] JP on the crest (z=0.50); duck: ぐわぁぁ？
+  t= 239.04s  [CLIMB] JP stuck at the crest (y=-0.54 z=0.54); forward jump
+  t= 240.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.14) z=0.060 tilt= 8.0 JP(JUMP) @(+1.71,-0.45) z=0.54 wall    86s
+  t= 240.22s  [CLIMB] JP landed at y=-0.45 z=0.54
+  t= 242.80s  [CLIMB] JP over the top; duck looks around
+  t= 245.92s  [CLIMB] JP crossed the course and stops behind BZ (z=0.11)
+  t= 248.94s  [CALL] stage -> CALL
+  t= 250.0s [CALL] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.15) z=0.060 tilt= 4.1 JP(WALK) @(+1.48,+2.23) z=0.11 wall    94s
+  t= 250.46s  [CALL] JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+  t= 253.96s  [RETURN] stage -> RETURN
+  t= 253.96s  [RETURN] JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+  t= 260.0s [RETURN] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.15) z=0.060 tilt= 4.5 JP(WALK) @(+2.97,-1.57) z=0.11 wall   101s
+  t= 264.56s  [RESCUE] stage -> RESCUE
+  t= 264.56s  [RESCUE] the manager (固定ルール) takes over: duck SIT/toe at (+1.25,-2.15), crab at (+1.79,-2.99), 1.00 m
+  t= 264.58s  [RESCUE] MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 0.99 m, touching=False, last=none)
+  t= 270.0s [RESCUE] BZ done @(+1.55,+3.08) MD(WALK_ON) @(+1.26,-2.10) z=0.123 tilt= 1.7 JP(WALK) @(+1.77,-2.99) z=0.11 wall   109s
+  t= 276.52s  [RESCUE] MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.08) z=0.06)
+  t= 276.54s  [RESCUE] MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 0.99 m, touching=False, last=seated)
+  t= 280.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.39,-2.08) z=0.060 tilt= 6.2 JP(WALK) @(+1.42,-2.69) z=0.11 wall   117s
+  t= 290.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.29,-1.83) z=0.114 tilt=17.9 JP(WALK) @(+1.39,-2.03) z=0.13 wall   126s
+  t= 300.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-1.79) z=0.123 tilt=16.6 JP(WALK) @(+1.34,-1.99) z=0.13 wall   135s
+  t= 310.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-1.74) z=0.127 tilt= 6.0 JP(WALK) @(+1.23,-1.99) z=0.13 wall   146s
+  t= 320.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.31,-1.41) z=0.228 tilt= 5.6 JP(WALK) @(+1.28,-1.65) z=0.22 wall   158s
+  t= 330.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.38,-1.00) z=0.345 tilt= 8.9 JP(WALK) @(+1.34,-1.25) z=0.34 wall   169s
+  t= 340.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.44,-0.62) z=0.458 tilt= 7.8 JP(WALK) @(+1.41,-0.86) z=0.45 wall   180s
+  t= 347.86s  [RESCUE] MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.44,-0.41) z=0.50)
+  t= 347.88s  [RESCUE] MANAGER #3: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+  t= 349.62s  [RESCUE] MANAGER result: BACK_OFF -> cleared (duck SIT/deck at (+1.44,-0.41) z=0.50)
+  t= 349.64s  [RESCUE] MANAGER #4: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.64 m, touching=False, last=cleared)
+  t= 350.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.44,-0.45) z=0.557 tilt= 1.4 JP(WALK) @(+1.48,-1.05) z=0.39 wall   189s
+  t= 355.18s  [RESCUE] MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.45,-0.44) z=0.56)
+  t= 355.20s  [RESCUE] MANAGER #5: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.61 m, touching=False, last=standing)
+  t= 355.20s  [RESCUE] JP follows the duck across the landing and down the far ramp (procession finale), 0.61 m behind
+  t= 355.20s  [RESCUE] BZ raises its fork while the duck walks on (pre-positioning for the circle)
+  t= 355.22s  [RESCUE] BZ's fork is up; it turns round on the spot to face the goal
+  t= 360.0s [RESCUE] BZ done @(+1.65,+3.24) MD(WALK_ON) @(+1.44,-0.17) z=0.558 tilt= 2.3 JP(WALK) @(+1.47,-1.17) z=0.36 wall   197s
+  t= 366.32s  [RESCUE] BZ faces south, toward the goal: the circle is complete
+  t= 369.38s  [RESCUE] MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.58,+1.95) z=0.15)
+  t= 369.38s  [RESCUE] DUCK CROSSED THE COURSE (y=+1.95 z=0.153) - all three have crossed
+  t= 369.38s  [CELEBRATE] stage -> CELEBRATE
+  t= 369.40s  [CELEBRATE] JP comes down the far ramp after the duck; the three form a circle at the goal
+  t= 370.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(STAND) @(+1.65,+2.27) z=0.125 tilt= 2.6 JP(WALK) @(+1.44,-0.54) z=0.54 wall   205s
+  t= 370.40s  [CELEBRATE] the duck walks to its place in the circle (north of the toe first)
+  t= 371.42s  [CELEBRATE] JP stalls on the landing at y=-0.53; full speed 0.8 for 3 s
+  t= 375.24s  [CELEBRATE] JP is down the far ramp (y=+1.75 z=0.19); goes to its place in the circle
+  t= 380.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(WALK) @(+1.02,+2.41) z=0.120 tilt= 2.0 JP(WALK) @(+2.29,+2.43) z=0.11 wall   212s
+  t= 383.82s  [CELEBRATE] the duck and the crab are in their places (1.12 / 1.24 m from BZ, which is ready)
+  t= 386.32s  [CELEBRATE] the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.10 rad, crab 0.02 rad off the centre)
+  t= 390.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.68,+2.47) z=0.061 tilt= 5.1 JP(DANCE) @(+2.36,+2.44) z=0.12 wall   220s
+  t= 400.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.60,+2.55) z=0.080 tilt= 4.8 JP(FREEZE) @(+2.37,+2.45) z=0.14 wall   230s
+  t= 401.72s  [END] stage -> END
+Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take34.mp4 (4923 frames, ffmpeg rc=0)
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 404.22,
+  "state_digest": "678fd3cae2caa4e7d1d146d4a2cfba3f1722cf30ed453248d21b3ccac5be24a5",
+  "ngeom": 291,
+  "face": {
+    "on": true,
+    "log": [
+      [
+        0.0,
+        "neutral",
+        "戯れ・待機"
+      ],
+      [
+        196.46,
+        "serious",
+        "持ち場へ"
+      ],
+      [
+        196.82,
+        "happy",
+        "応援ダンス"
+      ],
+      [
+        224.04,
+        "serious",
+        "持ち場へ"
+      ],
+      [
+        228.86,
+        "serious",
+        "坂を登る"
+      ],
+      [
+        245.92,
+        "neutral",
+        "待機"
+      ],
+      [
+        248.96,
+        "serious",
+        "戻る準備"
+      ],
+      [
+        253.96,
+        "serious",
+        "戻る"
+      ],
+      [
+        264.58,
+        "serious",
+        "座らせる"
+      ],
+      [
+        276.54,
+        "cross",
+        "押し上げ中"
+      ],
+      [
+        291.06,
+        "sweat",
+        "押し上げ中、5 秒超"
+      ],
+      [
+        347.88,
+        "serious",
+        "少し離れる"
+      ],
+      [
+        349.64,
+        "serious",
+        "立たせる"
+      ],
+      [
+        355.2,
+        "serious",
+        "見送る"
+      ],
+      [
+        369.38,
+        "sparkle",
+        "パッカンが渡り切った"
+      ],
+      [
+        386.34,
+        "happy",
+        "祝賀ダンス"
+      ]
+    ]
+  },
+  "cuts": [
+    [
+      22.0,
+      54.0,
+      "BZ が空荷で保管場所へ戻る"
+    ],
+    [
+      110.0,
+      172.0,
+      "BZ が空荷でスタート地点へ回る（パッカンと跳跳は待機場所へ）"
+    ]
+  ],
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802545736,
+        "carry_m": 2.984051547897827
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.2075943438433419,
+        "carry_m": 2.9853781947083275
+      }
+    ],
+    "rise_m": 0.43991551922526545,
+    "surfaces": 4
+  },
+  "course_disturbed": {},
+  "ending": "crab",
+  "manager": {
+    "policy": "固定ルール",
+    "decisions": [
+      {
+        "n": 1,
+        "t": 264.6,
+        "video_t": 85.3,
+        "action": "SEAT",
+        "bubble": "パッカン、カニさんの方を向いて座って",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 0.99,
+        "last_result": "none",
+        "result": "seated",
+        "duration_s": 11.9
+      },
+      {
+        "n": 2,
+        "t": 276.5,
+        "video_t": 91.3,
+        "action": "PUSH",
+        "bubble": "カニさん、そっと押し上げてあげて",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 0.99,
+        "last_result": "seated",
+        "result": "pushed_up",
+        "duration_s": 71.3
+      },
+      {
+        "n": 3,
+        "t": 347.9,
+        "video_t": 127.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.25,
+        "last_result": "pushed_up",
+        "result": "cleared",
+        "duration_s": 1.7
+      },
+      {
+        "n": 4,
+        "t": 349.6,
+        "video_t": 127.9,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.64,
+        "last_result": "cleared",
+        "result": "standing",
+        "duration_s": 5.5
+      },
+      {
+        "n": 5,
+        "t": 355.2,
+        "video_t": 130.6,
+        "action": "WALK_ON",
+        "bubble": "パッカン、そのまま進んで",
+        "duck": "STAND",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.61,
+        "last_result": "standing",
+        "result": "crossed",
+        "duration_s": 14.2
+      }
+    ],
+    "duck_crossed": true
+  },
+  "three_crossed": {
+    "bz": true,
+    "crab": true,
+    "duck": true
+  },
+  "video_silent": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take34_silent.mp4",
+    "frames": 4923,
+    "seconds": 164.1,
+    "bytes": 22349292
+  },
+  "video": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take34.mp4",
+    "ffmpeg_rc": 0,
+    "bytes": 22735439
+  }
+}
+     0.00s  BZ UP
+    16.26s  BZ RAISE_UP
+    17.92s  BZ TO_DOWN
+    54.00s  JUMP CUT: sim 22-54 s not shown (BZ が空荷で保管場所へ戻る)
+    57.46s  BZ PRECISE_LANE
+    65.82s  BZ ALIGN
+    75.56s  BZ RETREAT_FOR_ALIGNMENT
+    79.12s  BZ LOWER
+    80.76s  BZ DOWN
+   104.40s  BZ RAISE_DOWN
+   106.06s  BZ TO_START
+   106.06s  TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+   106.06s  MD heads to the waiting spot by the course start; JP to its watch spot
+   172.07s  JUMP CUT: sim 110-172 s not shown (BZ が空荷でスタート地点へ回る（パッカンと跳跳は待機場所へ）)
+   176.38s  BZ CROSS
+   176.38s  stage -> FOLLOW_IN
+   196.08s  construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+   196.08s  physics step -> 0.001
+   196.46s  stage -> RAMP
+   196.46s  MD: 坂に挑む（1 回目）
+   196.48s  JP cheers the duck on with its dance, claws up (official dance policy)
+   210.48s  MD: いったん後ずさり (reached y=-1.99, ramp toe -1.86)
+   213.00s  MD: もう一回挑む（2 回目）
+   224.02s  MD: やっぱり無理… (reached y=-2.00)
+   224.04s  JP pre-positions at the foot of its lane while the duck sits down
+   224.64s  MD: 諦めて座り込む（sitstand）
+   226.14s  MD: 首を振りながら「ぐわぁぁ？」
+   228.86s  stage -> CLIMB
+   228.86s  JP sets off from the foot of its lane
+   228.88s  JP passes beside the sitting duck and starts up the ramp
+   236.10s  JP on the crest (z=0.50); duck: ぐわぁぁ？
+   239.04s  JP stuck at the crest (y=-0.54 z=0.54); forward jump
+   240.22s  JP landed at y=-0.45 z=0.54
+   242.80s  JP over the top; duck looks around
+   245.92s  JP crossed the course and stops behind BZ (z=0.11)
+   248.94s  stage -> CALL
+   250.46s  JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+   253.96s  stage -> RETURN
+   253.96s  JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+   264.56s  stage -> RESCUE
+   264.56s  the manager (固定ルール) takes over: duck SIT/toe at (+1.25,-2.15), crab at (+1.79,-2.99), 1.00 m
+   264.58s  MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 0.99 m, touching=False, last=none)
+   276.52s  MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.08) z=0.06)
+   276.54s  MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 0.99 m, touching=False, last=seated)
+   347.86s  MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.44,-0.41) z=0.50)
+   347.88s  MANAGER #3: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+   349.62s  MANAGER result: BACK_OFF -> cleared (duck SIT/deck at (+1.44,-0.41) z=0.50)
+   349.64s  MANAGER #4: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.64 m, touching=False, last=cleared)
+   355.18s  MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.45,-0.44) z=0.56)
+   355.20s  MANAGER #5: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.61 m, touching=False, last=standing)
+   355.20s  JP follows the duck across the landing and down the far ramp (procession finale), 0.61 m behind
+   355.20s  BZ raises its fork while the duck walks on (pre-positioning for the circle)
+   355.22s  BZ's fork is up; it turns round on the spot to face the goal
+   366.32s  BZ faces south, toward the goal: the circle is complete
+   369.38s  MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.58,+1.95) z=0.15)
+   369.38s  DUCK CROSSED THE COURSE (y=+1.95 z=0.153) - all three have crossed
+   369.38s  stage -> CELEBRATE
+   369.40s  JP comes down the far ramp after the duck; the three form a circle at the goal
+   370.40s  the duck walks to its place in the circle (north of the toe first)
+   371.42s  JP stalls on the landing at y=-0.53; full speed 0.8 for 3 s
+   375.24s  JP is down the far ramp (y=+1.75 z=0.19); goes to its place in the circle
+   383.82s  the duck and the crab are in their places (1.12 / 1.24 m from BZ, which is ready)
+   386.32s  the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.10 rad, crab 0.02 rad off the centre)
+   401.72s  stage -> END

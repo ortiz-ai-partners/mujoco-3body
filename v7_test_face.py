@@ -51,9 +51,16 @@ def main():
         pip.update_scene(data, camera=face.cam_name, scene_option=opt)
         small = pip.render().copy()
         pics.append((e, small))
-        img = cap.draw(frame, f"v7 face test | {e}（{crab_face.JA[e]}）", ["跳跳の表示パネル（描画のみ・物理に影響なし）"],
-                       footer="crab_face.py", inset=(small, "跳跳の顔モニター（表示パネル・描画のみ）", face.label()))
+        # the story's widest caption (RESCUE), so the monitor goes below it; the smoke test also shows a jump-cut notice
+        img = cap.draw(frame, "v7 | 支配人AI〈アイランドマスター〉が次の一手を選ぶ ― 手助けは跳跳、物理のみ",
+                       [f"face test | {e}（{crab_face.JA[e]}）", "跳跳の表示パネル（描画のみ・物理に影響なし）"],
+                       footer="sim 123.4 s   x2", inset=(small, "跳跳の顔（表示パネル・描画のみ）", face.label()),
+                       notice="≫ 省略（sim 22→54 s）：BZ が空荷で保管場所へ戻る" if e == "sweat" else None)
         imageio.imwrite(out / f"face_{e}.png", img)
+        if e == "neutral":                                        # and once beside a short caption
+            img = cap.draw(frame, "v7 face test | short title", ["跳跳の表示パネル"], footer="crab_face.py",
+                           inset=(small, "跳跳の顔（表示パネル・描画のみ）", face.label()))
+            imageio.imwrite(out / "face_neutral_short_title.png", img)
     from PIL import Image, ImageDraw
     sheet = Image.new("RGB", (crab_face.PIP_W, (crab_face.PIP_H + 24) * len(pics)), (30, 30, 30))
     d = ImageDraw.Draw(sheet)

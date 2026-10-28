@@ -87,6 +87,13 @@ ARM_SLOTS = slice(0, 10)        # the crab's two front arms in the policies' wir
 CHEER_DANCE_S = 12.4            # the official dance (its claws go up), then
 CHEER_HOLD_S = 3.0              # the pose held with the fork up and the duck flapping
 
+# ── jump cuts (ゆうころ 10/28 夕: the submission must be 1-3 min including titles, at most 2x; the story is 3:30 at 2x,
+#    so the two empty drives of the construction are not shown: BZ going back for the second slope, and BZ going round
+#    to the start.  The physics runs through them; the frames are not written, a notice names the gap and the footer's
+#    sim clock jumps.  Default on; --no-cuts for the full record, --cut START:END:LABEL for others) ──
+DEFAULT_CUTS = [(22.0, 54.0, "BZ が空荷で保管場所へ戻る"),
+                (110.0, 172.0, "BZ が空荷でスタート地点へ回る")]      # (short: the notice must clear the footer)
+
 # ── the circle (ゆうころ 10/28 昼: 「みんなで顔を合わせようか、円になって中央を向き、ブルドーザーはアームを上下、アヒルは
 #    手がなかったので屈伸しながら首を振る」) ──
 # ── the crab cheers the duck's ramp attempts (ゆうころ 10/28 昼: 「カニ、ぱっかんがチャレンジしているとき万歳で踊って応援してほしい」) ──
@@ -133,13 +140,20 @@ def cheer_circle_tick(rel, duck, crab, sim, model, data, t):
     return rel >= CHEER_DANCE_S + CHEER_HOLD_S
 
 
-def cheer_tick(rel, duck, crab, sim, model, data, t):
+def cheer_tick(rel, duck, crab, sim, model, data, t, pump_floor=0.2):
     """One control tick of the goal celebration (rel = seconds since it began).  BZ pumps its fork twice, then raises
     it and keeps it up; the duck "flaps": velstand turns it left and right while its head bobs and rolls; the crab
     does the official dance and then holds both arms up.  Policy commands and joint targets only (no external
-    forces).  Returns True once the celebration is over."""
-    if rel < 4.0:
-        sim.command(0.0, 0.0, 1.0 if (rel % 2.0) < 1.0 else -1.0)           # two pumps
+    forces).  Returns True once the celebration is over.
+
+    pump_floor: the lowest the fork goes while pumping.  0.2 m when BZ's back is to the others (takes 9-33); 0.38 m
+    once BZ has turned round to face them (take 37-, ゆうころ 10/28 夕): the duck then stands under the raised tines,
+    0.9 m in front, and its head is 0.23 m high."""
+    if rel < 4.0:                                                             # two pumps: down for a second, up for a second
+        if (rel % 2.0) < 1.0:
+            sim.command(0.0, 0.0, -1.0 if sim.lift_target > pump_floor + 0.01 else 0.0)
+        else:
+            sim.command(0.0, 0.0, 1.0 if sim.lift_target < 0.5 else 0.0)
     else:
         sim.command(0.0, 0.0, 1.0 if sim.lift_target < 0.5 else 0.0)        # up, and stays up
     if duck.mode in ("STAND", "WALK", "TURN"):
@@ -431,9 +445,17 @@ def main():
                          "the manager's action and its result (crab_face.py's table) and shown in the face monitor, an inset at "
                          "the bottom-left.  Render-only: the physics path is the same with and without it "
                          "(--test, out/v7_full_report_facecheck_{A,B}.json)")
+    ap.add_argument("--no-cuts", action="store_true", help="write every frame (no jump cuts): the full-length record")
+    ap.add_argument("--cut", action="append", default=[], metavar="START:END[:LABEL]",
+                    help="a jump cut in simulated seconds, added to the default ones (DEFAULT_CUTS)")
     args = ap.parse_args()
     args.prestage = not args.no_prestage
     args.face = not args.no_face
+    cuts = [] if args.no_cuts else list(DEFAULT_CUTS)
+    for spec in args.cut:
+        a, b, *label = spec.split(":")
+        cuts.append((float(a), float(b), label[0] if label else ""))
+    cuts.sort()
 
     app, slope_assembly, tracks_mod = course_builder()
     xml = slope_assembly.assembly_xml(app.ROOT / "scene_fork_tracks.xml")
@@ -523,6 +545,15 @@ def main():
     def video_t():
         return (video.frames if video is not None else 0) / VIDEO_FPS
 
+    cut_state = {"active": None, "notice": "", "notice_until": -1}
+
+    def cut_at(t_sim):
+        """The jump cut containing simulated time t_sim, or None."""
+        for c in cuts:
+            if c[0] <= t_sim < c[1]:
+                return c
+        return None
+
     def event(t, text):
         events.append({"t": round(t, 2), "video_t": round(video_t(), 2), "event": text})
         print(f"  t={t:7.2f}s  [{stage}] {text}", flush=True)
@@ -535,6 +566,8 @@ def main():
             clock.speed = SPEED.get(new, 1.0)
 
     def quack(kind, pitch=1.0):
+        if video is not None and cut_at(data.time) is not None:
+            return                                           # a cry inside a jump cut is not heard
         chirps.add(video_t(), kind, pitch)
 
     def cry(who):
@@ -581,9 +614,10 @@ def main():
         crab.steer(data, (ch.LANE_X, q_jp[1] + 1.0), vx)
 
     def bz_reposition(t):
-        """Circle finale: BZ raises its fork (phase "raise") and turns round on the spot to face the goal ("turn" ->
-        "ready"), while the duck is still walking on across the landing (pre-positioning): nobody is near its 1.38 m
-        tines then.  It cannot drive north (the wall is 5 cm from its raised tines), so the circle forms around its post."""
+        """Circle and procession finales: BZ raises its fork (phase "raise") and turns round on the spot to face the goal
+        ("turn" -> "ready"), while the duck is still walking on across the landing (pre-positioning): nobody is near its
+        1.38 m tines then.  It cannot drive north (the wall is 5 cm from its raised tines), so it turns at its post.
+        (The procession's BZ kept its back to the others in takes 9-33: ゆうころ 10/28 夕「後ろ向いてるよ」.)"""
         yaw = quat_to_yaw(data.xquat[bz_bid])
         if bzf["phase"] == "raise":
             sim.command(0.0, 0.0, 1.0 if sim.lift_target < 0.5 else 0.0)
@@ -595,7 +629,7 @@ def main():
             if abs(err) < 0.04:
                 bzf["phase"] = "ready"
                 sim.command(0, 0, 0)
-                event(t, "BZ faces south: the circle is complete")
+                event(t, "BZ faces south, toward the goal" + (": the circle is complete" if args.finale == "circle" else ""))
             else:
                 sim.command(0.0, math.copysign(1.0 if abs(err) > 0.2 else 0.4, err), 1.0 if sim.lift_target < 0.5 else 0.0)
         else:
@@ -619,6 +653,7 @@ def main():
             return
         face.update(t, stage=stage, crab_mode=crab.mode, tilt=body_tilt_deg(data, crab.bid),
                     skill=mgr["name"] if mgr["gen"] is not None else None,
+                    touching=bool(h.touching()) if stage == "RESCUE" else False,
                     last_action=ch.ACTIONS[book.last_action] if book.last_action is not None else None,
                     last_result=book.last_result, crossed=mgr["crossed"])
 
@@ -680,7 +715,10 @@ def main():
                 [f"BZ: {lift_phase or 'navigating'}   跳跳: {CHEER_TEXT.get(cheer['phase'], cheer['phase'])}",
                  f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}  高さ {p_md[2]:.3f} m"])
 
-    def render_frame():
+    def render_frame(write=True):
+        """One video frame.  write=False (inside a jump cut) does everything except drawing: the per-frame mj_forward
+        and the track animation still run, so the physics path is the same as the full-length render (the first cut
+        version skipped them and the construction took 4 s longer: the story then failed, take 34 first attempt)."""
         sim.tracks.update(model, data)
         mujoco.mj_forward(model, data)
         p_md, p_jp, p_bz = duck.pos(data), crab.pos(data), data.xpos[bz_bid]
@@ -740,14 +778,18 @@ def main():
             else:                                                       # take 5's shot, from the south-east
                 cam.aim(lookat=look, distance=2.6 if lift_phase in ("insert", "lift", "hold", "lower", "back", "wait") else 3.4,
                         azimuth=135, elevation=-18)
-        renderer.update_scene(data, cam.step(1.0 / VIDEO_FPS), opt)
+        camera = cam.step(1.0 / VIDEO_FPS)
+        if not write:
+            return None
+        renderer.update_scene(data, camera, opt)
         frame = renderer.render()
         inset = None
         if pip is not None:
             pip.update_scene(data, camera=face.cam_name, scene_option=opt)
-            inset = (pip.render().copy(), "跳跳の顔モニター（表示パネル・描画のみ）", face.label())
+            inset = (pip.render().copy(), "跳跳の顔（表示パネル・描画のみ）", face.label())
+        notice = cut_state["notice"] if (video is not None and video.frames < cut_state["notice_until"]) else None
         title, lines = caption()
-        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}", inset=inset)
+        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}", inset=inset, notice=notice)
 
     t_wall = time.perf_counter()
     k = 0
@@ -1171,9 +1213,9 @@ def main():
                         crab.set_mode("WALK", t, model)
                     cry("crab")
                     event(t, f"JP follows the duck across the landing and down the far ramp (procession finale), {h.crab_dist():.2f} m behind")
-                    if args.finale == "circle" and args.prestage and bzf["phase"] == "idle":
-                        bzf["phase"] = "raise"               # pre-positioning: BZ gets its fork up meanwhile
-                        event(t, "BZ raises its fork while the duck walks on (pre-positioning for the circle)")
+                    if args.finale in ("circle", "procession") and args.prestage and bzf["phase"] == "idle":
+                        bzf["phase"] = "raise"               # pre-positioning: BZ gets its fork up and turns round meanwhile
+                        event(t, f"BZ raises its fork while the duck walks on (pre-positioning for the {args.finale})")
                 crab_follow(t)
             if bzf["phase"] in ("raise", "turn"):
                 bz_reposition(t)
@@ -1193,7 +1235,7 @@ def main():
                         crab.set_mode("WALK", t, model)
                 if args.finale in ("procession", "circle") and cel["following"]:
                     cel["phase"] = "follow"
-                    if circle and bzf["phase"] == "idle":
+                    if bzf["phase"] == "idle":                   # (no pre-positioning: BZ turns round now)
                         bzf["phase"] = "raise"
                     event(t, "JP comes down the far ramp after the duck; " + ("the three form a circle at the goal" if circle
                                                                               else "the duck walks on toward BZ; the three meet at the goal"))
@@ -1288,7 +1330,7 @@ def main():
                         else:
                             cry("crab")
                 elif args.finale == "procession":
-                    if cheer_tick(rel, duck, crab, sim, model, data, t):
+                    if cheer_tick(rel, duck, crab, sim, model, data, t, pump_floor=0.38 if bzf["phase"] == "ready" else 0.2):
                         duck.cheer = None
                         if duck.mode == "CHEER":
                             duck.set_mode("STAND", t)
@@ -1575,7 +1617,17 @@ def main():
             mujoco.mj_step(model, data)
             sub_k += 1
             if video is not None and clock.due(data.time):
-                video.add(render_frame())
+                c = cut_at(data.time)
+                if c is not None:
+                    cut_state["active"] = c                      # a jump cut: the frame is not written ...
+                    render_frame(write=False)                    # ... but the per-frame forward pass runs as always
+                else:
+                    if cut_state["active"] is not None:
+                        a, b, label = cut_state["active"]
+                        cut_state.update(active=None, notice=f"≫ 省略（sim {a:.0f}→{b:.0f} s）：{label}",
+                                         notice_until=video.frames + int(3.0 * VIDEO_FPS))
+                        event(data.time, f"JUMP CUT: sim {a:.0f}-{b:.0f} s not shown ({label})")
+                    video.add(render_frame())
         if args.preview and (data.time - last_shot >= 15.0):
             last_shot = data.time
             cam.snap()
@@ -1612,6 +1664,7 @@ def main():
     report = {"mujoco": mujoco.__version__, "sim_seconds": round(float(data.time), 2),
               "state_digest": digest, "ngeom": int(model.ngeom),
               "face": {"on": face is not None, "log": face.log if face is not None else None},
+              "cuts": [list(c) for c in cuts],
               "construction": {"success": bool(pilot.success), "reason": pilot.reason,
                                "parts": pilot.results, "rise_m": pilot.max_rise, "surfaces": len(pilot.touched)},
               "course_disturbed": course_disturbed,
@@ -1621,7 +1674,8 @@ def main():
               "events": events, "md_events": duck.events, "jp_events": crab.events, "chirps": chirps.events}
     if video is not None:
         size = video.close()
-        report["video_silent"] = {"path": str(video.path), "frames": video.frames, "bytes": size}
+        report["video_silent"] = {"path": str(video.path), "frames": video.frames, "seconds": round(video.frames / VIDEO_FPS, 1),
+                                  "bytes": size}
         wav = OUT_DIR / f"3body_arena_v7{args.tag}_chirps.wav"
         chirps.wav(wav, video.frames / VIDEO_FPS)
         final = OUT_DIR / f"3body_arena_v7{args.tag}.mp4"
