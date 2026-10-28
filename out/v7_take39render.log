@@ -1,0 +1,896 @@
+﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
+At line:1 char:393
++ ... Seconds 25; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+timestep: parent has 0.005, child has 0.001, keeping parent value
+
+MuJoCo 3.11.0 | v7 full | dt=0.005 nq=90 nu=41 ngeom=291 face=on mood_ai=mood_net
+  t=   0.00s  [BUILD] BZ UP
+[vost#0:0/libx264 @ 0000021487295180] Multiple -pix_fmt options specified for stream 0, only the last option '-pix_fmt 
+yuv420p' will be used.
+  t=  10.0s [BUILD] BZ UP: CARRY @(+0.22,-0.75) MD(WALK) @(+4.11,+0.59) z=0.120 tilt= 0.9 JP(WALK) @(+4.46,+1.03) z=0.11 wall     6s
+  t=  16.26s  [BUILD] BZ RAISE_UP
+  t=  17.92s  [BUILD] BZ TO_DOWN
+  t=  20.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.64,-0.69) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.47,+1.05) z=0.11 wall    12s
+  t=  30.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.41,-0.71) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.48,+1.06) z=0.11 wall    14s
+  t=  40.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-3.11,-0.81) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.49,+1.07) z=0.11 wall    16s
+  t=  50.0s [BUILD] BZ TO_DOWN: FORWARD 2/2 @(-3.46,+0.45) MD(STAND) @(+4.13,+0.67) z=0.116 tilt= 0.7 JP(JUMP) @(+4.50,+1.07) z=0.08 wall    18s
+  t=  54.00s  [BUILD] JUMP CUT: sim 22-54 s not shown (BZ が空荷で保管場所へ戻る)
+  t=  57.46s  [BUILD] BZ PRECISE_LANE
+  t=  60.0s [BUILD] BZ PRECISE_LANE @(-3.38,+0.72) MD(WALK) @(+3.52,+0.12) z=0.118 tilt= 2.4 JP(WALK) @(+3.45,+0.84) z=0.11 wall    22s
+  t=  65.82s  [BUILD] BZ ALIGN
+  t=  70.0s [BUILD] BZ ALIGN @(-3.39,+0.69) MD(STAND) @(+3.41,+0.06) z=0.116 tilt= 0.7 JP(WALK) @(+3.52,+0.62) z=0.11 wall    29s
+  t=  75.56s  [BUILD] BZ RETREAT_FOR_ALIGNMENT
+  t=  79.12s  [BUILD] BZ LOWER
+  t=  80.0s [BUILD] BZ LOWER @(-4.51,+0.79) MD(STAND) @(+3.44,+0.09) z=0.116 tilt= 0.8 JP(WALK) @(+3.53,+0.63) z=0.11 wall    35s
+  t=  80.76s  [BUILD] BZ DOWN
+  t=  90.0s [BUILD] BZ DOWN: LIFT @(-2.75,+0.80) MD(STAND) @(+3.44,+0.09) z=0.116 tilt= 0.8 JP(WALK) @(+3.54,+0.63) z=0.11 wall    42s
+  t= 100.0s [BUILD] BZ DOWN: LOWER @(+0.23,+0.81) MD(WALK) @(+3.60,-0.28) z=0.117 tilt= 2.5 JP(WALK) @(+3.54,+0.65) z=0.11 wall    48s
+  t= 104.40s  [BUILD] BZ RAISE_DOWN
+  t= 106.06s  [BUILD] BZ TO_START
+  t= 106.06s  [BUILD] TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+  t= 106.06s  [BUILD] MD heads to the waiting spot by the course start; JP to its watch spot
+  t= 110.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.61,+0.91) MD(WALK) @(+3.73,-1.14) z=0.121 tilt= 2.6 JP(WALK) @(+4.46,-0.34) z=0.11 wall    56s
+  t= 120.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.39,+0.79) MD(WALK) @(+3.41,-2.05) z=0.115 tilt= 1.2 JP(WALK) @(+4.52,-1.82) z=0.11 wall    58s
+  t= 130.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.92,+0.62) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.53,-1.80) z=0.11 wall    60s
+  t= 140.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-1.09,+0.71) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.54,-1.80) z=0.11 wall    62s
+  t= 150.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.98,+0.96) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.58,-1.80) z=0.11 wall    64s
+  t= 160.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.94,-2.77) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.3 JP(WALK) @(+4.59,-1.80) z=0.11 wall    66s
+  t= 170.0s [BUILD] BZ TO_START: FORWARD 3/3 @(-1.05,-3.06) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.3 JP(WALK) @(+4.62,-1.80) z=0.11 wall    68s
+  t= 172.07s  [BUILD] JUMP CUT: sim 110-172 s not shown (BZ が空荷でスタート地点へ回る)
+  t= 176.38s  [BUILD] BZ CROSS
+  t= 176.38s  [FOLLOW_IN] stage -> FOLLOW_IN
+  t= 180.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.46,-3.10) MD(WALK) @(+2.96,-2.47) z=0.121 tilt= 2.7 JP(WALK) @(+4.64,-1.80) z=0.11 wall    73s
+  t= 190.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.68,+0.69) MD(WALK) @(+2.04,-2.75) z=0.116 tilt= 2.2 JP(WALK) @(+3.92,-2.09) z=0.11 wall    78s
+  t= 196.08s  [FOLLOW_IN] construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+  t= 196.08s  [FOLLOW_IN] physics step -> 0.001
+  t= 196.46s  [RAMP] stage -> RAMP
+  t= 196.46s  [RAMP] MD: 坂に挑む（1 回目）
+  t= 196.48s  [RAMP] JP cheers the duck on with its dance, claws up (official dance policy)
+  t= 200.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.34,-2.65) z=0.117 tilt= 2.8 JP(DANCE) @(+2.70,-2.61) z=0.14 wall    85s
+  t= 210.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.23,-1.99) z=0.122 tilt= 3.5 JP(DANCE) @(+2.71,-2.61) z=0.12 wall    94s
+  t= 210.48s  [RAMP] MD: いったん後ずさり (reached y=-1.99, ramp toe -1.86)
+  t= 213.00s  [RAMP] MD: もう一回挑む（2 回目）
+  t= 220.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.23,-2.00) z=0.120 tilt= 2.7 JP(DANCE) @(+2.72,-2.60) z=0.11 wall   102s
+  t= 224.02s  [RAMP] MD: やっぱり無理… (reached y=-2.00)
+  t= 224.04s  [RAMP] JP pre-positions at the foot of its lane while the duck sits down
+  t= 224.64s  [RAMP] MD: 諦めて座り込む（sitstand）
+  t= 226.14s  [RAMP] MD: 首を振りながら「ぐわぁぁ？」
+  t= 228.86s  [CLIMB] stage -> CLIMB
+  t= 228.86s  [CLIMB] JP sets off from the foot of its lane
+  t= 228.88s  [CLIMB] JP passes beside the sitting duck and starts up the ramp
+  t= 230.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.14) z=0.060 tilt= 6.7 JP(WALK) @(+1.79,-2.82) z=0.11 wall   112s
+  t= 236.10s  [CLIMB] JP on the crest (z=0.50); duck: ぐわぁぁ？
+  t= 239.04s  [CLIMB] JP stuck at the crest (y=-0.54 z=0.54); forward jump
+  t= 240.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.14) z=0.060 tilt= 8.0 JP(JUMP) @(+1.71,-0.45) z=0.54 wall   120s
+  t= 240.22s  [CLIMB] JP landed at y=-0.45 z=0.54
+  t= 242.80s  [CLIMB] JP over the top; duck looks around
+  t= 245.92s  [CLIMB] JP crossed the course and stops behind BZ (z=0.11)
+  t= 248.94s  [CALL] stage -> CALL
+  t= 250.0s [CALL] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.15) z=0.060 tilt= 4.1 JP(WALK) @(+1.48,+2.23) z=0.11 wall   127s
+  t= 250.46s  [CALL] JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+  t= 253.96s  [RETURN] stage -> RETURN
+  t= 253.96s  [RETURN] JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+  t= 260.0s [RETURN] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-2.15) z=0.060 tilt= 4.5 JP(WALK) @(+2.97,-1.57) z=0.11 wall   135s
+  t= 264.56s  [RESCUE] stage -> RESCUE
+  t= 264.56s  [RESCUE] the manager (PPO 方策（ppo2_v22）) takes over: duck SIT/toe at (+1.25,-2.15), crab at (+1.79,-2.99), 1.00 m
+  t= 264.58s  [RESCUE] MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 0.99 m, touching=False, last=none)
+  t= 270.0s [RESCUE] BZ done @(+1.55,+3.08) MD(WALK_ON) @(+1.26,-2.10) z=0.123 tilt= 1.7 JP(WALK) @(+1.77,-2.99) z=0.11 wall   144s
+  t= 276.52s  [RESCUE] MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.08) z=0.06)
+  t= 276.54s  [RESCUE] MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 0.99 m, touching=False, last=seated)
+  t= 280.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.39,-2.08) z=0.060 tilt= 6.2 JP(WALK) @(+1.42,-2.69) z=0.11 wall   155s
+  t= 290.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.29,-1.83) z=0.114 tilt=17.9 JP(WALK) @(+1.39,-2.03) z=0.13 wall   166s
+  t= 300.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-1.79) z=0.123 tilt=16.6 JP(WALK) @(+1.34,-1.99) z=0.13 wall   178s
+  t= 310.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.25,-1.74) z=0.127 tilt= 6.0 JP(WALK) @(+1.23,-1.99) z=0.13 wall   191s
+  t= 320.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.31,-1.41) z=0.228 tilt= 5.6 JP(WALK) @(+1.28,-1.65) z=0.22 wall   204s
+  t= 330.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.38,-1.00) z=0.345 tilt= 8.9 JP(WALK) @(+1.34,-1.25) z=0.34 wall   217s
+  t= 340.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.44,-0.62) z=0.458 tilt= 7.8 JP(WALK) @(+1.41,-0.86) z=0.45 wall   230s
+  t= 347.86s  [RESCUE] MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.44,-0.41) z=0.50)
+  t= 347.88s  [RESCUE] MANAGER #3: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+  t= 350.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.43,-0.29) z=0.557 tilt= 3.9 JP(WALK) @(+1.49,-0.66) z=0.50 wall   242s
+  t= 353.42s  [RESCUE] MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.43,-0.29) z=0.56)
+  t= 353.44s  [RESCUE] MANAGER #4: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.39 m, touching=False, last=standing)
+  t= 353.44s  [RESCUE] JP follows the duck across the landing and down the far ramp (procession finale), 0.39 m behind
+  t= 353.44s  [RESCUE] BZ raises its fork while the duck walks on (pre-positioning for the circle)
+  t= 353.46s  [RESCUE] BZ's fork is up; it turns round on the spot to face the goal
+  t= 360.0s [RESCUE] BZ done @(+1.60,+3.30) MD(WALK_ON) @(+1.43,+0.19) z=0.557 tilt= 2.6 JP(WALK) @(+1.49,-0.75) z=0.48 wall   253s
+  t= 364.60s  [RESCUE] BZ faces south, toward the goal: the circle is complete
+  t= 365.64s  [RESCUE] MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.56,+1.96) z=0.14)
+  t= 365.64s  [RESCUE] DUCK CROSSED THE COURSE (y=+1.96 z=0.137) - all three have crossed
+  t= 365.64s  [CELEBRATE] stage -> CELEBRATE
+  t= 365.66s  [CELEBRATE] JP comes down the far ramp after the duck; the three form a circle at the goal
+  t= 366.66s  [CELEBRATE] the duck walks to its place in the circle (north of the toe first)
+  t= 368.12s  [CELEBRATE] JP stalls on the landing at y=-0.53; full speed 0.8 for 3 s
+  t= 370.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(WALK) @(+1.45,+2.32) z=0.118 tilt= 2.2 JP(WALK) @(+1.48,+0.49) z=0.54 wall   264s
+  t= 372.12s  [CELEBRATE] JP is down the far ramp (y=+1.76 z=0.19); goes to its place in the circle
+  t= 379.96s  [CELEBRATE] the duck and the crab are in their places (1.11 / 1.24 m from BZ, which is ready)
+  t= 380.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(TURN) @(+0.76,+2.48) z=0.121 tilt= 2.9 JP(WALK) @(+2.28,+2.44) z=0.11 wall   272s
+  t= 382.70s  [CELEBRATE] the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.11 rad, crab 0.01 rad off the centre)
+  t= 390.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.72,+2.52) z=0.116 tilt= 4.1 JP(DANCE) @(+2.36,+2.43) z=0.11 wall   286s
+  t= 398.10s  [END] stage -> END
+Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take39.mp4 (4869 frames, ffmpeg rc=0)
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 400.6,
+  "state_digest": "aafa49e7a8698eac61a38d683b6b23da6705121a37522c29f4847378425a2cd0",
+  "ngeom": 291,
+  "face": {
+    "on": true,
+    "log": [
+      [
+        0.0,
+        "neutral",
+        "戯れ・待機"
+      ],
+      [
+        196.46,
+        "serious",
+        "持ち場へ"
+      ],
+      [
+        196.82,
+        "happy",
+        "応援ダンス"
+      ],
+      [
+        224.04,
+        "serious",
+        "持ち場へ"
+      ],
+      [
+        228.86,
+        "serious",
+        "坂を登る"
+      ],
+      [
+        245.92,
+        "neutral",
+        "待機"
+      ],
+      [
+        248.96,
+        "serious",
+        "戻る準備"
+      ],
+      [
+        253.96,
+        "serious",
+        "戻る"
+      ],
+      [
+        264.58,
+        "serious",
+        "座らせる"
+      ],
+      [
+        276.54,
+        "cross",
+        "押し上げ中"
+      ],
+      [
+        291.06,
+        "sweat",
+        "押し上げ中、5 秒超"
+      ],
+      [
+        347.88,
+        "serious",
+        "立たせる"
+      ],
+      [
+        353.44,
+        "serious",
+        "見送る"
+      ],
+      [
+        365.64,
+        "sparkle",
+        "パッカンが渡り切った"
+      ],
+      [
+        382.72,
+        "happy",
+        "祝賀ダンス"
+      ]
+    ],
+    "mood_ai": {
+      "kind": "mood",
+      "run": "mood_net",
+      "inferences": 5050,
+      "log": [
+        [
+          277.32,
+          0.703,
+          "confident"
+        ]
+      ],
+      "series": [
+        [
+          264.58,
+          0.547,
+          0.101
+        ],
+        [
+          265.58,
+          0.556,
+          0.101
+        ],
+        [
+          266.58,
+          0.556,
+          0.102
+        ],
+        [
+          267.58,
+          0.556,
+          0.101
+        ],
+        [
+          268.58,
+          0.413,
+          0.092
+        ],
+        [
+          269.58,
+          0.593,
+          0.12
+        ],
+        [
+          270.58,
+          0.619,
+          0.133
+        ],
+        [
+          271.58,
+          0.425,
+          0.105
+        ],
+        [
+          272.58,
+          0.402,
+          0.105
+        ],
+        [
+          273.58,
+          0.379,
+          0.104
+        ],
+        [
+          274.58,
+          0.525,
+          0.112
+        ],
+        [
+          275.58,
+          0.548,
+          0.115
+        ],
+        [
+          276.58,
+          0.635,
+          0.111
+        ],
+        [
+          277.58,
+          0.903,
+          0.307
+        ],
+        [
+          278.58,
+          0.931,
+          0.646
+        ],
+        [
+          279.58,
+          0.928,
+          0.659
+        ],
+        [
+          280.58,
+          0.926,
+          0.649
+        ],
+        [
+          281.58,
+          0.924,
+          0.647
+        ],
+        [
+          282.58,
+          0.922,
+          0.644
+        ],
+        [
+          283.58,
+          0.92,
+          0.641
+        ],
+        [
+          284.58,
+          0.902,
+          0.669
+        ],
+        [
+          285.58,
+          0.913,
+          0.631
+        ],
+        [
+          286.58,
+          0.91,
+          0.601
+        ],
+        [
+          287.58,
+          0.899,
+          0.506
+        ],
+        [
+          288.58,
+          0.893,
+          0.395
+        ],
+        [
+          289.58,
+          0.895,
+          0.46
+        ],
+        [
+          290.58,
+          0.901,
+          0.412
+        ],
+        [
+          291.58,
+          0.877,
+          0.393
+        ],
+        [
+          292.58,
+          0.865,
+          0.292
+        ],
+        [
+          293.58,
+          0.874,
+          0.376
+        ],
+        [
+          294.58,
+          0.874,
+          0.383
+        ],
+        [
+          295.58,
+          0.867,
+          0.305
+        ],
+        [
+          296.58,
+          0.888,
+          0.376
+        ],
+        [
+          297.58,
+          0.874,
+          0.402
+        ],
+        [
+          298.58,
+          0.876,
+          0.413
+        ],
+        [
+          299.58,
+          0.892,
+          0.398
+        ],
+        [
+          300.58,
+          0.878,
+          0.352
+        ],
+        [
+          301.58,
+          0.887,
+          0.471
+        ],
+        [
+          302.58,
+          0.883,
+          0.458
+        ],
+        [
+          303.58,
+          0.887,
+          0.474
+        ],
+        [
+          304.58,
+          0.899,
+          0.507
+        ],
+        [
+          305.58,
+          0.897,
+          0.538
+        ],
+        [
+          306.58,
+          0.9,
+          0.57
+        ],
+        [
+          307.58,
+          0.902,
+          0.608
+        ],
+        [
+          308.58,
+          0.902,
+          0.661
+        ],
+        [
+          309.58,
+          0.899,
+          0.687
+        ],
+        [
+          310.58,
+          0.904,
+          0.715
+        ],
+        [
+          311.58,
+          0.916,
+          0.691
+        ],
+        [
+          312.58,
+          0.904,
+          0.728
+        ],
+        [
+          313.58,
+          0.899,
+          0.719
+        ],
+        [
+          314.58,
+          0.899,
+          0.728
+        ],
+        [
+          315.58,
+          0.902,
+          0.723
+        ],
+        [
+          316.58,
+          0.907,
+          0.714
+        ],
+        [
+          317.58,
+          0.904,
+          0.699
+        ],
+        [
+          318.58,
+          0.906,
+          0.685
+        ],
+        [
+          319.58,
+          0.909,
+          0.683
+        ],
+        [
+          320.58,
+          0.918,
+          0.657
+        ],
+        [
+          321.58,
+          0.908,
+          0.68
+        ],
+        [
+          322.58,
+          0.902,
+          0.677
+        ],
+        [
+          323.58,
+          0.908,
+          0.683
+        ],
+        [
+          324.58,
+          0.913,
+          0.669
+        ],
+        [
+          325.58,
+          0.912,
+          0.66
+        ],
+        [
+          326.58,
+          0.905,
+          0.661
+        ],
+        [
+          327.58,
+          0.904,
+          0.653
+        ],
+        [
+          328.58,
+          0.908,
+          0.664
+        ],
+        [
+          329.58,
+          0.913,
+          0.656
+        ],
+        [
+          330.58,
+          0.913,
+          0.631
+        ],
+        [
+          331.58,
+          0.907,
+          0.626
+        ],
+        [
+          332.58,
+          0.91,
+          0.641
+        ],
+        [
+          333.58,
+          0.912,
+          0.634
+        ],
+        [
+          334.58,
+          0.918,
+          0.589
+        ],
+        [
+          335.58,
+          0.911,
+          0.601
+        ],
+        [
+          336.58,
+          0.916,
+          0.555
+        ],
+        [
+          337.58,
+          0.911,
+          0.597
+        ],
+        [
+          338.58,
+          0.921,
+          0.554
+        ],
+        [
+          339.58,
+          0.912,
+          0.574
+        ],
+        [
+          340.58,
+          0.906,
+          0.575
+        ],
+        [
+          341.58,
+          0.91,
+          0.577
+        ],
+        [
+          342.58,
+          0.914,
+          0.57
+        ],
+        [
+          343.58,
+          0.918,
+          0.518
+        ],
+        [
+          344.58,
+          0.908,
+          0.542
+        ],
+        [
+          345.58,
+          0.861,
+          0.434
+        ],
+        [
+          346.58,
+          0.862,
+          0.376
+        ],
+        [
+          347.58,
+          0.841,
+          0.305
+        ],
+        [
+          348.58,
+          0.906,
+          0.462
+        ],
+        [
+          349.58,
+          0.903,
+          0.455
+        ],
+        [
+          350.58,
+          0.903,
+          0.455
+        ],
+        [
+          351.58,
+          0.785,
+          0.384
+        ],
+        [
+          352.58,
+          0.786,
+          0.382
+        ],
+        [
+          353.58,
+          0.697,
+          0.615
+        ],
+        [
+          354.58,
+          0.696,
+          0.536
+        ],
+        [
+          355.58,
+          0.785,
+          0.503
+        ],
+        [
+          356.58,
+          0.787,
+          0.505
+        ],
+        [
+          357.58,
+          0.807,
+          0.51
+        ],
+        [
+          358.58,
+          0.81,
+          0.511
+        ],
+        [
+          359.58,
+          0.823,
+          0.506
+        ],
+        [
+          360.58,
+          0.833,
+          0.502
+        ],
+        [
+          361.58,
+          0.836,
+          0.52
+        ],
+        [
+          362.58,
+          0.841,
+          0.517
+        ],
+        [
+          363.58,
+          0.844,
+          0.528
+        ],
+        [
+          364.58,
+          0.933,
+          0.622
+        ],
+        [
+          365.58,
+          0.941,
+          0.649
+        ]
+      ]
+    }
+  },
+  "cuts": [
+    [
+      22.0,
+      54.0,
+      "BZ が空荷で保管場所へ戻る"
+    ],
+    [
+      110.0,
+      172.0,
+      "BZ が空荷でスタート地点へ回る"
+    ]
+  ],
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802545736,
+        "carry_m": 2.984051547897827
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.2075943438433419,
+        "carry_m": 2.9853781947083275
+      }
+    ],
+    "rise_m": 0.43991551922526545,
+    "surfaces": 4
+  },
+  "course_disturbed": {},
+  "ending": "crab",
+  "manager": {
+    "policy": "PPO 方策（ppo2_v22）",
+    "decisions": [
+      {
+        "n": 1,
+        "t": 264.6,
+        "video_t": 85.3,
+        "action": "SEAT",
+        "bubble": "パッカン、カニさんの方を向いて座って",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 0.99,
+        "last_result": "none",
+        "result": "seated",
+        "duration_s": 11.9
+      },
+      {
+        "n": 2,
+        "t": 276.5,
+        "video_t": 91.3,
+        "action": "PUSH",
+        "bubble": "カニさん、そっと押し上げてあげて",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 0.99,
+        "last_result": "seated",
+        "result": "pushed_up",
+        "duration_s": 71.3
+      },
+      {
+        "n": 3,
+        "t": 347.9,
+        "video_t": 127.0,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.25,
+        "last_result": "pushed_up",
+        "result": "standing",
+        "duration_s": 5.5
+      },
+      {
+        "n": 4,
+        "t": 353.4,
+        "video_t": 129.8,
+        "action": "WALK_ON",
+        "bubble": "パッカン、そのまま進んで",
+        "duck": "STAND",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.39,
+        "last_result": "standing",
+        "result": "crossed",
+        "duration_s": 12.2
+      }
+    ],
+    "duck_crossed": true
+  },
+  "three_crossed": {
+    "bz": true,
+    "crab": true,
+    "duck": true
+  },
+  "video_silent": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take39_silent.mp4",
+    "frames": 4869,
+    "seconds": 162.3,
+    "bytes": 22746068
+  },
+  "video": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take39.mp4",
+    "ffmpeg_rc": 0,
+    "bytes": 23126814
+  }
+}
+     0.00s  BZ UP
+    16.26s  BZ RAISE_UP
+    17.92s  BZ TO_DOWN
+    54.00s  JUMP CUT: sim 22-54 s not shown (BZ が空荷で保管場所へ戻る)
+    57.46s  BZ PRECISE_LANE
+    65.82s  BZ ALIGN
+    75.56s  BZ RETREAT_FOR_ALIGNMENT
+    79.12s  BZ LOWER
+    80.76s  BZ DOWN
+   104.40s  BZ RAISE_DOWN
+   106.06s  BZ TO_START
+   106.06s  TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+   106.06s  MD heads to the waiting spot by the course start; JP to its watch spot
+   172.07s  JUMP CUT: sim 110-172 s not shown (BZ が空荷でスタート地点へ回る)
+   176.38s  BZ CROSS
+   176.38s  stage -> FOLLOW_IN
+   196.08s  construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+   196.08s  physics step -> 0.001
+   196.46s  stage -> RAMP
+   196.46s  MD: 坂に挑む（1 回目）
+   196.48s  JP cheers the duck on with its dance, claws up (official dance policy)
+   210.48s  MD: いったん後ずさり (reached y=-1.99, ramp toe -1.86)
+   213.00s  MD: もう一回挑む（2 回目）
+   224.02s  MD: やっぱり無理… (reached y=-2.00)
+   224.04s  JP pre-positions at the foot of its lane while the duck sits down
+   224.64s  MD: 諦めて座り込む（sitstand）
+   226.14s  MD: 首を振りながら「ぐわぁぁ？」
+   228.86s  stage -> CLIMB
+   228.86s  JP sets off from the foot of its lane
+   228.88s  JP passes beside the sitting duck and starts up the ramp
+   236.10s  JP on the crest (z=0.50); duck: ぐわぁぁ？
+   239.04s  JP stuck at the crest (y=-0.54 z=0.54); forward jump
+   240.22s  JP landed at y=-0.45 z=0.54
+   242.80s  JP over the top; duck looks around
+   245.92s  JP crossed the course and stops behind BZ (z=0.11)
+   248.94s  stage -> CALL
+   250.46s  JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+   253.96s  stage -> RETURN
+   253.96s  JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+   264.56s  stage -> RESCUE
+   264.56s  the manager (PPO 方策（ppo2_v22）) takes over: duck SIT/toe at (+1.25,-2.15), crab at (+1.79,-2.99), 1.00 m
+   264.58s  MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 0.99 m, touching=False, last=none)
+   276.52s  MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.08) z=0.06)
+   276.54s  MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 0.99 m, touching=False, last=seated)
+   347.86s  MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.44,-0.41) z=0.50)
+   347.88s  MANAGER #3: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+   353.42s  MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.43,-0.29) z=0.56)
+   353.44s  MANAGER #4: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.39 m, touching=False, last=standing)
+   353.44s  JP follows the duck across the landing and down the far ramp (procession finale), 0.39 m behind
+   353.44s  BZ raises its fork while the duck walks on (pre-positioning for the circle)
+   353.46s  BZ's fork is up; it turns round on the spot to face the goal
+   364.60s  BZ faces south, toward the goal: the circle is complete
+   365.64s  MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.56,+1.96) z=0.14)
+   365.64s  DUCK CROSSED THE COURSE (y=+1.96 z=0.137) - all three have crossed
+   365.64s  stage -> CELEBRATE
+   365.66s  JP comes down the far ramp after the duck; the three form a circle at the goal
+   366.66s  the duck walks to its place in the circle (north of the toe first)
+   368.12s  JP stalls on the landing at y=-0.53; full speed 0.8 for 3 s
+   372.12s  JP is down the far ramp (y=+1.76 z=0.19); goes to its place in the circle
+   379.96s  the duck and the crab are in their places (1.11 / 1.24 m from BZ, which is ready)
+   382.70s  the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.11 rad, crab 0.01 rad off the centre)
+   398.10s  stage -> END

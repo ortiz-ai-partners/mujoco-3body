@@ -35,6 +35,19 @@ The expression table ("AI 管理": a function of the manager's chosen action and
   Not learned: nothing scores a face, so a learned one would be arbitrary.  The "?" for a decision failure that the
   consultation mentioned is not in: whether a repeated action was a mistake is the evaluation's judgement (2x2 in
   MANAGER_DESIGN.md), not a state the manager has.
+
+The mood AI (ゆうころ 10/28 夜:「本物の推論で 2 つの AI を走らせるように」, take 38-)
+  A second network runs beside the manager and infers the crab's mood: `MoodAI`, the mood net trained by
+  analysis/mood_train.py on analysis/mood_data.py's data (the rule, PPO and random managers in the learning
+  environment, the manager's 46-dim observation every 0.1 s inside every skill, how the skill ended and whether
+  the duck got across).  Every control step of the rescue it reads the manager's observation, the running skill and
+  its elapsed time and infers p(this move ends well) and p(the duck gets across): a 53-32-32-2 MLP, a wholly
+  separate network from every manager (out/manager_runs/mood_net/).  p(move ends well), smoothed, is the mood:
+  confident above MOOD_P_HI, worried below MOOD_P_LO, neutral between.  The mood then colours the table above:
+  during a push, worry sweats before the 5 s; while waiting, confidence smiles and worry sweats; seating / backing
+  off / standing the duck up sweat when worried.  The PPO v2.2 critic was tried first (--face-ai critic): it reads
+  every mid-push state as hopeless (V -22) because it only ever saw decision points (analysis/face_value.py), so it
+  is kept as a record, not used.  `--face-ai table` switches the mood off.
 """
 from __future__ import annotations
 
@@ -62,6 +75,17 @@ PIP_W, PIP_H = 240, 120
 CAM_DIST = 0.30                     # m in front of the panel (beyond the renderer's near plane, in front of the folded arms)
 PIP_FILL = 0.72                     # the panel's 10 cm fill this much of the inset's width
 PUSH_SWEAT_S = 5.0                  # s of pushing (PUSH skill, in contact with the duck) after which the face sweats
+
+# the mood AI: the mood net's p(this move ends well), smoothed, read as confident / neutral / worried (see MoodAI)
+MOOD_NET = "mood_net"             # out/manager_runs/<MOOD_NET>/mood_net.pt + meta.json (analysis/mood_train.py)
+MOOD_RUN = "ppo2_v22"              # the PPO whose critic is the --face-ai critic option (a record, not the default)
+MOOD_TAU = 0.5                      # s, time constant of the smoothing
+MOOD_P_HI, MOOD_P_LO = 0.70, 0.35   # p(move ends well) above: confident; below: worried
+MOOD_P_HYST = 0.05                  # a mood is left only once p is this far past its threshold
+MOOD_HI, MOOD_LO = 6.0, 2.0         # critic option: V above / below
+MOOD_DROP, MOOD_DROP_S = 2.0, 2.0   # critic option: a fall of V by this much within this many seconds is worry
+MOOD_HYST = 0.5
+MOOD_JA = {"confident": "自信", "neutral": "ふつう", "worried": "不安"}
 
 FAILED_PUSH = ("stalled", "slipped", "nothing", "fell")
 RESULT_JA = {"stalled": "動かない", "slipped": "滑った", "nothing": "変化なし", "fell": "転んだ"}
@@ -213,8 +237,9 @@ class FaceDriver:
 
     update() is called every control step, rendered or headless, so the face timeline is in every report."""
 
-    def __init__(self, model, prefix="jp-"):
+    def __init__(self, model, prefix="jp-", mood_ai=None):
         self.model = model
+        self.mood_ai = mood_ai                       # a MoodAI, or None (the table alone)
         self.gid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, prefix + "face_screen")
         self.mat = {e: mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_MATERIAL, prefix + f"face_mat_{e}") for e in EXPRESSIONS}
         if self.gid < 0 or min(self.mat.values()) < 0:
@@ -238,16 +263,25 @@ class FaceDriver:
         if s["crossed"] and s["stage"] in ("CELEBRATE", "END"):
             return "sparkle", "パッカンが渡り切った"
         if s["stage"] == "RESCUE":
+            mood = self.mood_ai.mood if (self.mood_ai is not None and self.mood_ai.ready) else "neutral"
             if s["skill"] is None:                  # between two skills (one control step): keep the face, no blink
                 return self.expr, self.reason
             if s["skill"] == "PUSH":
                 if self.push_contact_s >= PUSH_SWEAT_S:
                     return "sweat", "押し上げ中、5 秒超"
+                if mood == "worried":
+                    return "sweat", "押し上げ中、不安"
                 return "cross", "押し上げ中"
             if s["last_action"] == "PUSH" and s["last_result"] in FAILED_PUSH:
                 return "sweat", f"押し上げ → {RESULT_JA.get(s['last_result'], s['last_result'])}"
             if s["skill"] in ("SEAT", "BACK_OFF", "STANDUP", "WALK_ON"):
+                if mood == "worried":
+                    return "sweat", SKILL_JA[s["skill"]] + "、不安"
                 return "serious", SKILL_JA[s["skill"]]
+            if mood == "worried":
+                return "sweat", "様子を見る、不安"
+            if mood == "confident":
+                return "happy", "様子を見る、自信"
             return "neutral", "様子を見る"
         if s["stage"] in ("BUILD", "FOLLOW_IN"):
             return "neutral", "戯れ・待機"
@@ -256,9 +290,12 @@ class FaceDriver:
                                "CELEBRATE": "輪の位置へ"}.get(s["stage"], "移動中")
         return "neutral", "待機"
 
-    def update(self, t, **state):
+    def update(self, t, obs=None, **state):
+        """obs: the manager's observation this control step (the rescue), for the mood AI; None elsewhere."""
         dt = 0.0 if self.t_prev is None else max(0.0, t - self.t_prev)
         self.t_prev = t
+        if self.mood_ai is not None and obs is not None and state.get("skill_idx") is not None:
+            self.mood_ai.update(obs, t, state["skill_idx"], state.get("t_in_skill", 0.0))
         if state.get("skill") == "PUSH":
             if state.get("touching"):
                 self.push_contact_s += dt
@@ -276,6 +313,117 @@ class FaceDriver:
 
     def label(self):
         return f"{JA[self.expr]}：{self.reason}"
+
+    def title_label(self):
+        """The monitor's top line: the mood AI's reading, or a note that the face is render-only."""
+        m = self.mood_ai
+        if m is not None and m.ready:
+            if m.kind == "critic":
+                return f"気分 AI V={m.v_ema:+.1f} {MOOD_JA[m.mood]}"
+            return f"気分 AI 見込み {m.p_ema:.0%} {MOOD_JA[m.mood]}"
+        return "跳跳の顔（表示パネル・描画のみ）"
+
+
+class MoodAI:
+    """The second AI beside the manager, inferring the crab's mood every control step of the rescue.
+
+    kind "mood" (default): the mood net (analysis/mood_train.py) infers p(this move ends well) and p(the duck gets
+    across) from the manager's observation, the running skill and its elapsed time; p_ema (smoothed p(move ends
+    well)) is read as confident / neutral / worried with hysteresis.  kind "critic": the PPO v2.2 critic's V(s), the
+    first attempt, kept as a record.  log: [t, value, mood] at every mood change; series: [t, p_ok, p_cross] (or
+    [t, V]) once a second."""
+
+    def __init__(self, kind="mood", run=MOOD_RUN, net=MOOD_NET):
+        import json
+        from pathlib import Path
+        import torch
+        self.torch = torch
+        self.kind = kind
+        here = Path(__file__).resolve().parent / "out" / "manager_runs"
+        if kind == "critic":
+            from stable_baselines3 import PPO
+            self.run = run
+            self.ppo = PPO.load(here / run / "ppo_manager", device="cpu")
+        else:
+            import sys
+            sys.path.insert(0, str(Path(__file__).resolve().parent / "analysis"))
+            from mood_train import MoodNet, features
+            self.run = net
+            self.meta = json.load(open(here / net / "meta.json", encoding="utf-8"))
+            self.net = MoodNet(self.meta["n_in"], self.meta["hidden"])
+            self.net.load_state_dict(torch.load(here / net / "mood_net.pt", map_location="cpu"))
+            self.net.eval()
+            self.features = features
+            self.mean = np.asarray(self.meta["obs_mean"], np.float32)
+            self.std = np.asarray(self.meta["obs_std"], np.float32)
+        self.ready = False
+        self.v = self.v_ema = None                   # critic
+        self.p_ok = self.p_cross = self.p_ema = None  # mood net
+        self.mood = "neutral"
+        self.hist = []
+        self.log = []
+        self.series = []
+        self.t_prev = None
+        self.n = 0
+
+    def infer(self, obs, skill_idx=0, t_in_skill=0.0):
+        """One inference: (p_ok, p_cross) for the mood net, (V, None) for the critic."""
+        with self.torch.no_grad():
+            if self.kind == "critic":
+                ten, _ = self.ppo.policy.obs_to_tensor(np.asarray(obs, dtype=np.float32))
+                return float(self.ppo.policy.predict_values(ten)), None
+            x = self.features(np.asarray(obs, np.float32), int(skill_idx), float(t_in_skill), self.mean, self.std)
+            p = self.torch.sigmoid(self.net(self.torch.tensor(x)[None]))[0]
+            return float(p[0]), float(p[1])
+
+    def update(self, obs, t, skill_idx=0, t_in_skill=0.0):
+        a, b = self.infer(obs, skill_idx, t_in_skill)
+        dt = 0.0 if self.t_prev is None else max(0.0, t - self.t_prev)
+        self.t_prev = t
+        self.n += 1
+        k = min(1.0, dt / MOOD_TAU) if MOOD_TAU > 0 else 1.0
+        mood = self.mood
+        if self.kind == "critic":
+            self.v = a
+            self.v_ema = a if self.v_ema is None else self.v_ema + k * (a - self.v_ema)
+            self.hist.append((t, self.v_ema))
+            while self.hist and self.hist[0][0] < t - MOOD_DROP_S:
+                self.hist.pop(0)
+            drop = max((h for _, h in self.hist), default=self.v_ema) - self.v_ema
+            if mood == "worried":
+                if self.v_ema > MOOD_LO + MOOD_HYST and drop < MOOD_DROP * 0.5:
+                    mood = "confident" if self.v_ema >= MOOD_HI else "neutral"
+            elif mood == "confident":
+                if self.v_ema < MOOD_HI - MOOD_HYST or drop >= MOOD_DROP:
+                    mood = "worried" if (self.v_ema <= MOOD_LO or drop >= MOOD_DROP) else "neutral"
+            elif self.v_ema <= MOOD_LO or drop >= MOOD_DROP:
+                mood = "worried"
+            elif self.v_ema >= MOOD_HI:
+                mood = "confident"
+            value, sample = self.v_ema, [round(t, 2), round(a, 2)]
+        else:
+            self.p_ok, self.p_cross = a, b
+            pv = b if int(skill_idx) == 0 else a          # WAIT always "ends well" (waited): its mood is p(the duck gets across)
+            self.p_ema = pv if self.p_ema is None else self.p_ema + k * (pv - self.p_ema)
+            p = self.p_ema
+            if mood == "worried":
+                if p > MOOD_P_LO + MOOD_P_HYST:
+                    mood = "confident" if p >= MOOD_P_HI else "neutral"
+            elif mood == "confident":
+                if p < MOOD_P_HI - MOOD_P_HYST:
+                    mood = "worried" if p <= MOOD_P_LO else "neutral"
+            elif p <= MOOD_P_LO:
+                mood = "worried"
+            elif p >= MOOD_P_HI:
+                mood = "confident"
+            value, sample = p, [round(t, 2), round(a, 3), round(b, 3)]
+        self.ready = True
+        if mood != self.mood:
+            self.mood = mood
+            self.log.append([round(t, 2), round(value, 3), mood])
+        if not self.series or t - self.series[-1][0] >= 1.0:
+            self.series.append(sample)
+        return self.mood
 
 
 if __name__ == "__main__":

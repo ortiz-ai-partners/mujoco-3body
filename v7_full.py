@@ -445,6 +445,13 @@ def main():
                          "the manager's action and its result (crab_face.py's table) and shown in the face monitor, an inset at "
                          "the bottom-left.  Render-only: the physics path is the same with and without it "
                          "(--test, out/v7_full_report_facecheck_{A,B}.json)")
+    ap.add_argument("--face-ai", choices=["mood", "critic", "table"], default="mood",
+                    help="mood (ゆうころ 10/28 夜, take 38-): a second AI beside the manager - the mood net, out/manager_runs/mood_net - "
+                         "infers every control step of the rescue whether the running move will end well, and its mood "
+                         "(confident / neutral / worried) colours the crab's face; critic: the PPO v2.2 critic's V(s) instead "
+                         "(the first attempt, a record); table: the expression table alone (takes 30-37)")
+    ap.add_argument("--mood-run", default=crab_face.MOOD_RUN, help="the PPO whose critic --face-ai critic uses")
+    ap.add_argument("--mood-net", default=crab_face.MOOD_NET, help="out/manager_runs/<name>/ of the mood net")
     ap.add_argument("--no-cuts", action="store_true", help="write every frame (no jump cuts): the full-length record")
     ap.add_argument("--cut", action="append", default=[], metavar="START:END[:LABEL]",
                     help="a jump cut in simulated seconds, added to the default ones (DEFAULT_CUTS)")
@@ -462,7 +469,9 @@ def main():
     model, data = build_arena(xml, md_pose=MD_START, jp_pose=JP_PARK, timestep=args.dt_build, face=args.face)
     official_md_servos(model)
     duck, crab = Duck(model, data), Crab(model, data)
-    face = crab_face.FaceDriver(model, prefix="jp-") if args.face else None
+    mood = (crab_face.MoodAI(args.face_ai, run=args.mood_run, net=args.mood_net) if (args.face and args.face_ai != "table")
+            else None)
+    face = crab_face.FaceDriver(model, prefix="jp-", mood_ai=mood) if args.face else None
     for _ in range(100):
         mujoco.mj_step(model, data)
     data.time = 0.0
@@ -474,7 +483,7 @@ def main():
     md_root, jp_root, bz_root = (model.body_rootid[duck.bid], model.body_rootid[crab.bid],
                                  model.body_rootid[bz_bid])
     print(f"MuJoCo {mujoco.__version__} | v7 full | dt={model.opt.timestep} nq={model.nq} nu={model.nu} ngeom={model.ngeom} "
-          f"face={'on' if face is not None else 'off'}", flush=True)
+          f"face={'on' if face is not None else 'off'} mood_ai={mood.run if mood is not None else 'off'}", flush=True)
 
     render = not args.test
     video = None
@@ -651,8 +660,12 @@ def main():
         """The crab's expression, from the manager's state (crab_face.py's table); every control step, rendered or not."""
         if face is None:
             return
-        face.update(t, stage=stage, crab_mode=crab.mode, tilt=body_tilt_deg(data, crab.bid),
+        # the mood AI reads the manager's own observation while the manager is in charge (the rescue)
+        obs = ch.observation(h, book) if (mood is not None and stage == "RESCUE") else None
+        face.update(t, obs=obs, stage=stage, crab_mode=crab.mode, tilt=body_tilt_deg(data, crab.bid),
                     skill=mgr["name"] if mgr["gen"] is not None else None,
+                    skill_idx=mgr["action"] if mgr["gen"] is not None else None,
+                    t_in_skill=(t - mgr["t_dec"]) if mgr["gen"] is not None else 0.0,
                     touching=bool(h.touching()) if stage == "RESCUE" else False,
                     last_action=ch.ACTIONS[book.last_action] if book.last_action is not None else None,
                     last_result=book.last_result, crossed=mgr["crossed"])
@@ -786,7 +799,7 @@ def main():
         inset = None
         if pip is not None:
             pip.update_scene(data, camera=face.cam_name, scene_option=opt)
-            inset = (pip.render().copy(), "跳跳の顔（表示パネル・描画のみ）", face.label())
+            inset = (pip.render().copy(), face.title_label(), face.label())
         notice = cut_state["notice"] if (video is not None and video.frames < cut_state["notice_until"]) else None
         title, lines = caption()
         return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}", inset=inset, notice=notice)
@@ -1663,7 +1676,9 @@ def main():
     digest = hashlib.sha256(np.ascontiguousarray(data.qpos).tobytes() + np.ascontiguousarray(data.qvel).tobytes()).hexdigest()
     report = {"mujoco": mujoco.__version__, "sim_seconds": round(float(data.time), 2),
               "state_digest": digest, "ngeom": int(model.ngeom),
-              "face": {"on": face is not None, "log": face.log if face is not None else None},
+              "face": {"on": face is not None, "log": face.log if face is not None else None,
+                       "mood_ai": ({"kind": mood.kind, "run": mood.run, "inferences": mood.n, "log": mood.log, "series": mood.series}
+                                   if mood is not None else None)},
               "cuts": [list(c) for c in cuts],
               "construction": {"success": bool(pilot.success), "reason": pilot.reason,
                                "parts": pilot.results, "rise_m": pilot.max_rise, "surfaces": len(pilot.touched)},

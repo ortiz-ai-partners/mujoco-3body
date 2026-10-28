@@ -61,22 +61,58 @@ class Captioner:
         else:
             self.title = ImageFont.truetype(str(font_path), title_px)
             self.body = ImageFont.truetype(str(font_path), body_px)
+            self.title_s = ImageFont.truetype(str(font_path), 24)      # the caption shrinks to these beside the monitor
+            self.body_s = ImageFont.truetype(str(font_path), 20)
             self.small = ImageFont.truetype(str(font_path), 18)
             self.tiny = ImageFont.truetype(str(font_path), 15)
+        if font_path is None:
+            self.title_s, self.body_s = self.title, self.body
         self.ok = True
 
+    @staticmethod
+    def _wrap(d, text, font, limit):
+        """Split `text` into lines no wider than `limit` px (by characters: Japanese has no spaces)."""
+        out, cur = [], ""
+        for ch in text:
+            if cur and d.textbbox((0, 0), cur + ch, font=font)[2] > limit:
+                out.append(cur)
+                cur = ch
+            else:
+                cur += ch
+        if cur:
+            out.append(cur)
+        return out or [""]
+
     def draw(self, frame, title, lines=(), footer=None, inset=None, notice=None):
-        """inset: (image HxWx3, label above, label below) - the crab's face monitor, a small box at the top-right
-        (ゆうころ 10/28 夕: smaller, in the empty top-right).  It sits beside the caption box when that leaves room,
-        otherwise just below it, so the two never overlap.  notice: a line in a box at the bottom-left (a jump cut)."""
+        """inset: (image HxWx3, label above, label below) - the crab's face monitor, a small box at the top-right in the
+        same row as the caption box (ゆうころ 10/28 夜: 「一番上の文字情報の枠と同じ列に、二段じゃなく一段で」).  The
+        caption shrinks its fonts, then wraps its lines, so that it always fits beside the monitor.  notice: a line in a
+        box at the bottom-left (a jump cut)."""
         if not self.ok:
             return frame
         img = self.Image.fromarray(frame)
         d = self.ImageDraw.Draw(img, "RGBA")
         pad = 14
-        texts = [(title, self.title)] + [(ln, self.body) for ln in lines if ln]
-        boxes = [d.textbbox((0, 0), t, font=f) for t, f in texts]
-        box_w = max(b[2] for b in boxes) + 2 * pad
+        h, w = frame.shape[:2]
+        ibox_w = ibox_h = 0
+        if inset is not None:
+            pic, above, below = inset
+            ih, iw = pic.shape[:2]
+            ipad = 8
+            ba = d.textbbox((0, 0), above, font=self.tiny)
+            bb = d.textbbox((0, 0), below, font=self.small) if below else (0, 0, 0, 0)
+            ibox_w = max(iw, ba[2], bb[2]) + 2 * ipad
+            ibox_h = ih + ba[3] + bb[3] + 3 * ipad + 6
+        max_w = (w - 16 - ibox_w - 12 - 16) if inset is not None else (w - 32)
+        for tf, bf in ((self.title, self.body), (self.title_s, self.body_s)):
+            texts = [(t, tf) for t in self._wrap(d, title, tf, max_w - 2 * pad)]
+            for ln in lines:
+                if ln:
+                    texts += [(t, bf) for t in self._wrap(d, ln, bf, max_w - 2 * pad)]
+            boxes = [d.textbbox((0, 0), t, font=f) for t, f in texts]
+            box_w = max(b[2] for b in boxes) + 2 * pad
+            if box_w <= max_w and len(texts) == 1 + sum(1 for ln in lines if ln):
+                break                                                # fits without wrapping at these fonts
         box_h = sum(b[3] for b in boxes) + pad * (len(texts) + 1)
         d.rectangle([16, 16, 16 + box_w, 16 + box_h], fill=(10, 14, 20, 150))
         y = 16 + pad
@@ -84,16 +120,7 @@ class Captioner:
             d.text((16 + pad, y), t, font=f, fill=(255, 255, 255, 255))
             y += b[3] + pad
         if inset is not None:
-            pic, above, below = inset
-            ih, iw = pic.shape[:2]
-            h, w = frame.shape[:2]
-            ipad = 8
-            ba = d.textbbox((0, 0), above, font=self.tiny)
-            bb = d.textbbox((0, 0), below, font=self.small) if below else (0, 0, 0, 0)
-            ibox_w = max(iw, ba[2], bb[2]) + 2 * ipad
-            ibox_h = ih + ba[3] + bb[3] + 3 * ipad + 6
-            x0 = w - 16 - ibox_w
-            y0 = 16 if 16 + box_w + 12 <= x0 else 16 + box_h + 10          # beside the caption, or just below it
+            x0, y0 = w - 16 - ibox_w, 16                                 # the same row as the caption box
             d.rectangle([x0, y0, x0 + ibox_w, y0 + ibox_h], fill=(10, 14, 20, 150))
             d.text((x0 + ipad, y0 + ipad), above, font=self.tiny, fill=(225, 225, 225, 255))
             yy = y0 + ipad + ba[3] + 4
