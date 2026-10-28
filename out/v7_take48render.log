@@ -1,0 +1,4050 @@
+﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
+At line:1 char:393
++ ... Seconds 30; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+timestep: parent has 0.005, child has 0.001, keeping parent value
+
+MuJoCo 3.11.0 | v7 full | dt=0.005 nq=90 nu=41 ngeom=291 face=on mood_ai=mood_net
+  t=   0.00s  [BUILD] BZ UP
+[vost#0:0/libx264 @ 000001a8d1134fc0] Multiple -pix_fmt options specified for stream 0, only the last option '-pix_fmt 
+yuv420p' will be used.
+  t=  10.0s [BUILD] BZ UP: CARRY @(+0.22,-0.75) MD(WALK) @(+4.11,+0.59) z=0.120 tilt= 0.9 JP(WALK) @(+4.46,+1.03) z=0.11 wall     7s
+  t=  16.26s  [BUILD] BZ RAISE_UP
+  t=  17.92s  [BUILD] BZ TO_DOWN
+  t=  20.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.64,-0.69) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.47,+1.05) z=0.11 wall    14s
+  t=  30.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.41,-0.71) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.48,+1.06) z=0.11 wall    18s
+  t=  40.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-3.11,-0.81) MD(STAND) @(+4.13,+0.64) z=0.116 tilt= 0.4 JP(WALK) @(+4.49,+1.07) z=0.11 wall    20s
+  t=  50.0s [BUILD] BZ TO_DOWN: FORWARD 2/2 @(-3.46,+0.45) MD(STAND) @(+4.13,+0.67) z=0.116 tilt= 0.7 JP(JUMP) @(+4.50,+1.07) z=0.08 wall    22s
+  t=  54.00s  [BUILD] JUMP CUT: sim 22-54 s not shown (BZ が空荷で保管場所へ戻る)
+  t=  57.46s  [BUILD] BZ PRECISE_LANE
+  t=  60.0s [BUILD] BZ PRECISE_LANE @(-3.38,+0.72) MD(WALK) @(+3.52,+0.12) z=0.118 tilt= 2.4 JP(WALK) @(+3.45,+0.84) z=0.11 wall    28s
+  t=  65.82s  [BUILD] BZ ALIGN
+  t=  70.0s [BUILD] BZ ALIGN @(-3.39,+0.69) MD(STAND) @(+3.41,+0.06) z=0.116 tilt= 0.7 JP(WALK) @(+3.52,+0.62) z=0.11 wall    35s
+  t=  75.56s  [BUILD] BZ RETREAT_FOR_ALIGNMENT
+  t=  79.12s  [BUILD] BZ LOWER
+  t=  80.0s [BUILD] BZ LOWER @(-4.51,+0.79) MD(STAND) @(+3.44,+0.09) z=0.116 tilt= 0.8 JP(WALK) @(+3.53,+0.63) z=0.11 wall    42s
+  t=  80.76s  [BUILD] BZ DOWN
+  t=  90.0s [BUILD] BZ DOWN: LIFT @(-2.75,+0.80) MD(STAND) @(+3.44,+0.09) z=0.116 tilt= 0.8 JP(WALK) @(+3.54,+0.63) z=0.11 wall    50s
+  t= 100.0s [BUILD] BZ DOWN: LOWER @(+0.23,+0.81) MD(WALK) @(+3.60,-0.28) z=0.117 tilt= 2.5 JP(WALK) @(+3.54,+0.65) z=0.11 wall    58s
+  t= 104.40s  [BUILD] BZ RAISE_DOWN
+  t= 106.06s  [BUILD] BZ TO_START
+  t= 106.06s  [BUILD] TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+  t= 106.06s  [BUILD] MD heads to the waiting spot by the course start; JP to its watch spot
+  t= 110.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.61,+0.91) MD(WALK) @(+3.73,-1.14) z=0.121 tilt= 2.6 JP(WALK) @(+4.46,-0.34) z=0.11 wall    65s
+  t= 120.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.39,+0.79) MD(WALK) @(+3.41,-2.05) z=0.115 tilt= 1.2 JP(WALK) @(+4.52,-1.82) z=0.11 wall    67s
+  t= 130.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.92,+0.62) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.53,-1.80) z=0.11 wall    69s
+  t= 140.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-1.09,+0.71) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.54,-1.80) z=0.11 wall    71s
+  t= 150.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.98,+0.96) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.58,-1.80) z=0.11 wall    73s
+  t= 160.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.94,-2.77) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.3 JP(WALK) @(+4.59,-1.80) z=0.11 wall    76s
+  t= 170.0s [BUILD] BZ TO_START: FORWARD 3/3 @(-1.05,-3.06) MD(STAND) @(+3.29,-2.36) z=0.116 tilt= 0.3 JP(WALK) @(+4.62,-1.80) z=0.11 wall    78s
+  t= 172.07s  [BUILD] JUMP CUT: sim 110-172 s not shown (BZ が空荷でスタート地点へ回る)
+  t= 176.38s  [BUILD] BZ CROSS
+  t= 176.38s  [FOLLOW_IN] stage -> FOLLOW_IN
+  t= 180.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.46,-3.10) MD(WALK) @(+2.96,-2.47) z=0.121 tilt= 2.7 JP(WALK) @(+4.64,-1.80) z=0.11 wall    84s
+  t= 190.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.68,+0.69) MD(WALK) @(+2.04,-2.75) z=0.116 tilt= 2.2 JP(WALK) @(+3.92,-2.09) z=0.11 wall    90s
+  t= 196.08s  [FOLLOW_IN] construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+  t= 196.08s  [FOLLOW_IN] physics step -> 0.001
+  t= 196.46s  [RAMP] stage -> RAMP
+  t= 196.46s  [RAMP] MD: 坂に挑む（1 回目）
+  t= 196.48s  [RAMP] JP cheers the duck on with its dance, claws up (official dance policy)
+  t= 200.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.34,-2.65) z=0.117 tilt= 2.7 JP(DANCE) @(+2.55,-2.75) z=0.14 wall    97s
+  t= 210.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.23,-1.99) z=0.122 tilt= 3.4 JP(DANCE) @(+2.55,-2.75) z=0.11 wall   107s
+  t= 210.48s  [RAMP] MD: いったん後ずさり (reached y=-1.99, ramp toe -1.86)
+  t= 213.00s  [RAMP] MD: もう一回挑む（2 回目）
+  t= 220.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.22,-2.00) z=0.120 tilt= 2.7 JP(DANCE) @(+2.56,-2.74) z=0.11 wall   117s
+  t= 224.02s  [RAMP] MD: やっぱり無理… (reached y=-2.00)
+  t= 224.04s  [RAMP] JP pre-positions at the foot of its lane while the duck sits down
+  t= 224.64s  [RAMP] MD: 諦めて座り込む（sitstand）
+  t= 226.14s  [RAMP] MD: 首を振りながら「ぐわぁぁ？」
+  t= 228.86s  [CLIMB] stage -> CLIMB
+  t= 228.86s  [CLIMB] JP sets off from the foot of its lane
+  t= 228.88s  [CLIMB] JP passes beside the sitting duck and starts up the ramp
+  t= 230.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.23,-2.14) z=0.060 tilt= 6.7 JP(WALK) @(+1.79,-2.84) z=0.11 wall   127s
+  t= 236.06s  [CLIMB] JP on the crest (z=0.50); duck: ぐわぁぁ？
+  t= 239.10s  [CLIMB] JP stuck at the crest (y=-0.54 z=0.54); forward jump
+  t= 240.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.23,-2.14) z=0.060 tilt= 8.0 JP(JUMP) @(+1.75,-0.42) z=0.53 wall   135s
+  t= 240.28s  [CLIMB] JP landed at y=-0.42 z=0.54
+  t= 242.86s  [CLIMB] JP over the top; duck looks around
+  t= 246.00s  [CLIMB] JP crossed the course and stops behind BZ (z=0.11)
+  t= 249.02s  [CALL] stage -> CALL
+  t= 250.0s [CALL] BZ done @(+1.55,+3.08) MD(SIT) @(+1.23,-2.14) z=0.060 tilt= 4.1 JP(WALK) @(+1.48,+2.23) z=0.11 wall   143s
+  t= 250.54s  [CALL] JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+  t= 254.04s  [RETURN] stage -> RETURN
+  t= 254.04s  [RETURN] JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+  t= 260.0s [RETURN] BZ done @(+1.55,+3.08) MD(SIT) @(+1.23,-2.14) z=0.060 tilt= 4.4 JP(WALK) @(+2.97,-1.54) z=0.11 wall   152s
+  t= 264.60s  [RESCUE] stage -> RESCUE
+  t= 264.60s  [RESCUE] the manager (学習済み Q 表（tabq2_small）) takes over: duck SIT/toe at (+1.23,-2.14), crab at (+1.79,-2.99), 1.01 m
+  t= 264.62s  [RESCUE] MANAGER #1: STANDUP 「パッカン、立てる？」 (duck SIT/toe, crab 1.01 m, touching=False, last=none)
+  t= 270.0s [RESCUE] BZ done @(+1.55,+3.08) MD(STAND) @(+1.22,-2.11) z=0.116 tilt= 0.8 JP(WALK) @(+1.77,-2.98) z=0.11 wall   164s
+  t= 270.16s  [RESCUE] MANAGER result: STANDUP -> standing (duck STAND/toe at (+1.22,-2.11) z=0.12)
+  t= 270.18s  [RESCUE] MANAGER #2: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/toe, crab 1.04 m, touching=False, last=standing)
+  t= 280.0s [RESCUE] BZ done @(+1.55,+3.08) MD(WALK_ON) @(+1.31,-2.00) z=0.120 tilt= 4.1 JP(WALK) @(+1.77,-2.98) z=0.11 wall   178s
+  t= 281.22s  [RESCUE] MANAGER result: WALK_ON -> stalled (duck STAND/toe at (+1.31,-2.00) z=0.12)
+  t= 281.24s  [RESCUE] MANAGER #3: SEAT 「パッカン、カニさんの方を向いて座って」 (duck STAND/toe, crab 1.09 m, touching=False, last=stalled)
+  t= 288.62s  [RESCUE] MANAGER result: SEAT -> seated (duck SIT/toe at (+1.41,-2.03) z=0.06)
+  t= 288.64s  [RESCUE] MANAGER #4: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 1.02 m, touching=False, last=seated)
+  t= 290.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.41,-2.03) z=0.060 tilt= 6.2 JP(WALK) @(+1.56,-2.92) z=0.11 wall   191s
+  t= 300.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.40,-1.93) z=0.084 tilt=16.1 JP(WALK) @(+1.42,-2.13) z=0.11 wall   204s
+  t= 310.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.41,-1.77) z=0.121 tilt= 7.0 JP(WALK) @(+1.39,-2.01) z=0.13 wall   220s
+  t= 320.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.44,-1.50) z=0.202 tilt= 9.1 JP(WALK) @(+1.40,-1.74) z=0.19 wall   236s
+  t= 330.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.57,-0.97) z=0.355 tilt= 8.5 JP(WALK) @(+1.53,-1.22) z=0.34 wall   253s
+  t= 340.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.63,-0.57) z=0.473 tilt= 7.8 JP(WALK) @(+1.59,-0.81) z=0.46 wall   269s
+  t= 347.68s  [RESCUE] MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.66,-0.41) z=0.50)
+  t= 347.70s  [RESCUE] MANAGER #5: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+  t= 349.40s  [RESCUE] MANAGER result: BACK_OFF -> cleared (duck SIT/deck at (+1.66,-0.41) z=0.50)
+  t= 349.42s  [RESCUE] MANAGER #6: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.63 m, touching=False, last=cleared)
+  t= 350.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.66,-0.45) z=0.556 tilt= 2.9 JP(WALK) @(+1.50,-1.02) z=0.40 wall   286s
+  t= 354.96s  [RESCUE] MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.66,-0.44) z=0.56)
+  t= 354.98s  [RESCUE] MANAGER #7: STANDUP 「パッカン、立てる？」 (duck STAND/deck, crab 0.60 m, touching=False, last=standing)
+  t= 356.00s  [RESCUE] MANAGER result: STANDUP -> nothing (duck STAND/deck at (+1.66,-0.44) z=0.56)
+  t= 356.02s  [RESCUE] MANAGER #8: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.60 m, touching=False, last=nothing)
+  t= 356.02s  [RESCUE] JP follows the duck across the landing and down the far ramp (procession finale), 0.60 m behind
+  t= 356.02s  [RESCUE] BZ raises its fork while the duck walks on (pre-positioning for the circle)
+  t= 356.04s  [RESCUE] BZ's fork is up; it turns round on the spot to face the goal
+  t= 360.0s [RESCUE] BZ done @(+1.65,+3.20) MD(WALK_ON) @(+1.58,-0.17) z=0.558 tilt= 2.3 JP(WALK) @(+1.50,-1.12) z=0.37 wall   301s
+  t= 367.14s  [RESCUE] BZ faces south, toward the goal: the circle is complete
+  t= 369.54s  [RESCUE] MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.57,+1.96) z=0.13)
+  t= 369.54s  [RESCUE] DUCK CROSSED THE COURSE (y=+1.96 z=0.126) - all three have crossed
+  t= 369.54s  [CELEBRATE] stage -> CELEBRATE
+  t= 369.56s  [CELEBRATE] JP comes down the far ramp after the duck; the three form a circle at the goal
+  t= 370.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(STAND) @(+1.56,+2.21) z=0.128 tilt= 2.7 JP(WALK) @(+1.45,-0.55) z=0.54 wall   315s
+  t= 370.56s  [CELEBRATE] the duck walks to its place in the circle (north of the toe first)
+  t= 371.22s  [CELEBRATE] JP stalls on the landing at y=-0.54; full speed 0.8 for 3 s
+  t= 375.68s  [CELEBRATE] JP is down the far ramp (y=+1.75 z=0.19); goes to its place in the circle
+  t= 380.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(WALK) @(+0.93,+2.42) z=0.118 tilt= 1.6 JP(WALK) @(+2.29,+2.44) z=0.11 wall   325s
+  t= 382.60s  [CELEBRATE] the duck and the crab are in their places (1.13 / 1.24 m from BZ, which is ready)
+  t= 384.98s  [CELEBRATE] the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.12 rad, crab 0.01 rad off the centre)
+  t= 390.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.70,+2.45) z=0.117 tilt= 2.3 JP(DANCE) @(+2.37,+2.46) z=0.11 wall   340s
+  t= 400.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.63,+2.52) z=0.117 tilt= 1.6 JP(FREEZE) @(+2.37,+2.46) z=0.14 wall   355s
+  t= 400.40s  [END] stage -> END
+Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take48.mp4 (4904 frames, ffmpeg rc=0)
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 402.9,
+  "state_digest": "f53de6e45af7be623d984321bb8aaca2b22c023a6a07f68d99ef6db5eb69e0f3",
+  "ngeom": 291,
+  "face": {
+    "on": true,
+    "log": [
+      [
+        0.0,
+        "neutral",
+        "戯れ・待機",
+        17,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false
+        }
+      ],
+      [
+        196.46,
+        "happy",
+        "パッカンを応援",
+        7,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false
+        }
+      ],
+      [
+        208.64,
+        "troubled",
+        "パッカンが登れない（坂に挑む）",
+        6,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false
+        }
+      ],
+      [
+        213.0,
+        "happy",
+        "パッカンを応援",
+        7,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false
+        }
+      ],
+      [
+        218.96,
+        "troubled",
+        "パッカンが登れない（もう一回）",
+        6,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false
+        }
+      ],
+      [
+        228.86,
+        "serious",
+        "坂を登る",
+        16,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false
+        }
+      ],
+      [
+        246.0,
+        "neutral",
+        "待機",
+        17,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false
+        }
+      ],
+      [
+        264.62,
+        "serious",
+        "立たせる、成功 90%",
+        14,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.903,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.091,
+          "p_cross": 0.079
+        }
+      ],
+      [
+        270.16,
+        "relief",
+        "うまくいった",
+        5,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.761,
+          "p_stall": 0.001,
+          "p_fall": 0.008,
+          "p_nothing": 0.229,
+          "p_cross": 0.086
+        }
+      ],
+      [
+        272.16,
+        "serious",
+        "見送る、成功 92%",
+        14,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.925,
+          "p_stall": 0.002,
+          "p_fall": 0.01,
+          "p_nothing": 0.064,
+          "p_cross": 0.127
+        }
+      ],
+      [
+        281.24,
+        "happy",
+        "座らせる、成功 86%",
+        13,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.856,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.134,
+          "p_cross": 0.114
+        }
+      ],
+      [
+        288.62,
+        "relief",
+        "うまくいった",
+        5,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.125,
+          "p_stall": 0.001,
+          "p_fall": 0.007,
+          "p_nothing": 0.866,
+          "p_cross": 0.055
+        }
+      ],
+      [
+        290.62,
+        "serious",
+        "押しに行く、成功 97%",
+        14,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.971,
+          "p_stall": 0.002,
+          "p_fall": 0.002,
+          "p_nothing": 0.025,
+          "p_cross": 0.452
+        }
+      ],
+      [
+        291.38,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.987,
+          "p_stall": 0.004,
+          "p_fall": 0.003,
+          "p_nothing": 0.005,
+          "p_cross": 0.577
+        }
+      ],
+      [
+        296.64,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.03,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": true,
+          "p_success": 0.995,
+          "p_stall": 0.002,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.619
+        }
+      ],
+      [
+        297.14,
+        "sweat",
+        "押し上げ中、力 0.8",
+        9,
+        {
+          "effort": 0.79,
+          "contact_s": 0.5,
+          "stall_s": 0.0,
+          "pushing": true,
+          "p_success": 0.995,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.602
+        }
+      ],
+      [
+        301.0,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.54,
+          "contact_s": 4.4,
+          "stall_s": 0.0,
+          "pushing": true,
+          "p_success": 0.989,
+          "p_stall": 0.003,
+          "p_fall": 0.008,
+          "p_nothing": 0.0,
+          "p_cross": 0.423
+        }
+      ],
+      [
+        301.62,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.64,
+          "contact_s": 5.0,
+          "stall_s": 0.0,
+          "pushing": true,
+          "p_success": 0.991,
+          "p_stall": 0.002,
+          "p_fall": 0.006,
+          "p_nothing": 0.0,
+          "p_cross": 0.394
+        }
+      ],
+      [
+        304.74,
+        "troubled_sweat",
+        "押しながら、進みが止まった",
+        8,
+        {
+          "effort": 0.55,
+          "contact_s": 8.1,
+          "stall_s": 3.0,
+          "pushing": true,
+          "p_success": 0.994,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.367
+        }
+      ],
+      [
+        313.14,
+        "sweat",
+        "押し上げ中、力 0.8",
+        9,
+        {
+          "effort": 0.81,
+          "contact_s": 16.5,
+          "stall_s": 0.0,
+          "pushing": true,
+          "p_success": 0.989,
+          "p_stall": 0.002,
+          "p_fall": 0.008,
+          "p_nothing": 0.0,
+          "p_cross": 0.455
+        }
+      ],
+      [
+        347.68,
+        "relief",
+        "うまくいった",
+        5,
+        {
+          "effort": 0.05,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.921,
+          "p_stall": 0.066,
+          "p_fall": 0.001,
+          "p_nothing": 0.011,
+          "p_cross": 0.289
+        }
+      ],
+      [
+        351.4,
+        "happy",
+        "立たせる、成功 98%",
+        13,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.982,
+          "p_stall": 0.004,
+          "p_fall": 0.004,
+          "p_nothing": 0.011,
+          "p_cross": 0.879
+        }
+      ],
+      [
+        354.96,
+        "relief",
+        "うまくいった",
+        5,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.959,
+          "p_stall": 0.005,
+          "p_fall": 0.006,
+          "p_nothing": 0.031,
+          "p_cross": 0.912
+        }
+      ],
+      [
+        356.96,
+        "serious",
+        "見送る、成功 85%",
+        14,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.85,
+          "p_stall": 0.143,
+          "p_fall": 0.003,
+          "p_nothing": 0.004,
+          "p_cross": 0.171
+        }
+      ],
+      [
+        368.08,
+        "happy",
+        "見送る、成功 99%",
+        13,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.988,
+          "p_stall": 0.01,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.61
+        }
+      ],
+      [
+        369.54,
+        "sparkle",
+        "パッカンが渡り切った",
+        3,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.849
+        }
+      ],
+      [
+        385.0,
+        "happy",
+        "祝賀ダンス",
+        4,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "pushing": false,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.849
+        }
+      ]
+    ],
+    "effort_series": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.72
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.86
+      ],
+      [
+        2.0,
+        0.0,
+        0.0,
+        8.29
+      ],
+      [
+        3.0,
+        0.0,
+        0.0,
+        2.08
+      ],
+      [
+        4.0,
+        0.0,
+        0.0,
+        1.61
+      ],
+      [
+        5.0,
+        0.0,
+        0.0,
+        2.12
+      ],
+      [
+        6.0,
+        0.0,
+        0.0,
+        1.37
+      ],
+      [
+        7.0,
+        0.0,
+        0.0,
+        2.2
+      ],
+      [
+        8.0,
+        0.0,
+        0.0,
+        1.73
+      ],
+      [
+        9.0,
+        0.0,
+        0.0,
+        2.32
+      ],
+      [
+        10.0,
+        0.0,
+        0.0,
+        2.11
+      ],
+      [
+        11.0,
+        0.0,
+        0.0,
+        2.16
+      ],
+      [
+        12.0,
+        0.0,
+        0.0,
+        4.1
+      ],
+      [
+        13.0,
+        0.0,
+        0.0,
+        1.84
+      ],
+      [
+        14.0,
+        0.0,
+        0.0,
+        3.27
+      ],
+      [
+        15.0,
+        0.0,
+        0.0,
+        1.69
+      ],
+      [
+        16.0,
+        0.0,
+        0.0,
+        2.53
+      ],
+      [
+        17.0,
+        0.0,
+        0.0,
+        2.89
+      ],
+      [
+        18.0,
+        0.0,
+        0.0,
+        2.2
+      ],
+      [
+        19.0,
+        0.0,
+        0.0,
+        2.46
+      ],
+      [
+        20.0,
+        0.0,
+        0.0,
+        2.29
+      ],
+      [
+        21.0,
+        0.0,
+        0.0,
+        1.83
+      ],
+      [
+        22.0,
+        0.0,
+        0.0,
+        1.75
+      ],
+      [
+        23.0,
+        0.0,
+        0.0,
+        2.24
+      ],
+      [
+        24.0,
+        0.0,
+        0.0,
+        3.65
+      ],
+      [
+        25.0,
+        0.0,
+        0.0,
+        5.06
+      ],
+      [
+        26.0,
+        0.0,
+        0.0,
+        1.81
+      ],
+      [
+        27.0,
+        0.0,
+        0.0,
+        3.06
+      ],
+      [
+        28.0,
+        0.0,
+        0.0,
+        1.98
+      ],
+      [
+        29.0,
+        0.0,
+        0.0,
+        2.82
+      ],
+      [
+        30.0,
+        0.0,
+        0.0,
+        2.9
+      ],
+      [
+        31.0,
+        0.0,
+        0.0,
+        2.0
+      ],
+      [
+        32.0,
+        0.0,
+        0.0,
+        2.07
+      ],
+      [
+        33.0,
+        0.0,
+        0.0,
+        1.73
+      ],
+      [
+        34.0,
+        0.0,
+        0.0,
+        2.53
+      ],
+      [
+        35.0,
+        0.0,
+        0.0,
+        2.36
+      ],
+      [
+        36.0,
+        0.0,
+        0.0,
+        1.43
+      ],
+      [
+        37.0,
+        0.0,
+        0.0,
+        4.43
+      ],
+      [
+        38.0,
+        0.0,
+        0.0,
+        9.0
+      ],
+      [
+        39.0,
+        0.0,
+        0.0,
+        3.21
+      ],
+      [
+        40.0,
+        0.0,
+        0.0,
+        1.92
+      ],
+      [
+        41.0,
+        0.0,
+        0.0,
+        1.98
+      ],
+      [
+        42.0,
+        0.0,
+        0.0,
+        1.58
+      ],
+      [
+        43.0,
+        0.0,
+        0.0,
+        1.72
+      ],
+      [
+        44.0,
+        0.0,
+        0.0,
+        1.92
+      ],
+      [
+        45.0,
+        0.0,
+        0.0,
+        2.13
+      ],
+      [
+        46.0,
+        0.0,
+        0.0,
+        1.48
+      ],
+      [
+        47.0,
+        0.0,
+        0.0,
+        2.26
+      ],
+      [
+        48.0,
+        0.0,
+        0.0,
+        1.34
+      ],
+      [
+        49.0,
+        0.0,
+        0.0,
+        2.07
+      ],
+      [
+        50.0,
+        0.0,
+        0.0,
+        2.85
+      ],
+      [
+        51.0,
+        0.0,
+        0.0,
+        1.71
+      ],
+      [
+        52.0,
+        0.0,
+        0.0,
+        6.91
+      ],
+      [
+        53.0,
+        0.0,
+        0.0,
+        3.24
+      ],
+      [
+        54.0,
+        0.0,
+        0.0,
+        4.14
+      ],
+      [
+        55.0,
+        0.0,
+        0.0,
+        6.89
+      ],
+      [
+        56.0,
+        0.0,
+        0.0,
+        6.82
+      ],
+      [
+        57.0,
+        0.0,
+        0.0,
+        4.04
+      ],
+      [
+        58.0,
+        0.0,
+        0.0,
+        3.76
+      ],
+      [
+        59.0,
+        0.0,
+        0.0,
+        1.7
+      ],
+      [
+        60.0,
+        0.0,
+        0.0,
+        4.32
+      ],
+      [
+        61.0,
+        0.0,
+        0.0,
+        4.66
+      ],
+      [
+        62.0,
+        0.0,
+        0.0,
+        3.89
+      ],
+      [
+        63.0,
+        0.0,
+        0.0,
+        1.76
+      ],
+      [
+        64.0,
+        0.0,
+        0.0,
+        2.47
+      ],
+      [
+        65.0,
+        0.0,
+        0.0,
+        2.01
+      ],
+      [
+        66.0,
+        0.0,
+        0.0,
+        2.54
+      ],
+      [
+        67.0,
+        0.0,
+        0.0,
+        2.22
+      ],
+      [
+        68.0,
+        0.0,
+        0.0,
+        1.69
+      ],
+      [
+        69.0,
+        0.0,
+        0.0,
+        2.23
+      ],
+      [
+        70.0,
+        0.0,
+        0.0,
+        3.86
+      ],
+      [
+        71.0,
+        0.0,
+        0.0,
+        2.54
+      ],
+      [
+        72.0,
+        0.0,
+        0.0,
+        1.66
+      ],
+      [
+        73.0,
+        0.0,
+        0.0,
+        3.65
+      ],
+      [
+        74.0,
+        0.0,
+        0.0,
+        1.9
+      ],
+      [
+        75.0,
+        0.0,
+        0.0,
+        2.46
+      ],
+      [
+        76.0,
+        0.0,
+        0.0,
+        1.47
+      ],
+      [
+        77.0,
+        0.0,
+        0.0,
+        1.67
+      ],
+      [
+        78.0,
+        0.0,
+        0.0,
+        1.71
+      ],
+      [
+        79.0,
+        0.0,
+        0.0,
+        2.15
+      ],
+      [
+        80.0,
+        0.0,
+        0.0,
+        2.36
+      ],
+      [
+        81.0,
+        0.0,
+        0.0,
+        1.83
+      ],
+      [
+        82.0,
+        0.0,
+        0.0,
+        2.87
+      ],
+      [
+        83.0,
+        0.0,
+        0.0,
+        6.08
+      ],
+      [
+        84.0,
+        0.0,
+        0.0,
+        3.48
+      ],
+      [
+        85.0,
+        0.0,
+        0.0,
+        16.08
+      ],
+      [
+        86.0,
+        0.0,
+        0.0,
+        4.53
+      ],
+      [
+        87.0,
+        0.0,
+        0.0,
+        2.47
+      ],
+      [
+        88.0,
+        0.0,
+        0.0,
+        1.94
+      ],
+      [
+        89.0,
+        0.0,
+        0.0,
+        1.79
+      ],
+      [
+        90.0,
+        0.0,
+        0.0,
+        1.92
+      ],
+      [
+        91.0,
+        0.0,
+        0.0,
+        2.2
+      ],
+      [
+        92.0,
+        0.0,
+        0.0,
+        1.75
+      ],
+      [
+        93.0,
+        0.0,
+        0.0,
+        2.49
+      ],
+      [
+        94.0,
+        0.0,
+        0.0,
+        2.25
+      ],
+      [
+        95.0,
+        0.0,
+        0.0,
+        1.27
+      ],
+      [
+        96.0,
+        0.0,
+        0.0,
+        3.62
+      ],
+      [
+        97.0,
+        0.0,
+        0.0,
+        4.57
+      ],
+      [
+        98.0,
+        0.0,
+        0.0,
+        3.96
+      ],
+      [
+        99.0,
+        0.0,
+        0.0,
+        2.46
+      ],
+      [
+        100.0,
+        0.0,
+        0.0,
+        5.12
+      ],
+      [
+        101.0,
+        0.0,
+        0.0,
+        6.13
+      ],
+      [
+        102.0,
+        0.0,
+        0.0,
+        5.86
+      ],
+      [
+        103.0,
+        0.0,
+        0.0,
+        3.39
+      ],
+      [
+        104.0,
+        0.0,
+        0.0,
+        5.8
+      ],
+      [
+        105.0,
+        0.0,
+        0.0,
+        4.81
+      ],
+      [
+        106.0,
+        0.0,
+        0.0,
+        4.92
+      ],
+      [
+        107.0,
+        0.0,
+        0.0,
+        4.51
+      ],
+      [
+        108.0,
+        0.0,
+        0.0,
+        5.1
+      ],
+      [
+        109.0,
+        0.0,
+        0.0,
+        4.49
+      ],
+      [
+        110.0,
+        0.0,
+        0.0,
+        7.04
+      ],
+      [
+        111.0,
+        0.0,
+        0.0,
+        5.19
+      ],
+      [
+        112.0,
+        0.0,
+        0.0,
+        8.21
+      ],
+      [
+        113.0,
+        0.0,
+        0.0,
+        5.47
+      ],
+      [
+        114.0,
+        0.0,
+        0.0,
+        3.86
+      ],
+      [
+        115.0,
+        0.0,
+        0.0,
+        5.23
+      ],
+      [
+        116.0,
+        0.0,
+        0.0,
+        3.25
+      ],
+      [
+        117.0,
+        0.0,
+        0.0,
+        3.99
+      ],
+      [
+        118.0,
+        0.0,
+        0.0,
+        3.35
+      ],
+      [
+        119.0,
+        0.0,
+        0.0,
+        3.22
+      ],
+      [
+        120.0,
+        0.0,
+        0.0,
+        3.45
+      ],
+      [
+        121.0,
+        0.0,
+        0.0,
+        3.55
+      ],
+      [
+        122.0,
+        0.0,
+        0.0,
+        3.61
+      ],
+      [
+        123.0,
+        0.0,
+        0.0,
+        3.46
+      ],
+      [
+        124.0,
+        0.0,
+        0.0,
+        2.76
+      ],
+      [
+        125.0,
+        0.0,
+        0.0,
+        2.1
+      ],
+      [
+        126.0,
+        0.0,
+        0.0,
+        3.8
+      ],
+      [
+        127.0,
+        0.0,
+        0.0,
+        2.17
+      ],
+      [
+        128.0,
+        0.0,
+        0.0,
+        1.74
+      ],
+      [
+        129.0,
+        0.0,
+        0.0,
+        2.6
+      ],
+      [
+        130.0,
+        0.0,
+        0.0,
+        2.43
+      ],
+      [
+        131.0,
+        0.0,
+        0.0,
+        2.18
+      ],
+      [
+        132.0,
+        0.0,
+        0.0,
+        2.4
+      ],
+      [
+        133.0,
+        0.0,
+        0.0,
+        1.61
+      ],
+      [
+        134.0,
+        0.0,
+        0.0,
+        2.49
+      ],
+      [
+        135.0,
+        0.0,
+        0.0,
+        1.73
+      ],
+      [
+        136.0,
+        0.0,
+        0.0,
+        2.33
+      ],
+      [
+        137.0,
+        0.0,
+        0.0,
+        1.58
+      ],
+      [
+        138.0,
+        0.0,
+        0.0,
+        2.14
+      ],
+      [
+        139.0,
+        0.0,
+        0.0,
+        1.83
+      ],
+      [
+        140.0,
+        0.0,
+        0.0,
+        1.93
+      ],
+      [
+        141.0,
+        0.0,
+        0.0,
+        3.64
+      ],
+      [
+        142.0,
+        0.0,
+        0.0,
+        2.96
+      ],
+      [
+        143.0,
+        0.0,
+        0.0,
+        2.47
+      ],
+      [
+        144.0,
+        0.0,
+        0.0,
+        2.31
+      ],
+      [
+        145.0,
+        0.0,
+        0.0,
+        2.18
+      ],
+      [
+        146.0,
+        0.0,
+        0.0,
+        2.02
+      ],
+      [
+        147.0,
+        0.0,
+        0.0,
+        2.53
+      ],
+      [
+        148.0,
+        0.0,
+        0.0,
+        1.76
+      ],
+      [
+        149.0,
+        0.0,
+        0.0,
+        2.38
+      ],
+      [
+        150.0,
+        0.0,
+        0.0,
+        4.37
+      ],
+      [
+        151.0,
+        0.0,
+        0.0,
+        3.16
+      ],
+      [
+        152.0,
+        0.0,
+        0.0,
+        1.88
+      ],
+      [
+        153.0,
+        0.0,
+        0.0,
+        2.02
+      ],
+      [
+        154.0,
+        0.0,
+        0.0,
+        2.44
+      ],
+      [
+        155.0,
+        0.0,
+        0.0,
+        1.94
+      ],
+      [
+        156.0,
+        0.0,
+        0.0,
+        1.7
+      ],
+      [
+        157.0,
+        0.0,
+        0.0,
+        2.25
+      ],
+      [
+        158.0,
+        0.0,
+        0.0,
+        1.92
+      ],
+      [
+        159.0,
+        0.0,
+        0.0,
+        2.2
+      ],
+      [
+        160.0,
+        0.0,
+        0.0,
+        1.7
+      ],
+      [
+        161.0,
+        0.0,
+        0.0,
+        1.95
+      ],
+      [
+        162.0,
+        0.0,
+        0.0,
+        1.64
+      ],
+      [
+        163.0,
+        0.0,
+        0.0,
+        2.81
+      ],
+      [
+        164.0,
+        0.0,
+        0.0,
+        1.95
+      ],
+      [
+        165.0,
+        0.0,
+        0.0,
+        2.32
+      ],
+      [
+        166.0,
+        0.0,
+        0.0,
+        2.81
+      ],
+      [
+        167.0,
+        0.0,
+        0.0,
+        2.02
+      ],
+      [
+        168.0,
+        0.0,
+        0.0,
+        3.62
+      ],
+      [
+        169.0,
+        0.0,
+        0.0,
+        2.65
+      ],
+      [
+        170.0,
+        0.0,
+        0.0,
+        3.22
+      ],
+      [
+        171.0,
+        0.0,
+        0.0,
+        1.73
+      ],
+      [
+        172.0,
+        0.0,
+        0.0,
+        2.51
+      ],
+      [
+        173.0,
+        0.0,
+        0.0,
+        1.74
+      ],
+      [
+        174.0,
+        0.0,
+        0.0,
+        2.58
+      ],
+      [
+        175.0,
+        0.0,
+        0.0,
+        1.76
+      ],
+      [
+        176.0,
+        0.0,
+        0.0,
+        2.05
+      ],
+      [
+        177.0,
+        0.0,
+        0.0,
+        3.02
+      ],
+      [
+        178.0,
+        0.0,
+        0.0,
+        1.49
+      ],
+      [
+        179.0,
+        0.0,
+        0.0,
+        1.97
+      ],
+      [
+        180.0,
+        0.0,
+        0.0,
+        2.94
+      ],
+      [
+        181.0,
+        0.0,
+        0.0,
+        2.01
+      ],
+      [
+        182.0,
+        0.0,
+        0.0,
+        3.91
+      ],
+      [
+        183.0,
+        0.0,
+        0.0,
+        2.74
+      ],
+      [
+        184.0,
+        0.0,
+        0.0,
+        2.36
+      ],
+      [
+        185.0,
+        0.0,
+        0.0,
+        2.69
+      ],
+      [
+        186.0,
+        0.0,
+        0.0,
+        3.4
+      ],
+      [
+        187.0,
+        0.0,
+        0.0,
+        2.44
+      ],
+      [
+        188.0,
+        0.0,
+        0.0,
+        2.11
+      ],
+      [
+        189.0,
+        0.0,
+        0.0,
+        4.33
+      ],
+      [
+        190.0,
+        0.0,
+        0.0,
+        5.8
+      ],
+      [
+        191.0,
+        0.0,
+        0.0,
+        5.68
+      ],
+      [
+        192.0,
+        0.0,
+        0.0,
+        6.34
+      ],
+      [
+        193.0,
+        0.0,
+        0.0,
+        2.85
+      ],
+      [
+        194.0,
+        0.0,
+        0.0,
+        3.15
+      ],
+      [
+        195.0,
+        0.0,
+        0.0,
+        3.8
+      ],
+      [
+        196.0,
+        0.0,
+        0.0,
+        2.62
+      ],
+      [
+        197.0,
+        0.0,
+        0.0,
+        2.32
+      ],
+      [
+        198.0,
+        0.0,
+        0.0,
+        7.18
+      ],
+      [
+        199.0,
+        0.0,
+        0.0,
+        1.76
+      ],
+      [
+        200.0,
+        0.0,
+        0.0,
+        1.44
+      ],
+      [
+        201.0,
+        0.0,
+        0.0,
+        2.09
+      ],
+      [
+        202.0,
+        0.0,
+        0.0,
+        2.61
+      ],
+      [
+        203.0,
+        0.0,
+        0.0,
+        2.39
+      ],
+      [
+        204.0,
+        0.0,
+        0.0,
+        2.21
+      ],
+      [
+        205.0,
+        0.0,
+        0.0,
+        2.54
+      ],
+      [
+        206.0,
+        0.0,
+        0.0,
+        2.69
+      ],
+      [
+        207.0,
+        0.0,
+        0.0,
+        2.62
+      ],
+      [
+        208.0,
+        0.0,
+        0.0,
+        2.94
+      ],
+      [
+        209.0,
+        0.0,
+        0.0,
+        2.66
+      ],
+      [
+        210.0,
+        0.0,
+        0.0,
+        2.08
+      ],
+      [
+        211.0,
+        0.0,
+        0.0,
+        1.69
+      ],
+      [
+        212.0,
+        0.0,
+        0.0,
+        1.62
+      ],
+      [
+        213.0,
+        0.0,
+        0.0,
+        2.03
+      ],
+      [
+        214.0,
+        0.0,
+        0.0,
+        2.82
+      ],
+      [
+        215.0,
+        0.0,
+        0.0,
+        2.72
+      ],
+      [
+        216.0,
+        0.0,
+        0.0,
+        2.11
+      ],
+      [
+        217.0,
+        0.0,
+        0.0,
+        1.8
+      ],
+      [
+        218.0,
+        0.0,
+        0.0,
+        3.75
+      ],
+      [
+        219.0,
+        0.0,
+        0.0,
+        2.4
+      ],
+      [
+        220.0,
+        0.0,
+        0.0,
+        2.79
+      ],
+      [
+        221.0,
+        0.0,
+        0.0,
+        2.57
+      ],
+      [
+        222.0,
+        0.0,
+        0.0,
+        2.39
+      ],
+      [
+        223.0,
+        0.0,
+        0.0,
+        2.73
+      ],
+      [
+        224.0,
+        0.0,
+        0.0,
+        3.14
+      ],
+      [
+        225.0,
+        0.0,
+        0.0,
+        4.19
+      ],
+      [
+        226.0,
+        0.0,
+        0.0,
+        6.21
+      ],
+      [
+        227.0,
+        0.0,
+        0.0,
+        6.04
+      ],
+      [
+        228.0,
+        0.0,
+        0.0,
+        6.62
+      ],
+      [
+        229.0,
+        0.0,
+        0.0,
+        5.2
+      ],
+      [
+        230.0,
+        0.0,
+        0.0,
+        5.02
+      ],
+      [
+        231.0,
+        0.0,
+        0.0,
+        8.22
+      ],
+      [
+        232.0,
+        0.0,
+        0.0,
+        4.45
+      ],
+      [
+        233.0,
+        0.0,
+        0.0,
+        4.8
+      ],
+      [
+        234.0,
+        0.0,
+        0.0,
+        4.73
+      ],
+      [
+        235.0,
+        0.0,
+        0.0,
+        4.56
+      ],
+      [
+        236.0,
+        0.0,
+        0.0,
+        3.76
+      ],
+      [
+        237.0,
+        0.0,
+        0.0,
+        5.78
+      ],
+      [
+        238.0,
+        0.0,
+        0.0,
+        3.04
+      ],
+      [
+        239.0,
+        0.0,
+        0.0,
+        4.12
+      ],
+      [
+        240.0,
+        0.0,
+        0.0,
+        2.0
+      ],
+      [
+        241.0,
+        0.0,
+        0.0,
+        4.37
+      ],
+      [
+        242.0,
+        0.0,
+        0.0,
+        6.21
+      ],
+      [
+        243.0,
+        0.0,
+        0.0,
+        4.6
+      ],
+      [
+        244.0,
+        0.0,
+        0.0,
+        4.2
+      ],
+      [
+        245.0,
+        0.0,
+        0.0,
+        3.9
+      ],
+      [
+        246.0,
+        0.0,
+        0.0,
+        4.44
+      ],
+      [
+        247.0,
+        0.0,
+        0.0,
+        4.79
+      ],
+      [
+        248.0,
+        0.0,
+        0.0,
+        4.1
+      ],
+      [
+        249.0,
+        0.0,
+        0.0,
+        3.29
+      ],
+      [
+        250.0,
+        0.0,
+        0.0,
+        10.96
+      ],
+      [
+        251.0,
+        0.0,
+        0.0,
+        3.69
+      ],
+      [
+        252.0,
+        0.0,
+        0.0,
+        7.48
+      ],
+      [
+        253.0,
+        0.0,
+        0.0,
+        5.58
+      ],
+      [
+        254.0,
+        0.0,
+        0.0,
+        4.1
+      ],
+      [
+        255.0,
+        0.0,
+        0.0,
+        8.7
+      ],
+      [
+        256.0,
+        0.0,
+        0.0,
+        4.36
+      ],
+      [
+        257.0,
+        0.0,
+        0.0,
+        4.88
+      ],
+      [
+        258.0,
+        0.0,
+        0.0,
+        4.16
+      ],
+      [
+        259.0,
+        0.0,
+        0.0,
+        5.14
+      ],
+      [
+        260.0,
+        0.0,
+        0.0,
+        9.97
+      ],
+      [
+        261.0,
+        0.0,
+        0.0,
+        4.64
+      ],
+      [
+        262.0,
+        0.0,
+        0.0,
+        9.47
+      ],
+      [
+        263.0,
+        0.0,
+        0.0,
+        6.04
+      ],
+      [
+        264.0,
+        0.0,
+        0.0,
+        4.43
+      ],
+      [
+        265.0,
+        0.0,
+        0.0,
+        4.15
+      ],
+      [
+        266.0,
+        0.0,
+        0.0,
+        4.36
+      ],
+      [
+        267.0,
+        0.0,
+        0.0,
+        4.89
+      ],
+      [
+        268.0,
+        0.0,
+        0.0,
+        3.5
+      ],
+      [
+        269.0,
+        0.0,
+        0.0,
+        3.41
+      ],
+      [
+        270.0,
+        0.0,
+        0.0,
+        1.86
+      ],
+      [
+        271.0,
+        0.0,
+        0.0,
+        5.12
+      ],
+      [
+        272.0,
+        0.0,
+        0.0,
+        2.34
+      ],
+      [
+        273.0,
+        0.0,
+        0.0,
+        1.77
+      ],
+      [
+        274.0,
+        0.0,
+        0.0,
+        1.94
+      ],
+      [
+        275.0,
+        0.0,
+        0.0,
+        1.7
+      ],
+      [
+        276.0,
+        0.0,
+        0.0,
+        2.14
+      ],
+      [
+        277.0,
+        0.0,
+        0.0,
+        2.57
+      ],
+      [
+        278.0,
+        0.0,
+        0.0,
+        4.19
+      ],
+      [
+        279.0,
+        0.0,
+        0.0,
+        2.07
+      ],
+      [
+        280.0,
+        0.0,
+        0.0,
+        2.31
+      ],
+      [
+        281.0,
+        0.0,
+        0.0,
+        2.21
+      ],
+      [
+        282.0,
+        0.0,
+        0.0,
+        1.79
+      ],
+      [
+        283.0,
+        0.0,
+        0.0,
+        1.81
+      ],
+      [
+        284.0,
+        0.0,
+        0.0,
+        1.74
+      ],
+      [
+        285.0,
+        0.0,
+        0.0,
+        2.0
+      ],
+      [
+        286.0,
+        0.0,
+        0.0,
+        2.02
+      ],
+      [
+        287.0,
+        0.0,
+        0.0,
+        1.77
+      ],
+      [
+        288.0,
+        0.0,
+        0.0,
+        1.69
+      ],
+      [
+        289.0,
+        0.0,
+        0.0,
+        5.22
+      ],
+      [
+        290.0,
+        0.0,
+        0.0,
+        3.61
+      ],
+      [
+        291.0,
+        0.0,
+        0.0,
+        3.35
+      ],
+      [
+        292.0,
+        0.0,
+        0.0,
+        3.15
+      ],
+      [
+        293.0,
+        0.0,
+        0.0,
+        3.34
+      ],
+      [
+        294.0,
+        0.0,
+        0.0,
+        3.34
+      ],
+      [
+        295.0,
+        0.0,
+        0.0,
+        3.34
+      ],
+      [
+        296.0,
+        0.0,
+        0.0,
+        3.11
+      ],
+      [
+        297.0,
+        0.808,
+        8.99,
+        3.19
+      ],
+      [
+        298.0,
+        1.084,
+        8.6,
+        5.29
+      ],
+      [
+        299.0,
+        1.17,
+        13.51,
+        5.52
+      ],
+      [
+        300.0,
+        1.032,
+        12.33,
+        5.71
+      ],
+      [
+        301.0,
+        0.544,
+        1.09,
+        4.46
+      ],
+      [
+        302.0,
+        0.561,
+        6.94,
+        6.13
+      ],
+      [
+        303.0,
+        0.573,
+        6.32,
+        4.55
+      ],
+      [
+        304.0,
+        0.493,
+        6.75,
+        5.03
+      ],
+      [
+        305.0,
+        0.56,
+        6.73,
+        5.06
+      ],
+      [
+        306.0,
+        0.362,
+        1.19,
+        3.9
+      ],
+      [
+        307.0,
+        0.54,
+        7.32,
+        5.83
+      ],
+      [
+        308.0,
+        0.468,
+        0.0,
+        5.95
+      ],
+      [
+        309.0,
+        0.381,
+        1.83,
+        4.91
+      ],
+      [
+        310.0,
+        0.436,
+        4.65,
+        6.57
+      ],
+      [
+        311.0,
+        0.822,
+        9.94,
+        7.2
+      ],
+      [
+        312.0,
+        0.806,
+        0.0,
+        5.62
+      ],
+      [
+        313.0,
+        0.754,
+        9.2,
+        6.16
+      ],
+      [
+        314.0,
+        0.728,
+        5.7,
+        9.32
+      ],
+      [
+        315.0,
+        1.041,
+        0.0,
+        4.43
+      ],
+      [
+        316.0,
+        1.032,
+        9.12,
+        6.36
+      ],
+      [
+        317.0,
+        0.758,
+        0.0,
+        4.68
+      ],
+      [
+        318.0,
+        0.754,
+        12.28,
+        4.6
+      ],
+      [
+        319.0,
+        0.784,
+        16.14,
+        7.0
+      ],
+      [
+        320.0,
+        0.802,
+        8.88,
+        5.0
+      ],
+      [
+        321.0,
+        0.782,
+        4.45,
+        6.45
+      ],
+      [
+        322.0,
+        0.697,
+        0.0,
+        4.38
+      ],
+      [
+        323.0,
+        0.645,
+        0.0,
+        6.27
+      ],
+      [
+        324.0,
+        0.58,
+        0.0,
+        4.5
+      ],
+      [
+        325.0,
+        0.789,
+        10.01,
+        5.77
+      ],
+      [
+        326.0,
+        0.756,
+        3.79,
+        5.29
+      ],
+      [
+        327.0,
+        0.785,
+        10.19,
+        4.89
+      ],
+      [
+        328.0,
+        0.807,
+        6.01,
+        6.28
+      ],
+      [
+        329.0,
+        0.764,
+        7.32,
+        5.55
+      ],
+      [
+        330.0,
+        0.739,
+        0.0,
+        6.61
+      ],
+      [
+        331.0,
+        0.808,
+        8.81,
+        5.46
+      ],
+      [
+        332.0,
+        0.675,
+        6.07,
+        6.04
+      ],
+      [
+        333.0,
+        0.83,
+        9.9,
+        4.59
+      ],
+      [
+        334.0,
+        0.905,
+        9.46,
+        5.68
+      ],
+      [
+        335.0,
+        0.696,
+        9.08,
+        5.14
+      ],
+      [
+        336.0,
+        0.624,
+        18.53,
+        4.96
+      ],
+      [
+        337.0,
+        0.81,
+        6.31,
+        7.24
+      ],
+      [
+        338.0,
+        0.883,
+        10.04,
+        4.61
+      ],
+      [
+        339.0,
+        0.8,
+        0.0,
+        6.69
+      ],
+      [
+        340.0,
+        0.759,
+        9.34,
+        4.71
+      ],
+      [
+        341.0,
+        0.702,
+        5.98,
+        5.23
+      ],
+      [
+        342.0,
+        0.563,
+        0.0,
+        5.12
+      ],
+      [
+        343.0,
+        0.448,
+        6.4,
+        4.28
+      ],
+      [
+        344.0,
+        0.4,
+        0.0,
+        5.64
+      ],
+      [
+        345.0,
+        0.488,
+        7.73,
+        4.09
+      ],
+      [
+        346.0,
+        0.494,
+        6.2,
+        7.24
+      ],
+      [
+        347.0,
+        0.171,
+        0.0,
+        4.83
+      ],
+      [
+        348.0,
+        0.017,
+        0.0,
+        3.47
+      ],
+      [
+        349.0,
+        0.001,
+        0.0,
+        3.71
+      ],
+      [
+        350.0,
+        0.0,
+        0.0,
+        3.35
+      ],
+      [
+        351.0,
+        0.0,
+        0.0,
+        3.29
+      ],
+      [
+        352.0,
+        0.0,
+        0.0,
+        3.27
+      ],
+      [
+        353.0,
+        0.0,
+        0.0,
+        3.25
+      ],
+      [
+        354.0,
+        0.0,
+        0.0,
+        3.23
+      ],
+      [
+        355.0,
+        0.0,
+        0.0,
+        3.21
+      ],
+      [
+        356.0,
+        0.0,
+        0.0,
+        3.18
+      ],
+      [
+        357.0,
+        0.0,
+        0.0,
+        3.98
+      ],
+      [
+        358.0,
+        0.0,
+        0.0,
+        4.16
+      ],
+      [
+        359.0,
+        0.0,
+        0.0,
+        3.68
+      ],
+      [
+        360.0,
+        0.0,
+        0.0,
+        7.38
+      ],
+      [
+        361.0,
+        0.0,
+        0.0,
+        6.29
+      ],
+      [
+        362.0,
+        0.0,
+        0.0,
+        5.56
+      ],
+      [
+        363.0,
+        0.0,
+        0.0,
+        6.01
+      ],
+      [
+        364.0,
+        0.0,
+        0.0,
+        6.0
+      ],
+      [
+        365.0,
+        0.0,
+        0.0,
+        5.59
+      ],
+      [
+        366.0,
+        0.0,
+        0.0,
+        4.29
+      ],
+      [
+        367.0,
+        0.0,
+        0.0,
+        5.99
+      ],
+      [
+        368.0,
+        0.0,
+        0.0,
+        5.71
+      ],
+      [
+        369.0,
+        0.0,
+        0.0,
+        4.98
+      ],
+      [
+        370.0,
+        0.0,
+        0.0,
+        3.88
+      ],
+      [
+        371.0,
+        0.0,
+        0.0,
+        4.14
+      ],
+      [
+        372.0,
+        0.0,
+        0.0,
+        8.38
+      ],
+      [
+        373.0,
+        0.0,
+        0.0,
+        8.39
+      ],
+      [
+        374.0,
+        0.0,
+        0.0,
+        7.41
+      ],
+      [
+        375.0,
+        0.0,
+        0.0,
+        5.25
+      ],
+      [
+        376.0,
+        0.0,
+        0.0,
+        6.25
+      ],
+      [
+        377.0,
+        0.0,
+        0.0,
+        5.01
+      ],
+      [
+        378.0,
+        0.0,
+        0.0,
+        5.07
+      ],
+      [
+        379.0,
+        0.0,
+        0.0,
+        4.63
+      ],
+      [
+        380.0,
+        0.0,
+        0.0,
+        2.54
+      ],
+      [
+        381.0,
+        0.0,
+        0.0,
+        4.72
+      ],
+      [
+        382.0,
+        0.0,
+        0.0,
+        4.33
+      ],
+      [
+        383.0,
+        0.0,
+        0.0,
+        6.95
+      ],
+      [
+        384.0,
+        0.0,
+        0.0,
+        4.55
+      ],
+      [
+        385.0,
+        0.0,
+        0.0,
+        3.41
+      ],
+      [
+        386.0,
+        0.0,
+        0.0,
+        2.86
+      ],
+      [
+        387.0,
+        0.0,
+        0.0,
+        2.97
+      ],
+      [
+        388.0,
+        0.0,
+        0.0,
+        3.24
+      ],
+      [
+        389.0,
+        0.0,
+        0.0,
+        2.93
+      ],
+      [
+        390.0,
+        0.0,
+        0.0,
+        3.07
+      ],
+      [
+        391.0,
+        0.0,
+        0.0,
+        2.91
+      ],
+      [
+        392.0,
+        0.0,
+        0.0,
+        5.22
+      ],
+      [
+        393.0,
+        0.0,
+        0.0,
+        3.17
+      ],
+      [
+        394.0,
+        0.0,
+        0.0,
+        1.85
+      ],
+      [
+        395.0,
+        0.0,
+        0.0,
+        1.65
+      ],
+      [
+        396.0,
+        0.0,
+        0.0,
+        1.71
+      ],
+      [
+        397.0,
+        0.0,
+        0.0,
+        2.09
+      ],
+      [
+        398.0,
+        0.0,
+        0.0,
+        1.8
+      ],
+      [
+        399.0,
+        0.0,
+        0.0,
+        1.77
+      ],
+      [
+        400.0,
+        0.0,
+        0.0,
+        1.76
+      ]
+    ],
+    "mood_ai": {
+      "kind": "mood",
+      "run": "mood_net",
+      "inferences": 5239,
+      "log": [],
+      "series": [
+        [
+          264.62,
+          0.903,
+          0.001,
+          0.005,
+          0.091,
+          0.079
+        ],
+        [
+          265.62,
+          0.902,
+          0.001,
+          0.005,
+          0.092,
+          0.078
+        ],
+        [
+          266.62,
+          0.899,
+          0.001,
+          0.005,
+          0.095,
+          0.077
+        ],
+        [
+          267.62,
+          0.898,
+          0.001,
+          0.005,
+          0.096,
+          0.077
+        ],
+        [
+          268.62,
+          0.816,
+          0.001,
+          0.007,
+          0.176,
+          0.083
+        ],
+        [
+          269.62,
+          0.767,
+          0.001,
+          0.008,
+          0.224,
+          0.085
+        ],
+        [
+          270.62,
+          0.861,
+          0.001,
+          0.009,
+          0.128,
+          0.109
+        ],
+        [
+          271.62,
+          0.921,
+          0.002,
+          0.01,
+          0.068,
+          0.127
+        ],
+        [
+          272.62,
+          0.926,
+          0.002,
+          0.01,
+          0.063,
+          0.127
+        ],
+        [
+          273.62,
+          0.926,
+          0.002,
+          0.009,
+          0.063,
+          0.125
+        ],
+        [
+          274.62,
+          0.926,
+          0.002,
+          0.009,
+          0.063,
+          0.125
+        ],
+        [
+          275.62,
+          0.926,
+          0.002,
+          0.009,
+          0.063,
+          0.123
+        ],
+        [
+          276.62,
+          0.927,
+          0.002,
+          0.009,
+          0.062,
+          0.123
+        ],
+        [
+          277.62,
+          0.925,
+          0.001,
+          0.009,
+          0.064,
+          0.122
+        ],
+        [
+          278.62,
+          0.925,
+          0.001,
+          0.009,
+          0.064,
+          0.121
+        ],
+        [
+          279.62,
+          0.925,
+          0.001,
+          0.009,
+          0.064,
+          0.12
+        ],
+        [
+          280.62,
+          0.926,
+          0.001,
+          0.009,
+          0.064,
+          0.119
+        ],
+        [
+          281.62,
+          0.429,
+          0.001,
+          0.008,
+          0.562,
+          0.087
+        ],
+        [
+          282.62,
+          0.394,
+          0.004,
+          0.014,
+          0.588,
+          0.154
+        ],
+        [
+          283.62,
+          0.717,
+          0.006,
+          0.013,
+          0.264,
+          0.228
+        ],
+        [
+          284.62,
+          0.396,
+          0.003,
+          0.008,
+          0.593,
+          0.099
+        ],
+        [
+          285.62,
+          0.16,
+          0.001,
+          0.007,
+          0.832,
+          0.063
+        ],
+        [
+          286.62,
+          0.106,
+          0.001,
+          0.007,
+          0.886,
+          0.054
+        ],
+        [
+          287.62,
+          0.12,
+          0.001,
+          0.007,
+          0.871,
+          0.055
+        ],
+        [
+          288.64,
+          0.144,
+          0.001,
+          0.008,
+          0.847,
+          0.055
+        ],
+        [
+          289.64,
+          0.815,
+          0.001,
+          0.004,
+          0.18,
+          0.173
+        ],
+        [
+          290.64,
+          0.972,
+          0.002,
+          0.002,
+          0.024,
+          0.457
+        ],
+        [
+          291.64,
+          0.989,
+          0.005,
+          0.003,
+          0.003,
+          0.597
+        ],
+        [
+          292.64,
+          0.992,
+          0.004,
+          0.003,
+          0.001,
+          0.615
+        ],
+        [
+          293.64,
+          0.994,
+          0.003,
+          0.003,
+          0.0,
+          0.618
+        ],
+        [
+          294.64,
+          0.994,
+          0.003,
+          0.003,
+          0.0,
+          0.619
+        ],
+        [
+          295.64,
+          0.995,
+          0.002,
+          0.002,
+          0.0,
+          0.618
+        ],
+        [
+          296.64,
+          0.995,
+          0.002,
+          0.002,
+          0.0,
+          0.619
+        ],
+        [
+          297.64,
+          0.996,
+          0.001,
+          0.002,
+          0.0,
+          0.555
+        ],
+        [
+          298.64,
+          0.996,
+          0.001,
+          0.003,
+          0.0,
+          0.51
+        ],
+        [
+          299.64,
+          0.994,
+          0.002,
+          0.003,
+          0.0,
+          0.473
+        ],
+        [
+          300.64,
+          0.992,
+          0.003,
+          0.005,
+          0.0,
+          0.435
+        ],
+        [
+          301.64,
+          0.991,
+          0.002,
+          0.006,
+          0.0,
+          0.397
+        ],
+        [
+          302.64,
+          0.993,
+          0.002,
+          0.005,
+          0.0,
+          0.391
+        ],
+        [
+          303.64,
+          0.994,
+          0.002,
+          0.005,
+          0.0,
+          0.378
+        ],
+        [
+          304.64,
+          0.994,
+          0.002,
+          0.004,
+          0.0,
+          0.368
+        ],
+        [
+          305.64,
+          0.994,
+          0.002,
+          0.004,
+          0.0,
+          0.367
+        ],
+        [
+          306.64,
+          0.994,
+          0.001,
+          0.004,
+          0.0,
+          0.361
+        ],
+        [
+          307.64,
+          0.994,
+          0.001,
+          0.004,
+          0.0,
+          0.357
+        ],
+        [
+          308.64,
+          0.995,
+          0.001,
+          0.004,
+          0.0,
+          0.357
+        ],
+        [
+          309.64,
+          0.995,
+          0.001,
+          0.004,
+          0.0,
+          0.37
+        ],
+        [
+          310.64,
+          0.992,
+          0.002,
+          0.006,
+          0.0,
+          0.435
+        ],
+        [
+          311.64,
+          0.99,
+          0.002,
+          0.008,
+          0.0,
+          0.458
+        ],
+        [
+          312.64,
+          0.989,
+          0.002,
+          0.008,
+          0.0,
+          0.459
+        ],
+        [
+          313.64,
+          0.99,
+          0.002,
+          0.008,
+          0.0,
+          0.458
+        ],
+        [
+          314.64,
+          0.99,
+          0.002,
+          0.007,
+          0.0,
+          0.463
+        ],
+        [
+          315.64,
+          0.991,
+          0.002,
+          0.007,
+          0.0,
+          0.447
+        ],
+        [
+          316.64,
+          0.993,
+          0.002,
+          0.005,
+          0.0,
+          0.403
+        ],
+        [
+          317.64,
+          0.994,
+          0.001,
+          0.004,
+          0.0,
+          0.384
+        ],
+        [
+          318.64,
+          0.995,
+          0.001,
+          0.003,
+          0.0,
+          0.374
+        ],
+        [
+          319.64,
+          0.996,
+          0.001,
+          0.003,
+          0.0,
+          0.356
+        ],
+        [
+          320.64,
+          0.997,
+          0.001,
+          0.002,
+          0.0,
+          0.327
+        ],
+        [
+          321.64,
+          0.997,
+          0.001,
+          0.002,
+          0.0,
+          0.347
+        ],
+        [
+          322.64,
+          0.998,
+          0.001,
+          0.002,
+          0.0,
+          0.344
+        ],
+        [
+          323.64,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.363
+        ],
+        [
+          324.64,
+          0.998,
+          0.0,
+          0.001,
+          0.0,
+          0.35
+        ],
+        [
+          325.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.334
+        ],
+        [
+          326.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.353
+        ],
+        [
+          327.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.358
+        ],
+        [
+          328.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.452
+        ],
+        [
+          329.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.489
+        ],
+        [
+          330.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.473
+        ],
+        [
+          331.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.455
+        ],
+        [
+          332.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.504
+        ],
+        [
+          333.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.481
+        ],
+        [
+          334.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.535
+        ],
+        [
+          335.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.531
+        ],
+        [
+          336.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.517
+        ],
+        [
+          337.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.514
+        ],
+        [
+          338.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.512
+        ],
+        [
+          339.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.522
+        ],
+        [
+          340.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.497
+        ],
+        [
+          341.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.499
+        ],
+        [
+          342.64,
+          0.999,
+          0.0,
+          0.001,
+          0.0,
+          0.518
+        ],
+        [
+          343.64,
+          0.999,
+          0.0,
+          0.0,
+          0.0,
+          0.429
+        ],
+        [
+          344.64,
+          0.934,
+          0.06,
+          0.001,
+          0.005,
+          0.408
+        ],
+        [
+          345.64,
+          0.921,
+          0.069,
+          0.001,
+          0.008,
+          0.359
+        ],
+        [
+          346.64,
+          0.933,
+          0.056,
+          0.001,
+          0.009,
+          0.323
+        ],
+        [
+          347.64,
+          0.921,
+          0.066,
+          0.001,
+          0.011,
+          0.29
+        ],
+        [
+          348.64,
+          0.988,
+          0.01,
+          0.001,
+          0.002,
+          0.708
+        ],
+        [
+          349.64,
+          0.99,
+          0.003,
+          0.003,
+          0.004,
+          0.84
+        ],
+        [
+          350.64,
+          0.983,
+          0.004,
+          0.004,
+          0.01,
+          0.882
+        ],
+        [
+          351.64,
+          0.981,
+          0.004,
+          0.004,
+          0.011,
+          0.878
+        ],
+        [
+          352.64,
+          0.981,
+          0.004,
+          0.004,
+          0.011,
+          0.873
+        ],
+        [
+          353.64,
+          0.964,
+          0.004,
+          0.005,
+          0.027,
+          0.902
+        ],
+        [
+          354.64,
+          0.959,
+          0.005,
+          0.006,
+          0.031,
+          0.912
+        ],
+        [
+          355.64,
+          0.237,
+          0.725,
+          0.01,
+          0.028,
+          0.22
+        ],
+        [
+          356.64,
+          0.732,
+          0.256,
+          0.005,
+          0.008,
+          0.222
+        ],
+        [
+          357.64,
+          0.943,
+          0.053,
+          0.003,
+          0.001,
+          0.207
+        ],
+        [
+          358.64,
+          0.968,
+          0.028,
+          0.003,
+          0.0,
+          0.304
+        ],
+        [
+          359.64,
+          0.975,
+          0.022,
+          0.003,
+          0.0,
+          0.317
+        ],
+        [
+          360.64,
+          0.979,
+          0.019,
+          0.003,
+          0.0,
+          0.323
+        ],
+        [
+          361.64,
+          0.979,
+          0.018,
+          0.002,
+          0.0,
+          0.329
+        ],
+        [
+          362.64,
+          0.977,
+          0.02,
+          0.003,
+          0.0,
+          0.348
+        ],
+        [
+          363.64,
+          0.974,
+          0.023,
+          0.003,
+          0.0,
+          0.368
+        ],
+        [
+          364.64,
+          0.972,
+          0.025,
+          0.003,
+          0.0,
+          0.359
+        ],
+        [
+          365.64,
+          0.969,
+          0.028,
+          0.003,
+          0.0,
+          0.367
+        ],
+        [
+          366.64,
+          0.967,
+          0.03,
+          0.003,
+          0.0,
+          0.364
+        ],
+        [
+          367.64,
+          0.973,
+          0.025,
+          0.002,
+          0.0,
+          0.461
+        ],
+        [
+          368.64,
+          0.995,
+          0.004,
+          0.001,
+          0.0,
+          0.72
+        ]
+      ]
+    }
+  },
+  "cuts": [
+    [
+      22.0,
+      54.0,
+      "BZ が空荷で保管場所へ戻る"
+    ],
+    [
+      110.0,
+      172.0,
+      "BZ が空荷でスタート地点へ回る"
+    ]
+  ],
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802545736,
+        "carry_m": 2.984051547897827
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.2075943438433419,
+        "carry_m": 2.9853781947083275
+      }
+    ],
+    "rise_m": 0.43991551922526545,
+    "surfaces": 4
+  },
+  "course_disturbed": {},
+  "ending": "crab",
+  "manager": {
+    "policy": "学習済み Q 表（tabq2_small）",
+    "decisions": [
+      {
+        "n": 1,
+        "t": 264.6,
+        "video_t": 85.4,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.01,
+        "last_result": "none",
+        "result": "standing",
+        "duration_s": 5.5
+      },
+      {
+        "n": 2,
+        "t": 270.2,
+        "video_t": 88.1,
+        "action": "WALK_ON",
+        "bubble": "パッカン、そのまま進んで",
+        "duck": "STAND",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.04,
+        "last_result": "standing",
+        "result": "stalled",
+        "duration_s": 11.0
+      },
+      {
+        "n": 3,
+        "t": 281.2,
+        "video_t": 93.7,
+        "action": "SEAT",
+        "bubble": "パッカン、カニさんの方を向いて座って",
+        "duck": "STAND",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.09,
+        "last_result": "stalled",
+        "result": "seated",
+        "duration_s": 7.4
+      },
+      {
+        "n": 4,
+        "t": 288.6,
+        "video_t": 97.4,
+        "action": "PUSH",
+        "bubble": "カニさん、そっと押し上げてあげて",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.02,
+        "last_result": "seated",
+        "result": "pushed_up",
+        "duration_s": 59.0
+      },
+      {
+        "n": 5,
+        "t": 347.7,
+        "video_t": 126.9,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.25,
+        "last_result": "pushed_up",
+        "result": "cleared",
+        "duration_s": 1.7
+      },
+      {
+        "n": 6,
+        "t": 349.4,
+        "video_t": 127.8,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.63,
+        "last_result": "cleared",
+        "result": "standing",
+        "duration_s": 5.5
+      },
+      {
+        "n": 7,
+        "t": 355.0,
+        "video_t": 130.5,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "STAND",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.6,
+        "last_result": "standing",
+        "result": "nothing",
+        "duration_s": 1.0
+      },
+      {
+        "n": 8,
+        "t": 356.0,
+        "video_t": 131.1,
+        "action": "WALK_ON",
+        "bubble": "パッカン、そのまま進んで",
+        "duck": "STAND",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.6,
+        "last_result": "nothing",
+        "result": "crossed",
+        "duration_s": 13.5
+      }
+    ],
+    "duck_crossed": true
+  },
+  "three_crossed": {
+    "bz": true,
+    "crab": true,
+    "duck": true
+  },
+  "video_silent": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take48_silent.mp4",
+    "frames": 4904,
+    "seconds": 163.5,
+    "bytes": 22848865
+  },
+  "video": {
+    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take48.mp4",
+    "ffmpeg_rc": 0,
+    "bytes": 23246402
+  }
+}
+     0.00s  BZ UP
+    16.26s  BZ RAISE_UP
+    17.92s  BZ TO_DOWN
+    54.00s  JUMP CUT: sim 22-54 s not shown (BZ が空荷で保管場所へ戻る)
+    57.46s  BZ PRECISE_LANE
+    65.82s  BZ ALIGN
+    75.56s  BZ RETREAT_FOR_ALIGNMENT
+    79.12s  BZ LOWER
+    80.76s  BZ DOWN
+   104.40s  BZ RAISE_DOWN
+   106.06s  BZ TO_START
+   106.06s  TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+   106.06s  MD heads to the waiting spot by the course start; JP to its watch spot
+   172.07s  JUMP CUT: sim 110-172 s not shown (BZ が空荷でスタート地点へ回る)
+   176.38s  BZ CROSS
+   176.38s  stage -> FOLLOW_IN
+   196.08s  construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+   196.08s  physics step -> 0.001
+   196.46s  stage -> RAMP
+   196.46s  MD: 坂に挑む（1 回目）
+   196.48s  JP cheers the duck on with its dance, claws up (official dance policy)
+   210.48s  MD: いったん後ずさり (reached y=-1.99, ramp toe -1.86)
+   213.00s  MD: もう一回挑む（2 回目）
+   224.02s  MD: やっぱり無理… (reached y=-2.00)
+   224.04s  JP pre-positions at the foot of its lane while the duck sits down
+   224.64s  MD: 諦めて座り込む（sitstand）
+   226.14s  MD: 首を振りながら「ぐわぁぁ？」
+   228.86s  stage -> CLIMB
+   228.86s  JP sets off from the foot of its lane
+   228.88s  JP passes beside the sitting duck and starts up the ramp
+   236.06s  JP on the crest (z=0.50); duck: ぐわぁぁ？
+   239.10s  JP stuck at the crest (y=-0.54 z=0.54); forward jump
+   240.28s  JP landed at y=-0.42 z=0.54
+   242.86s  JP over the top; duck looks around
+   246.00s  JP crossed the course and stops behind BZ (z=0.11)
+   249.02s  stage -> CALL
+   250.54s  JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+   254.04s  stage -> RETURN
+   254.04s  JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+   264.60s  stage -> RESCUE
+   264.60s  the manager (学習済み Q 表（tabq2_small）) takes over: duck SIT/toe at (+1.23,-2.14), crab at (+1.79,-2.99), 1.01 m
+   264.62s  MANAGER #1: STANDUP 「パッカン、立てる？」 (duck SIT/toe, crab 1.01 m, touching=False, last=none)
+   270.16s  MANAGER result: STANDUP -> standing (duck STAND/toe at (+1.22,-2.11) z=0.12)
+   270.18s  MANAGER #2: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/toe, crab 1.04 m, touching=False, last=standing)
+   281.22s  MANAGER result: WALK_ON -> stalled (duck STAND/toe at (+1.31,-2.00) z=0.12)
+   281.24s  MANAGER #3: SEAT 「パッカン、カニさんの方を向いて座って」 (duck STAND/toe, crab 1.09 m, touching=False, last=stalled)
+   288.62s  MANAGER result: SEAT -> seated (duck SIT/toe at (+1.41,-2.03) z=0.06)
+   288.64s  MANAGER #4: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 1.02 m, touching=False, last=seated)
+   347.68s  MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.66,-0.41) z=0.50)
+   347.70s  MANAGER #5: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+   349.40s  MANAGER result: BACK_OFF -> cleared (duck SIT/deck at (+1.66,-0.41) z=0.50)
+   349.42s  MANAGER #6: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.63 m, touching=False, last=cleared)
+   354.96s  MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.66,-0.44) z=0.56)
+   354.98s  MANAGER #7: STANDUP 「パッカン、立てる？」 (duck STAND/deck, crab 0.60 m, touching=False, last=standing)
+   356.00s  MANAGER result: STANDUP -> nothing (duck STAND/deck at (+1.66,-0.44) z=0.56)
+   356.02s  MANAGER #8: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.60 m, touching=False, last=nothing)
+   356.02s  JP follows the duck across the landing and down the far ramp (procession finale), 0.60 m behind
+   356.02s  BZ raises its fork while the duck walks on (pre-positioning for the circle)
+   356.04s  BZ's fork is up; it turns round on the spot to face the goal
+   367.14s  BZ faces south, toward the goal: the circle is complete
+   369.54s  MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.57,+1.96) z=0.13)
+   369.54s  DUCK CROSSED THE COURSE (y=+1.96 z=0.126) - all three have crossed
+   369.54s  stage -> CELEBRATE
+   369.56s  JP comes down the far ramp after the duck; the three form a circle at the goal
+   370.56s  the duck walks to its place in the circle (north of the toe first)
+   371.22s  JP stalls on the landing at y=-0.54; full speed 0.8 for 3 s
+   375.68s  JP is down the far ramp (y=+1.75 z=0.19); goes to its place in the circle
+   382.60s  the duck and the crab are in their places (1.13 / 1.24 m from BZ, which is ready)
+   384.98s  the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.12 rad, crab 0.01 rad off the centre)
+   400.40s  stage -> END

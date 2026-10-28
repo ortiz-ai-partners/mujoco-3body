@@ -392,6 +392,9 @@ class FaceDriver:
             raise RuntimeError("the model has no face (build_arena(face=True))")
         self.cam_name = prefix + "face_cam"
         self.expr, self.reason, self.rule, self.since = "neutral", "登場", 17, -1e9
+        self.decider = "登場（固定プログラム）"            # the values behind the current face, for the monitor
+        self.advance = 0.0                           # m the duck moved along y over the last STALL_S
+        self.stage = None
         self.t_prev = None
         self.spiral_until = self.shock_until = self.relief_until = -1e9
         self.push_contact_s = 0.0                    # s spent pushing the duck during the current PUSH (contact, latched)
@@ -399,6 +402,8 @@ class FaceDriver:
         self.contact_gap_s = 0.0
         self.stall_s = 0.0                           # s the pushed duck has not moved
         self.ramp_stall_s = 0.0                      # s the duck has not moved during its own ramp attempt
+        self.still_since = None                      # when the duck's current standstill began
+        self.phase_prev = None                       # (stage, ramp phase, pushing): a change restarts the standstill timer
         self.effort = 0.0                            # smoothed contact force on the duck, / PUSH_FORCE_REF
         self.y_hist = []                             # (t, duck y) over the last STALL_S seconds
         self.duck_mode_prev = None
@@ -434,68 +439,80 @@ class FaceDriver:
 
     # -- the rules
     def choose(self, t, s):
-        """(expression, reason, rule number) for the state `s` this control step."""
-        if s["tilt"] > TILT_ON or (self.expr == "spiral" and s["tilt"] > TILT_OFF):
+        """(expression, reason, rule number, the values that decided it) for the state `s` this control step.  The
+        fourth item is what the monitor's top line shows (ゆうころ: every change of face names the values behind it)."""
+        tilt = s["tilt"]
+        if tilt > TILT_ON or (self.expr == "spiral" and tilt > TILT_OFF):
             self.spiral_until = t + SPIRAL_HOLD
         if t < self.spiral_until:
-            return "spiral", "転倒", 1
+            return "spiral", "転倒", 1, f"自分の傾き {tilt:.0f}°（50° 超）"
         if t < self.shock_until:
-            return "shock", "パッカンが転んだ", 2
+            return "shock", "パッカンが転んだ", 2, f"パッカン {s.get('duck_mode', '')}（転倒から {SHOCK_S - (self.shock_until - t):.1f} 秒）"
         stage, mode, skill = s["stage"], s["crab_mode"], s.get("skill")
+        adv = self.advance * 100.0                                     # cm over the last STALL_S
         if s["crossed"] and stage in ("CELEBRATE", "END"):
             if mode in ("DANCE", "FREEZE"):
-                return "happy", "祝賀ダンス", 4
-            return "sparkle", "パッカンが渡り切った", 3
+                return "happy", "祝賀ダンス", 4, "祝賀ダンス中（固定プログラム）"
+            return "sparkle", "パッカンが渡り切った", 3, f"計測：パッカンが北の床で立位（y {s.get('duck_y', 0.0):+.2f}）"
         if t < self.relief_until:
-            return "relief", "うまくいった", 5
+            return "relief", "うまくいった", 5, f"直前の手の結果 {s.get('last_result')}（{RELIEF_S - (self.relief_until - t):.1f}／{RELIEF_S:.0f} 秒）"
         if stage == "RAMP":
             phase = s.get("ramp_phase")
+            ja = RAMP_JA.get(phase, phase or "")
             if phase in ("back", "handover", "sit") or (phase in ("try1", "try2") and self.ramp_stall_s >= STALL_S):
-                return "troubled", f"パッカンが登れない（{RAMP_JA.get(phase, phase)}）", 6
+                why = (f"足踏み {self.ramp_stall_s:.1f} 秒（進み {adv:+.0f} cm/2 秒）" if phase in ("try1", "try2")
+                       else f"進み {adv:+.0f} cm/2 秒")
+                return "troubled", f"パッカンが登れない（{ja}）", 6, f"パッカン {ja}、{why}"
             if phase in ("try1", "try2"):
-                return "happy", "パッカンを応援", 7
+                return "happy", "パッカンを応援", 7, f"パッカン {ja}、進み {adv:+.0f} cm/2 秒（登っている）"
             if mode in ("WALK", "JUMP"):
-                return "neutral", "持ち場へ", 17
-            return "happy", "応援ダンス", 7
+                return "neutral", "持ち場へ", 17, "自分の移動（固定プログラム）"
+            return "happy", "応援ダンス", 7, "応援ダンス中（固定プログラム）"
         if mode == "DANCE":
-            return "happy", "応援ダンス", 7
+            return "happy", "応援ダンス", 7, "応援ダンス中（固定プログラム）"
         if stage == "RESCUE":
             if skill is None:                       # between two skills (one control step): keep the face
-                return self.expr, self.reason, self.rule
+                return self.expr, self.reason, self.rule, self.decider
             smile, trouble = self._lines(skill)
             ps, pst, pf, pc = self._p("p_success", 0.5), self._p("p_stall"), self._p("p_fall"), self._p("p_cross", 0.5)
             if skill == "PUSH" and self.pushing:
+                vals = (f"力 {self.effort:.1f}/0.7  接触 {self.push_contact_s:.0f}s/5  進み {adv:+.0f}cm\n"
+                        f"AI 止＋転 {pst + pf:.0%}/40  転 {pf:.0%}/30")
                 if (pst + pf >= P_STALL_FALL) or pf >= P_FALL or self.stall_s >= PUSH_STALL_S:
                     why = ("進みが止まった" if self.stall_s >= PUSH_STALL_S else f"転ばせる {pf:.0%}" if pf >= P_FALL
                            else f"止まる＋転ぶ {pst + pf:.0%}")
-                    return "troubled_sweat", "押しながら、" + why, 8
+                    return "troubled_sweat", "押しながら、" + why, 8, vals + f"  停止 {self.stall_s:.1f}s/3"
                 hard = self.effort >= (EFFORT_LO if self.expr == "sweat" else EFFORT_HI)       # with hysteresis
                 if hard or self.push_contact_s >= PUSH_SWEAT_S:
                     why = f"力 {self.effort:.1f}" if hard else "接触 5 秒超"
-                    return "sweat", "押し上げ中、" + why, 9
-                return "cross", "押し上げ中", 10
+                    return "sweat", "押し上げ中、" + why, 9, vals
+                return "cross", "押し上げ中", 10, vals
             if self.trouble_latched:
-                return "troubled", f"直前の押しが{RESULT_JA.get(s.get('last_result'), '失敗')}", 11
+                return ("troubled", f"直前の押しが{RESULT_JA.get(s.get('last_result'), '失敗')}", 11,
+                        f"直前の手 {s.get('last_result')}、成功 {ps:.0%}（にっこりの線 {smile:.0%} まで困り）")
             if skill in ("SEAT", "BACK_OFF", "STANDUP", "WALK_ON", "PUSH"):
                 name = SKILL_JA[skill]
                 on_t = self.expr == "troubled"
                 fall_risk = skill == "PUSH" and pf >= P_FALL             # the fall estimate is sharp for the push only
+                vals = f"{skill} 成功 {ps:.0%}（にっこり {smile:.0%}／困り {trouble:.0%}）" + (f"\n転 {pf:.0%}/30" if skill == "PUSH" else "")
                 if fall_risk or self._below(ps, trouble, on_t):
-                    return "troubled", f"{name}、成功 {ps:.0%}" + (f" 転ぶ {pf:.0%}" if fall_risk else ""), 12
+                    return "troubled", f"{name}、成功 {ps:.0%}" + (f" 転ぶ {pf:.0%}" if fall_risk else ""), 12, vals
                 if self._above(ps, smile, self.expr == "happy"):
-                    return "happy", f"{name}、成功 {ps:.0%}", 13
-                return "serious", f"{name}、成功 {ps:.0%}", 14
+                    return "happy", f"{name}、成功 {ps:.0%}", 13, vals
+                return "serious", f"{name}、成功 {ps:.0%}", 14, vals
             if skill == "WAIT":
+                vals = f"WAIT：渡れる {pc:.0%}（にっこり 60／困り 30）"
                 if self._above(pc, P_CROSS_HI, self.expr == "happy"):
-                    return "happy", f"様子を見る、渡れる {pc:.0%}", 15
+                    return "happy", f"様子を見る、渡れる {pc:.0%}", 15, vals
                 if self._below(pc, P_CROSS_LO, self.expr == "troubled"):
-                    return "troubled", f"様子を見る、渡れる {pc:.0%}", 15
-                return "neutral", "様子を見る", 17
+                    return "troubled", f"様子を見る、渡れる {pc:.0%}", 15, vals
+                return "neutral", "様子を見る", 17, vals
         if stage == "CLIMB" and mode in ("WALK", "JUMP"):
-            return "serious", "坂を登る", 16
+            return "serious", "坂を登る", 16, f"自分の登坂（固定プログラム）、傾き {tilt:.0f}°"
         if mode == "FREEZE":
-            return "happy", "万歳", 4
-        return "neutral", {"BUILD": "戯れ・待機", "FOLLOW_IN": "戯れ・待機", "CALL": "待機", "RETURN": "戻る"}.get(stage, "待機"), 17
+            return "happy", "万歳", 4, "万歳のポーズ（固定プログラム）"
+        where = {"BUILD": "戯れ・待機", "FOLLOW_IN": "戯れ・待機", "CALL": "待機", "RETURN": "戻る"}.get(stage, "待機")
+        return "neutral", where, 17, f"{where}（固定プログラム）、傾き {tilt:.0f}°"
 
     def update(self, t, obs=None, **s):
         """One control step.  s: stage, crab_mode, tilt, skill, skill_idx, t_in_skill, touching, last_result, n_results,
@@ -514,6 +531,8 @@ class FaceDriver:
         advance = (self.y_hist[-1][1] - self.y_hist[0][1]) if len(self.y_hist) > 1 else 1.0
         window = (self.y_hist[-1][0] - self.y_hist[0][0]) if len(self.y_hist) > 1 else 0.0
         still = window >= STALL_S - 0.05 and abs(advance) < STALL_V * STALL_S
+        self.advance = advance if len(self.y_hist) > 1 else 0.0
+        self.stage = s.get("stage")
         if skill == "PUSH":
             if s.get("touching"):
                 self.pushing, self.contact_gap_s = True, 0.0
@@ -523,15 +542,24 @@ class FaceDriver:
                     self.pushing = False
         else:
             self.pushing, self.contact_gap_s, self.push_contact_s = False, 0.0, 0.0
+        phase_now = (s.get("stage"), s.get("ramp_phase"), self.pushing)
+        if phase_now != self.phase_prev:             # a new attempt or a new push: the standstill before it does not count
+            self.still_since = None
+            self.y_hist = self.y_hist[-1:]
+            still = False
+        self.phase_prev = phase_now
+        if still:                                    # the duck stopped when the (still) window began: no extra latency
+            if self.still_since is None:
+                self.still_since = t - STALL_S
+        else:
+            self.still_since = None
+        stalled_for = (t - self.still_since) if self.still_since is not None else 0.0
         if self.pushing:
             self.push_contact_s += dt
-            self.stall_s = self.stall_s + dt if still else 0.0
+            self.stall_s = stalled_for
         else:
             self.stall_s = 0.0
-        if s.get("stage") == "RAMP" and s.get("ramp_phase") in ("try1", "try2"):
-            self.ramp_stall_s = self.ramp_stall_s + dt if still else 0.0
-        else:
-            self.ramp_stall_s = 0.0
+        self.ramp_stall_s = stalled_for if (s.get("stage") == "RAMP" and s.get("ramp_phase") in ("try1", "try2")) else 0.0
         # events: a move just ended, the duck fell
         n_results = int(s.get("n_results", 0))
         if n_results > self.n_results_seen:
@@ -553,13 +581,13 @@ class FaceDriver:
             self.mood_ai.update(obs, t, s["skill_idx"], s.get("t_in_skill", 0.0))
         if self.trouble_latched and self._p("p_success", 0.0) >= self._lines(skill)[0]:
             self.trouble_latched = False
-        want, reason, rule = self.choose(t, s)
+        want, reason, rule, decider = self.choose(t, s)
         immediate = want in ("spiral", "shock") or (want == "cross" and self.expr != "cross")
         if want != self.expr and (immediate or t - self.since >= HOLD):
             self.expr, self.since = want, t
             self.model.geom_matid[self.gid] = self.mat[want]
         if want == self.expr:
-            self.reason, self.rule = reason, rule
+            self.reason, self.rule, self.decider = reason, rule, decider
         if not self.log or self.log[-1][1] != self.expr or self.log[-1][3] != self.rule:   # a new face or a new rule
             self.log.append([round(t, 2), self.expr, self.reason, self.rule, self.values()])
         if not self.effort_series or t - self.effort_series[-1][0] >= 1.0:
@@ -581,20 +609,29 @@ class FaceDriver:
         return v
 
     def title_label(self):
-        """The monitor's top line: the AI's values when it is reading, else a note that the face is render-only."""
+        """The monitor's top line: the values that decided the current face (every rule names its own)."""
+        return self.decider
+
+    def reading(self):
+        """True while the second AI is reading the scene (the rescue): its values are inputs then."""
         m = self.mood_ai
-        if m is not None and m.ready:
-            if m.kind == "critic":
-                return f"気分 AI V={m.v_ema:+.1f} {MOOD_JA[m.mood]}"
-            p = m.p
-            return (f"成功{p['p_success'] * 100:.0f} 止{p['p_stall'] * 100:.0f} 転{p['p_fall'] * 100:.0f} "
-                    f"空{p['p_nothing'] * 100:.0f}｜渡{p['p_cross'] * 100:.0f}")     # %, kept short: the box must stay narrow
-        return "跳跳の顔（表示パネル・描画のみ）"
+        return m is not None and m.ready and self.stage == "RESCUE"
+
+    def ai_label(self):
+        """The AI's five values while it is reading, else None."""
+        if not self.reading():
+            return None
+        m = self.mood_ai
+        if m.kind == "critic":
+            return f"気分 AI V={m.v_ema:+.1f} {MOOD_JA[m.mood]}"
+        p = m.p
+        return (f"AI：成功{p['p_success'] * 100:.0f} 止{p['p_stall'] * 100:.0f} 転{p['p_fall'] * 100:.0f} "
+                f"空{p['p_nothing'] * 100:.0f}｜渡れる{p['p_cross'] * 100:.0f}")
 
     def bars(self):
-        """(label, value) for the four outcome bars under the face, or None."""
+        """(label, value) for the four outcome bars under the face while the AI is reading, or None."""
         m = self.mood_ai
-        if m is not None and m.ready and m.kind != "critic":
+        if self.reading() and m.kind != "critic":
             return [("成", m.p["p_success"]), ("止", m.p["p_stall"]), ("転", m.p["p_fall"]), ("空", m.p["p_nothing"])]
         return None
 

@@ -818,7 +818,7 @@ def main():
         if pip is not None:
             pip.update_scene(data, camera=face.cam_name, scene_option=opt)
             inset = {"pic": pip.render().copy(), "above": face.title_label(), "bars": face.bars(),
-                     "below": face.measured_label(), "reason": face.label()}
+                     "below": face.ai_label() or face.measured_label(), "reason": face.label()}
         notice = cut_state["notice"] if (video is not None and video.frames < cut_state["notice_until"]) else None
         title, lines = caption()
         return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}", inset=inset, notice=notice)

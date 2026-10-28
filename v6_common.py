@@ -63,10 +63,12 @@ class Captioner:
             self.body = ImageFont.truetype(str(font_path), body_px)
             self.title_s = ImageFont.truetype(str(font_path), 24)      # the caption shrinks to these beside the monitor
             self.body_s = ImageFont.truetype(str(font_path), 20)
+            self.title_xs = ImageFont.truetype(str(font_path), 22)     # ... and to these before it wraps
+            self.body_xs = ImageFont.truetype(str(font_path), 18)
             self.small = ImageFont.truetype(str(font_path), 18)
             self.tiny = ImageFont.truetype(str(font_path), 15)
         if font_path is None:
-            self.title_s, self.body_s = self.title, self.body
+            self.title_s = self.body_s = self.title_xs = self.body_xs = self.title
         self.ok = True
 
     @staticmethod
@@ -95,21 +97,32 @@ class Captioner:
         pad = 14
         h, w = frame.shape[:2]
         ibox_w = ibox_h = 0
+        INSET_TEXT_W = 300                                                 # px: the monitor's text wraps inside this
         if inset is not None:
             if isinstance(inset, tuple):                                   # (pic, above, below): the older callers
                 inset = {"pic": inset[0], "above": inset[1], "reason": inset[2]}
-            pic, above = inset["pic"], inset.get("above") or ""
-            bars, below, reason = inset.get("bars"), inset.get("below") or "", inset.get("reason") or ""
+            pic = inset["pic"]
+            bars = inset.get("bars")
             ih, iw = pic.shape[:2]
             ipad = 8
-            ba = d.textbbox((0, 0), above, font=self.tiny) if above else (0, 0, 0, 0)
-            bb = d.textbbox((0, 0), below, font=self.tiny) if below else (0, 0, 0, 0)
-            br = d.textbbox((0, 0), reason, font=self.small) if reason else (0, 0, 0, 0)
+            tw = max(iw, INSET_TEXT_W)
+
+            def wrapped(text, font):
+                out = []
+                for part in (text or "").split("\n"):
+                    out += self._wrap(d, part, font, tw) if part else []
+                return out
+
+            above = wrapped(inset.get("above"), self.tiny)
+            below = wrapped(inset.get("below"), self.tiny)
+            reason = wrapped(inset.get("reason"), self.small)
+            line_h = lambda font: d.textbbox((0, 0), "あ", font=font)[3] + 3   # noqa: E731
             bars_h = 18 if bars else 0
-            ibox_w = max(iw, ba[2], bb[2], br[2]) + 2 * ipad
-            ibox_h = ipad + ba[3] + 4 + ih + 4 + bars_h + (4 if bars else 0) + bb[3] + (4 if below else 0) + br[3] + ipad
+            ibox_w = tw + 2 * ipad
+            ibox_h = (ipad + len(above) * line_h(self.tiny) + 4 + ih + 4 + bars_h + (4 if bars else 0)
+                      + len(below) * line_h(self.tiny) + (4 if below else 0) + len(reason) * line_h(self.small) + ipad)
         max_w = (w - 16 - ibox_w - 12 - 16) if inset is not None else (w - 32)
-        for tf, bf in ((self.title, self.body), (self.title_s, self.body_s)):
+        for tf, bf in ((self.title, self.body), (self.title_s, self.body_s), (self.title_xs, self.body_xs)):
             texts = [(t, tf) for t in self._wrap(d, title, tf, max_w - 2 * pad)]
             for ln in lines:
                 if ln:
@@ -128,9 +141,10 @@ class Captioner:
             x0, y0 = w - 16 - ibox_w, 16                                 # the same row as the caption box
             d.rectangle([x0, y0, x0 + ibox_w, y0 + ibox_h], fill=(10, 14, 20, 150))
             yy = y0 + ipad
-            if above:
-                d.text((x0 + ipad, yy), above, font=self.tiny, fill=(225, 225, 225, 255))
-                yy += ba[3] + 4
+            for t in above:
+                d.text((x0 + ipad, yy), t, font=self.tiny, fill=(225, 225, 225, 255))
+                yy += line_h(self.tiny)
+            yy += 4
             img.paste(self.Image.fromarray(pic), (x0 + ipad, yy))
             d.rectangle([x0 + ipad - 1, yy - 1, x0 + ipad + iw, yy + ih], outline=(120, 235, 255, 200))
             yy += ih + 4
@@ -144,11 +158,14 @@ class Captioner:
                     d.rectangle([bx + 18, yy + 4, bx + 18 + int(bw * max(0.0, min(1.0, float(val)))), yy + 14],
                                 fill=(120, 235, 255, 255))
                 yy += bars_h + 4
+            for t in below:
+                d.text((x0 + ipad, yy), t, font=self.tiny, fill=(225, 225, 225, 255))
+                yy += line_h(self.tiny)
             if below:
-                d.text((x0 + ipad, yy), below, font=self.tiny, fill=(225, 225, 225, 255))
-                yy += bb[3] + 4
-            if reason:
-                d.text((x0 + ipad, yy), reason, font=self.small, fill=(255, 255, 255, 255))
+                yy += 4
+            for t in reason:
+                d.text((x0 + ipad, yy), t, font=self.small, fill=(255, 255, 255, 255))
+                yy += line_h(self.small)
         if notice:
             h, w = frame.shape[:2]
             nb = d.textbbox((0, 0), notice, font=self.body)
