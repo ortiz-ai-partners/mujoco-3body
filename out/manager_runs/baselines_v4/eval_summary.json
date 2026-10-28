@@ -1,0 +1,102 @@
+{
+ "rule": {
+  "episodes": 30,
+  "crossing_rate": 0.967,
+  "landing_rate": 1.0,
+  "median_time_to_cross_s": 90.4,
+  "mean_return": 8.56,
+  "mean_steps": 6.93,
+  "mean_falls": 0.33,
+  "mean_pushes": 1.0,
+  "course_damaged": 0,
+  "mean_wall_s": 52.0,
+  "action_counts": {
+   "WAIT": 56,
+   "SEAT": 26,
+   "PUSH": 30,
+   "BACK_OFF": 36,
+   "STANDUP": 30,
+   "WALK_ON": 30
+  },
+  "by_scenario": {
+   "toe_seated_ok": {
+    "n": 6,
+    "crossed": 6
+   },
+   "toe_seated_wrong": {
+    "n": 8,
+    "crossed": 7
+   },
+   "toe_standing": {
+    "n": 6,
+    "crossed": 6
+   },
+   "toe_fallen": {
+    "n": 3,
+    "crossed": 3
+   },
+   "deck_seated": {
+    "n": 7,
+    "crossed": 7
+   },
+   "deck_fallen": {
+    "n": 0,
+    "crossed": 0
+   },
+   "ramp_fallen": {
+    "n": 0,
+    "crossed": 0
+   }
+  }
+ },
+ "random": {
+  "episodes": 30,
+  "crossing_rate": 0.467,
+  "landing_rate": 0.733,
+  "median_time_to_cross_s": 158.5,
+  "mean_return": -14.98,
+  "mean_steps": 23.73,
+  "mean_falls": 1.53,
+  "mean_pushes": 2.67,
+  "course_damaged": 0,
+  "mean_wall_s": 63.8,
+  "action_counts": {
+   "WAIT": 120,
+   "SEAT": 115,
+   "PUSH": 113,
+   "BACK_OFF": 116,
+   "STANDUP": 119,
+   "WALK_ON": 129
+  },
+  "by_scenario": {
+   "toe_seated_ok": {
+    "n": 6,
+    "crossed": 4
+   },
+   "toe_seated_wrong": {
+    "n": 8,
+    "crossed": 1
+   },
+   "toe_standing": {
+    "n": 6,
+    "crossed": 1
+   },
+   "toe_fallen": {
+    "n": 3,
+    "crossed": 2
+   },
+   "deck_seated": {
+    "n": 7,
+    "crossed": 6
+   },
+   "deck_fallen": {
+    "n": 0,
+    "crossed": 0
+   },
+   "ramp_fallen": {
+    "n": 0,
+    "crossed": 0
+   }
+  }
+ }
+}
