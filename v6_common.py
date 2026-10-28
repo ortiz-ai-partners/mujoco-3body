@@ -57,18 +57,37 @@ class Captioner:
         self.Image, self.ImageDraw = Image, ImageDraw
         font_path = next((p for p in _FONTS if p.exists()), None)
         if font_path is None:
-            self.title = self.body = ImageFont.load_default()
+            self.title = self.body = self.small = ImageFont.load_default()
         else:
             self.title = ImageFont.truetype(str(font_path), title_px)
             self.body = ImageFont.truetype(str(font_path), body_px)
+            self.small = ImageFont.truetype(str(font_path), 20)
         self.ok = True
 
-    def draw(self, frame, title, lines=(), footer=None):
+    def draw(self, frame, title, lines=(), footer=None, inset=None):
+        """inset: (image HxWx3, label above, label below) drawn in a box at the bottom-left (the crab's face monitor)."""
         if not self.ok:
             return frame
         img = self.Image.fromarray(frame)
         d = self.ImageDraw.Draw(img, "RGBA")
         pad = 14
+        if inset is not None:
+            pic, above, below = inset
+            ih, iw = pic.shape[:2]
+            h, w = frame.shape[:2]
+            ba = d.textbbox((0, 0), above, font=self.small)
+            bb = d.textbbox((0, 0), below, font=self.small) if below else (0, 0, 0, 0)
+            box_w = max(iw, ba[2], bb[2]) + 2 * pad
+            box_h = ih + ba[3] + bb[3] + 3 * pad + pad // 2
+            x0, y1 = 16, h - 16
+            y0 = y1 - box_h
+            d.rectangle([x0, y0, x0 + box_w, y1], fill=(10, 14, 20, 150))
+            d.text((x0 + pad, y0 + pad), above, font=self.small, fill=(235, 235, 235, 255))
+            y = y0 + pad + ba[3] + pad // 2
+            img.paste(self.Image.fromarray(pic), (x0 + pad, y))
+            d.rectangle([x0 + pad - 1, y - 1, x0 + pad + iw, y + ih], outline=(120, 235, 255, 200))
+            if below:
+                d.text((x0 + pad, y + ih + pad // 2), below, font=self.small, fill=(255, 255, 255, 255))
         texts = [(title, self.title)] + [(ln, self.body) for ln in lines if ln]
         boxes = [d.textbbox((0, 0), t, font=f) for t, f in texts]
         box_w = max(b[2] for b in boxes) + 2 * pad

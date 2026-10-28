@@ -77,8 +77,12 @@ def _prefixed(model, objtype, prefix):
 
 
 # ── Arena ────────────────────────────────────────────────────────────────
-def build_arena(stage_xml, md_pose=None, jp_pose=None, timestep=0.002):
-    """Stage (a scene file, or an XML string) + optional MD / JP.  Poses are (x, y, yaw)."""
+def build_arena(stage_xml, md_pose=None, jp_pose=None, timestep=0.002, face=False):
+    """Stage (a scene file, or an XML string) + optional MD / JP.  Poses are (x, y, yaw).
+
+    face: put the expression screen and the face camera on the crab's display panel (crab_face.py; the story's
+    videos).  Render-only - no mass, no contacts, no joints - so the physics path is the same either way (checked:
+    v7_full.py --test with and without --no-face).  Off by default: the learning environment builds without it."""
     if str(stage_xml).lstrip().startswith("<"):
         spec = mujoco.MjSpec.from_string(str(stage_xml))
     else:
@@ -105,6 +109,9 @@ def build_arena(stage_xml, md_pose=None, jp_pose=None, timestep=0.002):
         f = spec.worldbody.add_frame()
         f.name = "jp_origin"
         spec.attach(child, prefix="jp-", frame=f)
+        if face:
+            import crab_face
+            crab_face.add_face(spec, prefix="jp-")
         for jname in JP_HOME:
             act = spec.add_actuator()
             act.name = f"jp-{jname}"

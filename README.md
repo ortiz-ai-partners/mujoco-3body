@@ -11,6 +11,8 @@
 
 施工中はパッカンと跳跳が空き地で戯れる → BZ が峠を渡り始めるとパッカンが後を追い、跳跳は坂の足元の脇へ来る → 16° の坂に 2 回挑んで座り込む（公式ポリシーでは登れない：事実）、**その間、跳跳は横でハサミを上げる公式ダンスで応援**（10/28 昼） → 跳跳が横を通って坂を登り、天面で引っかかったら前方ジャンプ、峠を越える → パッカンが仲間を呼ぶ → 跳跳がコースの東側を回って座席の後ろへ戻る（固定プログラム、呼ばれている途中で帰り始める＝事前移動） → **ここから支配人AIが判断**（吹き出しに定型セリフ）：「パッカン、カニさんの方を向いて座って」→「カニさん、そっと押し上げてあげて」（座ったパッカンを跳跳が 0.3 m/s で坂の上まで押す）→「カニさん、少し離れて」→「パッカン、立てる？」→「パッカン、そのまま進んで」（天面を歩いて下り坂を降りる）→ パッカンが天面を歩き出すと跳跳が 0.8 m 後ろについて峠を越え、下り坂を降りる → **3 体ともコースを渡った** → **ゴールで輪になって万歳**（固定、ゆうころ 10/28 昼の案＝`--finale circle`、take 13 以降）：BZ はパッカンが天面を歩く間にフォークを上げてその場で向きを変え、パッカンと跳跳は坂の出口の北を回って BZ の前の半円に着き、全員が中央を向く → BZ はフォークを上げ下げ、パッカンは手がないので屈伸（sitstand）しながら首を振り、跳跳は公式ダンスで腕を上げて最後は両腕を上げたまま。take 9／10 の結末（渡った所で三人そろって万歳）は `--finale procession`、take 6／7 の結末（跳跳が東側を回り込み、離れた所でダンス）は `--finale around` で残してある。動画の速度はすべて 2 倍以下（提出の規則）、万歳のダンスは等速。
 
+**跳跳の表情（ゆうころ 10/28 夕、take 30 以降）**：支配人の行動と結果から表情表で選ぶ（`crab_face.py`）— 戯れ・待機はまる目、持ち場へ・坂登りは真剣、押し上げ中は ＞＜、押しに失敗した直後の手は ＞＜＋汗、応援・祝賀ダンスはにっこり、パッカンが渡り切ったらキラキラ、転倒はぐるぐる。実機の跳跳には丸い目のディスプレイが 2 つあり、公式リポジトリは dance 用の目アニメ（開く・まばたき・半目・キラキラ、動画）を同梱している（状態で表情を切り替える API はない）。顔は表示パネルに貼った描画専用の板で、画面左下の「顔モニター」（顔カメラの小窓）に映す。物理は不変：顔あり／なしのヘッドレス A/B で最終状態のダイジェスト・出来事・判断がすべて一致（`analysis/face_check.py`）。学習はしない（表情に報酬がない）。
+
 ブルドーザーはパッカンに触れない（ゆうころ 10/28：首を持ち上げると破損の恐れ）。v4（take 5）の結末「BZ のフォークが押し倒す→自力起立」は `--ending push` で残してある。
 
 ### 支配人AI（最終課題の核）
@@ -24,7 +26,7 @@
 | `manager2_train.py` | SB3 PPO（MLP 64×64、12 並列）の学習（継続学習 `--init-from`、開始分布と報酬版の指定、2,000 決定ごとのチェックポイント）／同一シード評価（PPO・固定ルール・ランダム）／デモ動画 |
 | `manager2_tabq.py` | 表形式 Q 学習（比較基準）：状態キー＝直前の結果 × 姿勢 × 進行段階 × 南向き × 座席 × 密着 × 押し上げ回数 |
 | `manager2_report.py` | 同一シード評価の比較表・場面別・行動回数・固定ルールとの 2×2（判断の失敗とスキルの失敗を分ける）→ `out\manager_runs\comparison_v2.md` |
-| `analysis/` | 学習記録・評価ログの分析スクリプト（失敗した押しの直後の手 `after_push_fail.py`、転倒状態の収益 `fallen_value.py`、分位ごとの行動分布 `train_stats.py`／`fallen_stats.py`、スキル信頼度、失敗の型、動画の静止画取り出し）。設計メモ §7.5b〜7.8 の表の出どころ |
+| `analysis/` | 学習記録・評価ログの分析スクリプト（失敗した押しの直後の手 `after_push_fail.py`、転倒状態の収益 `fallen_value.py`、分位ごとの行動分布 `train_stats.py`／`fallen_stats.py`、スキル信頼度、失敗の型、動画の静止画取り出し、顔の有無で物理が同じことの確認 `face_check.py`）。設計メモ §7.5b〜7.8 の表の出どころ |
 | `manager_env.py` ほか `manager_*.py` | v1（BZ がフォークで扱う版）。BZ 禁止で凍結、履歴 |
 | `MANAGER_DESIGN.md` | 設計メモ v1〜v1.4（事実・実験・比較。§7 が v2 の結果） |
 
@@ -66,17 +68,21 @@
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --circle --video out\v7_cheer_circle_test1.mp4                            # 輪の万歳の単体テスト
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_bz_drive.py                                                                        # BZ の前進・旋回・フォーク上下の単体テスト
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --video out\v7_cheer_test3.mp4                                           # ゴールの万歳の単体テスト（配置は手置き）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_face.py                                                                            # 跳跳の顔の単体テスト（7 表情 → out\face_test\）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --test --no-face --tag _facecheck_A; python v7_full.py --test --tag _facecheck_B; python analysis\face_check.py out\v7_full_report_facecheck_A.json out\v7_full_report_facecheck_B.json   # 顔の有無で物理が同じことの確認
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take30                                     # take 24 の顔付き（既定で顔あり、--no-face で無し）
 ```
 
 | ファイル | 内容 |
 |---|---|
 | `v7_full.py` | 通し台本（1 つの連続シミュレーション）。`--tag` で版を分ける |
 | `v7_policies.py` | 公式ポリシーの観測転記：`JumperLocomotion` / `JumperJump` / `JumperDance` / `MicroduckPolicy` |
-| `v7_test_*.py` | 単体検証（歩行・ジャンプ・前方ジャンプ・velstand・sitstand・衝突・首・ダンス・フォーク、ゴールの万歳 `v7_test_cheer.py`、BZ の前進・旋回 `v7_test_bz_drive.py`） |
+| `v7_test_*.py` | 単体検証（歩行・ジャンプ・前方ジャンプ・velstand・sitstand・衝突・首・ダンス・フォーク、ゴールの万歳 `v7_test_cheer.py`、BZ の前進・旋回 `v7_test_bz_drive.py`、跳跳の顔 `v7_test_face.py`） |
+| `crab_face.py` | 跳跳の表情：表示パネルの描画専用スクリーン（7 表情の絵、`MjSpec` で追加）、顔カメラ、支配人の行動と結果から表情を選ぶ表情表（`FaceDriver`）。10/11 のレッスン動画の顔（`jumper/out/face_tools/face_display.py`）が元 |
 | `v6_common.py` / `v6_robots.py` | 動画・字幕・カメラ、`MjSpec.attach` による 3 体アリーナ |
 | `v6_phase1_build.py` | BZ 単体施工 → `out\v6_stage_built.xml`（施工済みの独立シーン） |
 | `render_3body*.py`, `v6_phase2/3/4_*.py` | v1〜v6 の記録（v6 Phase 2〜3 は外力あり：採用せず、履歴として残置） |
 | `HANDOVER.md` | 引継ぎ文書（事実・罠・時系列） |
-| `out/` | 動画・レポート（**新コース（峠の隙間 1 cm、take 24 以降）：`take24`/`take25` = 固定ルール（輪／追走）、`take27` = PPO v2.2（輪）、`take28` = Q 表（輪）**；旧コース：`take16`/`take18` = 固定ルール、`take20` = Q 表、`take22`/`take23` = PPO v2.2、`take14` = 最初の全部入り成功版、`take11`〜`take13`・`take15`/`17`/`19`/`21`/`26` = 失敗版、`take9` = 追走の結末（施工 4 倍速）、`take10` = 学習済み Q 表で同じ結末、`take6` = 固定ルールで 3/3（旧結末）、`take7` = 学習済み Q 表（旧結末）、`take8` = 学習済み PPO（失敗）、`take4`/`take5` = 旧々結末（押し倒し）、`manager2_demo_*.mp4` = 学習環境のデモ、`v7_cheer_test*.mp4` = 万歳の単体テスト、`*.notion.mp4` = 圧縮版）。`out\manager_runs\<run>\` に学習ログ・評価 JSON・方策 |
+| `out/` | 動画・レポート（**新コース（峠の隙間 1 cm、take 24 以降）：`take24`/`take25` = 固定ルール（輪／追走）、`take27` = PPO v2.2（輪）、`take28` = Q 表（輪）**；旧コース：`take16`/`take18` = 固定ルール、`take20` = Q 表、`take22`/`take23` = PPO v2.2、`take14` = 最初の全部入り成功版、`take11`〜`take13`・`take15`/`17`/`19`/`21`/`26` = 失敗版、`take9` = 追走の結末（施工 4 倍速）、`take10` = 学習済み Q 表で同じ結末、`take6` = 固定ルールで 3/3（旧結末）、`take7` = 学習済み Q 表（旧結末）、`take8` = 学習済み PPO（失敗）、`take4`/`take5` = 旧々結末（押し倒し）、`manager2_demo_*.mp4` = 学習環境のデモ、`v7_cheer_test*.mp4` = 万歳の単体テスト、`face_test\` = 顔の単体テスト、`v7_full_report_facecheck_{A,B}.json` = 顔の有無の A/B（物理同一）、`*.notion.mp4` = 圧縮版）。`out\manager_runs\<run>\` に学習ログ・評価 JSON・方策 |
 
 Notion「MuJoCo 3体連携」ページに検証結果を逐次記録している。

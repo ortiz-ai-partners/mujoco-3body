@@ -29,6 +29,7 @@ Stages (ゆうころ 10/27 夜の筋書き)
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import subprocess
@@ -45,6 +46,7 @@ from v6_common import (HERE, OUT_DIR, VIDEO_FPS, VIDEO_H, VIDEO_W, Captioner, Ca
 from v6_phase4_full import ArenaSim, PHASE_TEXT
 from v6_robots import body_tilt_deg, build_arena, robots_in_contact
 from v7_policies import MD_CONTROL_DT, JumperDance, JumperJump, JumperLocomotion, MicroduckPolicy, set_pd_gains
+import crab_face
 
 CONTROL_DT = 0.02
 POLICY_DIR = HERE / "policies" / "microduck"
@@ -424,14 +426,21 @@ def main():
                          "next action starts - the crab to the foot of its lane while the duck tries the ramp again, back round "
                          "the course to the lane behind the seat while the duck is still calling, and BZ to its circle spot "
                          "while the duck walks on across the landing")
+    ap.add_argument("--no-face", action="store_true",
+                    help="no face on the crab's display panel.  By default (ゆうころ 10/28 夕) the crab's expression is chosen from "
+                         "the manager's action and its result (crab_face.py's table) and shown in the face monitor, an inset at "
+                         "the bottom-left.  Render-only: the physics path is the same with and without it "
+                         "(--test, out/v7_full_report_facecheck_{A,B}.json)")
     args = ap.parse_args()
     args.prestage = not args.no_prestage
+    args.face = not args.no_face
 
     app, slope_assembly, tracks_mod = course_builder()
     xml = slope_assembly.assembly_xml(app.ROOT / "scene_fork_tracks.xml")
-    model, data = build_arena(xml, md_pose=MD_START, jp_pose=JP_PARK, timestep=args.dt_build)
+    model, data = build_arena(xml, md_pose=MD_START, jp_pose=JP_PARK, timestep=args.dt_build, face=args.face)
     official_md_servos(model)
     duck, crab = Duck(model, data), Crab(model, data)
+    face = crab_face.FaceDriver(model, prefix="jp-") if args.face else None
     for _ in range(100):
         mujoco.mj_step(model, data)
     data.time = 0.0
@@ -442,7 +451,8 @@ def main():
     bz_bid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "dozer")
     md_root, jp_root, bz_root = (model.body_rootid[duck.bid], model.body_rootid[crab.bid],
                                  model.body_rootid[bz_bid])
-    print(f"MuJoCo {mujoco.__version__} | v7 full | dt={model.opt.timestep} nq={model.nq} nu={model.nu}", flush=True)
+    print(f"MuJoCo {mujoco.__version__} | v7 full | dt={model.opt.timestep} nq={model.nq} nu={model.nu} ngeom={model.ngeom} "
+          f"face={'on' if face is not None else 'off'}", flush=True)
 
     render = not args.test
     video = None
@@ -451,6 +461,8 @@ def main():
         renderer = mujoco.Renderer(model, height=VIDEO_H, width=VIDEO_W)
         opt = mujoco.MjvOption()
         opt.geomgroup[1] = 0
+        # the face monitor: the crab's panel through its face camera, a second small renderer
+        pip = mujoco.Renderer(model, height=crab_face.PIP_H, width=crab_face.PIP_W) if face is not None else None
         cap = Captioner()
         cam = CameraRig(lookat=[-0.5, 0, 0.2], distance=8.5, azimuth=55, elevation=-38, tau=1.5)
         cam.snap()
@@ -601,6 +613,15 @@ def main():
             cel["md_leg"] = 2
             duck.walk_to(CIRCLE_MD, t, stop_dist=0.15, vx=0.25)
 
+    def face_tick(t):
+        """The crab's expression, from the manager's state (crab_face.py's table); every control step, rendered or not."""
+        if face is None:
+            return
+        face.update(t, stage=stage, crab_mode=crab.mode, tilt=body_tilt_deg(data, crab.bid),
+                    skill=mgr["name"] if mgr["gen"] is not None else None,
+                    last_action=ch.ACTIONS[book.last_action] if book.last_action is not None else None,
+                    last_result=book.last_result, crossed=mgr["crossed"])
+
     def caption():
         p_md, p_jp = duck.pos(data), crab.pos(data)
         if stage == "BUILD":
@@ -720,8 +741,13 @@ def main():
                 cam.aim(lookat=look, distance=2.6 if lift_phase in ("insert", "lift", "hold", "lower", "back", "wait") else 3.4,
                         azimuth=135, elevation=-18)
         renderer.update_scene(data, cam.step(1.0 / VIDEO_FPS), opt)
+        frame = renderer.render()
+        inset = None
+        if pip is not None:
+            pip.update_scene(data, camera=face.cam_name, scene_option=opt)
+            inset = (pip.render().copy(), "跳跳の顔モニター（表示パネル・描画のみ）", face.label())
         title, lines = caption()
-        return cap.draw(renderer.render(), title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}")
+        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}", inset=inset)
 
     t_wall = time.perf_counter()
     k = 0
@@ -1536,6 +1562,7 @@ def main():
                 quack("happy")
             duck_prev_mode = duck.mode
 
+        face_tick(t)
         # ── robots + physics ──────────────────────────────────────────
         md_every = round(MD_CONTROL_DT / dt)
         jp_every = max(1, round(0.005 / dt))       # the crab infers at 200 Hz whatever the physics step
@@ -1577,8 +1604,14 @@ def main():
                     video.add(render_frame())
     if render:
         renderer.close()
+        if pip is not None:
+            pip.close()
 
+    # the final state, to compare two runs (the face check: with and without the render-only face)
+    digest = hashlib.sha256(np.ascontiguousarray(data.qpos).tobytes() + np.ascontiguousarray(data.qvel).tobytes()).hexdigest()
     report = {"mujoco": mujoco.__version__, "sim_seconds": round(float(data.time), 2),
+              "state_digest": digest, "ngeom": int(model.ngeom),
+              "face": {"on": face is not None, "log": face.log if face is not None else None},
               "construction": {"success": bool(pilot.success), "reason": pilot.reason,
                                "parts": pilot.results, "rise_m": pilot.max_rise, "surfaces": len(pilot.touched)},
               "course_disturbed": course_disturbed,
