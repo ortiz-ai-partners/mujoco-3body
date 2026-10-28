@@ -88,3 +88,7 @@ flowchart TD
 ## 支配人 AI の結果図（オルティス作、10/28 夜）
 
 `report/results_managers_ortiz.png`：評価 v4（新コース、30 シード）の渡り切りと天面到達の棒グラフ、固定ルールとの同一シード 2×2、手数と転倒の平均、報酬 v2.2 で「転んだ相手に座り直し」の穴が 7 本中 5 本 → 0 本になった注記、旧コースとの比較。数値は `out/manager_runs/comparison_v4.md` と設計メモ §7.15 に一致することを確認済み。
+
+## コースと 3 体の動線（オルティス作、10/28 夜）
+
+`report/course_plan_ortiz.png`：上から見た全体図とコース拡大図。座標は `crab_help.py`（TOE_Y −2.0、CREST_Y −0.495、DECK_N_Y 0.548、DOWN_TOE_Y 2.05、LANE_X 1.45、SEAT_Y −2.13）と `v7_full.py`（MD_START、WAIT_SPOT、DUCK_LANE_X 1.2、CRAB_LANE_X 1.72、JP_PARK、CRAB_WATCH、CHEER_SPOT、CIRCLE_*）、`scene_fork_tracks.xml`（ブロック 4 個・ボール）に一致することを確認済み。
