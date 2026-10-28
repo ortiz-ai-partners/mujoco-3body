@@ -1,0 +1,52 @@
+﻿{
+ "rule": {
+  "episodes": 30,
+  "crossing_rate": 0.867,
+  "landing_rate": 1.0,
+  "median_time_to_cross_s": 88.8,
+  "mean_return": 6.3,
+  "mean_steps": 8.63,
+  "mean_falls": 0.63,
+  "mean_pushes": 1.27,
+  "course_damaged": 0,
+  "mean_wall_s": 49.2,
+  "action_counts": {
+   "WAIT": 90,
+   "SEAT": 31,
+   "PUSH": 38,
+   "BACK_OFF": 43,
+   "STANDUP": 29,
+   "WALK_ON": 28
+  },
+  "by_scenario": {
+   "toe_seated_ok": {
+    "n": 6,
+    "crossed": 5
+   },
+   "toe_seated_wrong": {
+    "n": 8,
+    "crossed": 7
+   },
+   "toe_standing": {
+    "n": 6,
+    "crossed": 5
+   },
+   "toe_fallen": {
+    "n": 3,
+    "crossed": 3
+   },
+   "deck_seated": {
+    "n": 7,
+    "crossed": 6
+   },
+   "deck_fallen": {
+    "n": 0,
+    "crossed": 0
+   },
+   "ramp_fallen": {
+    "n": 0,
+    "crossed": 0
+   }
+  }
+ }
+}

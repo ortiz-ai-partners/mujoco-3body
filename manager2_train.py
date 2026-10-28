@@ -131,6 +131,9 @@ def load_policies(run_dir):
 def evaluate(args):
     run_dir = RUNS / args.run
     run_dir.mkdir(parents=True, exist_ok=True)
+    if getattr(args, "rule_near_lip", "on") == "off":
+        import crab_help
+        crab_help.RULE_NEAR_LIP = False                    # the morning's rule, for a like-for-like check
     env = ManagerEnv(seed=0, max_episode_s=args.max_episode_s, log_path=run_dir / "eval_decisions.jsonl")
     policies = load_policies(run_dir)
     report = {}
@@ -194,6 +197,8 @@ def main():
     e.add_argument("--policies", nargs="+", default=["ppo", "rule", "random"])
     e.add_argument("--max-episode-s", type=float, default=240.0)
     e.add_argument("--verbose", action="store_true")
+    e.add_argument("--rule-near-lip", choices=["on", "off"], default="on",
+                   help="off = the rule without the near_lip push condition (as evaluated in baselines_v2)")
     args = ap.parse_args()
     if args.cmd == "train":
         train(args)

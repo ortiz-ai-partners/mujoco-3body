@@ -558,6 +558,10 @@ def rule_action(h, book):
     # at the foot, on the up-ramp, or beside the course
     if book.last_result in ("stalled", "slipped") and close:
         return ACTIONS.index("BACK_OFF")
-    if d.mode == "SIT" and h.facing_ok() and (h.at_seat() or stage == "ramp_up" or h.near_lip()):
+    if d.mode == "SIT" and h.facing_ok() and (h.at_seat() or stage == "ramp_up" or (RULE_NEAR_LIP and h.near_lip())):
         return ACTIONS.index("PUSH")                         # seated at the lip (or already on the ramp), facing the crab
     return ACTIONS.index("SEAT")
+
+
+RULE_NEAR_LIP = True               # the 10/28 noon addition to the rule (take 13); False reproduces the morning's rule
+                                   # (baselines_v2) for a like-for-like check of the evaluation environment

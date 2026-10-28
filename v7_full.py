@@ -414,6 +414,11 @@ def main():
                          "form a circle facing the centre - BZ pumps its fork, the duck squats and shakes its head, the crab dances; "
                          "procession (take 9/10): the crab follows the duck down and the three cheer where the duck stopped; "
                          "around (take 6/7): the crab backs down the up-ramp and walks round the course to the duck")
+    ap.add_argument("--jitter", type=float, default=0.0,
+                    help="seconds added to where the crab's cheer dance starts in its recording (CHEER_DANCE_START). The only "
+                         "purpose is to change the physics path of a rendered take: the rendered physics is deterministic "
+                         "for given code, so a learned manager that fails on one path (take 17: the Q table re-seats "
+                         "instead of backing off after a stalled push) can be tried on another. Say which jitter a take used")
     ap.add_argument("--no-prestage", action="store_true",
                     help="switch off the pre-positioning (ゆうころ 10/28 昼): by default an idle robot already walks to where its "
                          "next action starts - the crab to the foot of its lane while the duck tries the ramp again, back round "
@@ -880,7 +885,7 @@ def main():
                         _, err = crab.steer(data, p_md[:2], 0.0)
                         if abs(err) < 0.3:
                             ramp["cheer"] = True
-                            crab.dance_start = CHEER_DANCE_START
+                            crab.dance_start = CHEER_DANCE_START + args.jitter
                             crab.set_mode("DANCE", t, model)
                             cry("crab")
                             event(t, "JP cheers the duck on with its dance, claws up (official dance policy)")
