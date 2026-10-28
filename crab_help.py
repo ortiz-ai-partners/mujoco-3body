@@ -151,6 +151,13 @@ class Helpers:
     def seated_for_push(self):
         return self.duck.mode == "SIT" and self.facing_ok() and self.at_seat()
 
+    def near_lip(self):
+        """Seated on the line anywhere from the seat to just past the ramp's lip: close enough for a push.  (Take 13,
+        10/28: re-seated 2 cm outside SEAT_TOL at y -2.01, the rule asked for SEAT seven more times - the skill reports
+        'seated' wherever the duck sits down - until the time ran out.)"""
+        p = self.duck_xyz()
+        return abs(p[0] - LANE_X) < 0.2 and SEAT_Y - SEAT_TOL < p[1] < TOE_Y + 0.12
+
     def crossed(self):
         return self.stage() == "north" and self.duck_up()
 
@@ -551,6 +558,6 @@ def rule_action(h, book):
     # at the foot, on the up-ramp, or beside the course
     if book.last_result in ("stalled", "slipped") and close:
         return ACTIONS.index("BACK_OFF")
-    if d.mode == "SIT" and h.facing_ok() and (h.at_seat() or stage == "ramp_up"):
+    if d.mode == "SIT" and h.facing_ok() and (h.at_seat() or stage == "ramp_up" or h.near_lip()):
         return ACTIONS.index("PUSH")                         # seated at the lip (or already on the ramp), facing the crab
     return ACTIONS.index("SEAT")

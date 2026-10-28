@@ -16,7 +16,8 @@ import mujoco
 import numpy as np
 
 from manager2_env import Scene
-from v7_full import ARM_SLOTS, CHEER_DANCE_S, CHEER_HOLD_S, CONTROL_DT, cheer_tick
+from v7_full import (ARM_SLOTS, CHEER_DANCE_S, CHEER_HOLD_S, CIRCLE_BZ_END, CIRCLE_C, CIRCLE_JP, CIRCLE_MD, CONTROL_DT,
+                     cheer_circle_tick, cheer_tick)
 
 
 def main():
@@ -24,23 +25,34 @@ def main():
     ap.add_argument("--video", type=Path)
     ap.add_argument("--speed", type=float, default=1.0)
     ap.add_argument("--dance-only", action="store_true", help="only the crab's official dance (no duck / BZ moves)")
+    ap.add_argument("--circle", action="store_true", help="the circle celebration (ゆうころ 10/28 昼): BZ pumps the fork, the duck squats")
     ap.add_argument("--seconds", type=float)
     args = ap.parse_args()
 
     s = Scene(dt=0.001)
     model, data, duck, crab = s.model, s.data, s.duck, s.crab
     z_stand = float(data.qpos[s.free["md"][0] + 2])
-    # where take 6 left them: BZ parked north of the course facing north, the duck on the floor just past the far
-    # ramp's toe, the crab at the duck's east side facing it (the procession finale brings it there)
-    s.teleport("bz", (1.55, 3.07), math.pi / 2, z=0.30)
-    s.teleport("md", (1.45, 2.35), math.pi / 2, z=z_stand + 0.005)
-    s.teleport("jp", (2.35, 2.15), math.pi, z=0.115)
+    if args.circle:
+        # the circle: BZ at its spot facing south, the duck and the crab on the circle facing the centre
+        s.teleport("bz", CIRCLE_BZ_END, -math.pi / 2, z=0.30)
+        s.teleport("md", CIRCLE_MD, math.atan2(CIRCLE_C[1] - CIRCLE_MD[1], CIRCLE_C[0] - CIRCLE_MD[0]), z=z_stand + 0.005)
+        s.teleport("jp", CIRCLE_JP, math.atan2(CIRCLE_C[1] - CIRCLE_JP[1], CIRCLE_C[0] - CIRCLE_JP[0]), z=0.115)
+    else:
+        # where take 6 left them: BZ parked north of the course facing north, the duck on the floor just past the far
+        # ramp's toe, the crab at the duck's east side facing it (the procession finale brings it there)
+        s.teleport("bz", (1.55, 3.07), math.pi / 2, z=0.30)
+        s.teleport("md", (1.45, 2.35), math.pi / 2, z=z_stand + 0.005)
+        s.teleport("jp", (2.35, 2.15), math.pi, z=0.115)
     mujoco.mj_forward(model, data)
     s.course_ref = data.xpos[s.course_bids][:, :2].copy()          # the bookkeeping Scene.reset() would have set up
     s.course_damage, s.course_moved_body, s.falls, s.was_fallen = 0.0, "", 0, False
     duck.gaze = None
-    s.bubble_text = "ゴールで三人そろって万歳！"
-    s.bubble_sub = "BZ：フォーク万歳   パッカン：パタパタ（velstand）   跳跳：腕を上げて応援ダンス（公式 dance ポリシー）"
+    if args.circle:
+        s.bubble_text = "ゴールで輪になって万歳！"
+        s.bubble_sub = "BZ：フォークを上げ下げ   パッカン：屈伸しながら首を振る（sitstand）   跳跳：腕を上げて応援ダンス（公式 dance ポリシー）"
+    else:
+        s.bubble_text = "ゴールで三人そろって万歳！"
+        s.bubble_sub = "BZ：フォーク万歳   パッカン：パタパタ（velstand）   跳跳：腕を上げて応援ダンス（公式 dance ポリシー）"
     if args.video:
         s.start_recording(args.video, speed=args.speed)
     s.run(1.0)
@@ -58,6 +70,12 @@ def main():
             if crab.mode != "DANCE":
                 crab.set_mode("DANCE", s.t, model)
             s.sim.command(0, 0, 0)
+        elif args.circle:
+            if duck.mode == "SIT" and duck.tilt(data) > 60.0:      # toppled while squatting: velstand takes over
+                duck.resume, duck.fell_at, duck.upright_since = "STAND", s.t, None
+                duck.use("vel")
+                duck.set_mode("FALLEN", s.t)
+            cheer_circle_tick(rel, duck, crab, s.sim, model, data, s.t)
         else:
             cheer_tick(rel, duck, crab, s.sim, model, data, s.t)
         s.tick()
@@ -67,13 +85,14 @@ def main():
         if k % 5 == 0:
             zc = [float(data.xpos[b][2]) for b in claws]
             rows.append((round(rel, 2), round(zc[0], 3), round(zc[1], 3), duck.mode, crab.mode,
-                         round(float(duck.tilt(data)), 1), round(float(s.sim.lift_target), 3), round(float(crab.pos(data)[2]), 3)))
+                         round(float(duck.tilt(data)), 1), round(float(s.sim.lift_target), 3), round(float(crab.pos(data)[2]), 3),
+                         round(float(duck.pos(data)[2]), 3)))
             if min(zc) > best[0]:
                 best = (min(zc), data.qpos[arm_q].copy(), rel)
     if args.video:
         print("video", s.stop_recording())
     print(f"dance recording: {crab.dance.duration:.2f} s, {crab.dance.n_frames} frames at {crab.dance.rec_hz:g} Hz")
-    print("t     clawL  clawR  duck     crab   tilt  fork   crab_z")
+    print("t     clawL  clawR  duck     crab   tilt  fork   crab_z  duck_z")
     for r in rows[::5]:
         print("  ".join(str(x) for x in r))
     print(f"\nclaws highest at rel={best[2]:.2f} s (min of the two: {best[0]:.3f} m); arm joints there (LF_J0..J4, RF_J0..J4):")

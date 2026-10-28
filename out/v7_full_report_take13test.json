@@ -1,0 +1,1840 @@
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 505.7,
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802549377,
+        "carry_m": 2.984051548019637
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.207593682664809,
+        "carry_m": 2.9854041207378157
+      }
+    ],
+    "rise_m": 0.4398817558698997,
+    "surfaces": 4
+  },
+  "course_disturbed": {},
+  "ending": "crab",
+  "manager": {
+    "policy": "固定ルール",
+    "decisions": [
+      {
+        "n": 1,
+        "t": 265.7,
+        "video_t": 0.0,
+        "action": "SEAT",
+        "bubble": "パッカン、カニさんの方を向いて座って",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "none",
+        "result": "seated",
+        "duration_s": 11.8
+      },
+      {
+        "n": 2,
+        "t": 277.5,
+        "video_t": 0.0,
+        "action": "PUSH",
+        "bubble": "カニさん、そっと押し上げてあげて",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.01,
+        "last_result": "seated",
+        "result": "pushed_up",
+        "duration_s": 59.8
+      },
+      {
+        "n": 3,
+        "t": 337.3,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.25,
+        "last_result": "pushed_up",
+        "result": "cleared",
+        "duration_s": 1.7
+      },
+      {
+        "n": 4,
+        "t": 339.0,
+        "video_t": 0.0,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.63,
+        "last_result": "cleared",
+        "result": "standing",
+        "duration_s": 5.5
+      },
+      {
+        "n": 5,
+        "t": 344.6,
+        "video_t": 0.0,
+        "action": "WALK_ON",
+        "bubble": "パッカン、そのまま進んで",
+        "duck": "STAND",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.6,
+        "last_result": "standing",
+        "result": "walked",
+        "duration_s": 30.0
+      },
+      {
+        "n": 6,
+        "t": 374.6,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.04,
+        "last_result": "walked",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 7,
+        "t": 378.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 8,
+        "t": 382.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 9,
+        "t": 386.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 10,
+        "t": 390.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 11,
+        "t": 394.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 12,
+        "t": 398.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 13,
+        "t": 402.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 14,
+        "t": 407.0,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 15,
+        "t": 411.0,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 16,
+        "t": 415.0,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 17,
+        "t": 419.1,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 18,
+        "t": 423.1,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 19,
+        "t": 427.2,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 20,
+        "t": 431.2,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 21,
+        "t": 435.2,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 22,
+        "t": 439.3,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 23,
+        "t": 443.3,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 24,
+        "t": 447.4,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.05,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 25,
+        "t": 451.4,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 26,
+        "t": 455.4,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 27,
+        "t": 459.5,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 28,
+        "t": 463.5,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 29,
+        "t": 467.6,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 30,
+        "t": 471.6,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 31,
+        "t": 475.6,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 32,
+        "t": 479.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 33,
+        "t": 483.7,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 34,
+        "t": 487.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 35,
+        "t": 491.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 36,
+        "t": 495.8,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 37,
+        "t": 499.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited",
+        "result": "waited",
+        "duration_s": 4.0
+      },
+      {
+        "n": 38,
+        "t": 503.9,
+        "video_t": 0.0,
+        "action": "WAIT",
+        "bubble": "ちょっと待とう",
+        "duck": "FALLEN",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "waited"
+      }
+    ],
+    "duck_crossed": false
+  },
+  "three_crossed": {
+    "bz": true,
+    "crab": true,
+    "duck": false
+  },
+  "events": [
+    {
+      "t": 0.0,
+      "video_t": 0.0,
+      "event": "BZ UP"
+    },
+    {
+      "t": 16.26,
+      "video_t": 0.0,
+      "event": "BZ RAISE_UP"
+    },
+    {
+      "t": 17.92,
+      "video_t": 0.0,
+      "event": "BZ TO_DOWN"
+    },
+    {
+      "t": 57.46,
+      "video_t": 0.0,
+      "event": "BZ PRECISE_LANE"
+    },
+    {
+      "t": 65.82,
+      "video_t": 0.0,
+      "event": "BZ ALIGN"
+    },
+    {
+      "t": 75.56,
+      "video_t": 0.0,
+      "event": "BZ RETREAT_FOR_ALIGNMENT"
+    },
+    {
+      "t": 79.12,
+      "video_t": 0.0,
+      "event": "BZ LOWER"
+    },
+    {
+      "t": 80.76,
+      "video_t": 0.0,
+      "event": "BZ DOWN"
+    },
+    {
+      "t": 104.4,
+      "video_t": 0.0,
+      "event": "BZ RAISE_DOWN"
+    },
+    {
+      "t": 106.06,
+      "video_t": 0.0,
+      "event": "BZ TO_START"
+    },
+    {
+      "t": 106.06,
+      "video_t": 0.0,
+      "event": "TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance"
+    },
+    {
+      "t": 106.06,
+      "video_t": 0.0,
+      "event": "MD heads to the waiting spot by the course start; JP to its watch spot"
+    },
+    {
+      "t": 177.12,
+      "video_t": 0.0,
+      "event": "BZ CROSS"
+    },
+    {
+      "t": 177.12,
+      "video_t": 0.0,
+      "event": "stage -> FOLLOW_IN"
+    },
+    {
+      "t": 193.66,
+      "video_t": 0.0,
+      "event": "stage -> RAMP"
+    },
+    {
+      "t": 193.66,
+      "video_t": 0.0,
+      "event": "MD: 坂に挑む（1 回目）"
+    },
+    {
+      "t": 193.68,
+      "video_t": 0.0,
+      "event": "JP cheers the duck on with its dance, claws up (official dance policy)"
+    },
+    {
+      "t": 196.78,
+      "video_t": 0.0,
+      "event": "construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)"
+    },
+    {
+      "t": 196.78,
+      "video_t": 0.0,
+      "event": "physics step -> 0.001"
+    },
+    {
+      "t": 207.68,
+      "video_t": 0.0,
+      "event": "MD: いったん後ずさり (reached y=-2.00, ramp toe -1.86)"
+    },
+    {
+      "t": 210.2,
+      "video_t": 0.0,
+      "event": "MD: もう一回挑む（2 回目）"
+    },
+    {
+      "t": 221.22,
+      "video_t": 0.0,
+      "event": "MD: やっぱり無理… (reached y=-2.00)"
+    },
+    {
+      "t": 221.24,
+      "video_t": 0.0,
+      "event": "JP pre-positions at the foot of its lane while the duck sits down"
+    },
+    {
+      "t": 221.84,
+      "video_t": 0.0,
+      "event": "MD: 諦めて座り込む（sitstand）"
+    },
+    {
+      "t": 223.34,
+      "video_t": 0.0,
+      "event": "MD: 首を振りながら「ぐわぁぁ？」"
+    },
+    {
+      "t": 226.06,
+      "video_t": 0.0,
+      "event": "stage -> CLIMB"
+    },
+    {
+      "t": 226.06,
+      "video_t": 0.0,
+      "event": "JP sets off from the foot of its lane"
+    },
+    {
+      "t": 226.08,
+      "video_t": 0.0,
+      "event": "JP passes beside the sitting duck and starts up the ramp"
+    },
+    {
+      "t": 233.28,
+      "video_t": 0.0,
+      "event": "JP on the crest (z=0.50); duck: ぐわぁぁ？"
+    },
+    {
+      "t": 240.4,
+      "video_t": 0.0,
+      "event": "JP stuck at the crest (y=-0.54 z=0.54); forward jump"
+    },
+    {
+      "t": 241.58,
+      "video_t": 0.0,
+      "event": "JP landed at y=-0.43 z=0.54"
+    },
+    {
+      "t": 244.16,
+      "video_t": 0.0,
+      "event": "JP over the top; duck looks around"
+    },
+    {
+      "t": 247.34,
+      "video_t": 0.0,
+      "event": "JP crossed the course and stops behind BZ (z=0.11)"
+    },
+    {
+      "t": 250.36,
+      "video_t": 0.0,
+      "event": "stage -> CALL"
+    },
+    {
+      "t": 251.88,
+      "video_t": 0.0,
+      "event": "JP heads back round the east side of the course to the lane behind the seat (pre-positioning)"
+    },
+    {
+      "t": 255.38,
+      "video_t": 0.0,
+      "event": "stage -> RETURN"
+    },
+    {
+      "t": 255.38,
+      "video_t": 0.0,
+      "event": "JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)"
+    },
+    {
+      "t": 265.68,
+      "video_t": 0.0,
+      "event": "stage -> RESCUE"
+    },
+    {
+      "t": 265.68,
+      "video_t": 0.0,
+      "event": "the manager (固定ルール) takes over: duck SIT/toe at (+1.23,-2.08), crab at (+1.79,-2.98), 1.06 m"
+    },
+    {
+      "t": 265.7,
+      "video_t": 0.0,
+      "event": "MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 1.05 m, touching=False, last=none)"
+    },
+    {
+      "t": 277.46,
+      "video_t": 0.0,
+      "event": "MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.05) z=0.06)"
+    },
+    {
+      "t": 277.48,
+      "video_t": 0.0,
+      "event": "MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 1.01 m, touching=False, last=seated)"
+    },
+    {
+      "t": 337.28,
+      "video_t": 0.0,
+      "event": "MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.48,-0.42) z=0.50)"
+    },
+    {
+      "t": 337.3,
+      "video_t": 0.0,
+      "event": "MANAGER #3: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)"
+    },
+    {
+      "t": 339.02,
+      "video_t": 0.0,
+      "event": "MANAGER result: BACK_OFF -> cleared (duck SIT/deck at (+1.48,-0.42) z=0.50)"
+    },
+    {
+      "t": 339.04,
+      "video_t": 0.0,
+      "event": "MANAGER #4: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.63 m, touching=False, last=cleared)"
+    },
+    {
+      "t": 344.58,
+      "video_t": 0.0,
+      "event": "MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.50,-0.44) z=0.56)"
+    },
+    {
+      "t": 344.6,
+      "video_t": 0.0,
+      "event": "MANAGER #5: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.60 m, touching=False, last=standing)"
+    },
+    {
+      "t": 344.6,
+      "video_t": 0.0,
+      "event": "JP follows the duck across the landing and down the far ramp (procession finale), 0.60 m behind"
+    },
+    {
+      "t": 344.6,
+      "video_t": 0.0,
+      "event": "BZ raises its fork while the duck walks on (pre-positioning for the circle)"
+    },
+    {
+      "t": 344.62,
+      "video_t": 0.0,
+      "event": "BZ's fork is up; it turns round on the spot to face the goal"
+    },
+    {
+      "t": 351.78,
+      "video_t": 0.0,
+      "event": "MD fell (tilt 86) at (+1.31,+0.14)"
+    },
+    {
+      "t": 355.78,
+      "video_t": 0.0,
+      "event": "BZ faces south: the circle is complete"
+    },
+    {
+      "t": 374.62,
+      "video_t": 0.0,
+      "event": "MANAGER result: WALK_ON -> walked (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 374.64,
+      "video_t": 0.0,
+      "event": "MANAGER #6: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.04 m, touching=False, last=walked)"
+    },
+    {
+      "t": 378.66,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 378.68,
+      "video_t": 0.0,
+      "event": "MANAGER #7: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 382.7,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 382.72,
+      "video_t": 0.0,
+      "event": "MANAGER #8: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 386.74,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 386.76,
+      "video_t": 0.0,
+      "event": "MANAGER #9: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 390.78,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 390.8,
+      "video_t": 0.0,
+      "event": "MANAGER #10: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 394.82,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 394.84,
+      "video_t": 0.0,
+      "event": "MANAGER #11: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 398.86,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 398.88,
+      "video_t": 0.0,
+      "event": "MANAGER #12: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 402.9,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 402.92,
+      "video_t": 0.0,
+      "event": "MANAGER #13: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 406.94,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 406.96,
+      "video_t": 0.0,
+      "event": "MANAGER #14: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 410.98,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 411.0,
+      "video_t": 0.0,
+      "event": "MANAGER #15: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 415.02,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 415.04,
+      "video_t": 0.0,
+      "event": "MANAGER #16: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 419.06,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 419.08,
+      "video_t": 0.0,
+      "event": "MANAGER #17: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 423.1,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 423.12,
+      "video_t": 0.0,
+      "event": "MANAGER #18: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 427.14,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 427.16,
+      "video_t": 0.0,
+      "event": "MANAGER #19: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 431.18,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 431.2,
+      "video_t": 0.0,
+      "event": "MANAGER #20: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 435.22,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 435.24,
+      "video_t": 0.0,
+      "event": "MANAGER #21: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 439.26,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 439.28,
+      "video_t": 0.0,
+      "event": "MANAGER #22: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 443.3,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 443.32,
+      "video_t": 0.0,
+      "event": "MANAGER #23: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 447.34,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 447.36,
+      "video_t": 0.0,
+      "event": "MANAGER #24: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.05 m, touching=False, last=waited)"
+    },
+    {
+      "t": 451.38,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 451.4,
+      "video_t": 0.0,
+      "event": "MANAGER #25: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 455.42,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 455.44,
+      "video_t": 0.0,
+      "event": "MANAGER #26: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 459.46,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 459.48,
+      "video_t": 0.0,
+      "event": "MANAGER #27: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 463.5,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 463.52,
+      "video_t": 0.0,
+      "event": "MANAGER #28: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 467.54,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 467.56,
+      "video_t": 0.0,
+      "event": "MANAGER #29: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 471.58,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 471.6,
+      "video_t": 0.0,
+      "event": "MANAGER #30: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 475.62,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 475.64,
+      "video_t": 0.0,
+      "event": "MANAGER #31: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 479.66,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 479.68,
+      "video_t": 0.0,
+      "event": "MANAGER #32: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 483.7,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 483.72,
+      "video_t": 0.0,
+      "event": "MANAGER #33: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 487.74,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 487.76,
+      "video_t": 0.0,
+      "event": "MANAGER #34: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 491.78,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 491.8,
+      "video_t": 0.0,
+      "event": "MANAGER #35: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 495.82,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 495.84,
+      "video_t": 0.0,
+      "event": "MANAGER #36: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 499.86,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 499.88,
+      "video_t": 0.0,
+      "event": "MANAGER #37: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 503.9,
+      "video_t": 0.0,
+      "event": "MANAGER result: WAIT -> waited (duck FALLEN/deck at (+1.28,+0.03) z=0.48)"
+    },
+    {
+      "t": 503.92,
+      "video_t": 0.0,
+      "event": "MANAGER #38: WAIT 「ちょっと待とう」 (duck FALLEN/deck, crab 1.06 m, touching=False, last=waited)"
+    },
+    {
+      "t": 505.7,
+      "video_t": 0.0,
+      "event": "RESCUE timeout after 240 s: duck FALLEN/deck"
+    },
+    {
+      "t": 505.7,
+      "video_t": 0.0,
+      "event": "stage -> END"
+    }
+  ],
+  "md_events": [
+    {
+      "t": 0.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 2.56,
+      "mode": "STAND"
+    },
+    {
+      "t": 4.5,
+      "mode": "WALK"
+    },
+    {
+      "t": 4.58,
+      "mode": "STAND"
+    },
+    {
+      "t": 5.72,
+      "mode": "WALK"
+    },
+    {
+      "t": 5.72,
+      "mode": "STAND"
+    },
+    {
+      "t": 7.54,
+      "mode": "WALK"
+    },
+    {
+      "t": 7.54,
+      "mode": "STAND"
+    },
+    {
+      "t": 9.1,
+      "mode": "WALK"
+    },
+    {
+      "t": 9.12,
+      "mode": "STAND"
+    },
+    {
+      "t": 11.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 11.0,
+      "mode": "STAND"
+    },
+    {
+      "t": 12.96,
+      "mode": "WALK"
+    },
+    {
+      "t": 20.42,
+      "mode": "STAND"
+    },
+    {
+      "t": 22.84,
+      "mode": "WALK"
+    },
+    {
+      "t": 38.82,
+      "mode": "STAND"
+    },
+    {
+      "t": 39.9,
+      "mode": "WALK"
+    },
+    {
+      "t": 50.28,
+      "mode": "STAND"
+    },
+    {
+      "t": 52.18,
+      "mode": "WALK"
+    },
+    {
+      "t": 67.32,
+      "mode": "STAND"
+    },
+    {
+      "t": 68.42,
+      "mode": "WALK"
+    },
+    {
+      "t": 69.32,
+      "mode": "STAND"
+    },
+    {
+      "t": 70.84,
+      "mode": "WALK"
+    },
+    {
+      "t": 85.3,
+      "mode": "STAND"
+    },
+    {
+      "t": 86.46,
+      "mode": "WALK"
+    },
+    {
+      "t": 87.72,
+      "mode": "STAND"
+    },
+    {
+      "t": 89.68,
+      "mode": "WALK"
+    },
+    {
+      "t": 136.92,
+      "mode": "STAND"
+    },
+    {
+      "t": 177.12,
+      "mode": "WALK"
+    },
+    {
+      "t": 193.64,
+      "mode": "STAND"
+    },
+    {
+      "t": 193.66,
+      "mode": "WALK"
+    },
+    {
+      "t": 207.68,
+      "mode": "BACK"
+    },
+    {
+      "t": 210.2,
+      "mode": "WALK"
+    },
+    {
+      "t": 221.22,
+      "mode": "SIT"
+    },
+    {
+      "t": 269.2,
+      "mode": "STAND"
+    },
+    {
+      "t": 270.2,
+      "mode": "WALK_ON"
+    },
+    {
+      "t": 272.58,
+      "mode": "STAND"
+    },
+    {
+      "t": 273.18,
+      "mode": "TURN"
+    },
+    {
+      "t": 274.92,
+      "mode": "SIT"
+    },
+    {
+      "t": 342.54,
+      "mode": "STAND"
+    },
+    {
+      "t": 344.58,
+      "mode": "WALK_ON"
+    },
+    {
+      "t": 351.76,
+      "mode": "FALLEN"
+    }
+  ],
+  "jp_events": [
+    {
+      "t": 0.0,
+      "mode": "WALK"
+    },
+    {
+      "t": 0.0,
+      "mode": "JUMP"
+    },
+    {
+      "t": 1.18,
+      "mode": "WALK"
+    },
+    {
+      "t": 12.64,
+      "mode": "JUMP"
+    },
+    {
+      "t": 13.82,
+      "mode": "WALK"
+    },
+    {
+      "t": 20.7,
+      "mode": "JUMP"
+    },
+    {
+      "t": 21.88,
+      "mode": "WALK"
+    },
+    {
+      "t": 33.62,
+      "mode": "JUMP"
+    },
+    {
+      "t": 34.8,
+      "mode": "WALK"
+    },
+    {
+      "t": 46.94,
+      "mode": "JUMP"
+    },
+    {
+      "t": 48.12,
+      "mode": "WALK"
+    },
+    {
+      "t": 59.06,
+      "mode": "JUMP"
+    },
+    {
+      "t": 60.24,
+      "mode": "WALK"
+    },
+    {
+      "t": 64.3,
+      "mode": "JUMP"
+    },
+    {
+      "t": 65.48,
+      "mode": "WALK"
+    },
+    {
+      "t": 69.04,
+      "mode": "JUMP"
+    },
+    {
+      "t": 70.22,
+      "mode": "WALK"
+    },
+    {
+      "t": 81.44,
+      "mode": "JUMP"
+    },
+    {
+      "t": 82.62,
+      "mode": "WALK"
+    },
+    {
+      "t": 88.5,
+      "mode": "JUMP"
+    },
+    {
+      "t": 89.68,
+      "mode": "WALK"
+    },
+    {
+      "t": 97.32,
+      "mode": "JUMP"
+    },
+    {
+      "t": 98.5,
+      "mode": "WALK"
+    },
+    {
+      "t": 102.38,
+      "mode": "JUMP"
+    },
+    {
+      "t": 103.56,
+      "mode": "WALK"
+    },
+    {
+      "t": 193.68,
+      "mode": "DANCE"
+    },
+    {
+      "t": 221.24,
+      "mode": "WALK"
+    },
+    {
+      "t": 240.4,
+      "mode": "JUMP"
+    },
+    {
+      "t": 241.58,
+      "mode": "WALK"
+    },
+    {
+      "t": 247.34,
+      "mode": "IDLE"
+    },
+    {
+      "t": 250.38,
+      "mode": "WALK"
+    }
+  ],
+  "chirps": [
+    [
+      0.0,
+      "trill",
+      1.0503745894058394
+    ],
+    [
+      0.0,
+      "quack",
+      0.8746472016539689
+    ],
+    [
+      0.0,
+      "trill",
+      1.0554708981990957
+    ],
+    [
+      0.0,
+      "sigh",
+      1.0192686439231857
+    ],
+    [
+      0.0,
+      "clack",
+      1.1239860770625918
+    ],
+    [
+      0.0,
+      "clack",
+      0.9542870643546321
+    ],
+    [
+      0.0,
+      "quack",
+      0.9710117558144739
+    ],
+    [
+      0.0,
+      "clack",
+      0.9848301651856113
+    ],
+    [
+      0.0,
+      "trill",
+      0.9399559235262452
+    ],
+    [
+      0.0,
+      "quack",
+      0.961081823398468
+    ],
+    [
+      0.0,
+      "gwaa",
+      0.8586051376128152
+    ],
+    [
+      0.0,
+      "clack",
+      0.9318007290146326
+    ],
+    [
+      0.0,
+      "trill",
+      1.0495980268310094
+    ],
+    [
+      0.0,
+      "quack",
+      0.8562867124783946
+    ],
+    [
+      0.0,
+      "clack",
+      1.1132299986136318
+    ],
+    [
+      0.0,
+      "quack",
+      1.1793520981280021
+    ],
+    [
+      0.0,
+      "trill",
+      0.9100032756382975
+    ],
+    [
+      0.0,
+      "gwaa",
+      0.9357829178899224
+    ],
+    [
+      0.0,
+      "clack",
+      1.0364484956307392
+    ],
+    [
+      0.0,
+      "trill",
+      1.0952637058495855
+    ],
+    [
+      0.0,
+      "clack",
+      0.9359053607783387
+    ],
+    [
+      0.0,
+      "happy",
+      1.163144227790151
+    ],
+    [
+      0.0,
+      "clack",
+      0.9360038394075093
+    ],
+    [
+      0.0,
+      "trill",
+      1.0245671394281375
+    ],
+    [
+      0.0,
+      "quack",
+      0.9310821298341101
+    ],
+    [
+      0.0,
+      "clack",
+      1.0388156556550552
+    ],
+    [
+      0.0,
+      "quack",
+      0.9636802264969689
+    ],
+    [
+      0.0,
+      "clack",
+      1.1408481971174564
+    ],
+    [
+      0.0,
+      "trill",
+      1.1004689913211623
+    ],
+    [
+      0.0,
+      "quack",
+      0.9372097260721421
+    ],
+    [
+      0.0,
+      "clack",
+      0.9714555369092427
+    ],
+    [
+      0.0,
+      "quack",
+      1.0620240165938712
+    ],
+    [
+      0.0,
+      "clack",
+      1.0836723996634374
+    ],
+    [
+      0.0,
+      "clack",
+      1.0037776202213524
+    ],
+    [
+      0.0,
+      "happy",
+      1.042189304328853
+    ],
+    [
+      0.0,
+      "clack",
+      0.9387282715230064
+    ],
+    [
+      0.0,
+      "gwaa",
+      1.0729382389930873
+    ],
+    [
+      0.0,
+      "trill",
+      1.0888808508342638
+    ],
+    [
+      0.0,
+      "quack",
+      0.9690288275257218
+    ],
+    [
+      0.0,
+      "clack",
+      0.9961984272111164
+    ],
+    [
+      0.0,
+      "gwaa",
+      1.0916419065562604
+    ],
+    [
+      0.0,
+      "trill",
+      1.0398994786258733
+    ],
+    [
+      0.0,
+      "quack",
+      1.048027564232135
+    ],
+    [
+      0.0,
+      "quack",
+      1.04427404994845
+    ],
+    [
+      0.0,
+      "clack",
+      1.1007880488323012
+    ],
+    [
+      0.0,
+      "gwaa",
+      1.1584672976394583
+    ],
+    [
+      0.0,
+      "happy",
+      0.9799450231582497
+    ],
+    [
+      0.0,
+      "trill",
+      1.0548332546225503
+    ],
+    [
+      0.0,
+      "quack",
+      1.1482101644250944
+    ],
+    [
+      0.0,
+      "clack",
+      1.054233702328242
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "clack",
+      1.024852345158036
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "worried",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "sigh",
+      1.0
+    ],
+    [
+      0.0,
+      "gwaa",
+      1.0
+    ],
+    [
+      0.0,
+      "clack",
+      0.9028672229323814
+    ],
+    [
+      0.0,
+      "worried",
+      1.0
+    ],
+    [
+      0.0,
+      "gwaa",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "call",
+      1.0
+    ],
+    [
+      0.0,
+      "trill",
+      1.0149489257837752
+    ],
+    [
+      0.0,
+      "call",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "clack",
+      1.1436130134228992
+    ],
+    [
+      0.0,
+      "happy",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "quack",
+      1.0
+    ],
+    [
+      0.0,
+      "clack",
+      1.147732378351536
+    ],
+    [
+      0.0,
+      "worried",
+      1.0
+    ]
+  ]
+}

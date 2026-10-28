@@ -9,7 +9,7 @@
 
 ## 筋書き（v5 = take 6、2026-10-28）— 支配人AI〈アイランドマスター〉が次の一手を選ぶ
 
-施工中はパッカンと跳跳が空き地で戯れる → BZ が峠を渡り始めるとパッカンが後を追う → 16° の坂に 2 回挑んで座り込む（公式ポリシーでは登れない：事実） → 跳跳が横を通って坂を登り、天面で引っかかったら前方ジャンプ、峠を越える → パッカンが仲間を呼ぶ → 跳跳がコースの東側を回って戻る（固定プログラム） → **ここから支配人AIが判断**（吹き出しに定型セリフ）：「パッカン、カニさんの方を向いて座って」→「カニさん、そっと押し上げてあげて」（座ったパッカンを跳跳が 0.3 m/s で坂の上まで押す）→「カニさん、少し離れて」→「パッカン、立てる？」→「パッカン、そのまま進んで」（天面を歩いて下り坂を降りる）→ パッカンが天面を歩き出すと跳跳が 0.8 m 後ろについて峠を越え、下り坂を降りる → **3 体ともコースを渡った** → ゴールで三人そろって万歳（固定、ゆうころ 10/28 朝の案＝take 9 以降）：BZ はフォークを 2 回あおって上げたまま、パッカンはパタパタ（velstand の旋回＋首振り）、跳跳は公式ダンスで腕を上げ、両腕が最も高い 12.4 秒で止めて決めポーズ。take 6／7 の結末（跳跳が坂を後ろ向きに降りて東側を回り込み、離れた所でダンス）は `--finale around` で残してある。
+施工中はパッカンと跳跳が空き地で戯れる → BZ が峠を渡り始めるとパッカンが後を追い、跳跳は坂の足元の脇へ来る → 16° の坂に 2 回挑んで座り込む（公式ポリシーでは登れない：事実）、**その間、跳跳は横でハサミを上げる公式ダンスで応援**（10/28 昼） → 跳跳が横を通って坂を登り、天面で引っかかったら前方ジャンプ、峠を越える → パッカンが仲間を呼ぶ → 跳跳がコースの東側を回って座席の後ろへ戻る（固定プログラム、呼ばれている途中で帰り始める＝事前移動） → **ここから支配人AIが判断**（吹き出しに定型セリフ）：「パッカン、カニさんの方を向いて座って」→「カニさん、そっと押し上げてあげて」（座ったパッカンを跳跳が 0.3 m/s で坂の上まで押す）→「カニさん、少し離れて」→「パッカン、立てる？」→「パッカン、そのまま進んで」（天面を歩いて下り坂を降りる）→ パッカンが天面を歩き出すと跳跳が 0.8 m 後ろについて峠を越え、下り坂を降りる → **3 体ともコースを渡った** → **ゴールで輪になって万歳**（固定、ゆうころ 10/28 昼の案＝`--finale circle`、take 13 以降）：BZ はパッカンが天面を歩く間にフォークを上げてその場で向きを変え、パッカンと跳跳は坂の出口の北を回って BZ の前の半円に着き、全員が中央を向く → BZ はフォークを上げ下げ、パッカンは手がないので屈伸（sitstand）しながら首を振り、跳跳は公式ダンスで腕を上げて最後は両腕を上げたまま。take 9／10 の結末（渡った所で三人そろって万歳）は `--finale procession`、take 6／7 の結末（跳跳が東側を回り込み、離れた所でダンス）は `--finale around` で残してある。動画の速度はすべて 2 倍以下（提出の規則）、万歳のダンスは等速。
 
 ブルドーザーはパッカンに触れない（ゆうころ 10/28：首を持ち上げると破損の恐れ）。v4（take 5）の結末「BZ のフォークが押し倒す→自力起立」は `--ending push` で残してある。
 
@@ -32,7 +32,7 @@
 
 | 支配人 | 学習 | 渡り切り | 天面到達 | 無駄な手／話 | 通し台本（take） |
 |---|---|---|---|---|---|
-| 固定ルール | なし | 25/30 | 97% | 0.13 | take 6：5 手（描画版 8 手、押し直し 1 回）、**take 9：8 手、新しい結末（跳跳が追走、ゴールで三人の万歳）** |
+| 固定ルール | なし | 25/30（near_lip 追加後は再評価中） | 97% | 0.13 | take 6：5 手（描画版 8 手、押し直し 1 回）、take 9：8 手（追走の結末）、**take 14：5 手、輪の万歳・応援ダンス・事前移動・2 倍速上限（提出候補）** |
 | 表形式 Q `tabq2_small` | 120 話、2 h | 23/30 | 93% | 13.97 | take 7：8 手、**take 10：8 手、新しい結末** |
 | PPO 小 `ppo2_small` | 3k 決定、54 min | 0/30 | 27% | 61.9 | — （WALK_ON に固着） |
 | PPO 中 `ppo2_medium2` | 12k 決定、4 h 13 min | 19/30 | 77% | 9.97 | take 8：ヘッドレスは 4 手で渡り切り（BACK_OFF を省く）、描画版は失敗（止まった押しの後に STANDUP、転倒・密着で SEAT 連打） |
@@ -59,7 +59,10 @@
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_report.py --runs ppo2_small ppo2_medium2 baselines_v2 tabq2_small                # 比較表と 2×2
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager tabq --run tabq2_small --tag _take7                    # 学習済み Q 表が支配人
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager ppo --run ppo2_medium2 --tag _take8                    # 学習済み PPO が支配人
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --finale procession --tag _take9                  # 新しい結末（跳跳が追走、ゴールで三人の万歳）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --finale procession --tag _take9                  # take 9 の結末（跳跳が追走、ゴールで三人の万歳）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take13                                     # 既定：輪の万歳・応援ダンス・事前移動・2 倍速上限（--no-prestage で先回りなし）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --circle --video out\v7_cheer_circle_test1.mp4                            # 輪の万歳の単体テスト
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_bz_drive.py                                                                        # BZ の前進・旋回・フォーク上下の単体テスト
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --video out\v7_cheer_test3.mp4                                           # ゴールの万歳の単体テスト（配置は手置き）
 ```
 
@@ -67,11 +70,11 @@
 |---|---|
 | `v7_full.py` | 通し台本（1 つの連続シミュレーション）。`--tag` で版を分ける |
 | `v7_policies.py` | 公式ポリシーの観測転記：`JumperLocomotion` / `JumperJump` / `JumperDance` / `MicroduckPolicy` |
-| `v7_test_*.py` | 単体検証（歩行・ジャンプ・前方ジャンプ・velstand・sitstand・衝突・首・ダンス・フォーク、ゴールの万歳 `v7_test_cheer.py`） |
+| `v7_test_*.py` | 単体検証（歩行・ジャンプ・前方ジャンプ・velstand・sitstand・衝突・首・ダンス・フォーク、ゴールの万歳 `v7_test_cheer.py`、BZ の前進・旋回 `v7_test_bz_drive.py`） |
 | `v6_common.py` / `v6_robots.py` | 動画・字幕・カメラ、`MjSpec.attach` による 3 体アリーナ |
 | `v6_phase1_build.py` | BZ 単体施工 → `out\v6_stage_built.xml`（施工済みの独立シーン） |
 | `render_3body*.py`, `v6_phase2/3/4_*.py` | v1〜v6 の記録（v6 Phase 2〜3 は外力あり：採用せず、履歴として残置） |
 | `HANDOVER.md` | 引継ぎ文書（事実・罠・時系列） |
-| `out/` | 動画・レポート（`3body_arena_v7_take9.mp4` = 固定ルール支配人で 3/3 ＋ 新しい結末（跳跳が追走、ゴールで三人の万歳）、`take10` = 学習済み Q 表で同じ結末、`take6` = 固定ルールで 3/3（旧結末）、`take7` = 学習済み Q 表（旧結末）、`take8` = 学習済み PPO（失敗）、`take4`/`take5` = 旧々結末（押し倒し）、`manager2_demo_*.mp4` = 学習環境のデモ、`v7_cheer_test*.mp4` = 万歳の単体テスト、`*.notion.mp4` = 圧縮版）。`out\manager_runs\<run>\` に学習ログ・評価 JSON・方策 |
+| `out/` | 動画・レポート（`3body_arena_v7_take14.mp4` = 固定ルール支配人で 3/3 ＋ 輪の万歳・応援ダンス・事前移動・2 倍速上限、`take11`〜`take13` = その途中の失敗版（跳跳の滑落、ルールの座り直しループ）、`take9` = 追走の結末（施工 4 倍速）、`take10` = 学習済み Q 表で同じ結末、`take6` = 固定ルールで 3/3（旧結末）、`take7` = 学習済み Q 表（旧結末）、`take8` = 学習済み PPO（失敗）、`take4`/`take5` = 旧々結末（押し倒し）、`manager2_demo_*.mp4` = 学習環境のデモ、`v7_cheer_test*.mp4` = 万歳の単体テスト、`*.notion.mp4` = 圧縮版）。`out\manager_runs\<run>\` に学習ログ・評価 JSON・方策 |
 
 Notion「MuJoCo 3体連携」ページに検証結果を逐次記録している。
