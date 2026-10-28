@@ -3,8 +3,10 @@
  "n_samples": 47952,
  "n_episodes": 35,
  "n_in": 53,
+ "n_out": 5,
  "hidden": 32,
  "epochs": 600,
+ "best_epoch": 450,
  "obs_mean": [
   0.17532479763031006,
   0.44512537121772766,
@@ -103,40 +105,65 @@
  ],
  "t_scale": 60.0,
  "outputs": [
-  "p_skill_ok",
-  "p_crossed"
+  "p_success",
+  "p_stall",
+  "p_fall",
+  "p_nothing",
+  "p_cross"
  ],
+ "classes": [
+  "success",
+  "stall",
+  "fall",
+  "nothing"
+ ],
+ "thr_smile": 0.34,
+ "thr_trouble": 0.287,
+ "thr_smile_by_skill": {
+  "WAIT": 0.991,
+  "SEAT": 0.041,
+  "PUSH": 0.987,
+  "BACK_OFF": 0.997,
+  "STANDUP": 0.978,
+  "WALK_ON": 0.988
+ },
+ "thr_trouble_by_skill": {
+  "WAIT": 0.4,
+  "SEAT": 0.05,
+  "PUSH": 0.056,
+  "BACK_OFF": 0.416,
+  "STANDUP": 0.753,
+  "WALK_ON": 0.287
+ },
  "metrics": {
-  "skill_ok/train": {
+  "outcome4/train": {
    "n": 37180,
-   "acc": 0.898,
-   "balanced_acc": 0.891,
-   "mean_p_when_true": 0.807,
-   "mean_p_when_false": 0.284
+   "acc": 0.988
   },
-  "skill_ok/heldout": {
-   "n": 10772,
-   "acc": 0.921,
-   "balanced_acc": 0.918,
-   "mean_p_when_true": 0.75,
-   "mean_p_when_false": 0.275
+  "success_vs_not/train": {
+   "n": 37180,
+   "acc": 0.99,
+   "balanced_acc": 0.99
   },
   "crossed/train": {
    "n": 37180,
-   "acc": 0.838,
-   "balanced_acc": 0.823,
-   "mean_p_when_true": 0.616,
-   "mean_p_when_false": 0.2
+   "acc": 0.925,
+   "balanced_acc": 0.939
+  },
+  "outcome4/heldout": {
+   "n": 10772,
+   "acc": 0.8
+  },
+  "success_vs_not/heldout": {
+   "n": 10772,
+   "acc": 0.8,
+   "balanced_acc": 0.83
   },
   "crossed/heldout": {
    "n": 10772,
-   "acc": 0.641,
-   "balanced_acc": 0.648,
-   "mean_p_when_true": 0.565,
-   "mean_p_when_false": 0.457
+   "acc": 0.672,
+   "balanced_acc": 0.684
   }
  },
- "best_epoch": 80,
- "best_heldout_score": 0.9116,
- "train_s": 2.5
+ "train_s": 3.5
 }

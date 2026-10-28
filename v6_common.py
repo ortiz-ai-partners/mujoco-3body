@@ -96,13 +96,18 @@ class Captioner:
         h, w = frame.shape[:2]
         ibox_w = ibox_h = 0
         if inset is not None:
-            pic, above, below = inset
+            if isinstance(inset, tuple):                                   # (pic, above, below): the older callers
+                inset = {"pic": inset[0], "above": inset[1], "reason": inset[2]}
+            pic, above = inset["pic"], inset.get("above") or ""
+            bars, below, reason = inset.get("bars"), inset.get("below") or "", inset.get("reason") or ""
             ih, iw = pic.shape[:2]
             ipad = 8
-            ba = d.textbbox((0, 0), above, font=self.tiny)
-            bb = d.textbbox((0, 0), below, font=self.small) if below else (0, 0, 0, 0)
-            ibox_w = max(iw, ba[2], bb[2]) + 2 * ipad
-            ibox_h = ih + ba[3] + bb[3] + 3 * ipad + 6
+            ba = d.textbbox((0, 0), above, font=self.tiny) if above else (0, 0, 0, 0)
+            bb = d.textbbox((0, 0), below, font=self.tiny) if below else (0, 0, 0, 0)
+            br = d.textbbox((0, 0), reason, font=self.small) if reason else (0, 0, 0, 0)
+            bars_h = 18 if bars else 0
+            ibox_w = max(iw, ba[2], bb[2], br[2]) + 2 * ipad
+            ibox_h = ipad + ba[3] + 4 + ih + 4 + bars_h + (4 if bars else 0) + bb[3] + (4 if below else 0) + br[3] + ipad
         max_w = (w - 16 - ibox_w - 12 - 16) if inset is not None else (w - 32)
         for tf, bf in ((self.title, self.body), (self.title_s, self.body_s)):
             texts = [(t, tf) for t in self._wrap(d, title, tf, max_w - 2 * pad)]
@@ -122,12 +127,28 @@ class Captioner:
         if inset is not None:
             x0, y0 = w - 16 - ibox_w, 16                                 # the same row as the caption box
             d.rectangle([x0, y0, x0 + ibox_w, y0 + ibox_h], fill=(10, 14, 20, 150))
-            d.text((x0 + ipad, y0 + ipad), above, font=self.tiny, fill=(225, 225, 225, 255))
-            yy = y0 + ipad + ba[3] + 4
+            yy = y0 + ipad
+            if above:
+                d.text((x0 + ipad, yy), above, font=self.tiny, fill=(225, 225, 225, 255))
+                yy += ba[3] + 4
             img.paste(self.Image.fromarray(pic), (x0 + ipad, yy))
             d.rectangle([x0 + ipad - 1, yy - 1, x0 + ipad + iw, yy + ih], outline=(120, 235, 255, 200))
+            yy += ih + 4
+            if bars:                                                     # the four outcome bars: label, then a bar
+                cell = iw / len(bars)
+                for i, (lab, val) in enumerate(bars):
+                    bx = x0 + ipad + int(i * cell)
+                    d.text((bx, yy), lab, font=self.tiny, fill=(225, 225, 225, 255))
+                    bw = int(cell) - 22
+                    d.rectangle([bx + 18, yy + 4, bx + 18 + bw, yy + 14], fill=(40, 50, 60, 220))
+                    d.rectangle([bx + 18, yy + 4, bx + 18 + int(bw * max(0.0, min(1.0, float(val)))), yy + 14],
+                                fill=(120, 235, 255, 255))
+                yy += bars_h + 4
             if below:
-                d.text((x0 + ipad, yy + ih + 4), below, font=self.small, fill=(255, 255, 255, 255))
+                d.text((x0 + ipad, yy), below, font=self.tiny, fill=(225, 225, 225, 255))
+                yy += bb[3] + 4
+            if reason:
+                d.text((x0 + ipad, yy), reason, font=self.small, fill=(255, 255, 255, 255))
         if notice:
             h, w = frame.shape[:2]
             nb = d.textbbox((0, 0), notice, font=self.body)

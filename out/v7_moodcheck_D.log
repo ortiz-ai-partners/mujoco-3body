@@ -1,0 +1,6779 @@
+﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
+At line:1 char:368
++ ... joco_3body; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+timestep: parent has 0.005, child has 0.001, keeping parent value
+
+MuJoCo 3.11.0 | v7 full | dt=0.005 nq=90 nu=41 ngeom=291 face=on mood_ai=mood_net
+  t=   0.00s  [BUILD] BZ UP
+  t=  10.0s [BUILD] BZ UP: CARRY @(+0.22,-0.75) MD(STAND) @(+4.10,+0.61) z=0.116 tilt= 0.7 JP(WALK) @(+4.46,+1.03) z=0.11 wall     1s
+  t=  16.26s  [BUILD] BZ RAISE_UP
+  t=  17.92s  [BUILD] BZ TO_DOWN
+  t=  20.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.64,-0.69) MD(WALK) @(+3.54,+0.64) z=0.120 tilt= 3.1 JP(WALK) @(+3.66,+1.35) z=0.11 wall     2s
+  t=  30.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-0.41,-0.71) MD(WALK) @(+3.72,+0.18) z=0.121 tilt= 4.0 JP(WALK) @(+3.56,+0.75) z=0.11 wall     3s
+  t=  40.0s [BUILD] BZ TO_DOWN: FORWARD 1/2 @(-3.11,-0.81) MD(WALK) @(+4.07,-0.52) z=0.118 tilt= 1.8 JP(WALK) @(+3.85,+0.03) z=0.11 wall     4s
+  t=  50.0s [BUILD] BZ TO_DOWN: FORWARD 2/2 @(-3.46,+0.45) MD(WALK) @(+3.50,-1.26) z=0.121 tilt= 2.9 JP(WALK) @(+3.93,-0.05) z=0.11 wall     5s
+  t=  57.46s  [BUILD] BZ PRECISE_LANE
+  t=  60.0s [BUILD] BZ PRECISE_LANE @(-3.38,+0.72) MD(WALK) @(+3.54,-0.66) z=0.118 tilt= 2.2 JP(JUMP) @(+3.53,+0.19) z=0.09 wall     6s
+  t=  65.82s  [BUILD] BZ ALIGN
+  t=  70.0s [BUILD] BZ ALIGN @(-3.39,+0.69) MD(STAND) @(+3.69,+0.09) z=0.116 tilt= 1.0 JP(JUMP) @(+3.99,+0.79) z=0.09 wall     7s
+  t=  75.56s  [BUILD] BZ RETREAT_FOR_ALIGNMENT
+  t=  79.12s  [BUILD] BZ LOWER
+  t=  80.0s [BUILD] BZ LOWER @(-4.51,+0.79) MD(WALK) @(+3.98,-0.57) z=0.119 tilt= 0.8 JP(WALK) @(+3.91,+0.02) z=0.11 wall     8s
+  t=  80.76s  [BUILD] BZ DOWN
+  t=  90.0s [BUILD] BZ DOWN: LIFT @(-2.75,+0.80) MD(WALK) @(+4.22,-1.15) z=0.120 tilt= 4.2 JP(WALK) @(+3.74,-0.37) z=0.11 wall     9s
+  t= 100.0s [BUILD] BZ DOWN: LOWER @(+0.23,+0.81) MD(WALK) @(+4.39,-0.32) z=0.120 tilt= 1.8 JP(WALK) @(+3.80,+0.26) z=0.11 wall    10s
+  t= 104.40s  [BUILD] BZ RAISE_DOWN
+  t= 106.06s  [BUILD] BZ TO_START
+  t= 106.06s  [BUILD] TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+  t= 106.06s  [BUILD] MD heads to the waiting spot by the course start; JP to its watch spot
+  t= 110.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.61,+0.91) MD(WALK) @(+4.41,+0.01) z=0.115 tilt= 2.0 JP(WALK) @(+4.34,-1.46) z=0.11 wall    11s
+  t= 120.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.39,+0.79) MD(WALK) @(+3.97,-0.85) z=0.118 tilt= 2.2 JP(WALK) @(+4.47,-1.88) z=0.11 wall    12s
+  t= 130.0s [BUILD] BZ TO_START: FORWARD 1/3 @(-0.92,+0.62) MD(WALK) @(+3.57,-1.73) z=0.120 tilt= 3.1 JP(WALK) @(+4.48,-1.87) z=0.11 wall    13s
+  t= 140.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-1.09,+0.71) MD(STAND) @(+3.28,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.50,-1.84) z=0.11 wall    14s
+  t= 150.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.98,+0.96) MD(STAND) @(+3.28,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.51,-1.84) z=0.11 wall    15s
+  t= 160.0s [BUILD] BZ TO_START: FORWARD 2/3 @(-0.94,-2.77) MD(STAND) @(+3.28,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.51,-1.84) z=0.11 wall    16s
+  t= 170.0s [BUILD] BZ TO_START: FORWARD 3/3 @(-1.05,-3.06) MD(STAND) @(+3.28,-2.36) z=0.116 tilt= 0.4 JP(WALK) @(+4.52,-1.84) z=0.11 wall    17s
+  t= 176.38s  [BUILD] BZ CROSS
+  t= 176.38s  [FOLLOW_IN] stage -> FOLLOW_IN
+  t= 180.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.46,-3.10) MD(WALK) @(+2.95,-2.47) z=0.121 tilt= 3.0 JP(WALK) @(+4.55,-1.83) z=0.11 wall    19s
+  t= 190.0s [FOLLOW_IN] BZ CROSS: FORWARD 1/1 @(+1.68,+0.69) MD(WALK) @(+2.04,-2.75) z=0.115 tilt= 0.6 JP(WALK) @(+3.81,-2.14) z=0.11 wall    20s
+  t= 196.08s  [FOLLOW_IN] construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+  t= 196.08s  [FOLLOW_IN] physics step -> 0.001
+  t= 196.32s  [RAMP] stage -> RAMP
+  t= 196.32s  [RAMP] MD: 坂に挑む（1 回目）
+  t= 196.34s  [RAMP] JP cheers the duck on with its dance, claws up (official dance policy)
+  t= 200.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.36,-2.66) z=0.118 tilt= 2.9 JP(DANCE) @(+2.55,-2.70) z=0.12 wall    21s
+  t= 210.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.23,-2.00) z=0.120 tilt= 3.4 JP(DANCE) @(+2.56,-2.70) z=0.14 wall    23s
+  t= 210.34s  [RAMP] MD: いったん後ずさり (reached y=-2.00, ramp toe -1.86)
+  t= 212.86s  [RAMP] MD: もう一回挑む（2 回目）
+  t= 220.0s [RAMP] BZ done @(+1.55,+3.08) MD(WALK) @(+1.24,-1.99) z=0.118 tilt= 1.6 JP(DANCE) @(+2.57,-2.70) z=0.11 wall    25s
+  t= 223.88s  [RAMP] MD: やっぱり無理… (reached y=-1.99)
+  t= 223.90s  [RAMP] JP pre-positions at the foot of its lane while the duck sits down
+  t= 224.48s  [RAMP] MD: 諦めて座り込む（sitstand）
+  t= 225.98s  [RAMP] MD: 首を振りながら「ぐわぁぁ？」
+  t= 228.70s  [CLIMB] stage -> CLIMB
+  t= 228.70s  [CLIMB] JP sets off from the foot of its lane
+  t= 228.72s  [CLIMB] JP passes beside the sitting duck and starts up the ramp
+  t= 230.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.19,-2.10) z=0.060 tilt= 6.8 JP(WALK) @(+1.78,-2.74) z=0.11 wall    27s
+  t= 235.84s  [CLIMB] JP on the crest (z=0.50); duck: ぐわぁぁ？
+  t= 238.92s  [CLIMB] JP stuck at the crest (y=-0.55 z=0.54); forward jump
+  t= 240.0s [CLIMB] BZ done @(+1.55,+3.08) MD(SIT) @(+1.19,-2.10) z=0.060 tilt= 7.9 JP(JUMP) @(+1.71,-0.47) z=0.54 wall    29s
+  t= 240.10s  [CLIMB] JP landed at y=-0.48 z=0.53
+  t= 242.76s  [CLIMB] JP over the top; duck looks around
+  t= 245.88s  [CLIMB] JP crossed the course and stops behind BZ (z=0.11)
+  t= 248.90s  [CALL] stage -> CALL
+  t= 250.0s [CALL] BZ done @(+1.55,+3.08) MD(SIT) @(+1.19,-2.10) z=0.060 tilt= 4.0 JP(WALK) @(+1.49,+2.23) z=0.11 wall    32s
+  t= 250.42s  [CALL] JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+  t= 253.92s  [RETURN] stage -> RETURN
+  t= 253.92s  [RETURN] JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+  t= 260.0s [RETURN] BZ done @(+1.55,+3.08) MD(SIT) @(+1.19,-2.10) z=0.060 tilt= 4.3 JP(WALK) @(+2.98,-1.64) z=0.11 wall    34s
+  t= 264.44s  [RESCUE] stage -> RESCUE
+  t= 264.44s  [RESCUE] the manager (固定ルール) takes over: duck SIT/toe at (+1.19,-2.10), crab at (+1.79,-2.99), 1.07 m
+  t= 264.46s  [RESCUE] MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 1.06 m, touching=False, last=none)
+  t= 270.0s [RESCUE] BZ done @(+1.55,+3.08) MD(WALK_ON) @(+1.24,-2.07) z=0.116 tilt= 3.6 JP(WALK) @(+1.77,-2.99) z=0.11 wall    36s
+  t= 276.46s  [RESCUE] MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.07) z=0.06)
+  t= 276.48s  [RESCUE] MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 1.00 m, touching=False, last=seated)
+  t= 280.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.39,-2.07) z=0.060 tilt= 6.2 JP(WALK) @(+1.42,-2.69) z=0.11 wall    38s
+  t= 290.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.34,-1.79) z=0.122 tilt= 9.0 JP(WALK) @(+1.37,-2.02) z=0.13 wall    41s
+  t= 300.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.34,-1.64) z=0.160 tilt=10.2 JP(WALK) @(+1.32,-1.88) z=0.15 wall    46s
+  t= 310.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.39,-1.27) z=0.268 tilt= 7.7 JP(WALK) @(+1.36,-1.52) z=0.26 wall    50s
+  t= 320.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.43,-0.89) z=0.379 tilt= 6.6 JP(WALK) @(+1.39,-1.14) z=0.37 wall    54s
+  t= 330.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.47,-0.48) z=0.497 tilt=12.2 JP(WALK) @(+1.46,-0.72) z=0.49 wall    58s
+  t= 333.62s  [RESCUE] MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.43,-0.41) z=0.50)
+  t= 333.64s  [RESCUE] MANAGER #3: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+  t= 335.36s  [RESCUE] MANAGER result: BACK_OFF -> cleared (duck SIT/deck at (+1.43,-0.41) z=0.50)
+  t= 335.38s  [RESCUE] MANAGER #4: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.63 m, touching=False, last=cleared)
+  t= 340.0s [RESCUE] BZ done @(+1.55,+3.08) MD(STAND) @(+1.43,-0.44) z=0.556 tilt= 0.9 JP(WALK) @(+1.48,-1.04) z=0.39 wall    61s
+  t= 340.92s  [RESCUE] MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.43,-0.44) z=0.56)
+  t= 340.94s  [RESCUE] MANAGER #5: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.61 m, touching=False, last=standing)
+  t= 340.94s  [RESCUE] JP follows the duck across the landing and down the far ramp (procession finale), 0.61 m behind
+  t= 340.94s  [RESCUE] BZ raises its fork while the duck walks on (pre-positioning for the circle)
+  t= 340.96s  [RESCUE] BZ's fork is up; it turns round on the spot to face the goal
+  t= 350.0s [RESCUE] BZ done @(+1.48,+3.35) MD(WALK_ON) @(+1.45,+0.26) z=0.557 tilt= 0.4 JP(WALK) @(+1.46,-0.80) z=0.46 wall    64s
+  t= 352.06s  [RESCUE] BZ faces south, toward the goal: the circle is complete
+  t= 354.90s  [RESCUE] MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.53,+1.95) z=0.14)
+  t= 354.90s  [RESCUE] DUCK CROSSED THE COURSE (y=+1.95 z=0.141) - all three have crossed
+  t= 354.90s  [CELEBRATE] stage -> CELEBRATE
+  t= 354.92s  [CELEBRATE] JP comes down the far ramp after the duck; the three form a circle at the goal
+  t= 355.24s  [CELEBRATE] MD fell (tilt 84) at (+1.44,+2.18)
+  t= 356.80s  [CELEBRATE] JP stalls on the landing at y=-0.54; full speed 0.8 for 3 s
+  t= 357.44s  [CELEBRATE] the duck walks to its place in the circle (north of the toe first)
+  t= 357.44s  [CELEBRATE] MD is back on its feet by itself (2.2 s)
+  t= 360.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(WALK) @(+1.27,+2.25) z=0.115 tilt= 0.7 JP(WALK) @(+1.44,+1.42) z=0.29 wall    67s
+  t= 362.12s  [CELEBRATE] JP is down the far ramp (y=+1.75 z=0.19); goes to its place in the circle
+  t= 367.76s  [CELEBRATE] the duck and the crab are in their places (1.15 / 1.24 m from BZ, which is ready)
+  t= 370.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(TURN) @(+0.75,+2.45) z=0.121 tilt= 3.2 JP(WALK) @(+2.30,+2.45) z=0.11 wall    69s
+  t= 370.18s  [CELEBRATE] the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.11 rad, crab 0.03 rad off the centre)
+  t= 380.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.64,+2.48) z=0.117 tilt= 6.3 JP(DANCE) @(+2.37,+2.43) z=0.12 wall    71s
+  t= 385.60s  [END] stage -> END
+{
+  "mujoco": "3.11.0",
+  "sim_seconds": 385.6,
+  "state_digest": "c083a03c2625a88acdda43fc7b57e2ebca97e42d750d2101a0a7256c5b36e199",
+  "ngeom": 291,
+  "face": {
+    "on": true,
+    "log": [
+      [
+        0.0,
+        "neutral",
+        "戯れ・待機",
+        17,
+        {
+          "effort": 0.0,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        196.32,
+        "happy",
+        "パッカンを応援",
+        7,
+        {
+          "effort": 0.08,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        210.34,
+        "troubled",
+        "パッカンが登れない（後ずさり）",
+        6,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        212.86,
+        "happy",
+        "パッカンを応援",
+        7,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        223.88,
+        "troubled",
+        "パッカンが登れない（諦める）",
+        6,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        224.48,
+        "troubled",
+        "パッカンが登れない（座り込む）",
+        6,
+        {
+          "effort": 0.2,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        228.7,
+        "serious",
+        "坂を登る",
+        16,
+        {
+          "effort": 0.16,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        245.88,
+        "neutral",
+        "待機",
+        17,
+        {
+          "effort": 0.22,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        253.92,
+        "neutral",
+        "戻る",
+        17,
+        {
+          "effort": 0.21,
+          "contact_s": 0.0,
+          "stall_s": 0.0
+        }
+      ],
+      [
+        264.46,
+        "happy",
+        "座らせる、成功 93%",
+        13,
+        {
+          "effort": 0.21,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.93,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.066,
+          "p_cross": 0.097
+        }
+      ],
+      [
+        264.72,
+        "happy",
+        "座らせる、成功 92%",
+        13,
+        {
+          "effort": 0.19,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.925,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.071,
+          "p_cross": 0.097
+        }
+      ],
+      [
+        264.82,
+        "happy",
+        "座らせる、成功 93%",
+        13,
+        {
+          "effort": 0.19,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.925,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.07,
+          "p_cross": 0.096
+        }
+      ],
+      [
+        267.98,
+        "happy",
+        "座らせる、成功 92%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.922,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.073,
+          "p_cross": 0.092
+        }
+      ],
+      [
+        268.02,
+        "happy",
+        "座らせる、成功 91%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.915,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.081,
+          "p_cross": 0.094
+        }
+      ],
+      [
+        268.08,
+        "happy",
+        "座らせる、成功 90%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.905,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.09,
+          "p_cross": 0.095
+        }
+      ],
+      [
+        268.16,
+        "happy",
+        "座らせる、成功 89%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.894,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.101,
+          "p_cross": 0.097
+        }
+      ],
+      [
+        268.24,
+        "happy",
+        "座らせる、成功 88%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.883,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.111,
+          "p_cross": 0.099
+        }
+      ],
+      [
+        268.32,
+        "happy",
+        "座らせる、成功 87%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.875,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.119,
+          "p_cross": 0.1
+        }
+      ],
+      [
+        268.44,
+        "happy",
+        "座らせる、成功 86%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.864,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.129,
+          "p_cross": 0.102
+        }
+      ],
+      [
+        268.58,
+        "happy",
+        "座らせる、成功 85%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.854,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.139,
+          "p_cross": 0.103
+        }
+      ],
+      [
+        268.76,
+        "happy",
+        "座らせる、成功 84%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.844,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.148,
+          "p_cross": 0.104
+        }
+      ],
+      [
+        269.0,
+        "happy",
+        "座らせる、成功 85%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.848,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.145,
+          "p_cross": 0.108
+        }
+      ],
+      [
+        269.04,
+        "happy",
+        "座らせる、成功 86%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.858,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.135,
+          "p_cross": 0.111
+        }
+      ],
+      [
+        269.08,
+        "happy",
+        "座らせる、成功 87%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.868,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.126,
+          "p_cross": 0.114
+        }
+      ],
+      [
+        269.12,
+        "happy",
+        "座らせる、成功 88%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.877,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.117,
+          "p_cross": 0.117
+        }
+      ],
+      [
+        269.18,
+        "happy",
+        "座らせる、成功 89%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.889,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.106,
+          "p_cross": 0.121
+        }
+      ],
+      [
+        269.22,
+        "happy",
+        "座らせる、成功 90%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.896,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.099,
+          "p_cross": 0.123
+        }
+      ],
+      [
+        269.28,
+        "happy",
+        "座らせる、成功 91%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.906,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.089,
+          "p_cross": 0.127
+        }
+      ],
+      [
+        269.36,
+        "happy",
+        "座らせる、成功 92%",
+        13,
+        {
+          "effort": 0.15,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.918,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.078,
+          "p_cross": 0.132
+        }
+      ],
+      [
+        269.42,
+        "happy",
+        "座らせる、成功 93%",
+        13,
+        {
+          "effort": 0.15,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.926,
+          "p_stall": 0.001,
+          "p_fall": 0.004,
+          "p_nothing": 0.07,
+          "p_cross": 0.136
+        }
+      ],
+      [
+        269.5,
+        "happy",
+        "座らせる、成功 94%",
+        13,
+        {
+          "effort": 0.15,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.935,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.061,
+          "p_cross": 0.142
+        }
+      ],
+      [
+        269.62,
+        "happy",
+        "座らせる、成功 95%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.947,
+          "p_stall": 0.0,
+          "p_fall": 0.003,
+          "p_nothing": 0.05,
+          "p_cross": 0.15
+        }
+      ],
+      [
+        269.74,
+        "happy",
+        "座らせる、成功 96%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.955,
+          "p_stall": 0.0,
+          "p_fall": 0.003,
+          "p_nothing": 0.041,
+          "p_cross": 0.158
+        }
+      ],
+      [
+        269.92,
+        "happy",
+        "座らせる、成功 97%",
+        13,
+        {
+          "effort": 0.14,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.965,
+          "p_stall": 0.0,
+          "p_fall": 0.003,
+          "p_nothing": 0.032,
+          "p_cross": 0.173
+        }
+      ],
+      [
+        270.26,
+        "happy",
+        "座らせる、成功 98%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.975,
+          "p_stall": 0.0,
+          "p_fall": 0.002,
+          "p_nothing": 0.022,
+          "p_cross": 0.197
+        }
+      ],
+      [
+        271.52,
+        "happy",
+        "座らせる、成功 97%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.972,
+          "p_stall": 0.0,
+          "p_fall": 0.003,
+          "p_nothing": 0.025,
+          "p_cross": 0.262
+        }
+      ],
+      [
+        271.54,
+        "happy",
+        "座らせる、成功 96%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.964,
+          "p_stall": 0.0,
+          "p_fall": 0.003,
+          "p_nothing": 0.032,
+          "p_cross": 0.262
+        }
+      ],
+      [
+        271.58,
+        "happy",
+        "座らせる、成功 95%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.951,
+          "p_stall": 0.0,
+          "p_fall": 0.004,
+          "p_nothing": 0.045,
+          "p_cross": 0.262
+        }
+      ],
+      [
+        271.6,
+        "happy",
+        "座らせる、成功 94%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.944,
+          "p_stall": 0.0,
+          "p_fall": 0.004,
+          "p_nothing": 0.052,
+          "p_cross": 0.261
+        }
+      ],
+      [
+        271.64,
+        "happy",
+        "座らせる、成功 93%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.932,
+          "p_stall": 0.0,
+          "p_fall": 0.004,
+          "p_nothing": 0.063,
+          "p_cross": 0.26
+        }
+      ],
+      [
+        271.68,
+        "happy",
+        "座らせる、成功 92%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.921,
+          "p_stall": 0.0,
+          "p_fall": 0.005,
+          "p_nothing": 0.074,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        271.72,
+        "happy",
+        "座らせる、成功 91%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.911,
+          "p_stall": 0.0,
+          "p_fall": 0.005,
+          "p_nothing": 0.084,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        271.76,
+        "happy",
+        "座らせる、成功 90%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.902,
+          "p_stall": 0.0,
+          "p_fall": 0.005,
+          "p_nothing": 0.092,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        271.8,
+        "happy",
+        "座らせる、成功 89%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.894,
+          "p_stall": 0.001,
+          "p_fall": 0.005,
+          "p_nothing": 0.1,
+          "p_cross": 0.26
+        }
+      ],
+      [
+        271.86,
+        "happy",
+        "座らせる、成功 88%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.884,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.11,
+          "p_cross": 0.26
+        }
+      ],
+      [
+        271.94,
+        "happy",
+        "座らせる、成功 87%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.872,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.121,
+          "p_cross": 0.26
+        }
+      ],
+      [
+        272.0,
+        "happy",
+        "座らせる、成功 86%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.865,
+          "p_stall": 0.001,
+          "p_fall": 0.006,
+          "p_nothing": 0.128,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        272.1,
+        "happy",
+        "座らせる、成功 85%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.854,
+          "p_stall": 0.001,
+          "p_fall": 0.007,
+          "p_nothing": 0.139,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        272.2,
+        "happy",
+        "座らせる、成功 84%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.844,
+          "p_stall": 0.001,
+          "p_fall": 0.007,
+          "p_nothing": 0.149,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        272.28,
+        "happy",
+        "座らせる、成功 83%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.832,
+          "p_stall": 0.001,
+          "p_fall": 0.007,
+          "p_nothing": 0.16,
+          "p_cross": 0.258
+        }
+      ],
+      [
+        272.34,
+        "happy",
+        "座らせる、成功 82%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.822,
+          "p_stall": 0.001,
+          "p_fall": 0.008,
+          "p_nothing": 0.17,
+          "p_cross": 0.256
+        }
+      ],
+      [
+        272.38,
+        "happy",
+        "座らせる、成功 81%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.814,
+          "p_stall": 0.001,
+          "p_fall": 0.008,
+          "p_nothing": 0.177,
+          "p_cross": 0.255
+        }
+      ],
+      [
+        272.44,
+        "happy",
+        "座らせる、成功 80%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.803,
+          "p_stall": 0.001,
+          "p_fall": 0.008,
+          "p_nothing": 0.188,
+          "p_cross": 0.252
+        }
+      ],
+      [
+        272.5,
+        "happy",
+        "座らせる、成功 79%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.792,
+          "p_stall": 0.001,
+          "p_fall": 0.008,
+          "p_nothing": 0.199,
+          "p_cross": 0.251
+        }
+      ],
+      [
+        272.56,
+        "happy",
+        "座らせる、成功 78%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.782,
+          "p_stall": 0.001,
+          "p_fall": 0.008,
+          "p_nothing": 0.209,
+          "p_cross": 0.252
+        }
+      ],
+      [
+        272.6,
+        "happy",
+        "座らせる、成功 77%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.774,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.217,
+          "p_cross": 0.252
+        }
+      ],
+      [
+        272.64,
+        "happy",
+        "座らせる、成功 76%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.764,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.227,
+          "p_cross": 0.251
+        }
+      ],
+      [
+        272.68,
+        "happy",
+        "座らせる、成功 75%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.753,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.237,
+          "p_cross": 0.25
+        }
+      ],
+      [
+        272.72,
+        "happy",
+        "座らせる、成功 74%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.742,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.248,
+          "p_cross": 0.249
+        }
+      ],
+      [
+        272.76,
+        "happy",
+        "座らせる、成功 73%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.732,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.258,
+          "p_cross": 0.247
+        }
+      ],
+      [
+        272.8,
+        "happy",
+        "座らせる、成功 72%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.721,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.269,
+          "p_cross": 0.246
+        }
+      ],
+      [
+        272.84,
+        "happy",
+        "座らせる、成功 71%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.71,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.279,
+          "p_cross": 0.244
+        }
+      ],
+      [
+        272.86,
+        "happy",
+        "座らせる、成功 70%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.705,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.285,
+          "p_cross": 0.243
+        }
+      ],
+      [
+        272.9,
+        "happy",
+        "座らせる、成功 69%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.694,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.296,
+          "p_cross": 0.241
+        }
+      ],
+      [
+        272.94,
+        "happy",
+        "座らせる、成功 68%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.683,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.306,
+          "p_cross": 0.24
+        }
+      ],
+      [
+        272.98,
+        "happy",
+        "座らせる、成功 67%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.67,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.319,
+          "p_cross": 0.238
+        }
+      ],
+      [
+        273.0,
+        "happy",
+        "座らせる、成功 66%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.662,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.327,
+          "p_cross": 0.237
+        }
+      ],
+      [
+        273.02,
+        "happy",
+        "座らせる、成功 65%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.655,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.334,
+          "p_cross": 0.236
+        }
+      ],
+      [
+        273.06,
+        "happy",
+        "座らせる、成功 64%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.639,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.35,
+          "p_cross": 0.234
+        }
+      ],
+      [
+        273.08,
+        "happy",
+        "座らせる、成功 63%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.631,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.358,
+          "p_cross": 0.232
+        }
+      ],
+      [
+        273.1,
+        "happy",
+        "座らせる、成功 62%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.623,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.366,
+          "p_cross": 0.231
+        }
+      ],
+      [
+        273.14,
+        "happy",
+        "座らせる、成功 61%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.609,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.38,
+          "p_cross": 0.228
+        }
+      ],
+      [
+        273.16,
+        "happy",
+        "座らせる、成功 60%",
+        13,
+        {
+          "effort": 0.13,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.602,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.386,
+          "p_cross": 0.227
+        }
+      ],
+      [
+        273.2,
+        "happy",
+        "座らせる、成功 59%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.589,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.399,
+          "p_cross": 0.224
+        }
+      ],
+      [
+        273.22,
+        "happy",
+        "座らせる、成功 58%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.583,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.406,
+          "p_cross": 0.222
+        }
+      ],
+      [
+        273.26,
+        "happy",
+        "座らせる、成功 57%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.57,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.418,
+          "p_cross": 0.219
+        }
+      ],
+      [
+        273.28,
+        "happy",
+        "座らせる、成功 56%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.564,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.424,
+          "p_cross": 0.218
+        }
+      ],
+      [
+        273.32,
+        "happy",
+        "座らせる、成功 55%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.552,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.436,
+          "p_cross": 0.216
+        }
+      ],
+      [
+        273.36,
+        "happy",
+        "座らせる、成功 54%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.541,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.447,
+          "p_cross": 0.214
+        }
+      ],
+      [
+        273.38,
+        "happy",
+        "座らせる、成功 53%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.534,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.454,
+          "p_cross": 0.213
+        }
+      ],
+      [
+        273.42,
+        "happy",
+        "座らせる、成功 52%",
+        13,
+        {
+          "effort": 0.12,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.521,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.467,
+          "p_cross": 0.21
+        }
+      ],
+      [
+        273.44,
+        "happy",
+        "座らせる、成功 51%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.514,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.474,
+          "p_cross": 0.209
+        }
+      ],
+      [
+        273.48,
+        "happy",
+        "座らせる、成功 50%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.502,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.486,
+          "p_cross": 0.206
+        }
+      ],
+      [
+        273.52,
+        "happy",
+        "座らせる、成功 49%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.492,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.496,
+          "p_cross": 0.204
+        }
+      ],
+      [
+        273.56,
+        "happy",
+        "座らせる、成功 48%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.483,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.504,
+          "p_cross": 0.202
+        }
+      ],
+      [
+        273.6,
+        "happy",
+        "座らせる、成功 47%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.475,
+          "p_stall": 0.001,
+          "p_fall": 0.012,
+          "p_nothing": 0.513,
+          "p_cross": 0.2
+        }
+      ],
+      [
+        273.66,
+        "happy",
+        "座らせる、成功 46%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.463,
+          "p_stall": 0.001,
+          "p_fall": 0.012,
+          "p_nothing": 0.524,
+          "p_cross": 0.198
+        }
+      ],
+      [
+        273.72,
+        "happy",
+        "座らせる、成功 45%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.454,
+          "p_stall": 0.001,
+          "p_fall": 0.012,
+          "p_nothing": 0.534,
+          "p_cross": 0.196
+        }
+      ],
+      [
+        273.78,
+        "happy",
+        "座らせる、成功 44%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.445,
+          "p_stall": 0.001,
+          "p_fall": 0.012,
+          "p_nothing": 0.543,
+          "p_cross": 0.195
+        }
+      ],
+      [
+        273.86,
+        "happy",
+        "座らせる、成功 43%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.435,
+          "p_stall": 0.001,
+          "p_fall": 0.012,
+          "p_nothing": 0.552,
+          "p_cross": 0.193
+        }
+      ],
+      [
+        273.96,
+        "happy",
+        "座らせる、成功 44%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.44,
+          "p_stall": 0.001,
+          "p_fall": 0.012,
+          "p_nothing": 0.547,
+          "p_cross": 0.187
+        }
+      ],
+      [
+        273.98,
+        "happy",
+        "座らせる、成功 45%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.446,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.542,
+          "p_cross": 0.184
+        }
+      ],
+      [
+        274.02,
+        "happy",
+        "座らせる、成功 46%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.456,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.532,
+          "p_cross": 0.18
+        }
+      ],
+      [
+        274.08,
+        "happy",
+        "座らせる、成功 47%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.466,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.521,
+          "p_cross": 0.173
+        }
+      ],
+      [
+        274.16,
+        "happy",
+        "座らせる、成功 48%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.476,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.512,
+          "p_cross": 0.165
+        }
+      ],
+      [
+        274.34,
+        "happy",
+        "座らせる、成功 47%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.475,
+          "p_stall": 0.001,
+          "p_fall": 0.011,
+          "p_nothing": 0.514,
+          "p_cross": 0.149
+        }
+      ],
+      [
+        274.44,
+        "happy",
+        "座らせる、成功 46%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.464,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.524,
+          "p_cross": 0.142
+        }
+      ],
+      [
+        274.66,
+        "happy",
+        "座らせる、成功 47%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.466,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.522,
+          "p_cross": 0.132
+        }
+      ],
+      [
+        274.72,
+        "happy",
+        "座らせる、成功 48%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.479,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.51,
+          "p_cross": 0.132
+        }
+      ],
+      [
+        274.76,
+        "happy",
+        "座らせる、成功 49%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.487,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.501,
+          "p_cross": 0.132
+        }
+      ],
+      [
+        274.8,
+        "happy",
+        "座らせる、成功 50%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.496,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.493,
+          "p_cross": 0.133
+        }
+      ],
+      [
+        274.86,
+        "happy",
+        "座らせる、成功 51%",
+        13,
+        {
+          "effort": 0.11,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.507,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.482,
+          "p_cross": 0.133
+        }
+      ],
+      [
+        274.92,
+        "happy",
+        "座らせる、成功 52%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.518,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.471,
+          "p_cross": 0.133
+        }
+      ],
+      [
+        274.98,
+        "happy",
+        "座らせる、成功 53%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.527,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.462,
+          "p_cross": 0.134
+        }
+      ],
+      [
+        275.04,
+        "happy",
+        "座らせる、成功 54%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.536,
+          "p_stall": 0.001,
+          "p_fall": 0.01,
+          "p_nothing": 0.453,
+          "p_cross": 0.134
+        }
+      ],
+      [
+        275.12,
+        "happy",
+        "座らせる、成功 55%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.546,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.443,
+          "p_cross": 0.135
+        }
+      ],
+      [
+        275.2,
+        "happy",
+        "座らせる、成功 56%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.555,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.434,
+          "p_cross": 0.136
+        }
+      ],
+      [
+        275.3,
+        "happy",
+        "座らせる、成功 57%",
+        13,
+        {
+          "effort": 0.09,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.565,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.424,
+          "p_cross": 0.136
+        }
+      ],
+      [
+        275.44,
+        "happy",
+        "座らせる、成功 58%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.576,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.414,
+          "p_cross": 0.137
+        }
+      ],
+      [
+        275.62,
+        "happy",
+        "座らせる、成功 59%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.586,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.404,
+          "p_cross": 0.138
+        }
+      ],
+      [
+        275.88,
+        "happy",
+        "座らせる、成功 60%",
+        13,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.595,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.395,
+          "p_cross": 0.138
+        }
+      ],
+      [
+        276.46,
+        "relief",
+        "うまくいった",
+        5,
+        {
+          "effort": 0.1,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.604,
+          "p_stall": 0.001,
+          "p_fall": 0.009,
+          "p_nothing": 0.386,
+          "p_cross": 0.138
+        }
+      ],
+      [
+        278.46,
+        "serious",
+        "押しに行く、成功 98%",
+        14,
+        {
+          "effort": 0.18,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.977,
+          "p_stall": 0.003,
+          "p_fall": 0.003,
+          "p_nothing": 0.017,
+          "p_cross": 0.484
+        }
+      ],
+      [
+        278.94,
+        "serious",
+        "押しに行く、成功 99%",
+        14,
+        {
+          "effort": 0.17,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.985,
+          "p_stall": 0.005,
+          "p_fall": 0.004,
+          "p_nothing": 0.007,
+          "p_cross": 0.582
+        }
+      ],
+      [
+        279.32,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.17,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.987,
+          "p_stall": 0.006,
+          "p_fall": 0.004,
+          "p_nothing": 0.003,
+          "p_cross": 0.621
+        }
+      ],
+      [
+        284.18,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.17,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.003,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.655
+        }
+      ],
+      [
+        284.9,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 0.6,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.627
+        }
+      ],
+      [
+        284.94,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.23,
+          "contact_s": 0.6,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.623
+        }
+      ],
+      [
+        285.58,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.24,
+          "contact_s": 1.1,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.589
+        }
+      ],
+      [
+        285.6,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.24,
+          "contact_s": 1.2,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.588
+        }
+      ],
+      [
+        286.22,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.24,
+          "contact_s": 1.7,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.543
+        }
+      ],
+      [
+        286.26,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.24,
+          "contact_s": 1.7,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.537
+        }
+      ],
+      [
+        286.88,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.24,
+          "contact_s": 2.3,
+          "stall_s": 0.0,
+          "p_success": 0.993,
+          "p_stall": 0.003,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.509
+        }
+      ],
+      [
+        286.9,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.24,
+          "contact_s": 2.3,
+          "stall_s": 0.0,
+          "p_success": 0.993,
+          "p_stall": 0.003,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.513
+        }
+      ],
+      [
+        287.54,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 2.8,
+          "stall_s": 0.0,
+          "p_success": 0.991,
+          "p_stall": 0.002,
+          "p_fall": 0.006,
+          "p_nothing": 0.0,
+          "p_cross": 0.399
+        }
+      ],
+      [
+        287.56,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.23,
+          "contact_s": 2.8,
+          "stall_s": 0.0,
+          "p_success": 0.991,
+          "p_stall": 0.002,
+          "p_fall": 0.006,
+          "p_nothing": 0.0,
+          "p_cross": 0.392
+        }
+      ],
+      [
+        288.2,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 3.4,
+          "stall_s": 0.0,
+          "p_success": 0.987,
+          "p_stall": 0.003,
+          "p_fall": 0.01,
+          "p_nothing": 0.0,
+          "p_cross": 0.349
+        }
+      ],
+      [
+        288.22,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.22,
+          "contact_s": 3.4,
+          "stall_s": 0.0,
+          "p_success": 0.987,
+          "p_stall": 0.003,
+          "p_fall": 0.01,
+          "p_nothing": 0.0,
+          "p_cross": 0.351
+        }
+      ],
+      [
+        288.86,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 3.9,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.009,
+          "p_nothing": 0.0,
+          "p_cross": 0.329
+        }
+      ],
+      [
+        288.9,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.23,
+          "contact_s": 3.9,
+          "stall_s": 0.0,
+          "p_success": 0.989,
+          "p_stall": 0.003,
+          "p_fall": 0.008,
+          "p_nothing": 0.0,
+          "p_cross": 0.325
+        }
+      ],
+      [
+        289.54,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 4.4,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.009,
+          "p_nothing": 0.0,
+          "p_cross": 0.326
+        }
+      ],
+      [
+        289.56,
+        "cross",
+        "押し上げ中",
+        10,
+        {
+          "effort": 0.22,
+          "contact_s": 4.5,
+          "stall_s": 0.0,
+          "p_success": 0.987,
+          "p_stall": 0.003,
+          "p_fall": 0.009,
+          "p_nothing": 0.0,
+          "p_cross": 0.326
+        }
+      ],
+      [
+        290.2,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.2,
+          "contact_s": 5.0,
+          "stall_s": 0.1,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.009,
+          "p_nothing": 0.0,
+          "p_cross": 0.316
+        }
+      ],
+      [
+        290.7,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.21,
+          "contact_s": 5.4,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.009,
+          "p_nothing": 0.0,
+          "p_cross": 0.312
+        }
+      ],
+      [
+        291.2,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.2,
+          "contact_s": 5.8,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.009,
+          "p_nothing": 0.0,
+          "p_cross": 0.304
+        }
+      ],
+      [
+        291.8,
+        "serious",
+        "押しに行く、成功 99%",
+        14,
+        {
+          "effort": 0.21,
+          "contact_s": 6.2,
+          "stall_s": 0.0,
+          "p_success": 0.987,
+          "p_stall": 0.003,
+          "p_fall": 0.01,
+          "p_nothing": 0.0,
+          "p_cross": 0.308
+        }
+      ],
+      [
+        292.3,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 6.6,
+          "stall_s": 0.0,
+          "p_success": 0.986,
+          "p_stall": 0.003,
+          "p_fall": 0.01,
+          "p_nothing": 0.0,
+          "p_cross": 0.305
+        }
+      ],
+      [
+        292.86,
+        "serious",
+        "押しに行く、成功 99%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 7.1,
+          "stall_s": 0.0,
+          "p_success": 0.986,
+          "p_stall": 0.003,
+          "p_fall": 0.01,
+          "p_nothing": 0.0,
+          "p_cross": 0.3
+        }
+      ],
+      [
+        293.36,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 7.5,
+          "stall_s": 0.1,
+          "p_success": 0.986,
+          "p_stall": 0.003,
+          "p_fall": 0.01,
+          "p_nothing": 0.0,
+          "p_cross": 0.295
+        }
+      ],
+      [
+        294.06,
+        "serious",
+        "押しに行く、成功 99%",
+        14,
+        {
+          "effort": 0.21,
+          "contact_s": 8.0,
+          "stall_s": 0.0,
+          "p_success": 0.986,
+          "p_stall": 0.003,
+          "p_fall": 0.011,
+          "p_nothing": 0.0,
+          "p_cross": 0.304
+        }
+      ],
+      [
+        294.56,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 8.5,
+          "stall_s": 0.0,
+          "p_success": 0.985,
+          "p_stall": 0.003,
+          "p_fall": 0.011,
+          "p_nothing": 0.0,
+          "p_cross": 0.307
+        }
+      ],
+      [
+        295.22,
+        "serious",
+        "押しに行く、成功 98%",
+        14,
+        {
+          "effort": 0.24,
+          "contact_s": 9.0,
+          "stall_s": 0.0,
+          "p_success": 0.983,
+          "p_stall": 0.004,
+          "p_fall": 0.013,
+          "p_nothing": 0.0,
+          "p_cross": 0.317
+        }
+      ],
+      [
+        295.72,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.25,
+          "contact_s": 9.4,
+          "stall_s": 0.0,
+          "p_success": 0.98,
+          "p_stall": 0.004,
+          "p_fall": 0.016,
+          "p_nothing": 0.0,
+          "p_cross": 0.333
+        }
+      ],
+      [
+        296.32,
+        "serious",
+        "押しに行く、成功 98%",
+        14,
+        {
+          "effort": 0.24,
+          "contact_s": 10.0,
+          "stall_s": 0.0,
+          "p_success": 0.977,
+          "p_stall": 0.005,
+          "p_fall": 0.018,
+          "p_nothing": 0.0,
+          "p_cross": 0.352
+        }
+      ],
+      [
+        296.82,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.23,
+          "contact_s": 10.4,
+          "stall_s": 0.0,
+          "p_success": 0.976,
+          "p_stall": 0.005,
+          "p_fall": 0.018,
+          "p_nothing": 0.0,
+          "p_cross": 0.347
+        }
+      ],
+      [
+        297.48,
+        "serious",
+        "押しに行く、成功 98%",
+        14,
+        {
+          "effort": 0.23,
+          "contact_s": 11.0,
+          "stall_s": 0.0,
+          "p_success": 0.978,
+          "p_stall": 0.005,
+          "p_fall": 0.016,
+          "p_nothing": 0.001,
+          "p_cross": 0.327
+        }
+      ],
+      [
+        297.98,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 11.5,
+          "stall_s": 0.0,
+          "p_success": 0.98,
+          "p_stall": 0.005,
+          "p_fall": 0.014,
+          "p_nothing": 0.001,
+          "p_cross": 0.32
+        }
+      ],
+      [
+        298.56,
+        "serious",
+        "押しに行く、成功 98%",
+        14,
+        {
+          "effort": 0.22,
+          "contact_s": 12.0,
+          "stall_s": 0.0,
+          "p_success": 0.984,
+          "p_stall": 0.004,
+          "p_fall": 0.011,
+          "p_nothing": 0.0,
+          "p_cross": 0.304
+        }
+      ],
+      [
+        299.06,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 12.4,
+          "stall_s": 0.0,
+          "p_success": 0.984,
+          "p_stall": 0.004,
+          "p_fall": 0.011,
+          "p_nothing": 0.001,
+          "p_cross": 0.303
+        }
+      ],
+      [
+        299.68,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.21,
+          "contact_s": 12.9,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.008,
+          "p_nothing": 0.0,
+          "p_cross": 0.28
+        }
+      ],
+      [
+        300.2,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 13.4,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.008,
+          "p_nothing": 0.0,
+          "p_cross": 0.269
+        }
+      ],
+      [
+        300.8,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 13.9,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.008,
+          "p_nothing": 0.0,
+          "p_cross": 0.293
+        }
+      ],
+      [
+        301.32,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 14.3,
+          "stall_s": 0.0,
+          "p_success": 0.989,
+          "p_stall": 0.003,
+          "p_fall": 0.007,
+          "p_nothing": 0.0,
+          "p_cross": 0.291
+        }
+      ],
+      [
+        301.92,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.21,
+          "contact_s": 14.8,
+          "stall_s": 0.0,
+          "p_success": 0.991,
+          "p_stall": 0.003,
+          "p_fall": 0.006,
+          "p_nothing": 0.0,
+          "p_cross": 0.262
+        }
+      ],
+      [
+        302.42,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.23,
+          "contact_s": 15.2,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.231
+        }
+      ],
+      [
+        303.06,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 15.8,
+          "stall_s": 0.0,
+          "p_success": 0.993,
+          "p_stall": 0.002,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.268
+        }
+      ],
+      [
+        303.56,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.23,
+          "contact_s": 16.2,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.276
+        }
+      ],
+      [
+        304.18,
+        "happy",
+        "押しに行く、成功 99%",
+        13,
+        {
+          "effort": 0.21,
+          "contact_s": 16.7,
+          "stall_s": 0.0,
+          "p_success": 0.994,
+          "p_stall": 0.002,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.262
+        }
+      ],
+      [
+        304.5,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 16.9,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.245
+        }
+      ],
+      [
+        304.68,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 17.1,
+          "stall_s": 0.0,
+          "p_success": 0.996,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.235
+        }
+      ],
+      [
+        305.32,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 17.6,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.26
+        }
+      ],
+      [
+        305.84,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 18.1,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.271
+        }
+      ],
+      [
+        306.66,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 18.8,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.286
+        }
+      ],
+      [
+        307.24,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.2,
+          "contact_s": 19.2,
+          "stall_s": 0.0,
+          "p_success": 0.996,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.277
+        }
+      ],
+      [
+        307.84,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 19.7,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.277
+        }
+      ],
+      [
+        308.34,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 20.1,
+          "stall_s": 0.0,
+          "p_success": 0.996,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.275
+        }
+      ],
+      [
+        308.96,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 20.6,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.278
+        }
+      ],
+      [
+        309.46,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.23,
+          "contact_s": 21.0,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.002,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.273
+        }
+      ],
+      [
+        310.04,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.21,
+          "contact_s": 21.6,
+          "stall_s": 0.0,
+          "p_success": 0.996,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.269
+        }
+      ],
+      [
+        310.54,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.24,
+          "contact_s": 22.0,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.001,
+          "p_fall": 0.003,
+          "p_nothing": 0.0,
+          "p_cross": 0.283
+        }
+      ],
+      [
+        311.16,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 22.5,
+          "stall_s": 0.0,
+          "p_success": 0.996,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.268
+        }
+      ],
+      [
+        311.66,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.24,
+          "contact_s": 23.0,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.242
+        }
+      ],
+      [
+        312.28,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 23.5,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.25
+        }
+      ],
+      [
+        312.78,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.24,
+          "contact_s": 23.9,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.25
+        }
+      ],
+      [
+        313.42,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.24,
+          "contact_s": 24.5,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.243
+        }
+      ],
+      [
+        313.92,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.23,
+          "contact_s": 24.9,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.271
+        }
+      ],
+      [
+        314.44,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 25.4,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.272
+        }
+      ],
+      [
+        314.94,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 25.8,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.257
+        }
+      ],
+      [
+        315.44,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.2,
+          "contact_s": 26.2,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.256
+        }
+      ],
+      [
+        315.94,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 26.5,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        316.58,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 27.1,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.29
+        }
+      ],
+      [
+        317.08,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 27.5,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.297
+        }
+      ],
+      [
+        317.64,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.21,
+          "contact_s": 27.9,
+          "stall_s": 0.0,
+          "p_success": 0.997,
+          "p_stall": 0.001,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.274
+        }
+      ],
+      [
+        318.16,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 28.3,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.251
+        }
+      ],
+      [
+        318.82,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 28.9,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.249
+        }
+      ],
+      [
+        319.4,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 29.3,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.235
+        }
+      ],
+      [
+        319.98,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 29.8,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.237
+        }
+      ],
+      [
+        320.48,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 30.2,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.253
+        }
+      ],
+      [
+        321.08,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.24,
+          "contact_s": 30.8,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.284
+        }
+      ],
+      [
+        321.62,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 31.2,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.261
+        }
+      ],
+      [
+        322.12,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 31.6,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.226
+        }
+      ],
+      [
+        322.62,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 32.0,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.224
+        }
+      ],
+      [
+        323.34,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.24,
+          "contact_s": 32.7,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.225
+        }
+      ],
+      [
+        323.88,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 33.1,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.253
+        }
+      ],
+      [
+        324.5,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 33.6,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.274
+        }
+      ],
+      [
+        325.0,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 34.0,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.289
+        }
+      ],
+      [
+        325.62,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 34.6,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.314
+        }
+      ],
+      [
+        326.12,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.22,
+          "contact_s": 35.0,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.302
+        }
+      ],
+      [
+        326.94,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 35.8,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.289
+        }
+      ],
+      [
+        327.44,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.23,
+          "contact_s": 36.2,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.272
+        }
+      ],
+      [
+        328.32,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.23,
+          "contact_s": 37.1,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.287
+        }
+      ],
+      [
+        328.84,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.2,
+          "contact_s": 37.4,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.28
+        }
+      ],
+      [
+        329.42,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.19,
+          "contact_s": 37.8,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.321
+        }
+      ],
+      [
+        329.94,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.19,
+          "contact_s": 38.1,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.288
+        }
+      ],
+      [
+        330.48,
+        "happy",
+        "押しに行く、成功 100%",
+        13,
+        {
+          "effort": 0.19,
+          "contact_s": 38.5,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.23
+        }
+      ],
+      [
+        330.98,
+        "serious",
+        "押しに行く、成功 93%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 38.8,
+          "stall_s": 0.0,
+          "p_success": 0.932,
+          "p_stall": 0.065,
+          "p_fall": 0.001,
+          "p_nothing": 0.001,
+          "p_cross": 0.234
+        }
+      ],
+      [
+        331.0,
+        "serious",
+        "押しに行く、成功 92%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 38.8,
+          "stall_s": 0.0,
+          "p_success": 0.918,
+          "p_stall": 0.079,
+          "p_fall": 0.001,
+          "p_nothing": 0.002,
+          "p_cross": 0.232
+        }
+      ],
+      [
+        331.02,
+        "serious",
+        "押しに行く、成功 91%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 38.8,
+          "stall_s": 0.0,
+          "p_success": 0.905,
+          "p_stall": 0.091,
+          "p_fall": 0.001,
+          "p_nothing": 0.002,
+          "p_cross": 0.23
+        }
+      ],
+      [
+        331.04,
+        "serious",
+        "押しに行く、成功 89%",
+        14,
+        {
+          "effort": 0.19,
+          "contact_s": 38.8,
+          "stall_s": 0.0,
+          "p_success": 0.893,
+          "p_stall": 0.103,
+          "p_fall": 0.001,
+          "p_nothing": 0.002,
+          "p_cross": 0.228
+        }
+      ],
+      [
+        331.06,
+        "serious",
+        "押しに行く、成功 88%",
+        14,
+        {
+          "effort": 0.19,
+          "contact_s": 38.8,
+          "stall_s": 0.0,
+          "p_success": 0.882,
+          "p_stall": 0.115,
+          "p_fall": 0.002,
+          "p_nothing": 0.002,
+          "p_cross": 0.227
+        }
+      ],
+      [
+        331.08,
+        "serious",
+        "押しに行く、成功 87%",
+        14,
+        {
+          "effort": 0.19,
+          "contact_s": 38.8,
+          "stall_s": 0.0,
+          "p_success": 0.871,
+          "p_stall": 0.125,
+          "p_fall": 0.002,
+          "p_nothing": 0.003,
+          "p_cross": 0.225
+        }
+      ],
+      [
+        331.18,
+        "serious",
+        "押しに行く、成功 85%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 38.9,
+          "stall_s": 0.0,
+          "p_success": 0.854,
+          "p_stall": 0.141,
+          "p_fall": 0.002,
+          "p_nothing": 0.003,
+          "p_cross": 0.231
+        }
+      ],
+      [
+        331.22,
+        "serious",
+        "押しに行く、成功 84%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 38.9,
+          "stall_s": 0.0,
+          "p_success": 0.836,
+          "p_stall": 0.158,
+          "p_fall": 0.002,
+          "p_nothing": 0.003,
+          "p_cross": 0.229
+        }
+      ],
+      [
+        331.38,
+        "serious",
+        "押しに行く、成功 82%",
+        14,
+        {
+          "effort": 0.19,
+          "contact_s": 39.0,
+          "stall_s": 0.0,
+          "p_success": 0.822,
+          "p_stall": 0.172,
+          "p_fall": 0.002,
+          "p_nothing": 0.003,
+          "p_cross": 0.245
+        }
+      ],
+      [
+        331.4,
+        "serious",
+        "押しに行く、成功 81%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 39.0,
+          "stall_s": 0.0,
+          "p_success": 0.814,
+          "p_stall": 0.18,
+          "p_fall": 0.002,
+          "p_nothing": 0.003,
+          "p_cross": 0.244
+        }
+      ],
+      [
+        331.44,
+        "serious",
+        "押しに行く、成功 80%",
+        14,
+        {
+          "effort": 0.19,
+          "contact_s": 39.0,
+          "stall_s": 0.0,
+          "p_success": 0.799,
+          "p_stall": 0.195,
+          "p_fall": 0.002,
+          "p_nothing": 0.004,
+          "p_cross": 0.242
+        }
+      ],
+      [
+        331.46,
+        "serious",
+        "押しに行く、成功 79%",
+        14,
+        {
+          "effort": 0.19,
+          "contact_s": 39.0,
+          "stall_s": 0.0,
+          "p_success": 0.793,
+          "p_stall": 0.201,
+          "p_fall": 0.002,
+          "p_nothing": 0.004,
+          "p_cross": 0.241
+        }
+      ],
+      [
+        331.5,
+        "serious",
+        "押しに行く、成功 78%",
+        14,
+        {
+          "effort": 0.18,
+          "contact_s": 39.0,
+          "stall_s": 0.0,
+          "p_success": 0.78,
+          "p_stall": 0.213,
+          "p_fall": 0.002,
+          "p_nothing": 0.004,
+          "p_cross": 0.239
+        }
+      ],
+      [
+        331.52,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.18,
+          "contact_s": 39.1,
+          "stall_s": 0.0,
+          "p_success": 0.783,
+          "p_stall": 0.211,
+          "p_fall": 0.002,
+          "p_nothing": 0.004,
+          "p_cross": 0.242
+        }
+      ],
+      [
+        332.02,
+        "serious",
+        "押しに行く、成功 80%",
+        14,
+        {
+          "effort": 0.21,
+          "contact_s": 39.5,
+          "stall_s": 0.0,
+          "p_success": 0.802,
+          "p_stall": 0.191,
+          "p_fall": 0.003,
+          "p_nothing": 0.003,
+          "p_cross": 0.277
+        }
+      ],
+      [
+        332.18,
+        "serious",
+        "押しに行く、成功 82%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 39.6,
+          "stall_s": 0.0,
+          "p_success": 0.822,
+          "p_stall": 0.172,
+          "p_fall": 0.003,
+          "p_nothing": 0.003,
+          "p_cross": 0.265
+        }
+      ],
+      [
+        332.24,
+        "serious",
+        "押しに行く、成功 83%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 39.6,
+          "stall_s": 0.0,
+          "p_success": 0.826,
+          "p_stall": 0.168,
+          "p_fall": 0.003,
+          "p_nothing": 0.003,
+          "p_cross": 0.259
+        }
+      ],
+      [
+        332.26,
+        "serious",
+        "押しに行く、成功 82%",
+        14,
+        {
+          "effort": 0.21,
+          "contact_s": 39.6,
+          "stall_s": 0.0,
+          "p_success": 0.824,
+          "p_stall": 0.17,
+          "p_fall": 0.003,
+          "p_nothing": 0.003,
+          "p_cross": 0.255
+        }
+      ],
+      [
+        332.38,
+        "serious",
+        "押しに行く、成功 84%",
+        14,
+        {
+          "effort": 0.19,
+          "contact_s": 39.7,
+          "stall_s": 0.0,
+          "p_success": 0.84,
+          "p_stall": 0.155,
+          "p_fall": 0.002,
+          "p_nothing": 0.003,
+          "p_cross": 0.246
+        }
+      ],
+      [
+        332.52,
+        "sweat",
+        "押し上げ中、接触 5 秒超",
+        9,
+        {
+          "effort": 0.21,
+          "contact_s": 39.8,
+          "stall_s": 0.0,
+          "p_success": 0.844,
+          "p_stall": 0.15,
+          "p_fall": 0.002,
+          "p_nothing": 0.004,
+          "p_cross": 0.227
+        }
+      ],
+      [
+        333.14,
+        "serious",
+        "押しに行く、成功 87%",
+        14,
+        {
+          "effort": 0.21,
+          "contact_s": 40.1,
+          "stall_s": 0.0,
+          "p_success": 0.871,
+          "p_stall": 0.122,
+          "p_fall": 0.002,
+          "p_nothing": 0.004,
+          "p_cross": 0.181
+        }
+      ],
+      [
+        333.22,
+        "serious",
+        "押しに行く、成功 86%",
+        14,
+        {
+          "effort": 0.2,
+          "contact_s": 40.1,
+          "stall_s": 0.0,
+          "p_success": 0.864,
+          "p_stall": 0.129,
+          "p_fall": 0.002,
+          "p_nothing": 0.005,
+          "p_cross": 0.172
+        }
+      ],
+      [
+        333.5,
+        "serious",
+        "押しに行く、成功 85%",
+        14,
+        {
+          "effort": 0.17,
+          "contact_s": 40.2,
+          "stall_s": 0.0,
+          "p_success": 0.855,
+          "p_stall": 0.138,
+          "p_fall": 0.002,
+          "p_nothing": 0.005,
+          "p_cross": 0.154
+        }
+      ],
+      [
+        333.64,
+        "relief",
+        "うまくいった",
+        5,
+        {
+          "effort": 0.17,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.86,
+          "p_stall": 0.133,
+          "p_fall": 0.002,
+          "p_nothing": 0.005,
+          "p_cross": 0.188
+        }
+      ],
+      [
+        337.36,
+        "happy",
+        "立たせる、成功 99%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.003,
+          "p_fall": 0.002,
+          "p_nothing": 0.007,
+          "p_cross": 0.586
+        }
+      ],
+      [
+        338.94,
+        "happy",
+        "立たせる、成功 98%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.985,
+          "p_stall": 0.003,
+          "p_fall": 0.002,
+          "p_nothing": 0.01,
+          "p_cross": 0.573
+        }
+      ],
+      [
+        339.42,
+        "happy",
+        "立たせる、成功 97%",
+        13,
+        {
+          "effort": 0.22,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.975,
+          "p_stall": 0.004,
+          "p_fall": 0.003,
+          "p_nothing": 0.018,
+          "p_cross": 0.608
+        }
+      ],
+      [
+        340.92,
+        "relief",
+        "うまくいった",
+        5,
+        {
+          "effort": 0.19,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.969,
+          "p_stall": 0.005,
+          "p_fall": 0.003,
+          "p_nothing": 0.023,
+          "p_cross": 0.626
+        }
+      ],
+      [
+        342.92,
+        "serious",
+        "見送る、成功 98%",
+        14,
+        {
+          "effort": 0.17,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.977,
+          "p_stall": 0.019,
+          "p_fall": 0.004,
+          "p_nothing": 0.0,
+          "p_cross": 0.69
+        }
+      ],
+      [
+        352.96,
+        "serious",
+        "見送る、成功 99%",
+        14,
+        {
+          "effort": 0.17,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.985,
+          "p_stall": 0.012,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.751
+        }
+      ],
+      [
+        353.08,
+        "happy",
+        "見送る、成功 99%",
+        13,
+        {
+          "effort": 0.18,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.988,
+          "p_stall": 0.01,
+          "p_fall": 0.002,
+          "p_nothing": 0.0,
+          "p_cross": 0.743
+        }
+      ],
+      [
+        353.66,
+        "happy",
+        "見送る、成功 100%",
+        13,
+        {
+          "effort": 0.19,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.995,
+          "p_stall": 0.004,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.748
+        }
+      ],
+      [
+        354.9,
+        "sparkle",
+        "パッカンが渡り切った",
+        3,
+        {
+          "effort": 0.21,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.844
+        }
+      ],
+      [
+        355.24,
+        "shock",
+        "パッカンが転んだ",
+        2,
+        {
+          "effort": 0.21,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.844
+        }
+      ],
+      [
+        356.74,
+        "sparkle",
+        "パッカンが渡り切った",
+        3,
+        {
+          "effort": 0.23,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.844
+        }
+      ],
+      [
+        370.2,
+        "happy",
+        "祝賀ダンス",
+        4,
+        {
+          "effort": 0.17,
+          "contact_s": 0.0,
+          "stall_s": 0.0,
+          "p_success": 0.998,
+          "p_stall": 0.001,
+          "p_fall": 0.001,
+          "p_nothing": 0.0,
+          "p_cross": 0.844
+        }
+      ]
+    ],
+    "effort_series": [
+      [
+        0.0,
+        0.0,
+        1.72
+      ],
+      [
+        1.0,
+        0.223,
+        1.81
+      ],
+      [
+        2.0,
+        0.213,
+        7.99
+      ],
+      [
+        3.0,
+        0.138,
+        2.44
+      ],
+      [
+        4.0,
+        0.105,
+        1.67
+      ],
+      [
+        5.0,
+        0.085,
+        1.81
+      ],
+      [
+        6.0,
+        0.08,
+        1.81
+      ],
+      [
+        7.0,
+        0.079,
+        1.35
+      ],
+      [
+        8.0,
+        0.086,
+        2.17
+      ],
+      [
+        9.0,
+        0.085,
+        1.88
+      ],
+      [
+        10.0,
+        0.083,
+        1.66
+      ],
+      [
+        11.0,
+        0.079,
+        1.6
+      ],
+      [
+        12.0,
+        0.156,
+        2.81
+      ],
+      [
+        13.0,
+        0.171,
+        15.99
+      ],
+      [
+        14.0,
+        0.157,
+        4.61
+      ],
+      [
+        15.0,
+        0.158,
+        7.44
+      ],
+      [
+        16.0,
+        0.175,
+        2.96
+      ],
+      [
+        17.0,
+        0.201,
+        6.54
+      ],
+      [
+        18.0,
+        0.22,
+        6.78
+      ],
+      [
+        19.0,
+        0.233,
+        5.78
+      ],
+      [
+        20.0,
+        0.179,
+        3.6
+      ],
+      [
+        21.0,
+        0.154,
+        3.34
+      ],
+      [
+        22.0,
+        0.156,
+        4.75
+      ],
+      [
+        23.0,
+        0.143,
+        3.28
+      ],
+      [
+        24.0,
+        0.114,
+        2.26
+      ],
+      [
+        25.0,
+        0.153,
+        4.81
+      ],
+      [
+        26.0,
+        0.161,
+        3.01
+      ],
+      [
+        27.0,
+        0.148,
+        3.74
+      ],
+      [
+        28.0,
+        0.166,
+        5.07
+      ],
+      [
+        29.0,
+        0.143,
+        2.7
+      ],
+      [
+        30.0,
+        0.164,
+        4.48
+      ],
+      [
+        31.0,
+        0.164,
+        3.55
+      ],
+      [
+        32.0,
+        0.181,
+        4.57
+      ],
+      [
+        33.0,
+        0.172,
+        4.88
+      ],
+      [
+        34.0,
+        0.216,
+        17.66
+      ],
+      [
+        35.0,
+        0.169,
+        4.54
+      ],
+      [
+        36.0,
+        0.205,
+        4.08
+      ],
+      [
+        37.0,
+        0.162,
+        4.13
+      ],
+      [
+        38.0,
+        0.165,
+        3.49
+      ],
+      [
+        39.0,
+        0.158,
+        3.96
+      ],
+      [
+        40.0,
+        0.12,
+        3.99
+      ],
+      [
+        41.0,
+        0.153,
+        2.92
+      ],
+      [
+        42.0,
+        0.162,
+        2.74
+      ],
+      [
+        43.0,
+        0.163,
+        3.59
+      ],
+      [
+        44.0,
+        0.161,
+        3.94
+      ],
+      [
+        45.0,
+        0.201,
+        4.75
+      ],
+      [
+        46.0,
+        0.169,
+        3.76
+      ],
+      [
+        47.0,
+        0.189,
+        7.76
+      ],
+      [
+        48.0,
+        0.198,
+        2.02
+      ],
+      [
+        49.0,
+        0.222,
+        4.39
+      ],
+      [
+        50.0,
+        0.222,
+        4.78
+      ],
+      [
+        51.0,
+        0.232,
+        8.2
+      ],
+      [
+        52.0,
+        0.221,
+        6.02
+      ],
+      [
+        53.0,
+        0.232,
+        5.41
+      ],
+      [
+        54.0,
+        0.225,
+        4.91
+      ],
+      [
+        55.0,
+        0.227,
+        4.41
+      ],
+      [
+        56.0,
+        0.209,
+        6.68
+      ],
+      [
+        57.0,
+        0.226,
+        5.25
+      ],
+      [
+        58.0,
+        0.226,
+        4.41
+      ],
+      [
+        59.0,
+        0.223,
+        6.72
+      ],
+      [
+        60.0,
+        0.271,
+        1.67
+      ],
+      [
+        61.0,
+        0.225,
+        4.58
+      ],
+      [
+        62.0,
+        0.219,
+        5.9
+      ],
+      [
+        63.0,
+        0.23,
+        5.86
+      ],
+      [
+        64.0,
+        0.236,
+        7.15
+      ],
+      [
+        65.0,
+        0.35,
+        12.14
+      ],
+      [
+        66.0,
+        0.212,
+        5.5
+      ],
+      [
+        67.0,
+        0.21,
+        5.54
+      ],
+      [
+        68.0,
+        0.225,
+        5.34
+      ],
+      [
+        69.0,
+        0.21,
+        4.61
+      ],
+      [
+        70.0,
+        0.225,
+        1.97
+      ],
+      [
+        71.0,
+        0.184,
+        2.29
+      ],
+      [
+        72.0,
+        0.144,
+        3.07
+      ],
+      [
+        73.0,
+        0.141,
+        3.78
+      ],
+      [
+        74.0,
+        0.175,
+        3.42
+      ],
+      [
+        75.0,
+        0.155,
+        5.16
+      ],
+      [
+        76.0,
+        0.153,
+        3.48
+      ],
+      [
+        77.0,
+        0.167,
+        3.93
+      ],
+      [
+        78.0,
+        0.171,
+        4.18
+      ],
+      [
+        79.0,
+        0.171,
+        4.12
+      ],
+      [
+        80.0,
+        0.167,
+        5.29
+      ],
+      [
+        81.0,
+        0.158,
+        4.68
+      ],
+      [
+        82.0,
+        0.301,
+        1.47
+      ],
+      [
+        83.0,
+        0.212,
+        7.52
+      ],
+      [
+        84.0,
+        0.218,
+        3.71
+      ],
+      [
+        85.0,
+        0.229,
+        4.25
+      ],
+      [
+        86.0,
+        0.224,
+        4.38
+      ],
+      [
+        87.0,
+        0.178,
+        3.31
+      ],
+      [
+        88.0,
+        0.221,
+        3.54
+      ],
+      [
+        89.0,
+        0.359,
+        7.24
+      ],
+      [
+        90.0,
+        0.204,
+        6.39
+      ],
+      [
+        91.0,
+        0.229,
+        5.02
+      ],
+      [
+        92.0,
+        0.219,
+        7.25
+      ],
+      [
+        93.0,
+        0.227,
+        5.65
+      ],
+      [
+        94.0,
+        0.236,
+        8.6
+      ],
+      [
+        95.0,
+        0.231,
+        5.9
+      ],
+      [
+        96.0,
+        0.23,
+        5.82
+      ],
+      [
+        97.0,
+        0.22,
+        5.96
+      ],
+      [
+        98.0,
+        0.336,
+        15.38
+      ],
+      [
+        99.0,
+        0.212,
+        6.11
+      ],
+      [
+        100.0,
+        0.213,
+        6.24
+      ],
+      [
+        101.0,
+        0.221,
+        5.17
+      ],
+      [
+        102.0,
+        0.209,
+        4.67
+      ],
+      [
+        103.0,
+        0.284,
+        9.0
+      ],
+      [
+        104.0,
+        0.189,
+        7.14
+      ],
+      [
+        105.0,
+        0.134,
+        2.52
+      ],
+      [
+        106.0,
+        0.171,
+        4.13
+      ],
+      [
+        107.0,
+        0.223,
+        8.09
+      ],
+      [
+        108.0,
+        0.23,
+        7.57
+      ],
+      [
+        109.0,
+        0.23,
+        5.6
+      ],
+      [
+        110.0,
+        0.234,
+        8.84
+      ],
+      [
+        111.0,
+        0.229,
+        7.24
+      ],
+      [
+        112.0,
+        0.239,
+        5.52
+      ],
+      [
+        113.0,
+        0.196,
+        4.44
+      ],
+      [
+        114.0,
+        0.161,
+        4.14
+      ],
+      [
+        115.0,
+        0.136,
+        3.07
+      ],
+      [
+        116.0,
+        0.148,
+        3.98
+      ],
+      [
+        117.0,
+        0.156,
+        4.02
+      ],
+      [
+        118.0,
+        0.151,
+        4.4
+      ],
+      [
+        119.0,
+        0.154,
+        3.74
+      ],
+      [
+        120.0,
+        0.155,
+        4.05
+      ],
+      [
+        121.0,
+        0.152,
+        2.99
+      ],
+      [
+        122.0,
+        0.158,
+        3.01
+      ],
+      [
+        123.0,
+        0.152,
+        3.29
+      ],
+      [
+        124.0,
+        0.151,
+        3.68
+      ],
+      [
+        125.0,
+        0.156,
+        3.66
+      ],
+      [
+        126.0,
+        0.155,
+        3.55
+      ],
+      [
+        127.0,
+        0.157,
+        3.68
+      ],
+      [
+        128.0,
+        0.161,
+        3.66
+      ],
+      [
+        129.0,
+        0.161,
+        3.66
+      ],
+      [
+        130.0,
+        0.153,
+        3.64
+      ],
+      [
+        131.0,
+        0.157,
+        3.65
+      ],
+      [
+        132.0,
+        0.159,
+        3.64
+      ],
+      [
+        133.0,
+        0.155,
+        3.62
+      ],
+      [
+        134.0,
+        0.15,
+        2.87
+      ],
+      [
+        135.0,
+        0.156,
+        4.2
+      ],
+      [
+        136.0,
+        0.156,
+        4.19
+      ],
+      [
+        137.0,
+        0.163,
+        4.82
+      ],
+      [
+        138.0,
+        0.132,
+        3.26
+      ],
+      [
+        139.0,
+        0.119,
+        2.05
+      ],
+      [
+        140.0,
+        0.083,
+        2.05
+      ],
+      [
+        141.0,
+        0.078,
+        2.15
+      ],
+      [
+        142.0,
+        0.082,
+        1.71
+      ],
+      [
+        143.0,
+        0.084,
+        1.9
+      ],
+      [
+        144.0,
+        0.078,
+        1.79
+      ],
+      [
+        145.0,
+        0.082,
+        2.36
+      ],
+      [
+        146.0,
+        0.082,
+        2.36
+      ],
+      [
+        147.0,
+        0.088,
+        1.81
+      ],
+      [
+        148.0,
+        0.088,
+        2.1
+      ],
+      [
+        149.0,
+        0.085,
+        2.18
+      ],
+      [
+        150.0,
+        0.087,
+        2.04
+      ],
+      [
+        151.0,
+        0.079,
+        1.86
+      ],
+      [
+        152.0,
+        0.087,
+        2.05
+      ],
+      [
+        153.0,
+        0.082,
+        2.55
+      ],
+      [
+        154.0,
+        0.088,
+        2.41
+      ],
+      [
+        155.0,
+        0.078,
+        1.94
+      ],
+      [
+        156.0,
+        0.086,
+        2.54
+      ],
+      [
+        157.0,
+        0.086,
+        2.03
+      ],
+      [
+        158.0,
+        0.088,
+        2.4
+      ],
+      [
+        159.0,
+        0.087,
+        1.64
+      ],
+      [
+        160.0,
+        0.087,
+        1.6
+      ],
+      [
+        161.0,
+        0.084,
+        2.71
+      ],
+      [
+        162.0,
+        0.088,
+        1.88
+      ],
+      [
+        163.0,
+        0.096,
+        5.85
+      ],
+      [
+        164.0,
+        0.084,
+        2.29
+      ],
+      [
+        165.0,
+        0.083,
+        1.72
+      ],
+      [
+        166.0,
+        0.07,
+        1.9
+      ],
+      [
+        167.0,
+        0.078,
+        1.9
+      ],
+      [
+        168.0,
+        0.083,
+        2.03
+      ],
+      [
+        169.0,
+        0.081,
+        2.55
+      ],
+      [
+        170.0,
+        0.087,
+        1.83
+      ],
+      [
+        171.0,
+        0.113,
+        3.83
+      ],
+      [
+        172.0,
+        0.093,
+        1.87
+      ],
+      [
+        173.0,
+        0.086,
+        3.79
+      ],
+      [
+        174.0,
+        0.08,
+        1.81
+      ],
+      [
+        175.0,
+        0.077,
+        1.85
+      ],
+      [
+        176.0,
+        0.132,
+        3.32
+      ],
+      [
+        177.0,
+        0.133,
+        2.07
+      ],
+      [
+        178.0,
+        0.123,
+        2.47
+      ],
+      [
+        179.0,
+        0.106,
+        4.13
+      ],
+      [
+        180.0,
+        0.103,
+        2.69
+      ],
+      [
+        181.0,
+        0.086,
+        1.76
+      ],
+      [
+        182.0,
+        0.081,
+        2.19
+      ],
+      [
+        183.0,
+        0.122,
+        3.03
+      ],
+      [
+        184.0,
+        0.131,
+        3.81
+      ],
+      [
+        185.0,
+        0.123,
+        2.95
+      ],
+      [
+        186.0,
+        0.087,
+        1.74
+      ],
+      [
+        187.0,
+        0.08,
+        1.83
+      ],
+      [
+        188.0,
+        0.082,
+        2.43
+      ],
+      [
+        189.0,
+        0.236,
+        7.41
+      ],
+      [
+        190.0,
+        0.242,
+        7.32
+      ],
+      [
+        191.0,
+        0.233,
+        5.76
+      ],
+      [
+        192.0,
+        0.229,
+        4.02
+      ],
+      [
+        193.0,
+        0.193,
+        3.05
+      ],
+      [
+        194.0,
+        0.13,
+        3.95
+      ],
+      [
+        195.0,
+        0.092,
+        2.05
+      ],
+      [
+        196.0,
+        0.087,
+        2.96
+      ],
+      [
+        197.0,
+        0.121,
+        1.32
+      ],
+      [
+        198.0,
+        0.273,
+        2.13
+      ],
+      [
+        199.0,
+        0.265,
+        4.7
+      ],
+      [
+        200.0,
+        0.108,
+        2.88
+      ],
+      [
+        201.0,
+        0.092,
+        2.32
+      ],
+      [
+        202.0,
+        0.103,
+        1.73
+      ],
+      [
+        203.0,
+        0.086,
+        1.91
+      ],
+      [
+        204.0,
+        0.118,
+        2.7
+      ],
+      [
+        205.0,
+        0.105,
+        2.77
+      ],
+      [
+        206.0,
+        0.103,
+        2.6
+      ],
+      [
+        207.0,
+        0.098,
+        2.32
+      ],
+      [
+        208.0,
+        0.107,
+        2.11
+      ],
+      [
+        209.0,
+        0.093,
+        1.31
+      ],
+      [
+        210.0,
+        0.08,
+        1.72
+      ],
+      [
+        211.0,
+        0.09,
+        2.69
+      ],
+      [
+        212.0,
+        0.089,
+        2.61
+      ],
+      [
+        213.0,
+        0.105,
+        3.01
+      ],
+      [
+        214.0,
+        0.087,
+        1.63
+      ],
+      [
+        215.0,
+        0.086,
+        2.19
+      ],
+      [
+        216.0,
+        0.08,
+        1.72
+      ],
+      [
+        217.0,
+        0.087,
+        2.5
+      ],
+      [
+        218.0,
+        0.09,
+        2.96
+      ],
+      [
+        219.0,
+        0.118,
+        2.44
+      ],
+      [
+        220.0,
+        0.104,
+        2.64
+      ],
+      [
+        221.0,
+        0.101,
+        2.59
+      ],
+      [
+        222.0,
+        0.096,
+        2.79
+      ],
+      [
+        223.0,
+        0.096,
+        2.66
+      ],
+      [
+        224.0,
+        0.16,
+        6.02
+      ],
+      [
+        225.0,
+        0.214,
+        3.54
+      ],
+      [
+        226.0,
+        0.216,
+        5.02
+      ],
+      [
+        227.0,
+        0.224,
+        4.74
+      ],
+      [
+        228.0,
+        0.187,
+        4.36
+      ],
+      [
+        229.0,
+        0.193,
+        4.49
+      ],
+      [
+        230.0,
+        0.23,
+        8.87
+      ],
+      [
+        231.0,
+        0.231,
+        4.23
+      ],
+      [
+        232.0,
+        0.21,
+        3.42
+      ],
+      [
+        233.0,
+        0.187,
+        3.61
+      ],
+      [
+        234.0,
+        0.194,
+        3.51
+      ],
+      [
+        235.0,
+        0.198,
+        3.71
+      ],
+      [
+        236.0,
+        0.204,
+        4.42
+      ],
+      [
+        237.0,
+        0.213,
+        3.3
+      ],
+      [
+        238.0,
+        0.222,
+        6.11
+      ],
+      [
+        239.0,
+        0.226,
+        6.31
+      ],
+      [
+        240.0,
+        0.19,
+        1.97
+      ],
+      [
+        241.0,
+        0.225,
+        8.68
+      ],
+      [
+        242.0,
+        0.216,
+        3.81
+      ],
+      [
+        243.0,
+        0.245,
+        6.32
+      ],
+      [
+        244.0,
+        0.244,
+        3.97
+      ],
+      [
+        245.0,
+        0.235,
+        4.03
+      ],
+      [
+        246.0,
+        0.209,
+        4.27
+      ],
+      [
+        247.0,
+        0.127,
+        3.25
+      ],
+      [
+        248.0,
+        0.119,
+        3.2
+      ],
+      [
+        249.0,
+        0.172,
+        4.67
+      ],
+      [
+        250.0,
+        0.216,
+        6.45
+      ],
+      [
+        251.0,
+        0.219,
+        4.24
+      ],
+      [
+        252.0,
+        0.234,
+        4.38
+      ],
+      [
+        253.0,
+        0.229,
+        4.69
+      ],
+      [
+        254.0,
+        0.214,
+        6.39
+      ],
+      [
+        255.0,
+        0.248,
+        4.94
+      ],
+      [
+        256.0,
+        0.243,
+        5.25
+      ],
+      [
+        257.0,
+        0.245,
+        9.18
+      ],
+      [
+        258.0,
+        0.237,
+        4.43
+      ],
+      [
+        259.0,
+        0.241,
+        5.39
+      ],
+      [
+        260.0,
+        0.243,
+        4.25
+      ],
+      [
+        261.0,
+        0.251,
+        10.55
+      ],
+      [
+        262.0,
+        0.232,
+        4.76
+      ],
+      [
+        263.0,
+        0.229,
+        3.86
+      ],
+      [
+        264.0,
+        0.216,
+        4.65
+      ],
+      [
+        265.0,
+        0.181,
+        3.65
+      ],
+      [
+        266.0,
+        0.146,
+        3.01
+      ],
+      [
+        267.0,
+        0.128,
+        2.55
+      ],
+      [
+        268.0,
+        0.114,
+        3.13
+      ],
+      [
+        269.0,
+        0.136,
+        5.12
+      ],
+      [
+        270.0,
+        0.139,
+        4.14
+      ],
+      [
+        271.0,
+        0.117,
+        2.81
+      ],
+      [
+        272.0,
+        0.123,
+        2.22
+      ],
+      [
+        273.0,
+        0.12,
+        2.04
+      ],
+      [
+        274.0,
+        0.092,
+        1.79
+      ],
+      [
+        275.0,
+        0.1,
+        1.69
+      ],
+      [
+        276.0,
+        0.108,
+        2.5
+      ],
+      [
+        277.0,
+        0.184,
+        5.69
+      ],
+      [
+        278.0,
+        0.188,
+        4.57
+      ],
+      [
+        279.0,
+        0.176,
+        4.15
+      ],
+      [
+        280.0,
+        0.172,
+        3.8
+      ],
+      [
+        281.0,
+        0.173,
+        3.79
+      ],
+      [
+        282.0,
+        0.171,
+        3.73
+      ],
+      [
+        283.0,
+        0.173,
+        3.79
+      ],
+      [
+        284.0,
+        0.171,
+        3.72
+      ],
+      [
+        285.0,
+        0.234,
+        5.64
+      ],
+      [
+        286.0,
+        0.24,
+        8.22
+      ],
+      [
+        287.0,
+        0.239,
+        4.94
+      ],
+      [
+        288.0,
+        0.23,
+        8.25
+      ],
+      [
+        289.0,
+        0.227,
+        5.77
+      ],
+      [
+        290.0,
+        0.215,
+        5.76
+      ],
+      [
+        291.0,
+        0.213,
+        6.16
+      ],
+      [
+        292.0,
+        0.205,
+        4.92
+      ],
+      [
+        293.0,
+        0.206,
+        3.31
+      ],
+      [
+        294.0,
+        0.208,
+        5.41
+      ],
+      [
+        295.0,
+        0.206,
+        3.99
+      ],
+      [
+        296.0,
+        0.244,
+        6.56
+      ],
+      [
+        297.0,
+        0.248,
+        6.74
+      ],
+      [
+        298.0,
+        0.215,
+        4.77
+      ],
+      [
+        299.0,
+        0.224,
+        7.43
+      ],
+      [
+        300.0,
+        0.203,
+        3.72
+      ],
+      [
+        301.0,
+        0.222,
+        4.67
+      ],
+      [
+        302.0,
+        0.229,
+        5.31
+      ],
+      [
+        303.0,
+        0.224,
+        5.05
+      ],
+      [
+        304.0,
+        0.222,
+        5.36
+      ],
+      [
+        305.0,
+        0.21,
+        4.0
+      ],
+      [
+        306.0,
+        0.203,
+        6.38
+      ],
+      [
+        307.0,
+        0.218,
+        5.14
+      ],
+      [
+        308.0,
+        0.215,
+        6.11
+      ],
+      [
+        309.0,
+        0.215,
+        3.92
+      ],
+      [
+        310.0,
+        0.208,
+        4.66
+      ],
+      [
+        311.0,
+        0.231,
+        5.66
+      ],
+      [
+        312.0,
+        0.234,
+        5.92
+      ],
+      [
+        313.0,
+        0.235,
+        6.24
+      ],
+      [
+        314.0,
+        0.222,
+        4.51
+      ],
+      [
+        315.0,
+        0.215,
+        7.07
+      ],
+      [
+        316.0,
+        0.214,
+        5.85
+      ],
+      [
+        317.0,
+        0.221,
+        7.12
+      ],
+      [
+        318.0,
+        0.214,
+        4.79
+      ],
+      [
+        319.0,
+        0.216,
+        4.75
+      ],
+      [
+        320.0,
+        0.219,
+        5.67
+      ],
+      [
+        321.0,
+        0.226,
+        5.25
+      ],
+      [
+        322.0,
+        0.231,
+        5.77
+      ],
+      [
+        323.0,
+        0.222,
+        5.4
+      ],
+      [
+        324.0,
+        0.211,
+        5.05
+      ],
+      [
+        325.0,
+        0.222,
+        5.71
+      ],
+      [
+        326.0,
+        0.219,
+        6.75
+      ],
+      [
+        327.0,
+        0.222,
+        5.24
+      ],
+      [
+        328.0,
+        0.228,
+        4.63
+      ],
+      [
+        329.0,
+        0.204,
+        4.63
+      ],
+      [
+        330.0,
+        0.182,
+        3.86
+      ],
+      [
+        331.0,
+        0.201,
+        5.5
+      ],
+      [
+        332.0,
+        0.209,
+        6.45
+      ],
+      [
+        333.0,
+        0.214,
+        5.51
+      ],
+      [
+        334.0,
+        0.19,
+        4.12
+      ],
+      [
+        335.0,
+        0.187,
+        3.98
+      ],
+      [
+        336.0,
+        0.21,
+        5.31
+      ],
+      [
+        337.0,
+        0.215,
+        5.4
+      ],
+      [
+        338.0,
+        0.219,
+        5.48
+      ],
+      [
+        339.0,
+        0.219,
+        5.45
+      ],
+      [
+        340.0,
+        0.217,
+        5.39
+      ],
+      [
+        341.0,
+        0.188,
+        3.88
+      ],
+      [
+        342.0,
+        0.184,
+        3.48
+      ],
+      [
+        343.0,
+        0.166,
+        4.06
+      ],
+      [
+        344.0,
+        0.157,
+        3.89
+      ],
+      [
+        345.0,
+        0.176,
+        4.23
+      ],
+      [
+        346.0,
+        0.171,
+        4.38
+      ],
+      [
+        347.0,
+        0.174,
+        4.41
+      ],
+      [
+        348.0,
+        0.183,
+        4.74
+      ],
+      [
+        349.0,
+        0.183,
+        4.66
+      ],
+      [
+        350.0,
+        0.183,
+        4.75
+      ],
+      [
+        351.0,
+        0.182,
+        4.63
+      ],
+      [
+        352.0,
+        0.184,
+        4.88
+      ],
+      [
+        353.0,
+        0.164,
+        3.52
+      ],
+      [
+        354.0,
+        0.204,
+        6.24
+      ],
+      [
+        355.0,
+        0.226,
+        7.53
+      ],
+      [
+        356.0,
+        0.208,
+        6.56
+      ],
+      [
+        357.0,
+        0.257,
+        7.95
+      ],
+      [
+        358.0,
+        0.275,
+        10.24
+      ],
+      [
+        359.0,
+        0.303,
+        7.76
+      ],
+      [
+        360.0,
+        0.253,
+        5.63
+      ],
+      [
+        361.0,
+        0.209,
+        5.66
+      ],
+      [
+        362.0,
+        0.176,
+        4.0
+      ],
+      [
+        363.0,
+        0.217,
+        6.25
+      ],
+      [
+        364.0,
+        0.243,
+        3.08
+      ],
+      [
+        365.0,
+        0.222,
+        6.14
+      ],
+      [
+        366.0,
+        0.213,
+        4.1
+      ],
+      [
+        367.0,
+        0.157,
+        3.84
+      ],
+      [
+        368.0,
+        0.185,
+        5.19
+      ],
+      [
+        369.0,
+        0.218,
+        3.91
+      ],
+      [
+        370.0,
+        0.182,
+        4.13
+      ],
+      [
+        371.0,
+        0.14,
+        2.84
+      ],
+      [
+        372.0,
+        0.123,
+        3.04
+      ],
+      [
+        373.0,
+        0.126,
+        4.0
+      ],
+      [
+        374.0,
+        0.139,
+        3.43
+      ],
+      [
+        375.0,
+        0.135,
+        3.38
+      ],
+      [
+        376.0,
+        0.119,
+        2.86
+      ],
+      [
+        377.0,
+        0.117,
+        3.03
+      ],
+      [
+        378.0,
+        0.151,
+        2.48
+      ],
+      [
+        379.0,
+        0.087,
+        2.53
+      ],
+      [
+        380.0,
+        0.1,
+        3.16
+      ],
+      [
+        381.0,
+        0.091,
+        2.52
+      ],
+      [
+        382.0,
+        0.087,
+        1.52
+      ],
+      [
+        383.0,
+        0.077,
+        1.85
+      ],
+      [
+        384.0,
+        0.073,
+        1.8
+      ],
+      [
+        385.0,
+        0.072,
+        1.79
+      ]
+    ],
+    "mood_ai": {
+      "kind": "mood",
+      "run": "mood_net",
+      "inferences": 4518,
+      "log": [],
+      "series": [
+        [
+          264.46,
+          0.93,
+          0.001,
+          0.004,
+          0.066,
+          0.097
+        ],
+        [
+          265.46,
+          0.927,
+          0.001,
+          0.004,
+          0.069,
+          0.094
+        ],
+        [
+          266.46,
+          0.927,
+          0.001,
+          0.004,
+          0.069,
+          0.093
+        ],
+        [
+          267.46,
+          0.926,
+          0.001,
+          0.004,
+          0.069,
+          0.092
+        ],
+        [
+          268.46,
+          0.863,
+          0.001,
+          0.006,
+          0.131,
+          0.102
+        ],
+        [
+          269.46,
+          0.931,
+          0.001,
+          0.004,
+          0.065,
+          0.139
+        ],
+        [
+          270.46,
+          0.978,
+          0.0,
+          0.002,
+          0.02,
+          0.21
+        ],
+        [
+          271.46,
+          0.98,
+          0.0,
+          0.003,
+          0.017,
+          0.261
+        ],
+        [
+          272.46,
+          0.799,
+          0.001,
+          0.008,
+          0.192,
+          0.252
+        ],
+        [
+          273.46,
+          0.508,
+          0.001,
+          0.011,
+          0.48,
+          0.208
+        ],
+        [
+          274.46,
+          0.462,
+          0.001,
+          0.01,
+          0.526,
+          0.14
+        ],
+        [
+          275.46,
+          0.577,
+          0.001,
+          0.009,
+          0.413,
+          0.137
+        ],
+        [
+          276.48,
+          0.586,
+          0.001,
+          0.009,
+          0.404,
+          0.132
+        ],
+        [
+          277.48,
+          0.87,
+          0.001,
+          0.004,
+          0.126,
+          0.172
+        ],
+        [
+          278.48,
+          0.978,
+          0.003,
+          0.003,
+          0.017,
+          0.489
+        ],
+        [
+          279.48,
+          0.988,
+          0.006,
+          0.004,
+          0.002,
+          0.63
+        ],
+        [
+          280.48,
+          0.99,
+          0.005,
+          0.004,
+          0.001,
+          0.648
+        ],
+        [
+          281.48,
+          0.992,
+          0.004,
+          0.004,
+          0.0,
+          0.652
+        ],
+        [
+          282.48,
+          0.993,
+          0.004,
+          0.003,
+          0.0,
+          0.655
+        ],
+        [
+          283.48,
+          0.994,
+          0.003,
+          0.003,
+          0.0,
+          0.656
+        ],
+        [
+          284.48,
+          0.995,
+          0.002,
+          0.003,
+          0.0,
+          0.623
+        ],
+        [
+          285.48,
+          0.994,
+          0.002,
+          0.003,
+          0.0,
+          0.586
+        ],
+        [
+          286.48,
+          0.991,
+          0.003,
+          0.005,
+          0.0,
+          0.555
+        ],
+        [
+          287.48,
+          0.991,
+          0.003,
+          0.007,
+          0.0,
+          0.416
+        ],
+        [
+          288.48,
+          0.988,
+          0.003,
+          0.009,
+          0.0,
+          0.319
+        ],
+        [
+          289.48,
+          0.988,
+          0.003,
+          0.009,
+          0.0,
+          0.32
+        ],
+        [
+          290.48,
+          0.988,
+          0.003,
+          0.009,
+          0.0,
+          0.318
+        ],
+        [
+          291.48,
+          0.987,
+          0.003,
+          0.01,
+          0.0,
+          0.313
+        ],
+        [
+          292.48,
+          0.987,
+          0.003,
+          0.01,
+          0.0,
+          0.297
+        ],
+        [
+          293.48,
+          0.986,
+          0.003,
+          0.01,
+          0.0,
+          0.293
+        ],
+        [
+          294.48,
+          0.986,
+          0.003,
+          0.011,
+          0.0,
+          0.3
+        ],
+        [
+          295.48,
+          0.98,
+          0.004,
+          0.015,
+          0.0,
+          0.339
+        ],
+        [
+          296.48,
+          0.976,
+          0.005,
+          0.018,
+          0.0,
+          0.345
+        ],
+        [
+          297.48,
+          0.978,
+          0.005,
+          0.016,
+          0.001,
+          0.327
+        ],
+        [
+          298.48,
+          0.983,
+          0.004,
+          0.012,
+          0.0,
+          0.303
+        ],
+        [
+          299.48,
+          0.987,
+          0.004,
+          0.009,
+          0.0,
+          0.29
+        ],
+        [
+          300.48,
+          0.989,
+          0.003,
+          0.008,
+          0.0,
+          0.279
+        ],
+        [
+          301.48,
+          0.99,
+          0.003,
+          0.007,
+          0.0,
+          0.285
+        ],
+        [
+          302.48,
+          0.994,
+          0.002,
+          0.004,
+          0.0,
+          0.233
+        ],
+        [
+          303.48,
+          0.994,
+          0.002,
+          0.004,
+          0.0,
+          0.271
+        ],
+        [
+          304.48,
+          0.995,
+          0.001,
+          0.003,
+          0.0,
+          0.246
+        ],
+        [
+          305.48,
+          0.995,
+          0.001,
+          0.003,
+          0.0,
+          0.268
+        ],
+        [
+          306.48,
+          0.995,
+          0.001,
+          0.003,
+          0.0,
+          0.278
+        ],
+        [
+          307.48,
+          0.996,
+          0.001,
+          0.003,
+          0.0,
+          0.269
+        ],
+        [
+          308.48,
+          0.995,
+          0.002,
+          0.003,
+          0.0,
+          0.288
+        ],
+        [
+          309.48,
+          0.995,
+          0.002,
+          0.003,
+          0.0,
+          0.272
+        ],
+        [
+          310.48,
+          0.995,
+          0.001,
+          0.003,
+          0.0,
+          0.284
+        ],
+        [
+          311.48,
+          0.996,
+          0.001,
+          0.002,
+          0.0,
+          0.25
+        ],
+        [
+          312.48,
+          0.997,
+          0.001,
+          0.002,
+          0.0,
+          0.253
+        ],
+        [
+          313.48,
+          0.997,
+          0.001,
+          0.002,
+          0.0,
+          0.248
+        ],
+        [
+          314.48,
+          0.997,
+          0.001,
+          0.002,
+          0.0,
+          0.27
+        ],
+        [
+          315.48,
+          0.997,
+          0.001,
+          0.001,
+          0.0,
+          0.253
+        ],
+        [
+          316.48,
+          0.997,
+          0.001,
+          0.002,
+          0.0,
+          0.282
+        ],
+        [
+          317.48,
+          0.997,
+          0.001,
+          0.002,
+          0.0,
+          0.282
+        ],
+        [
+          318.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.245
+        ],
+        [
+          319.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.23
+        ],
+        [
+          320.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.253
+        ],
+        [
+          321.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.271
+        ],
+        [
+          322.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.224
+        ],
+        [
+          323.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.238
+        ],
+        [
+          324.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.274
+        ],
+        [
+          325.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.315
+        ],
+        [
+          326.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.3
+        ],
+        [
+          327.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.271
+        ],
+        [
+          328.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.289
+        ],
+        [
+          329.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.321
+        ],
+        [
+          330.48,
+          0.998,
+          0.001,
+          0.001,
+          0.0,
+          0.23
+        ],
+        [
+          331.48,
+          0.786,
+          0.208,
+          0.002,
+          0.004,
+          0.24
+        ],
+        [
+          332.48,
+          0.837,
+          0.157,
+          0.002,
+          0.004,
+          0.229
+        ],
+        [
+          333.48,
+          0.856,
+          0.136,
+          0.002,
+          0.005,
+          0.156
+        ],
+        [
+          334.48,
+          0.974,
+          0.024,
+          0.001,
+          0.001,
+          0.576
+        ],
+        [
+          335.48,
+          0.993,
+          0.004,
+          0.001,
+          0.002,
+          0.64
+        ],
+        [
+          336.48,
+          0.989,
+          0.003,
+          0.002,
+          0.006,
+          0.607
+        ],
+        [
+          337.48,
+          0.988,
+          0.003,
+          0.002,
+          0.007,
+          0.585
+        ],
+        [
+          338.48,
+          0.988,
+          0.003,
+          0.002,
+          0.007,
+          0.574
+        ],
+        [
+          339.48,
+          0.974,
+          0.004,
+          0.003,
+          0.019,
+          0.611
+        ],
+        [
+          340.48,
+          0.97,
+          0.005,
+          0.003,
+          0.023,
+          0.626
+        ],
+        [
+          341.48,
+          0.959,
+          0.031,
+          0.003,
+          0.007,
+          0.665
+        ],
+        [
+          342.48,
+          0.978,
+          0.019,
+          0.003,
+          0.001,
+          0.61
+        ],
+        [
+          343.48,
+          0.977,
+          0.018,
+          0.004,
+          0.0,
+          0.733
+        ],
+        [
+          344.48,
+          0.979,
+          0.017,
+          0.004,
+          0.0,
+          0.755
+        ],
+        [
+          345.48,
+          0.982,
+          0.015,
+          0.004,
+          0.0,
+          0.763
+        ],
+        [
+          346.48,
+          0.983,
+          0.013,
+          0.003,
+          0.0,
+          0.761
+        ],
+        [
+          347.48,
+          0.983,
+          0.014,
+          0.003,
+          0.0,
+          0.769
+        ],
+        [
+          348.48,
+          0.983,
+          0.014,
+          0.003,
+          0.0,
+          0.764
+        ],
+        [
+          349.48,
+          0.982,
+          0.014,
+          0.003,
+          0.0,
+          0.767
+        ],
+        [
+          350.48,
+          0.982,
+          0.015,
+          0.003,
+          0.0,
+          0.764
+        ],
+        [
+          351.48,
+          0.981,
+          0.016,
+          0.003,
+          0.0,
+          0.759
+        ],
+        [
+          352.48,
+          0.981,
+          0.016,
+          0.003,
+          0.0,
+          0.756
+        ],
+        [
+          353.48,
+          0.994,
+          0.005,
+          0.001,
+          0.0,
+          0.739
+        ],
+        [
+          354.48,
+          0.997,
+          0.001,
+          0.001,
+          0.0,
+          0.82
+        ]
+      ]
+    }
+  },
+  "cuts": [
+    [
+      22.0,
+      54.0,
+      "BZ が空荷で保管場所へ戻る"
+    ],
+    [
+      110.0,
+      172.0,
+      "BZ が空荷でスタート地点へ回る"
+    ]
+  ],
+  "construction": {
+    "success": true,
+    "reason": "Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m",
+    "parts": [
+      {
+        "part": "up_1",
+        "lift_m": 0.20760744802549377,
+        "carry_m": 2.984051548019637
+      },
+      {
+        "part": "down_1",
+        "lift_m": 0.20759434389016013,
+        "carry_m": 2.9853781925266443
+      }
+    ],
+    "rise_m": 0.4399155173171487,
+    "surfaces": 4
+  },
+  "course_disturbed": {},
+  "ending": "crab",
+  "manager": {
+    "policy": "固定ルール",
+    "decisions": [
+      {
+        "n": 1,
+        "t": 264.5,
+        "video_t": 0.0,
+        "action": "SEAT",
+        "bubble": "パッカン、カニさんの方を向いて座って",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.06,
+        "last_result": "none",
+        "result": "seated",
+        "duration_s": 12.0
+      },
+      {
+        "n": 2,
+        "t": 276.5,
+        "video_t": 0.0,
+        "action": "PUSH",
+        "bubble": "カニさん、そっと押し上げてあげて",
+        "duck": "SIT",
+        "stage": "toe",
+        "touching": false,
+        "crab_dist": 1.0,
+        "last_result": "seated",
+        "result": "pushed_up",
+        "duration_s": 57.1
+      },
+      {
+        "n": 3,
+        "t": 333.6,
+        "video_t": 0.0,
+        "action": "BACK_OFF",
+        "bubble": "カニさん、少し離れて",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.25,
+        "last_result": "pushed_up",
+        "result": "cleared",
+        "duration_s": 1.7
+      },
+      {
+        "n": 4,
+        "t": 335.4,
+        "video_t": 0.0,
+        "action": "STANDUP",
+        "bubble": "パッカン、立てる？",
+        "duck": "SIT",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.63,
+        "last_result": "cleared",
+        "result": "standing",
+        "duration_s": 5.5
+      },
+      {
+        "n": 5,
+        "t": 340.9,
+        "video_t": 0.0,
+        "action": "WALK_ON",
+        "bubble": "パッカン、そのまま進んで",
+        "duck": "STAND",
+        "stage": "deck",
+        "touching": false,
+        "crab_dist": 0.61,
+        "last_result": "standing",
+        "result": "crossed",
+        "duration_s": 14.0
+      }
+    ],
+    "duck_crossed": true
+  },
+  "three_crossed": {
+    "bz": true,
+    "crab": true,
+    "duck": true
+  }
+}
+     0.00s  BZ UP
+    16.26s  BZ RAISE_UP
+    17.92s  BZ TO_DOWN
+    57.46s  BZ PRECISE_LANE
+    65.82s  BZ ALIGN
+    75.56s  BZ RETREAT_FOR_ALIGNMENT
+    79.12s  BZ LOWER
+    80.76s  BZ DOWN
+   104.40s  BZ RAISE_DOWN
+   106.06s  BZ TO_START
+   106.06s  TO_START route: corner at y=-3.0 (course-builder default -3.2) for fork clearance
+   106.06s  MD heads to the waiting spot by the course start; JP to its watch spot
+   176.38s  BZ CROSS
+   176.38s  stage -> FOLLOW_IN
+   196.08s  construction done: success=True (Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m)
+   196.08s  physics step -> 0.001
+   196.32s  stage -> RAMP
+   196.32s  MD: 坂に挑む（1 回目）
+   196.34s  JP cheers the duck on with its dance, claws up (official dance policy)
+   210.34s  MD: いったん後ずさり (reached y=-2.00, ramp toe -1.86)
+   212.86s  MD: もう一回挑む（2 回目）
+   223.88s  MD: やっぱり無理… (reached y=-1.99)
+   223.90s  JP pre-positions at the foot of its lane while the duck sits down
+   224.48s  MD: 諦めて座り込む（sitstand）
+   225.98s  MD: 首を振りながら「ぐわぁぁ？」
+   228.70s  stage -> CLIMB
+   228.70s  JP sets off from the foot of its lane
+   228.72s  JP passes beside the sitting duck and starts up the ramp
+   235.84s  JP on the crest (z=0.50); duck: ぐわぁぁ？
+   238.92s  JP stuck at the crest (y=-0.55 z=0.54); forward jump
+   240.10s  JP landed at y=-0.48 z=0.53
+   242.76s  JP over the top; duck looks around
+   245.88s  JP crossed the course and stops behind BZ (z=0.11)
+   248.90s  stage -> CALL
+   250.42s  JP heads back round the east side of the course to the lane behind the seat (pre-positioning)
+   253.92s  stage -> RETURN
+   253.92s  JP comes back round the east side of the course to the duck (fixed programme; BZ stays put)
+   264.44s  stage -> RESCUE
+   264.44s  the manager (固定ルール) takes over: duck SIT/toe at (+1.19,-2.10), crab at (+1.79,-2.99), 1.07 m
+   264.46s  MANAGER #1: SEAT 「パッカン、カニさんの方を向いて座って」 (duck SIT/toe, crab 1.06 m, touching=False, last=none)
+   276.46s  MANAGER result: SEAT -> seated (duck SIT/toe at (+1.39,-2.07) z=0.06)
+   276.48s  MANAGER #2: PUSH 「カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 1.00 m, touching=False, last=seated)
+   333.62s  MANAGER result: PUSH -> pushed_up (duck SIT/deck at (+1.43,-0.41) z=0.50)
+   333.64s  MANAGER #3: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
+   335.36s  MANAGER result: BACK_OFF -> cleared (duck SIT/deck at (+1.43,-0.41) z=0.50)
+   335.38s  MANAGER #4: STANDUP 「パッカン、立てる？」 (duck SIT/deck, crab 0.63 m, touching=False, last=cleared)
+   340.92s  MANAGER result: STANDUP -> standing (duck STAND/deck at (+1.43,-0.44) z=0.56)
+   340.94s  MANAGER #5: WALK_ON 「パッカン、そのまま進んで」 (duck STAND/deck, crab 0.61 m, touching=False, last=standing)
+   340.94s  JP follows the duck across the landing and down the far ramp (procession finale), 0.61 m behind
+   340.94s  BZ raises its fork while the duck walks on (pre-positioning for the circle)
+   340.96s  BZ's fork is up; it turns round on the spot to face the goal
+   352.06s  BZ faces south, toward the goal: the circle is complete
+   354.90s  MANAGER result: WALK_ON -> crossed (duck STAND/north at (+1.53,+1.95) z=0.14)
+   354.90s  DUCK CROSSED THE COURSE (y=+1.95 z=0.141) - all three have crossed
+   354.90s  stage -> CELEBRATE
+   354.92s  JP comes down the far ramp after the duck; the three form a circle at the goal
+   355.24s  MD fell (tilt 84) at (+1.44,+2.18)
+   356.80s  JP stalls on the landing at y=-0.54; full speed 0.8 for 3 s
+   357.44s  the duck walks to its place in the circle (north of the toe first)
+   357.44s  MD is back on its feet by itself (2.2 s)
+   362.12s  JP is down the far ramp (y=+1.75 z=0.19); goes to its place in the circle
+   367.76s  the duck and the crab are in their places (1.15 / 1.24 m from BZ, which is ready)
+   370.18s  the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.11 rad, crab 0.03 rad off the centre)
+   385.60s  stage -> END

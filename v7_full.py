@@ -656,17 +656,35 @@ def main():
             cel["md_leg"] = 2
             duck.walk_to(CIRCLE_MD, t, stop_dist=0.15, vx=0.25)
 
+    def crab_push_force():
+        """The contact force (N, normal components summed) the crab puts on the duck this step: the face's effort."""
+        total, f6 = 0.0, np.zeros(6)
+        for i in range(data.ncon):
+            ga, gb = map(int, data.contact[i].geom)
+            ra, rb = model.body_rootid[model.geom_bodyid[ga]], model.body_rootid[model.geom_bodyid[gb]]
+            if (ra == jp_root and rb == md_root) or (ra == md_root and rb == jp_root):
+                mujoco.mj_contactForce(model, data, i, f6)
+                total += abs(float(f6[0]))
+        return total
+
     def face_tick(t):
         """The crab's expression, from the manager's state (crab_face.py's table); every control step, rendered or not."""
         if face is None:
             return
-        # the mood AI reads the manager's own observation while the manager is in charge (the rescue)
+        # the mood AI reads the manager's own observation while the manager is in charge (the rescue); the measured
+        # signals (effort = the crab's actuator forces, the duck's position and mode, the ramp attempt's phase) go
+        # with it (crab_face.py's rules)
         obs = ch.observation(h, book) if (mood is not None and stage == "RESCUE") else None
         face.update(t, obs=obs, stage=stage, crab_mode=crab.mode, tilt=body_tilt_deg(data, crab.bid),
                     skill=mgr["name"] if mgr["gen"] is not None else None,
                     skill_idx=mgr["action"] if mgr["gen"] is not None else None,
                     t_in_skill=(t - mgr["t_dec"]) if mgr["gen"] is not None else 0.0,
                     touching=bool(h.touching()) if stage == "RESCUE" else False,
+                    n_results=sum(1 for dcs in mgr["decisions"] if "result" in dcs),
+                    duck_mode=duck.mode, duck_y=float(duck.pos(data)[1]),
+                    ramp_phase=ramp["phase"] if stage == "RAMP" else None,
+                    effort_raw=float(np.abs(data.actuator_force[crab.loco.act_ids]).sum()),
+                    push_force=crab_push_force(),
                     last_action=ch.ACTIONS[book.last_action] if book.last_action is not None else None,
                     last_result=book.last_result, crossed=mgr["crossed"])
 
@@ -799,7 +817,8 @@ def main():
         inset = None
         if pip is not None:
             pip.update_scene(data, camera=face.cam_name, scene_option=opt)
-            inset = (pip.render().copy(), face.title_label(), face.label())
+            inset = {"pic": pip.render().copy(), "above": face.title_label(), "bars": face.bars(),
+                     "below": face.measured_label(), "reason": face.label()}
         notice = cut_state["notice"] if (video is not None and video.frames < cut_state["notice_until"]) else None
         title, lines = caption()
         return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}", inset=inset, notice=notice)
@@ -1677,6 +1696,7 @@ def main():
     report = {"mujoco": mujoco.__version__, "sim_seconds": round(float(data.time), 2),
               "state_digest": digest, "ngeom": int(model.ngeom),
               "face": {"on": face is not None, "log": face.log if face is not None else None,
+                       "effort_series": face.effort_series if face is not None else None,
                        "mood_ai": ({"kind": mood.kind, "run": mood.run, "inferences": mood.n, "log": mood.log, "series": mood.series}
                                    if mood is not None else None)},
               "cuts": [list(c) for c in cuts],
