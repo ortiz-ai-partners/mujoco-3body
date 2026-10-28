@@ -46,19 +46,32 @@ def parse_weights(text, valid):
 
 
 class CurveCallback:
-    """Collect per-episode returns from the vec env infos (SB3 Monitor-free)."""
+    """Collect per-episode returns from the vec env infos (SB3 Monitor-free) and save model checkpoints."""
 
-    def __init__(self, path):
+    def __init__(self, path, run_dir=None, ckpt_every=2000):
         self.path, self.rows, self.t0 = path, [], time.perf_counter()
+        self.run_dir, self.ckpt_every, self.next_ckpt = run_dir, ckpt_every, None
 
     def __call__(self, locals_, globals_):
+        model = locals_["self"]
         for i, done in enumerate(locals_["dones"]):
             if done:
                 info = locals_["infos"][i]
-                self.rows.append({"env": i, "step": int(locals_["self"].num_timesteps), "success": bool(info.get("success")),
+                self.rows.append({"env": i, "step": int(model.num_timesteps), "success": bool(info.get("success")),
                                   "landed": bool(info.get("landed")), "wall_s": round(time.perf_counter() - self.t0, 1)})
         if len(self.rows) % 20 == 0 and self.rows:
             self.path.write_text(json.dumps(self.rows, indent=0), encoding="utf-8")
+        if self.run_dir is not None:
+            # checkpoints every `ckpt_every` decisions, numbered by the model's step count plus a "latest" copy
+            # (10/28: ppo2_medium3 was stopped at 4.9k of 12k decisions and its weights were lost - until here the
+            # model was only saved at the end; intermediate policies can now also be evaluated)
+            step = int(model.num_timesteps)
+            if self.next_ckpt is None:
+                self.next_ckpt = (step // self.ckpt_every + 1) * self.ckpt_every
+            if step >= self.next_ckpt:
+                model.save(self.run_dir / f"ckpt_{step}")
+                model.save(self.run_dir / "ppo_manager_latest")
+                self.next_ckpt += self.ckpt_every
         return True
 
 
@@ -67,12 +80,14 @@ def train(args):
     from stable_baselines3 import PPO
     from stable_baselines3.common.vec_env import SubprocVecEnv, DummyVecEnv
     torch.set_num_threads(2)
-    from manager2_env import CRAB_SPOTS_DECK, CRAB_SPOTS_TOE, SCENARIOS
+    from manager2_env import CRAB_SPOTS_DECK, CRAB_SPOTS_RAMP, CRAB_SPOTS_TOE, SCENARIOS
     run_dir = RUNS / args.run
     run_dir.mkdir(parents=True, exist_ok=True)
     env_kwargs = {"scenarios": parse_weights(args.scenario_weights, {s for s, _ in SCENARIOS}),
                   "crab_spots_toe": parse_weights(args.crab_toe_weights, {s for s, _ in CRAB_SPOTS_TOE}),
-                  "crab_spots_deck": parse_weights(args.crab_deck_weights, {s for s, _ in CRAB_SPOTS_DECK})}
+                  "crab_spots_deck": parse_weights(args.crab_deck_weights, {s for s, _ in CRAB_SPOTS_DECK}),
+                  "crab_spots_ramp": parse_weights(args.crab_ramp_weights, {s for s, _ in CRAB_SPOTS_RAMP}),
+                  "reward": args.reward}
     fns = [make_env(i, run_dir, args.max_episode_s, env_kwargs) for i in range(args.envs)]
     venv = SubprocVecEnv(fns, start_method="spawn") if args.envs > 1 else DummyVecEnv(fns)
     n_steps = max(8, args.rollout)
@@ -87,7 +102,7 @@ def train(args):
                     learning_rate=3e-4, gamma=0.99, gae_lambda=0.95, ent_coef=args.ent_coef if args.ent_coef is not None else 0.02,
                     clip_range=0.2, policy_kwargs=dict(net_arch=[64, 64]), seed=args.seed, device="cpu", verbose=1)
     t0 = time.perf_counter()
-    cb = CurveCallback(run_dir / "train_curve.json")
+    cb = CurveCallback(run_dir / "train_curve.json", run_dir=run_dir, ckpt_every=args.ckpt_every)
     model.learn(total_timesteps=args.steps, callback=cb, reset_num_timesteps=not args.init_from)
     wall = time.perf_counter() - t0
     model.save(run_dir / "ppo_manager")
@@ -95,8 +110,8 @@ def train(args):
     cb.path.write_text(json.dumps(cb.rows, indent=0), encoding="utf-8")
     summary = {"run": args.run, "envs": args.envs, "steps": args.steps, "rollout": int(model.n_steps), "wall_s": round(wall, 1),
                "episodes": len(cb.rows), "train_success_rate": round(sum(r["success"] for r in cb.rows) / max(1, len(cb.rows)), 3),
-               "init_from": args.init_from, "ent_coef": float(model.ent_coef),
-               "draw_tables": {k: v for k, v in env_kwargs.items() if v}}
+               "init_from": args.init_from, "ent_coef": float(model.ent_coef), "reward": args.reward,
+               "draw_tables": {k: v for k, v in env_kwargs.items() if v and k != "reward"}}
     (run_dir / "train_summary.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
     print(json.dumps(summary, indent=1))
 
@@ -168,6 +183,10 @@ def main():
     t.add_argument("--scenario-weights", help="e.g. toe_seated_ok=0.2,toe_fallen=0.3 (names of SCENARIOS; replaces the table)")
     t.add_argument("--crab-toe-weights", help="e.g. behind=0.4,beside=0.2,touching=0.4")
     t.add_argument("--crab-deck-weights", help="e.g. touching=0.7,behind=0.3")
+    t.add_argument("--crab-ramp-weights", help="e.g. touching=0.7,behind=0.3 (the ramp_fallen scenario)")
+    t.add_argument("--reward", choices=["v2.1", "v2.2"], default="v2.1",
+                   help="v2.2 also counts a SEAT / STANDUP that ends still_down as a wasted move (training only)")
+    t.add_argument("--ckpt-every", type=int, default=2000, help="save ckpt_<steps>.zip and ppo_manager_latest.zip every N decisions")
     e = sub.add_parser("eval")
     e.add_argument("--run", default="ppo2_small")
     e.add_argument("--episodes", type=int, default=30)

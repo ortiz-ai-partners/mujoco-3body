@@ -20,10 +20,11 @@
 | ファイル | 内容 |
 |---|---|
 | `crab_help.py` | スキル（生成器）WAIT／SEAT／PUSH／BACK_OFF／STANDUP／WALK_ON、観測 45 次元、固定ルール。学習環境と通し動画が共用 |
-| `manager2_env.py` | gymnasium 環境：1 ステップ＝1 スキル、開始状態 6 種（足元で座り／別の向き／立ち／転倒、天面で座り／転倒）、コース監視（4 cm で破損＝失敗）、吹き出し付き録画 |
-| `manager2_train.py` | SB3 PPO（MLP 64×64、12 並列）の学習／同一シード評価（PPO・固定ルール・ランダム）／デモ動画 |
+| `manager2_env.py` | gymnasium 環境：1 ステップ＝1 スキル、開始状態 7 種（足元で座り／別の向き／立ち／転倒、天面で座り／転倒、坂の途中で転倒＋カニ密着＝押しに失敗した後の状態）、報酬 v2.1／v2.2（v2.2 は転んだ相手への無駄な SEAT／STANDUP も −1、学習用のみ）、コース監視（4 cm で破損＝失敗）、吹き出し付き録画 |
+| `manager2_train.py` | SB3 PPO（MLP 64×64、12 並列）の学習（継続学習 `--init-from`、開始分布と報酬版の指定、2,000 決定ごとのチェックポイント）／同一シード評価（PPO・固定ルール・ランダム）／デモ動画 |
 | `manager2_tabq.py` | 表形式 Q 学習（比較基準）：状態キー＝直前の結果 × 姿勢 × 進行段階 × 南向き × 座席 × 密着 × 押し上げ回数 |
 | `manager2_report.py` | 同一シード評価の比較表・場面別・行動回数・固定ルールとの 2×2（判断の失敗とスキルの失敗を分ける）→ `out\manager_runs\comparison_v2.md` |
+| `analysis/` | 学習記録・評価ログの分析スクリプト（失敗した押しの直後の手 `after_push_fail.py`、転倒状態の収益 `fallen_value.py`、分位ごとの行動分布 `train_stats.py`／`fallen_stats.py`、スキル信頼度、失敗の型、動画の静止画取り出し）。設計メモ §7.5b〜7.8 の表の出どころ |
 | `manager_env.py` ほか `manager_*.py` | v1（BZ がフォークで扱う版）。BZ 禁止で凍結、履歴 |
 | `MANAGER_DESIGN.md` | 設計メモ v1〜v1.4（事実・実験・比較。§7 が v2 の結果） |
 
@@ -35,10 +36,11 @@
 | 表形式 Q `tabq2_small` | 120 話、2 h | 23/30 | 93% | 13.97 | take 7：8 手 |
 | PPO 小 `ppo2_small` | 3k 決定、54 min | 0/30 | 27% | 61.9 | — （WALK_ON に固着） |
 | PPO 中 `ppo2_medium2` | 12k 決定、4 h 13 min | 19/30 | 77% | 9.97 | take 8：ヘッドレスは 4 手で渡り切り（BACK_OFF を省く）、描画版は失敗（止まった押しの後に STANDUP、転倒・密着で SEAT 連打） |
-| PPO 中（継続）`ppo2_medium3` | +12k 決定、転倒・密着の開始を増量 | （学習中） | | | take 9 予定 |
+| PPO 中（継続）`ppo2_medium3` | +4.9k 決定で中断（同じ報酬、足元の転倒・密着の開始を増量） | — | | | 学習中の成功率は 80% で横ばい、転倒直後の BACK_OFF は 13/52。置いた転倒は「押しに失敗して挟まった」状態を再現せず（SEAT のままでも 9/13 成功）。重みは未保存、ログのみ |
+| PPO 中（継続、報酬 v2.2）`ppo2_v22` | +12k 決定、転んだ相手への無駄手に −1、坂の途中で転倒＋密着の開始 20% | （学習中） | | | take 9 予定 |
 | ランダム | なし | 9/30 | 80% | 8.4 | — |
 
-失敗の帰属：固定ルールとの同一シード 2×2 で「ルールは渡ったが方策は失敗」＝判断の失敗、「両方失敗」＝スキルの失敗（天面の継ぎ目での転倒など）。押し上げスキルは正しい状態で呼んでも 63% なので、「やり直しの判断」が支配人の仕事になる。
+失敗の帰属：固定ルールとの同一シード 2×2 で「ルールは渡ったが方策は失敗」＝判断の失敗、「両方失敗」＝スキルの失敗（天面の継ぎ目での転倒など）。押し上げスキルは正しい状態で呼んでも 63% なので、「やり直しの判断」が支配人の仕事になる。その要は「押しに失敗したらカニが下がる」（ゆうころ 10/28 朝）：固定ルールは失敗した押しの後 13/13 で下がる（take 6 の 2:20）。PPO 中は転倒直後 3/10 で、報酬 v2.1 では転んだ相手への無駄な SEAT／STANDUP が時間しか引かれず学ぶ圧力がなかった → 報酬 v2.2 と「坂の途中で転倒＋密着」の開始場面で継続学習（`ppo2_v22`）。
 
 ## 動かし方
 
@@ -51,6 +53,8 @@
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_env.py --episodes 2 --policy rule   # 学習環境の煙試験
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py train --envs 12 --steps 12000 --rollout 48 --seed 1 --run ppo2_medium2   # PPO 中規模（約 4 時間）
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py eval --run ppo2_medium2 --episodes 30 --policies ppo --seed0 5000       # 30 シード評価
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py train --envs 12 --steps 12000 --seed 3 --run ppo2_v22 --init-from ppo2_medium2 --reward v2.2 --scenario-weights "toe_seated_ok=0.20,toe_seated_wrong=0.15,toe_standing=0.15,toe_fallen=0.10,deck_seated=0.15,deck_fallen=0.05,ramp_fallen=0.20" --crab-toe-weights "behind=0.5,beside=0.2,touching=0.3"   # 継続学習（報酬 v2.2、約 4 時間）
+& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_env.py --episodes 1 --policy rule --scenario ramp_fallen --crab touching --reward v2.2 --video out\manager2_smoke_ramp_fallen_rule.mp4   # 新しい開始場面の煙試験（動画付き）
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_tabq.py train --episodes 120 --run tabq2_small                                   # 表形式 Q（約 2 時間）
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_report.py --runs ppo2_small ppo2_medium2 baselines_v2 tabq2_small                # 比較表と 2×2
 & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager tabq --run tabq2_small --tag _take7                    # 学習済み Q 表が支配人

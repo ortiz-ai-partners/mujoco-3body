@@ -45,12 +45,23 @@ REWARD = {"success": 10.0, "per_second": -0.03, "landing_bonus": 3.0, "fall": -1
           "wait_idle": -0.5, "timeout": -5.0, "course_damaged": -10.0}
 # (10/28 01:40: "wasted" now also covers a skill that ends stalled / slipped - reward v2.1; ppo2_small and
 #  baselines_v2 were run under v2.0 without it, their returns differ by that term only)
+# reward v2.2 (10/28 08:30, after take 8 and the ppo2_medium2 evaluation): a SEAT / STANDUP that ends "still_down"
+#  (called on a fallen duck that cannot get up, usually because the crab is still against it) also counts as a
+#  wasted move.  Under v2.1 such a call cost only its time (about -0.4) while a BACK_OFF with nobody close cost -1,
+#  so PPO never learned to make room first (BACK_OFF after a fall 3/10 in the eval, flat through 4.9k decisions of
+#  continued training).  Training-only: the shared-seed evaluations keep v2.1 so their returns stay comparable.
+REWARD_VERSIONS = ("v2.1", "v2.2")
 COURSE_BODIES = ("up_1", "down_1", "block_1", "block_2")
 COURSE_TOLERANCE = 0.04                     # m, course-builder's own "Placed slope disturbed" tolerance
 SCENARIOS = [("toe_seated_ok", 0.30), ("toe_seated_wrong", 0.20), ("toe_standing", 0.20), ("toe_fallen", 0.10),
-             ("deck_seated", 0.15), ("deck_fallen", 0.05)]
+             ("deck_seated", 0.15), ("deck_fallen", 0.05), ("ramp_fallen", 0.0)]
+# ramp_fallen (10/28 08:30): the duck lying on the up-ramp with the crab against it from below - the state a push
+# that toppled it leaves behind (take 8, 3:05).  The placed toe_fallen + touching start did not reproduce it: there
+# the duck got up under SEAT 9/13 times, so nothing pushed the policy toward BACK_OFF.  Weight 0 in the default
+# table (appended last) so the shared-seed evaluations keep their draws; continued training weights it in.
 CRAB_SPOTS_TOE = [("behind", 0.65), ("beside", 0.25), ("touching", 0.10)]
 CRAB_SPOTS_DECK = [("touching", 0.70), ("behind", 0.30)]
+CRAB_SPOTS_RAMP = [("touching", 0.70), ("behind", 0.30)]
 
 
 def ramp_z(y):
@@ -202,10 +213,10 @@ class Scene:
             return stop.value
 
     # ── reset ────────────────────────────────────────────────────────────
-    def reset(self, rng, hard=None, scenarios=None, crab_spots_toe=None, crab_spots_deck=None):
+    def reset(self, rng, hard=None, scenarios=None, crab_spots_toe=None, crab_spots_deck=None, crab_spots_ramp=None):
         """Place the duck and the crab for one of the scenarios (training-only teleports), then let the duck
         take its starting state physically (stand, or stand then sit).  `hard` overrides the random draw
-        (scenario, crab, dx, dy, yaw_err_deg, gap, lat).  `scenarios` / `crab_spots_*` replace the default
+        (scenario, crab, dx, dy, yaw_err_deg, gap, lat, ramp_y).  `scenarios` / `crab_spots_*` replace the default
         draw tables (continued training with more weight on rare starts; evaluation keeps the defaults)."""
         qpos, qvel, ctrl, act = self.init
         self.data.qpos[:] = qpos
@@ -236,15 +247,23 @@ class Scene:
                 "deck_y": float(rng.choice([rng.uniform(CREST_Y + 0.12, -0.10), rng.uniform(0.16, DECK_N_Y - 0.22)]))}
         # (on the landing, but never seated on the 4 cm seam between its two pieces, y +0.02..+0.06)
         draw["crab"] = pick(rng, (crab_spots_deck or CRAB_SPOTS_DECK) if draw["scenario"].startswith("deck")
+                            else (crab_spots_ramp or CRAB_SPOTS_RAMP) if draw["scenario"] == "ramp_fallen"
                             else (crab_spots_toe or CRAB_SPOTS_TOE))
+        # the ramp_fallen height is derived from a draw already made (no extra rng call: the shared-seed
+        # evaluations must keep producing the same starts as before this scenario existed), middle 0.8 m of the ramp
+        draw["ramp_y"] = TOE_Y + 0.35 + (draw["any_yaw_deg"] / 360.0) * (CREST_Y - TOE_Y - 0.70)
         if hard:
             draw.update(hard)
         self.draw = draw
         sc = draw["scenario"]
         on_deck = sc.startswith("deck")
+        on_ramp = sc == "ramp_fallen"
         if on_deck:
             duck_xy = np.array([LANE_X + draw["dx"], draw["deck_y"]])
             z_floor = 0.44
+        elif on_ramp:
+            duck_xy = np.array([LANE_X + draw["dx"], draw["ramp_y"]])
+            z_floor = ramp_z(draw["ramp_y"])
         else:
             duck_xy = np.array([LANE_X + draw["dx"], SEAT_Y + draw["dy"]])
             z_floor = 0.0
@@ -257,7 +276,10 @@ class Scene:
         fallen = sc.endswith("fallen")
         z_stand = float(self.data.qpos[self.free["md"][0] + 2])            # the standing height from the arena's init
         if fallen:
-            self.teleport("md", duck_xy, yaw_d, z=z_floor + 0.10, roll=math.radians(80.0))
+            # on the incline the lying duck is pitched along the slope like the crab below (a level body written
+            # into the 16-degree surface would start 3 cm inside it at one end) and dropped from 2 cm higher
+            self.teleport("md", duck_xy, yaw_d, z=z_floor + (0.12 if on_ramp else 0.10), roll=math.radians(80.0),
+                          pitch=(-SLOPE * math.cos(yaw_d - math.pi / 2)) if on_ramp else 0.0)
         else:
             self.teleport("md", duck_xy, yaw_d, z=z_floor + z_stand + 0.005)
         # the crab
@@ -274,7 +296,7 @@ class Scene:
         # on the incline the crab is pitched nose-up to the slope and dropped from 3 cm: a level crab written
         # onto the 16-degree ramp had its front feet 4 cm inside the incline and the contact solver threw both
         # robots a metre (debug 10/28: duck fallen on the far ramp, crab on the floor beside the course)
-        on_incline = 0.0 < ramp_z(crab_xy[1]) < 0.44
+        on_incline = 0.0 < ramp_z(crab_xy[1]) < 0.44 and abs(crab_xy[0] - LANE_X) < 0.5   # in the lane, not beside it
         self.teleport("jp", crab_xy, yaw_c, z=ramp_z(crab_xy[1]) + 0.115 + (0.03 if on_incline else 0.0),
                       pitch=(-SLOPE * math.cos(yaw_c - math.pi / 2)) if on_incline else 0.0)
         mujoco.mj_forward(self.model, self.data)
@@ -314,12 +336,16 @@ class ManagerEnv(gym.Env):
     metadata = {"render_modes": []}
 
     def __init__(self, seed=0, max_episode_s=240.0, log_path=None, dt=0.001, scenarios=None, crab_spots_toe=None,
-                 crab_spots_deck=None):
+                 crab_spots_deck=None, crab_spots_ramp=None, reward="v2.1"):
         super().__init__()
+        if reward not in REWARD_VERSIONS:
+            raise ValueError(f"reward must be one of {REWARD_VERSIONS}, got {reward!r}")
+        self.reward_version = reward
         self.scene = Scene(dt=dt)
         self.max_episode_s = max_episode_s
         self.log_path = Path(log_path) if log_path else None
-        self.draw_tables = dict(scenarios=scenarios, crab_spots_toe=crab_spots_toe, crab_spots_deck=crab_spots_deck)
+        self.draw_tables = dict(scenarios=scenarios, crab_spots_toe=crab_spots_toe, crab_spots_deck=crab_spots_deck,
+                                crab_spots_ramp=crab_spots_ramp)
         self.observation_space = spaces.Box(-np.inf, np.inf, shape=(OBS_DIM,), dtype=np.float32)
         self.action_space = spaces.Discrete(len(ACTIONS))
         self.rng = np.random.default_rng(seed)
@@ -355,6 +381,8 @@ class ManagerEnv(gym.Env):
         if result in ("stalled", "slipped"):
             wasted += 1.0                                    # a futile call (e.g. WALK_ON into the ramp): the small PPO
                                                              # run of 10/28 repeated it 24 times at -0.9 each (time only)
+        if self.reward_version == "v2.2" and result == "still_down":
+            wasted += 1.0                                    # v2.2: SEAT / STANDUP on a duck that cannot get up (make room first)
         if name == "WAIT" and mode0 != "FALLEN" and stage0 != "north":
             wasted += -REWARD["wait_idle"]
         if name == "PUSH" and result != "nothing":
@@ -460,13 +488,14 @@ if __name__ == "__main__":
     ap.add_argument("--video", type=Path, help="record the episodes with the manager's speech bubble as caption")
     ap.add_argument("--speed", type=float, default=2.0)
     ap.add_argument("--max-episode-s", type=float, default=240.0)
+    ap.add_argument("--reward", choices=REWARD_VERSIONS, default="v2.1")
     args = ap.parse_args()
     hard = {}
     if args.scenario:
         hard["scenario"] = args.scenario
     if args.crab:
         hard["crab"] = args.crab
-    env = ManagerEnv(seed=0, max_episode_s=args.max_episode_s, log_path=args.log)
+    env = ManagerEnv(seed=0, max_episode_s=args.max_episode_s, log_path=args.log, reward=args.reward)
     rng = np.random.default_rng(0)
     pol = rule_policy if args.policy == "rule" else (lambda o, s: random_policy(o, s, rng))
     if args.video:
