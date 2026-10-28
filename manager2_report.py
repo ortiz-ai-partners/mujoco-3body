@@ -52,6 +52,7 @@ def metrics(recs):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", nargs="+", default=["ppo2_small", "baselines_v2", "tabq2_small"])
+    ap.add_argument("--name", default="comparison_v2", help="output file name under out/manager_runs/ (without .md)")
     args = ap.parse_args()
     table = {}
     for run in args.runs:
@@ -102,7 +103,7 @@ def main():
                 cells[idx] += 1
             lines.append(f"| {policy} | {cells[0]} | {cells[1]} | {cells[2]} | {cells[3]} |")
     text = "\n".join(lines) + "\n"
-    (RUNS / "comparison_v2.md").write_text(text, encoding="utf-8")
+    (RUNS / f"{args.name}.md").write_text(text, encoding="utf-8")
     print(text)
 
 
