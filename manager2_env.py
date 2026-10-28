@@ -234,6 +234,7 @@ class Scene:
         self.was_fallen = False
         self.course_ref, self.course_damage, self.course_moved_body = None, 0.0, ""
         self.pushes = 0
+        self.nudges = 0                                                      # PUSH calls on a fallen duck (skill_nudge)
         self.landed = False
         self.last_result, self.last_action = "none", None
         self.decisions = []
@@ -369,7 +370,7 @@ class ManagerEnv(gym.Env):
         s, h = self.scene, self.scene.h
         action = int(action)
         name = ACTIONS[action]
-        bubble = bubble_line(action, s)
+        bubble = bubble_line(action, s, h)
         s.bubble_text = bubble
         s.bubble_sub = (f"指示 {name}（{len(s.decisions) + 1} 手目）   直前の結果：{s.last_result}   押し上げ {s.pushes} 回   "
                         f"パッカン：{s.duck.mode}／{h.stage()}")
@@ -390,7 +391,9 @@ class ManagerEnv(gym.Env):
             wasted += 1.0                                    # v2.2: SEAT / STANDUP on a duck that cannot get up (make room first)
         if name == "WAIT" and mode0 != "FALLEN" and stage0 != "north":
             wasted += -REWARD["wait_idle"]
-        if name == "PUSH" and result != "nothing":
+        if name == "PUSH" and mode0 == "FALLEN":
+            s.nudges += 1                                    # a nudge, not a push up the ramp (keeps the obs' push count)
+        elif name == "PUSH" and result != "nothing":
             s.pushes += 1
         falls = min(s.falls - falls0, 2)
         stage = h.stage()
@@ -414,7 +417,7 @@ class ManagerEnv(gym.Env):
         rec = {"episode": self.episode_id, "t": round(t_start, 1), "action": name, "bubble": bubble, "result": result,
                "duration_s": round(duration, 1), "reward": round(reward, 3), "success": bool(success),
                "stage_before": stage0, "stage_after": stage, "duck_before": mode0, "duck_after": s.duck.mode,
-               "falls": int(falls), "pushes": s.pushes, "landed": bool(s.landed), "wasted": wasted,
+               "falls": int(falls), "pushes": s.pushes, "nudges": s.nudges, "landed": bool(s.landed), "wasted": wasted,
                "push_phase": getattr(h, "push_phase", "") if name == "PUSH" else "",
                "course_damage_m": round(s.course_damage, 3), "course_damaged": bool(damaged),
                "course_moved_body": s.course_moved_body, "draw": s.draw}

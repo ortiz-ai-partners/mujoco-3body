@@ -64,6 +64,7 @@ LINES = {
     "SEAT": "パッカン、カニさんの方を向いて座って",
     "PUSH": "カニさん、そっと押し上げてあげて",
     "PUSH_RETRY": "もう一回いこう。カニさん、そっと押し上げてあげて",
+    "NUDGE": "カニさん、そっと押してずらしてあげて",
     "BACK_OFF": "カニさん、少し離れて",
     "STANDUP": "パッカン、立てる？",
     "WALK_ON": "パッカン、そのまま進んで",
@@ -286,8 +287,8 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
     d, c = h.duck, h.crab
     t0 = now(h)
     if d.mode == "FALLEN":
-        c.loco.set_command(0, 0, 0)
-        yield from _hold(h, 1.5)
+        c.loco.set_command(0, 0, 0)                          # (a nudge of the fallen duck was tried on 10/28 noon and
+        yield from _hold(h, 1.5)                             #  dropped: see skill_nudge below)
         return "nothing"
     if c.mode != "WALK":
         c.set_mode("WALK", now(h), h.model)
@@ -407,6 +408,56 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
     return "stalled"
 
 
+def skill_nudge(h, max_s=30.0):
+    """NOT IN USE - an experiment of 10/28 noon (ゆうころ「固定ルール、カニを近くに伴走させようか」), kept as a record.
+    The idea: PUSH on a fallen duck = the crab comes up behind the lying duck on its line, shoves it 0.2 m north at
+    0.12 m/s off the landing's seam (where velstand could not get it up in 6 of the rule's 7 evaluation-v3 failures)
+    and backs away so that velstand can.  v7_test_nudge.py: a duck placed lying on the seam gets up by itself in 5 of
+    6 poses; in the stuck pose the crab, starting 0.6 m behind, stalled on the crest's own seam and never reached it;
+    in the env smoke (seed 7001) two nudges returned nothing and the shove moved the far deck piece 1.6 cm (course
+    damage risk).  Dropped: skill_push returns nothing on a fallen duck as before, and the rule waits."""
+    d, c = h.duck, h.crab
+    t0 = now(h)
+    if h.stage() in ("beside", "north") or d.mode != "FALLEN":
+        c.loco.set_command(0, 0, 0)
+        yield from _hold(h, 1.0)
+        return "nothing"
+    if c.mode != "WALK":
+        c.set_mode("WALK", now(h), h.model)
+    c.loco.posture[3] = 0.0
+    p0 = h.duck_xyz().copy()
+    phase, t_phase = "behind", now(h)
+    while now(h) - t0 < max_s:
+        p, q = h.duck_xyz(), h.crab_xyz()
+        if d.mode != "FALLEN" and phase != "back":           # it got up meanwhile: just make room
+            phase, t_phase = "back", now(h)
+        tx = float(np.clip(p[0], LANE_X - 0.2, LANE_X + 0.2))
+        if phase == "behind":                                # 0.45 m behind it on its line, facing north
+            if q[1] > p[1] - 0.25 and abs(q[0] - tx) < 0.35:   # level with / ahead of it on the line: back down first
+                reverse_command(h)
+            else:
+                e_yaw = wrap(math.pi / 2 - c.yaw(h.data))
+                dist, _ = c.steer(h.data, (tx, p[1] - 0.45), 0.25)
+                if dist < 0.12:
+                    c.loco.set_command(0.0, 0.0, float(np.clip(3.0 * e_yaw, -1.0, 1.0)))
+                    if abs(e_yaw) < 0.15:
+                        phase, t_phase = "shove", now(h)
+            if now(h) - t_phase > 15.0:
+                phase, t_phase = "back", now(h)
+        elif phase == "shove":
+            c.steer(h.data, (tx, p[1] + 0.3), 0.12)
+            if p[1] - p0[1] > 0.2 or now(h) - t_phase > 8.0:
+                phase, t_phase = "back", now(h)
+        elif phase == "back":
+            reverse_command(h)
+            if (h.crab_dist() > 0.6 and not h.touching()) or now(h) - t_phase > 7.0:
+                break
+        yield
+    c.loco.set_command(0, 0, 0)
+    yield from _hold(h, 0.5)
+    return "cleared" if h.duck_xyz()[1] - p0[1] > 0.1 else "nothing"
+
+
 def skill_back_off(h, max_s=7.0, clearance=0.6):
     """The crab reverses straight back until it is `clearance` from the duck and not touching it."""
     c = h.crab
@@ -456,8 +507,10 @@ def skill_standup(h, max_s=16.0):
 
 
 def skill_walk_on(h, max_s=30.0):
-    """The duck walks north along the course's centre line (velstand, 0.3 m/s; 0.2 across the landing); the crab
-    holds still.  Result: crossed / walked / stalled / nothing (not on its feet)."""
+    """The duck walks north along the course's centre line (velstand, 0.3 m/s); the crab holds still.  (In the story
+    the crab follows the duck across the landing and down - the procession finale - but that stays out of the skill:
+    the learned managers were trained with the crab holding, and the crab cannot help a fallen duck anyway, see
+    skill_nudge.)  Result: crossed / walked / stalled / nothing (not on its feet)."""
     d, c = h.duck, h.crab
     if not h.duck_up():
         c.loco.set_command(0, 0, 0)
@@ -527,8 +580,10 @@ def observation(h, book):
     return np.asarray(obs, dtype=np.float32)
 
 
-def bubble_line(action, book):
+def bubble_line(action, book, h=None):
     name = ACTIONS[action]
+    if name == "PUSH" and h is not None and h.duck.mode == "FALLEN":
+        return LINES["NUDGE"]
     if name == "PUSH" and book.pushes > 0:
         return LINES["PUSH_RETRY"]
     return LINES[name]
@@ -545,7 +600,7 @@ def rule_action(h, book):
     if d.mode == "FALLEN":
         if close and not (book.last_action == ACTIONS.index("BACK_OFF") and book.last_result == "stalled"):
             return ACTIONS.index("BACK_OFF")
-        return ACTIONS.index("WAIT")
+        return ACTIONS.index("WAIT")                         # nothing in the action set helps a fallen duck (skill_nudge)
     if stage == "north":
         return ACTIONS.index("WAIT")
     if stage in ("deck", "ramp_down"):

@@ -480,7 +480,7 @@ def main():
     import types
     import crab_help as ch                                   # imported here: crab_help imports this module
     h = ch.Helpers(model, data, duck, crab)
-    book = types.SimpleNamespace(last_result="none", last_action=None, pushes=0, t0_episode=0.0, course_damage=0.0,
+    book = types.SimpleNamespace(last_result="none", last_action=None, pushes=0, nudges=0, t0_episode=0.0, course_damage=0.0,
                                  course_tolerance=0.04)
     if args.manager == "ppo":
         from stable_baselines3 import PPO
@@ -1098,7 +1098,7 @@ def main():
                 obs = ch.observation(h, book)
                 a = manager_policy(obs)
                 name = ch.ACTIONS[a]
-                mgr.update(gen=ch.SKILLS[name](h), action=a, name=name, line=ch.bubble_line(a, book), t_dec=t, n=mgr["n"] + 1)
+                mgr.update(gen=ch.SKILLS[name](h), action=a, name=name, line=ch.bubble_line(a, book, h), t_dec=t, n=mgr["n"] + 1)
                 mgr["decisions"].append({"n": mgr["n"], "t": round(t, 1), "video_t": round(video_t(), 1), "action": name,
                                          "bubble": mgr["line"], "duck": duck.mode, "stage": h.stage(),
                                          "touching": bool(h.touching()), "crab_dist": round(h.crab_dist(), 2),
@@ -1114,7 +1114,9 @@ def main():
             except StopIteration as stop:
                 result = stop.value
                 book.last_result, book.last_action = result, mgr["action"]
-                if mgr["name"] == "PUSH" and result != "nothing":
+                if mgr["name"] == "PUSH" and mgr["decisions"][-1]["duck"] == "FALLEN":
+                    book.nudges += 1
+                elif mgr["name"] == "PUSH" and result != "nothing":
                     book.pushes += 1
                 mgr["decisions"][-1].update(result=result, duration_s=round(t - mgr["t_dec"], 1))
                 mgr["gen"] = None
