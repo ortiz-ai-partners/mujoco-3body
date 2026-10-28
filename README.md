@@ -32,7 +32,7 @@
 
 | 支配人 | 学習 | 渡り切り | 天面到達 | 無駄な手／話 | 通し台本（take） |
 |---|---|---|---|---|---|
-| 固定ルール | なし | 25/30 | 97% | 0.13 | take 6：5 手（描画版 8 手、押し直し 1 回） |
+| 固定ルール | なし | 25/30 | 97% | 0.13 | take 6：5 手（描画版 8 手、押し直し 1 回）、**take 9：8 手、新しい結末（跳跳が追走、ゴールで三人の万歳）** |
 | 表形式 Q `tabq2_small` | 120 話、2 h | 23/30 | 93% | 13.97 | take 7：8 手 |
 | PPO 小 `ppo2_small` | 3k 決定、54 min | 0/30 | 27% | 61.9 | — （WALK_ON に固着） |
 | PPO 中 `ppo2_medium2` | 12k 決定、4 h 13 min | 19/30 | 77% | 9.97 | take 8：ヘッドレスは 4 手で渡り切り（BACK_OFF を省く）、描画版は失敗（止まった押しの後に STANDUP、転倒・密着で SEAT 連打） |
@@ -72,6 +72,6 @@
 | `v6_phase1_build.py` | BZ 単体施工 → `out\v6_stage_built.xml`（施工済みの独立シーン） |
 | `render_3body*.py`, `v6_phase2/3/4_*.py` | v1〜v6 の記録（v6 Phase 2〜3 は外力あり：採用せず、履歴として残置） |
 | `HANDOVER.md` | 引継ぎ文書（事実・罠・時系列） |
-| `out/` | 動画・レポート（`3body_arena_v7_take6.mp4` = 固定ルール支配人で 3/3、`take7` = 学習済み Q 表、`take8` = 学習済み PPO、`take4`/`take5` = 旧結末（押し倒し）、`manager2_demo_*.mp4` = 学習環境のデモ、`*.notion.mp4` = 圧縮版）。`out\manager_runs\<run>\` に学習ログ・評価 JSON・方策 |
+| `out/` | 動画・レポート（`3body_arena_v7_take9.mp4` = 固定ルール支配人で 3/3 ＋ 新しい結末（跳跳が追走、ゴールで三人の万歳）、`take6` = 固定ルールで 3/3（旧結末）、`take7` = 学習済み Q 表、`take8` = 学習済み PPO（失敗）、`take4`/`take5` = 旧々結末（押し倒し）、`manager2_demo_*.mp4` = 学習環境のデモ、`v7_cheer_test*.mp4` = 万歳の単体テスト、`*.notion.mp4` = 圧縮版）。`out\manager_runs\<run>\` に学習ログ・評価 JSON・方策 |
 
 Notion「MuJoCo 3体連携」ページに検証結果を逐次記録している。
