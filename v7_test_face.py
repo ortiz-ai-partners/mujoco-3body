@@ -1,5 +1,5 @@
-"""Smoke test of the crab's face (crab_face.py): the seven expressions on the display panel, seen from in front of the
-crab by a story-style camera and by the face monitor (the inset at the bottom-left).  No physics is stepped.
+"""Smoke test of the crab's face (crab_face.py): the 11 expressions (crab_face.EXPRESSIONS) on the display panel, seen
+from the front by a story-style camera and by the face monitor (top-right, beside the caption).  No physics is stepped.
 
     python v7_test_face.py            -> out/face_test/face_<expression>.png and out/face_test/faces_sheet.png
 
@@ -51,7 +51,7 @@ def main():
         pip.update_scene(data, camera=face.cam_name, scene_option=opt)
         small = pip.render().copy()
         pics.append((e, small))
-        # the story's widest caption (RESCUE), so the monitor goes below it; the smoke test also shows a jump-cut notice
+        # the story's widest caption (RESCUE) beside the monitor; the smoke test also shows a jump-cut notice
         img = cap.draw(frame, "v7 | 支配人AI〈アイランドマスター〉が次の一手を選ぶ ― 手助けは跳跳、物理のみ",
                        [f"face test | {e}（{crab_face.JA[e]}）", "跳跳の表示パネル（描画のみ・物理に影響なし）"],
                        footer="sim 123.4 s   x2",

@@ -1,4 +1,4 @@
-"""Training data for the crab's mood net (crab_face.MoodAI, ゆうころ 10/28 夜「本物の推論で 2 つの AI」).
+"""Training data for the crab's mood net (crab_face.MoodAI; requirement: two AIs doing real inference in the video).
 
 Runs managers (the fixed rule, the PPO v2.2 policy, and random moves for variety) in the learning environment's Scene
 over the start scenarios and, every 0.1 s inside every skill, records the manager's 46-dim observation, which skill is

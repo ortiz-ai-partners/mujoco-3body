@@ -18,12 +18,13 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Protocol
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import mujoco
 import numpy as np
 
 # ── Paths ────────────────────────────────────────────────────────────────
-BASE = Path(__file__).resolve().parent.parent
+BASE = Path(__file__).resolve().parents[2]  # archive/: one level deeper than before the move; BASE is still the parent of the repository
 BZ_XML = BASE / "physical-ai-course-builder" / "scene_fork_tracks.xml"
 MD_XML = (
     BASE / "microduck_rl" / "src" / "mjlab_microduck"

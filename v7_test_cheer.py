@@ -1,9 +1,9 @@
-"""Goal celebration test (ゆうころ 10/28 朝): the three at the goal after the crossing - BZ's fork up, the duck
+"""Goal celebration test: the three at the goal after the crossing - BZ's fork up, the duck
 flapping, the crab's dance with its claws up, then both arms held up.  Built stage; the robots are placed by
 teleport (test only, never in a video); the celebration itself is policy commands and joint targets only.
 
-    <jumper venv python> v7_test_cheer.py --video out\\v7_cheer_test.mp4     # the 13 s celebration, recorded
-    <jumper venv python> v7_test_cheer.py --dance-only --seconds 16         # the dance alone: claw heights, arm pose at the top
+    python v7_test_cheer.py --video out/v7_cheer_test.mp4     # the 13 s celebration, recorded
+    python v7_test_cheer.py --dance-only --seconds 16         # the dance alone: claw heights, arm pose at the top
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ def main():
     ap.add_argument("--video", type=Path)
     ap.add_argument("--speed", type=float, default=1.0)
     ap.add_argument("--dance-only", action="store_true", help="only the crab's official dance (no duck / BZ moves)")
-    ap.add_argument("--circle", action="store_true", help="the circle celebration (ゆうころ 10/28 昼): BZ pumps the fork, the duck squats")
+    ap.add_argument("--circle", action="store_true", help="the circle celebration: BZ pumps the fork, the duck squats, the crab dances")
     ap.add_argument("--seconds", type=float)
     args = ap.parse_args()
 
@@ -38,7 +38,7 @@ def main():
         s.teleport("md", CIRCLE_MD, math.atan2(CIRCLE_C[1] - CIRCLE_MD[1], CIRCLE_C[0] - CIRCLE_MD[0]), z=z_stand + 0.005)
         s.teleport("jp", CIRCLE_JP, math.atan2(CIRCLE_C[1] - CIRCLE_JP[1], CIRCLE_C[0] - CIRCLE_JP[0]), z=0.115)
     else:
-        # where take 6 left them: BZ parked north of the course facing north, the duck on the floor just past the far
+        # the positions after a crossing: BZ parked north of the course facing north, the duck on the floor just past the far
         # ramp's toe, the crab at the duck's east side facing it (the procession finale brings it there)
         s.teleport("bz", (1.55, 3.07), math.pi / 2, z=0.30)
         s.teleport("md", (1.45, 2.35), math.pi / 2, z=z_stand + 0.005)

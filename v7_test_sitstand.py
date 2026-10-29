@@ -1,6 +1,6 @@
 """v7 check: velstand -> sitstand (sit, peer with the head while seated, stand) -> velstand.
 
-    <jumper venv python> v7_test_sitstand.py [--preview DIR]
+    python v7_test_sitstand.py [--preview DIR]
 """
 from __future__ import annotations
 

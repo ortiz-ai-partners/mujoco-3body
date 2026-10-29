@@ -1,0 +1,22 @@
+# Python 3.10 (verified with 3.10.6 on Windows 11, CPU only).
+# Versions are the ones the submission video, the evaluation tables and the
+# trained models were produced with (pip freeze of that environment);
+# see docs/reproduce.md for what each is for.
+mujoco==3.11.0
+numpy==2.2.6
+onnxruntime==1.23.2
+# torch: the CPU build is enough (training and inference both run on the CPU).
+# The environment had 2.14.1+cpu. Install it first from the CPU index, then this file:
+#   pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1
+stable-baselines3==2.9.2
+# gymnasium 1.1.x fails to import on Python 3.10.6; keep 1.0.0.
+gymnasium==1.0.0
+imageio==2.38.0
+imageio-ffmpeg==0.6.0
+Pillow==12.3.0
+# glfw is imported by ../physical-ai-course-builder/app.py (no visible window is opened).
+glfw==2.10.2
+# Optional, only for analysis/grab_frames.py (stills from an mp4): either `av`
+# (imageio's pyav plugin) or `opencv-python`. Not needed for the videos, the
+# training, the evaluation or the mood net.

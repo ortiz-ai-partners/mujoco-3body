@@ -1,6 +1,6 @@
 """v7 experiment: forward jump by sweeping the feet backward during the push (joint targets only).
 
-    <jumper venv python> v7_test_jump_forward.py
+    python v7_test_jump_forward.py
 """
 from __future__ import annotations
 

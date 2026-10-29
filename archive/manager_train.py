@@ -1,7 +1,7 @@
-"""Train and evaluate the manager (Island Master) with Stable-Baselines3 PPO on ManagerEnv.
+"""Train and evaluate the manager AI (v1) with Stable-Baselines3 PPO on ManagerEnv.
 
-    <jumper venv python> manager_train.py train --envs 8 --steps 1024 --run ppo_smoke
-    <jumper venv python> manager_train.py eval  --run ppo_smoke --episodes 30
+    python archive/manager_train.py train --envs 8 --steps 1024 --run ppo_smoke
+    python archive/manager_train.py eval  --run ppo_smoke --episodes 30
 
 train: PPO, small MLP (64x64), parallel envs (one MuJoCo scene per process).  One env step is one
 skill (5-110 simulated seconds), so `--steps` counts decisions, not simulator ticks.
@@ -15,6 +15,8 @@ import argparse
 import json
 import time
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import numpy as np
 

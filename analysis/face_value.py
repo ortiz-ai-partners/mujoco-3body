@@ -1,4 +1,4 @@
-"""Is the PPO v2.2 critic's V(s) a usable mood for the crab?  (crab_face.MoodAI, ゆうころ 10/28 夜)
+"""Is the PPO v2.2 critic's V(s) a usable mood for the crab?  (crab_face.MoodAI; the first design, not adopted)
 
 Runs the rule manager and the PPO v2.2 manager in the learning environment's Scene over the start scenarios (a few
 seeds each) and evaluates ppo2_v22's value network every 0.1 s inside the skills - the same inference the story's

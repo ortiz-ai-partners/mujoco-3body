@@ -4,7 +4,7 @@ Reproduces scene C headless and, while the duck stays down, tries in order:
   +4 s  policy reset (last_action -> 0)        -> if it gets up, stale state was the cause
   +9 s  servos to default for 1 s, then policy  -> if it gets up, the lying pose was the cause
 
-    <jumper venv python> v7_test_fall_recovery.py
+    python v7_test_fall_recovery.py
 """
 from __future__ import annotations
 

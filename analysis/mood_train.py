@@ -1,6 +1,6 @@
 """Train the crab's mood net: the second AI that infers, at any control step of a rescue, how the running move will
-end - p_success / p_stall / p_fall / p_nothing - and whether the duck gets across (crab_face.MoodAI; ゆうころ
-10/28 夜「本物の推論で 2 つの AI」「複数の確率と計測値から表情を組み立てる」).
+end - p_success / p_stall / p_fall / p_nothing - and whether the duck gets across (crab_face.MoodAI; requirement:
+two AIs doing real inference in the video, the face composed from several probabilities and measured values).
 
 Data: out/manager_runs/mood_data.npz from analysis/mood_data.py (the manager's 46-dim observation every 0.1 s inside
 every skill, which skill, how long it has run, how it ended, whether the episode ended crossed).  Features: the

@@ -1,6 +1,6 @@
 """v7 check: does the jumper stand and walk under its official locomotion policy, physics only?
 
-    <jumper venv python> v7_test_jumper.py [--preview DIR]
+    python v7_test_jumper.py [--preview DIR]
 """
 from __future__ import annotations
 

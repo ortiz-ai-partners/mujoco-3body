@@ -1,11 +1,12 @@
 """Build and test a 3-body arena: Bulldozer + Microduck + Jumper via MjSpec.attach."""
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import mujoco
 import numpy as np
 
-BASE = Path(__file__).resolve().parent.parent
+BASE = Path(__file__).resolve().parents[2]  # archive/: one level deeper than before the move; BASE is still the parent of the repository
 
 BZ_XML = BASE / "physical-ai-course-builder" / "scene_fork_tracks.xml"
 MD_XML = BASE / "microduck_rl" / "src" / "mjlab_microduck" / "robot" / "microduck" / "scene.xml"

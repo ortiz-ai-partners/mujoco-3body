@@ -1,9 +1,12 @@
 """v6 Phase 4 - the whole story in ONE continuous simulation (no resets, no teleports).
 
+Note: this is the v6 version with demo aids (external forces).  The submitted story is v7_full.py,
+which imports only ArenaSim and PHASE_TEXT from here and uses no external force.
+
   BUILD   BZ builds the two-slope course (SlopeAssembly, rule control, physics);
-          MD wanders in the free area beyond the course (ゆうころ: 「作っている最中もうろちょろ」).
+          MD wanders in the free area beyond the course (requirement: it wanders while the course is built).
   FOLLOW  When BZ starts crossing, MD comes over and follows it up the course,
-          quacking (「がーがー言いながら後をついていって」).
+          quacking (requirement: it follows BZ while quacking).
   CRAB    JP hops in, pounces on MD, MD falls and is helped up (virtual harness),
           JP ends up on its back; MD walks over and looks at it, worried.
   RESCUE  BZ drives over and nudges the crab back onto its feet with the fork;

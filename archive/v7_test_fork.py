@@ -1,6 +1,6 @@
 """Does the fork tip the seated duck over, or just push it along?  The LIFT ending, standalone.
 
-    <jumper venv python> v7_test_fork.py [--dy 0 0.1 0.2] [--lift 0 0.06]
+    python archive/v7_test_fork.py [--dy 0 0.1 0.2] [--lift 0 0.06]
 
 BZ is put 1.9 m east of the seated duck, facing west, with its centreline dy north of the duck's
 centre and the fork held at height `lift` while it slides in; then the story's insert / lift /
@@ -13,6 +13,9 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import mujoco
 import numpy as np
@@ -30,7 +33,7 @@ MD_SEAT = (1.22, -2.10, math.pi / 2)        # where the duck sits in the story, 
 def run(dy, lift_h, tracks_mod, mode="tip", height=0.49, back_speed=0.25, hold=2.5, side="east", standing=False,
         skew_deg=0.0):
     """mode 'tip': the story's original sequence (full-rate lift to 0.49, back at 0.25).
-    mode 'lift': the gentle one (ゆうころ 10/27: lifting the duck is the heart-warming ending) -
+    mode 'lift': the gentle one (the lift was the first intended ending) -
     lift at 0.6 rate to `height`, hold, lower at 0.4 rate, back off at `back_speed`."""
     model, data = build_arena(STAGE_XML, md_pose=MD_SEAT, timestep=0.001)
     official_md_servos(model)

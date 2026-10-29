@@ -1,6 +1,6 @@
 """Compare the manager policies on the shared evaluation seeds and attribute failures.
 
-    <jumper venv python> manager2_report.py --runs ppo2_small baselines_v2 tabq2_small
+    python manager2_report.py --runs ppo2_small baselines_v2 tabq2_small
 
 Reads out/manager_runs/<run>/eval_<policy>.json (written by manager2_train.py eval / manager2_tabq.py eval),
 prints a markdown table (crossing rate, landing rate, time, decisions, falls, pushes, wasted actions, course

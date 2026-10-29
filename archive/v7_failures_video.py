@@ -1,14 +1,17 @@
-"""v7 failure footage (physics only) for ゆうころ to inspect:
+"""v7 failure footage (physics only), recorded for inspection:
 
   A  the duck tries the 16-degree ramp, backs off, tries again, gives up and sits down
   B  the crab walks up the same ramp under its official locomotion policy (can it?)
   C  the crab pounces, the duck falls and does not get up (under investigation)
 
-    <jumper venv python> v7_failures_video.py   -> out/v7_failures_physics_only.mp4
+    python archive/v7_failures_video.py   -> out/v7_failures_physics_only.mp4
 """
 from __future__ import annotations
 
 import math
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import mujoco
 import numpy as np

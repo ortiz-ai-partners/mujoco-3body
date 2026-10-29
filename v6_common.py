@@ -1,7 +1,8 @@
 """Shared helpers for the v6 phased renders (BZ construction -> MD -> JP).
 
-v1-v5 tried the whole scenario in one script; v6 follows HANDOVER.md section 8
-and builds the video in phases that each export their own MP4.
+v1-v5 tried the whole scenario in one script; v6 follows docs/devlog/HANDOVER.md section 8
+and builds the video in phases that each export their own MP4.  v7_full.py (the submitted
+story) and the learning environment import the helpers from here.
 """
 from __future__ import annotations
 
@@ -87,7 +88,7 @@ class Captioner:
 
     def draw(self, frame, title, lines=(), footer=None, inset=None, notice=None):
         """inset: (image HxWx3, label above, label below) - the crab's face monitor, a small box at the top-right in the
-        same row as the caption box (ゆうころ 10/28 夜: 「一番上の文字情報の枠と同じ列に、二段じゃなく一段で」).  The
+        same row as the caption box (requirement: one row together with the caption box, not a second row).  The
         caption shrinks its fonts, then wraps its lines, so that it always fits beside the monitor.  notice: a line in a
         box at the bottom-left (a jump cut)."""
         if not self.ok:
@@ -257,7 +258,7 @@ class CameraRig:
         self.cam.elevation = self.state[5]
 
 
-# ── Built-stage snapshot (Notion phase A0) ───────────────────────────────
+# ── Built-stage snapshot (phase A0 of the v6 plan) ──────────────────────
 def body_poses(model, data, names=STAGE_BODIES):
     out = {}
     for n in names:

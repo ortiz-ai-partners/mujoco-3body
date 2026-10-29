@@ -1,6 +1,6 @@
 """Crab high-centres on the crest of the up-slope: can it push through at full speed, or jump over?
 
-    <jumper venv python> v7_test_crest.py [--sweep 1.0]
+    python v7_test_crest.py [--sweep 1.0]
 """
 from __future__ import annotations
 

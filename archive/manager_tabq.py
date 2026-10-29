@@ -1,7 +1,7 @@
 """Tabular Q-learning manager on the same ManagerEnv - the comparison baseline for the PPO (MLP) manager.
 
-    <jumper venv python> manager_tabq.py train --episodes 300 --run tabq_smoke
-    <jumper venv python> manager_tabq.py eval  --run tabq_smoke --episodes 20 --seed0 5000
+    python archive/manager_tabq.py train --episodes 300 --run tabq_smoke
+    python archive/manager_tabq.py eval  --run tabq_smoke --episodes 20 --seed0 5000
 
 The observation is discretised to a small key (last result x duck state x crab in path x attempts x
 docked x alignment quality); Q-learning with epsilon-greedy exploration.  Single process (one scene),
@@ -15,6 +15,8 @@ import json
 import time
 from collections import defaultdict
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import numpy as np
 

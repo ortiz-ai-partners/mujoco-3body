@@ -1,0 +1,58 @@
+{
+ "run": "ppo2_v22",
+ "envs": 12,
+ "steps": 12000,
+ "rollout": 48,
+ "wall_s": 16105.2,
+ "episodes": 766,
+ "train_success_rate": 0.658,
+ "init_from": "ppo2_medium2",
+ "ent_coef": 0.02,
+ "reward": "v2.2",
+ "draw_tables": {
+  "scenarios": [
+   [
+    "toe_seated_ok",
+    0.2
+   ],
+   [
+    "toe_seated_wrong",
+    0.15
+   ],
+   [
+    "toe_standing",
+    0.15
+   ],
+   [
+    "toe_fallen",
+    0.1
+   ],
+   [
+    "deck_seated",
+    0.15
+   ],
+   [
+    "deck_fallen",
+    0.05
+   ],
+   [
+    "ramp_fallen",
+    0.2
+   ]
+  ],
+  "crab_spots_toe": [
+   [
+    "behind",
+    0.5
+   ],
+   [
+    "beside",
+    0.2
+   ],
+   [
+    "touching",
+    0.3
+   ]
+  ]
+ }
+}

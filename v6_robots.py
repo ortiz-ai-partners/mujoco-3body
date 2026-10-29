@@ -1,7 +1,11 @@
 """Robots on the built stage: arena assembly, resets and controllers for MD and JP.
 
-Honesty notes for the report
-----------------------------
+Note: the notes below describe the v6 phases (Phase 2 / 3 are in archive/).  v7 (v7_full.py, manager2_env.py) uses only
+build_arena() and the helpers from here; it restores the XML's official Microduck servo values with
+v7_full.official_md_servos() and applies no external force (MicroduckCtrl / JumperCtrl are v6-only).
+
+Honesty notes for the report (v6)
+---------------------------------
 * BZ construction (Phase 1) is pure physics + rule control.
 * MD walks with a scripted gait; a *virtual harness* (external force/torque on
   the trunk via xfrc_applied) keeps it upright and pulls it along the path.
@@ -35,7 +39,7 @@ JP_HOME = {
 JP_STAND_Z = 0.10647
 JP_KP, JP_KD, JP_EFFORT = 10.0, 0.5, 1.7464
 
-# ── Microduck: idealised servo gains for the demo ────────────────────────
+# ── Microduck: idealised servo gains for the v6 demo (v7 restores the XML values, see official_md_servos) ──
 MD_KP, MD_KV, MD_FORCE = 8.0, 0.3, 5.0
 MD_STAND_Z = 0.12
 

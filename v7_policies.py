@@ -270,7 +270,7 @@ class JumperJump:
         self.gyro_adr = int(model.sensor_adr[sid])
         self.reset()
 
-    # Forward jump (ゆうころ 10/27): sweep every foot backward with the hip yaw J0 while
+    # Forward jump (this project's addition to the official jump): sweep every foot backward with the hip yaw J0 while
     # the legs push, so the vertical high jump gets a forward component.  Joint targets
     # only - no external force.  Left legs +J0 moves the foot toward -x, right legs -J0.
     SWEEP_SIGN = {"LF_J0_joint": 1.0, "LM_J0_joint": 1.0, "LR_J0_joint": 1.0,

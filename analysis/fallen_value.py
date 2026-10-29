@@ -10,7 +10,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-RUNS = Path(r"D:\IslandMaster\mujoco_3body\out\manager_runs")
+RUNS = Path(__file__).resolve().parents[1] / "out" / "manager_runs"
 ACTS = ["WAIT", "SEAT", "PUSH", "BACK_OFF", "STANDUP", "WALK_ON"]
 
 

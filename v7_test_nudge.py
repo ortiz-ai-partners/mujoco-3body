@@ -1,8 +1,8 @@
-"""The nudge (PUSH on a fallen duck, ゆうころ 10/28 昼): the duck lying across the landing's seam, the crab 0.6 m behind.
-Does velstand get it up on its own in 4 s?  If not, does the nudge move it, and does velstand get it up afterwards?
-Built stage; the robots are placed by teleport (test only).
+"""The nudge (PUSH on a fallen duck; an experiment, not adopted): the duck lying across the landing's seam, the crab
+0.6 m behind.  Does velstand get it up on its own in 4 s?  If not, does the nudge move it, and does velstand get it
+up afterwards?  Built stage; the robots are placed by teleport (test only).
 
-    <jumper venv python> v7_test_nudge.py [--video out\\v7_nudge_test.mp4]
+    python v7_test_nudge.py [--video out/v7_nudge_test.mp4]
 """
 from __future__ import annotations
 

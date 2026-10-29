@@ -1,4 +1,4 @@
-"""v6 Phase 2 - Microduck walks on the built stage (Notion phases A1 / A2 / B1).
+"""v6 Phase 2 - Microduck walks on the built stage (phases A1 / A2 / B1 of the v6 plan).
 
 Stage = out/v6_stage_built.xml (the Phase 1 result: slopes + parked dozer).
 MD is attached with MjSpec.attach and walks a straight line with a scripted
@@ -15,6 +15,8 @@ import argparse
 import json
 import math
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import imageio
 import mujoco

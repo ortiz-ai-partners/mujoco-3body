@@ -1,7 +1,7 @@
-"""Can the crab push the duck up the 16-degree ramp?  (ゆうころ 10/28: the crab helps instead of the bulldozer -
-"a beautiful friendship"; the bulldozer must not handle the duck, lifting by the neck could break it.)
+"""Can the crab push the duck up the 16-degree ramp?  (Requirement: the bulldozer must not handle the duck -
+lifting it by the neck could break it - so the crab helps instead.)
 
-    <jumper venv python> v7_test_crab_push.py [--crab-vx 0.3 0.5] [--seconds 60] [--video out/v7_crab_push.mp4]
+    python v7_test_crab_push.py [--crab-vx 0.3 0.5] [--seconds 60] [--video out/v7_crab_push.mp4]
 
 The duck (velstand, official servos) is commanded to walk north up the ramp from its toe; the crab
 (official locomotion) walks behind it, aiming just ahead of the duck so its body keeps pressing on the
@@ -78,7 +78,7 @@ def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.
 
     for _ in range(int(1.0 / CONTROL_DT)):              # settle on their feet
         tick()
-    if seated:                                            # ゆうころ: the seated duck is pushed (low centre of mass)
+    if seated:                                            # design decision: the seated duck is pushed (low centre of mass)
         duck.use("sit")
         duck.set_mode("SIT", t)
         duck.sit.twist[:] = (1.0, 0.0, 0.0)
@@ -190,7 +190,7 @@ def run(crab_vx, seconds, video_path=None, duck_vx=0.3, gap=0.35, crab_height=0.
             crab.steer(data, (LANE_X, p_md[1] + 0.15), approach_vx)   # close the gap gently
         else:
             # no slowing near the crest: the seated duck rides leaning back on the crab (~40 deg), and easing off
-            # there let it topple (run 10/28 01:xx, fell at y -0.82); keep the push steady until the landing
+            # there let it topple (one run fell at y -0.82); keep the push steady until the landing
             crab.steer(data, (LANE_X, p_md[1] + 0.15), crab_vx)       # sustained push, matched to the duck
         tick()
         touching = robots_in_contact(model, data, md_root, jp_root)

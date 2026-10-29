@@ -1,6 +1,6 @@
 """v7 check: the jumper's official high jump in plain MuJoCo - how high, how far?
 
-    <jumper venv python> v7_test_jump.py [--preview DIR]
+    python v7_test_jump.py [--preview DIR]
 """
 from __future__ import annotations
 

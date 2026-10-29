@@ -1,6 +1,6 @@
 """v7 check: Microduck under the official velstand policy in plain MuJoCo (XML PD servos, no forces).
 
-    <jumper venv python> v7_test_microduck.py [--dt 0.005] [--policy velstand.onnx] [--preview DIR]
+    python v7_test_microduck.py [--dt 0.005] [--policy velstand.onnx] [--preview DIR]
 """
 from __future__ import annotations
 

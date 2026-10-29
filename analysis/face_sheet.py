@@ -1,5 +1,5 @@
-"""The 11 faces as they appear in the video, with their names and the situations that bring them out (report figure 6,
-ゆうころ 10/28 夜).  Renders each expression through the face camera at twice the monitor's size and lays them out in
+"""The 11 faces as they appear in the video, with their names and the situations that bring them out (report
+figure 6).  Renders each expression through the face camera at twice the monitor's size and lays them out in
 a grid with Japanese labels.
 
     python analysis/face_sheet.py            -> report/faces_sheet_ja.png

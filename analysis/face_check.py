@@ -13,7 +13,7 @@ import sys
 
 
 def events(r):
-    # the jump-cut notes (takes 34-) are about the video, not the physics: left out of the comparison
+    # the jump-cut notes are about the video, not the physics: left out of the comparison
     return [(e["t"], e["event"]) for e in r["events"] if not e["event"].startswith("JUMP CUT")]
 
 

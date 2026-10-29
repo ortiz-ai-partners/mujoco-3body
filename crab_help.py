@@ -1,8 +1,8 @@
 """The crab-assisted crossing: skills the manager can call, shared by the learning environment
 (manager2_env.py) and the story (v7_full.py).
 
-ゆうころ (2026-10-28): the bulldozer must not handle the duck (lifting by the neck could break it);
-the crab helps instead - "a beautiful friendship".  Experiment v7_test_crab_push.py (same night):
+Requirement: the bulldozer must not handle the duck (lifting it by the neck could break it); the
+crab helps instead.  Experiment v7_test_crab_push.py:
 the seated duck, FACING the crab, pushed at 0.3 m/s with the crab's body at its neutral height,
 climbs the 16-degree ramp leaning only 6-12 degrees, survives the crest, stands up on the landing
 once the crab has backed off, and walks across and down by itself (crossed at 86.6 s).  Seated
@@ -39,24 +39,24 @@ from v7_full import CONTROL_DT, wrap
 LANE_X = 1.45                      # the push / walk line: the course's centre (x 0.98-1.98).  The story's duck lane
                                    # (1.22) is 24 cm from the west edge: pushing there the crab's left feet stood on
                                    # the edge (stalled pushes), and after a trip on the landing the duck walked off
-                                   # the west side and dropped 0.44 m (headless take-6 test, 10/28)
+                                   # the west side and dropped 0.44 m (headless test of an early render)
 TOE_Y = -2.0                       # the up-ramp's toe
 CREST_Y = -0.495                   # top edge of the up-ramp (landing surface z = 0.44)
 DECK_N_Y = 0.548                   # top edge of the down-ramp
 DOWN_TOE_Y = 2.05                  # the down-ramp's toe
 SEAT_Y = TOE_Y - 0.13              # where the duck sits to be pushed: 13 cm before the ramp's lip.  Seated 35 cm
-                                   # before it, the duck toppled at the lip in 20/20 pushes on 10/28 (its seated
+                                   # before it, the duck toppled at the lip in 20/20 pushes (its seated
                                    # posture degrades while it slides); seated 15 cm before it, it climbed 3/3
 SEAT_TOL = 0.12                    # "seated at the seat" within this (m)
 PUSH_TO_Y = CREST_Y + 0.08         # the push ends once the duck sits on the landing.  Pushing it on past the seam of
-                                   # the two deck pieces (4 cm gap at y +0.02..+0.06) was tried on 10/28: the crab
+                                   # the two deck pieces (4 cm gap at y +0.02..+0.06) was tried: the crab
                                    # itself stalls where its body straddles the crest, so the duck walks the landing
 FACE_SOUTH = -math.pi / 2          # the duck faces the crab: back to the slope
 FACING_TOL = math.radians(15.0)
 CRAB_PUSH_VX = 0.3                 # the only speed that climbed (0.2 leaned and fell, 0.4 fell, 0.5 fell)
 WALK_VX = 0.3                      # the duck's walking speed on the ramps and the floor
 WALK_DECK_VX = 0.3                 # across the landing (the seam between the two deck pieces trips it either way:
-                                   # 6-seed sweep 10/28, 0.2 m/s crossed 3/6, 0.3 m/s 4/6)
+                                   # 6-seed sweep: 0.2 m/s crossed 3/6, 0.3 m/s 4/6)
 
 ACTIONS = ["WAIT", "SEAT", "PUSH", "BACK_OFF", "STANDUP", "WALK_ON"]
 LINES = {
@@ -153,9 +153,9 @@ class Helpers:
         return self.duck.mode == "SIT" and self.facing_ok() and self.at_seat()
 
     def near_lip(self):
-        """Seated on the line anywhere from the seat to just past the ramp's lip: close enough for a push.  (Take 13,
-        10/28: re-seated 2 cm outside SEAT_TOL at y -2.01, the rule asked for SEAT seven more times - the skill reports
-        'seated' wherever the duck sits down - until the time ran out.)"""
+        """Seated on the line anywhere from the seat to just past the ramp's lip: close enough for a push.  (In one
+        render the duck re-seated 2 cm outside SEAT_TOL at y -2.01 and the rule asked for SEAT seven more times - the
+        skill reports 'seated' wherever the duck sits down - until the time ran out.)"""
         p = self.duck_xyz()
         return abs(p[0] - LANE_X) < 0.2 and SEAT_Y - SEAT_TOL < p[1] < TOE_Y + 0.12
 
@@ -252,7 +252,7 @@ def skill_seat(h, max_s=32.0):
         err = h.facing_err()
         # velstand needs at least ~0.35 rad/s to turn at all (the story's TURN); within 2.3 deg hold still.
         # The push is sensitive to the facing: 6 deg off, the crab's push drifts the duck sideways and it
-        # tips at the ramp's toe (debug 10/28, seed 1000), so the re-seat aims tighter than the 4.6 deg before.
+        # tips at the ramp's toe (debug run, seed 1000), so the re-seat aims tighter than the 4.6 deg before.
         wz = 0.0 if abs(err) < 0.04 else math.copysign(min(1.0, max(0.35, 2.5 * abs(err))), -err)
         d.pol.twist[:] = (0.0, 0.0, wz)
         if abs(err) < 0.04:
@@ -287,7 +287,7 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
     d, c = h.duck, h.crab
     t0 = now(h)
     if d.mode == "FALLEN":
-        c.loco.set_command(0, 0, 0)                          # (a nudge of the fallen duck was tried on 10/28 noon and
+        c.loco.set_command(0, 0, 0)                          # (a nudge of the fallen duck was tried and
         yield from _hold(h, 1.5)                             #  dropped: see skill_nudge below)
         return "nothing"
     if c.mode != "WALK":
@@ -309,7 +309,7 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
             yield from _hold(h, 0.5)
             return "slipped"
         # the push line is the duck's own line (clipped to the course's middle), not the lane's centre: aiming at
-        # the lane while the duck sat 3 cm off it drifted the duck sideways and tipped it at the toe (debug 10/28)
+        # the lane while the duck sat 3 cm off it drifted the duck sideways and tipped it at the toe (debug run)
         tx = float(np.clip(p[0], LANE_X - 0.2, LANE_X + 0.2))
         if phase == "behind":
             B = np.array([tx, p[1] - 0.60])
@@ -334,7 +334,7 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
         elif phase == "align":
             # square up before touching: heading north, on the duck's line, 0.6 m behind.  A crab that starts
             # the push 10-20 cm off the line turns in place instead of walking (its steering gives no forward
-            # speed beyond 0.4 rad of bearing error) and the push stalls (smoke 10/28, seeds 1000/1002).
+            # speed beyond 0.4 rad of bearing error) and the push stalls (smoke tests, seeds 1000/1002).
             e_yaw = wrap(math.pi / 2 - c.yaw(h.data))
             e_lat = tx - q[0]                                # + : the line is to the crab's right (it faces north)
             e_fwd = max(0.0, (p[1] - 0.60) - q[1])           # never backs up here: closer than 0.6 m is fine
@@ -360,7 +360,7 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
             if now(h) - t_phase > 1.0:
                 phase, t_phase = "approach", now(h)
         elif phase == "push" and lip_pause and not lip_done and p[1] > TOE_Y - 0.09:
-            # (experiment 10/28, off by default: a stop-and-re-approach at the lip did not save a push that had
+            # (experiment, off by default: a stop-and-re-approach at the lip did not save a push that had
             # started 0.35 m before it - 6/6 still toppled.  What matters is how far the seated duck slides on
             # the flat before the lip: see SEAT_Y)
             lip_done = True
@@ -376,10 +376,10 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
             if d.mode == "SIT":
                 d.sit.body[4] = duck_pitch                   # body pitch command while pushed (experiments)
             # (no burst over the crest: the crab's 0.8 m/s push-through moved the far ramp 7 cm in one run and
-            # toppled the seated duck on the landing in another, 10/28; the push ends at the landing's edge)
+            # toppled the seated duck on the landing in another; the push ends at the landing's edge)
             c.steer(h.data, (tx, p[1] + 0.15), v)
             # keep pushing across the landing until the duck is past the seam between the two deck pieces: the
-            # pieces stand 4 cm apart there (raycast 10/28: floor at y +0.02..+0.06) and a walking duck's foot
+            # pieces stand 4 cm apart there (raycast: floor at y +0.02..+0.06) and a walking duck's foot
             # drops into the slot - it tripped at y +0.07/+0.13 in every run and once could not get up
             if p[1] > PUSH_TO_Y and p[2] > 0.45:
                 phase, t_phase = "settle", now(h)
@@ -409,7 +409,7 @@ def skill_push(h, max_s=90.0, vx=CRAB_PUSH_VX, start="behind", gate="far", toe_v
 
 
 def skill_nudge(h, max_s=30.0):
-    """NOT IN USE - an experiment of 10/28 noon (ゆうころ「固定ルール、カニを近くに伴走させようか」), kept as a record.
+    """NOT IN USE - an experiment (idea: the crab escorts the duck closely and nudges it when it falls), kept as a record.
     The idea: PUSH on a fallen duck = the crab comes up behind the lying duck on its line, shoves it 0.2 m north at
     0.12 m/s off the landing's seam (where velstand could not get it up in 6 of the rule's 7 evaluation-v3 failures)
     and backs away so that velstand can.  v7_test_nudge.py: a duck placed lying on the seam gets up by itself in 5 of
@@ -551,8 +551,8 @@ SKILLS = {"WAIT": skill_wait, "SEAT": skill_seat, "PUSH": skill_push, "BACK_OFF"
 
 # ── what the manager sees ────────────────────────────────────────────────────
 def observation(h, book):
-    """45 floats.  `book` carries the bookkeeping: last_result, last_action, pushes, t0_episode, course_damage,
-    course_tolerance."""
+    """46 floats (OBS_DIM = 3 + 2 + 4 + 2 + 6 stages + 7 + 13 results + 6 actions + 3).  `book` carries the
+    bookkeeping: last_result, last_action, pushes, t0_episode, course_damage, course_tolerance."""
     p, q = h.duck_xyz(), h.crab_xyz()
     d = h.duck
     mode = d.mode
@@ -618,5 +618,5 @@ def rule_action(h, book):
     return ACTIONS.index("SEAT")
 
 
-RULE_NEAR_LIP = True               # the 10/28 noon addition to the rule (take 13); False reproduces the morning's rule
-                                   # (baselines_v2) for a like-for-like check of the evaluation environment
+RULE_NEAR_LIP = True               # a later addition to the rule (push a duck seated anywhere up to the lip); False
+                                   # reproduces the earlier rule (baselines_v2) for a like-for-like check of the environment

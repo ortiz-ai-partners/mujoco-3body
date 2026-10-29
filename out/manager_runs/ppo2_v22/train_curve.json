@@ -1,0 +1,5364 @@
+[
+{
+"env": 4,
+"step": 12120,
+"success": true,
+"landed": true,
+"wall_s": 42.5
+},
+{
+"env": 3,
+"step": 12144,
+"success": true,
+"landed": true,
+"wall_s": 89.0
+},
+{
+"env": 8,
+"step": 12144,
+"success": true,
+"landed": true,
+"wall_s": 89.0
+},
+{
+"env": 0,
+"step": 12156,
+"success": true,
+"landed": true,
+"wall_s": 117.3
+},
+{
+"env": 5,
+"step": 12156,
+"success": true,
+"landed": true,
+"wall_s": 117.3
+},
+{
+"env": 8,
+"step": 12216,
+"success": true,
+"landed": true,
+"wall_s": 197.1
+},
+{
+"env": 10,
+"step": 12216,
+"success": true,
+"landed": true,
+"wall_s": 197.1
+},
+{
+"env": 0,
+"step": 12228,
+"success": true,
+"landed": true,
+"wall_s": 204.2
+},
+{
+"env": 3,
+"step": 12264,
+"success": true,
+"landed": true,
+"wall_s": 258.7
+},
+{
+"env": 4,
+"step": 12288,
+"success": true,
+"landed": true,
+"wall_s": 289.7
+},
+{
+"env": 3,
+"step": 12300,
+"success": true,
+"landed": true,
+"wall_s": 313.0
+},
+{
+"env": 8,
+"step": 12300,
+"success": true,
+"landed": true,
+"wall_s": 313.0
+},
+{
+"env": 7,
+"step": 12312,
+"success": true,
+"landed": true,
+"wall_s": 320.4
+},
+{
+"env": 10,
+"step": 12324,
+"success": true,
+"landed": true,
+"wall_s": 327.8
+},
+{
+"env": 8,
+"step": 12336,
+"success": true,
+"landed": true,
+"wall_s": 350.4
+},
+{
+"env": 2,
+"step": 12384,
+"success": false,
+"landed": true,
+"wall_s": 380.2
+},
+{
+"env": 7,
+"step": 12384,
+"success": true,
+"landed": true,
+"wall_s": 380.2
+},
+{
+"env": 6,
+"step": 12432,
+"success": false,
+"landed": false,
+"wall_s": 442.2
+},
+{
+"env": 7,
+"step": 12444,
+"success": true,
+"landed": true,
+"wall_s": 462.8
+},
+{
+"env": 9,
+"step": 12444,
+"success": false,
+"landed": false,
+"wall_s": 462.8
+},
+{
+"env": 1,
+"step": 12492,
+"success": false,
+"landed": false,
+"wall_s": 522.9
+},
+{
+"env": 5,
+"step": 12492,
+"success": false,
+"landed": true,
+"wall_s": 522.9
+},
+{
+"env": 6,
+"step": 12492,
+"success": true,
+"landed": true,
+"wall_s": 522.9
+},
+{
+"env": 7,
+"step": 12492,
+"success": true,
+"landed": true,
+"wall_s": 522.9
+},
+{
+"env": 9,
+"step": 12492,
+"success": true,
+"landed": true,
+"wall_s": 522.9
+},
+{
+"env": 5,
+"step": 12528,
+"success": true,
+"landed": true,
+"wall_s": 576.3
+},
+{
+"env": 7,
+"step": 12528,
+"success": true,
+"landed": true,
+"wall_s": 576.3
+},
+{
+"env": 9,
+"step": 12528,
+"success": true,
+"landed": true,
+"wall_s": 576.3
+},
+{
+"env": 1,
+"step": 12588,
+"success": true,
+"landed": true,
+"wall_s": 663.8
+},
+{
+"env": 2,
+"step": 12588,
+"success": true,
+"landed": true,
+"wall_s": 663.8
+},
+{
+"env": 5,
+"step": 12588,
+"success": true,
+"landed": true,
+"wall_s": 663.8
+},
+{
+"env": 7,
+"step": 12588,
+"success": true,
+"landed": true,
+"wall_s": 663.8
+},
+{
+"env": 11,
+"step": 12612,
+"success": false,
+"landed": false,
+"wall_s": 683.2
+},
+{
+"env": 0,
+"step": 12636,
+"success": false,
+"landed": false,
+"wall_s": 717.0
+},
+{
+"env": 8,
+"step": 12636,
+"success": false,
+"landed": true,
+"wall_s": 717.0
+},
+{
+"env": 11,
+"step": 12648,
+"success": true,
+"landed": true,
+"wall_s": 746.8
+},
+{
+"env": 1,
+"step": 12672,
+"success": true,
+"landed": true,
+"wall_s": 799.9
+},
+{
+"env": 7,
+"step": 12684,
+"success": true,
+"landed": true,
+"wall_s": 808.2
+},
+{
+"env": 11,
+"step": 12684,
+"success": true,
+"landed": true,
+"wall_s": 808.2
+},
+{
+"env": 3,
+"step": 12696,
+"success": false,
+"landed": true,
+"wall_s": 832.0
+},
+{
+"env": 8,
+"step": 12696,
+"success": true,
+"landed": true,
+"wall_s": 832.0
+},
+{
+"env": 3,
+"step": 12720,
+"success": true,
+"landed": true,
+"wall_s": 860.3
+},
+{
+"env": 7,
+"step": 12720,
+"success": true,
+"landed": true,
+"wall_s": 860.3
+},
+{
+"env": 11,
+"step": 12720,
+"success": true,
+"landed": true,
+"wall_s": 860.3
+},
+{
+"env": 1,
+"step": 12732,
+"success": true,
+"landed": true,
+"wall_s": 872.2
+},
+{
+"env": 10,
+"step": 12744,
+"success": false,
+"landed": true,
+"wall_s": 899.9
+},
+{
+"env": 8,
+"step": 12756,
+"success": true,
+"landed": true,
+"wall_s": 908.0
+},
+{
+"env": 10,
+"step": 12768,
+"success": true,
+"landed": true,
+"wall_s": 914.8
+},
+{
+"env": 3,
+"step": 12780,
+"success": true,
+"landed": true,
+"wall_s": 920.7
+},
+{
+"env": 0,
+"step": 12792,
+"success": false,
+"landed": false,
+"wall_s": 927.9
+},
+{
+"env": 4,
+"step": 12804,
+"success": false,
+"landed": true,
+"wall_s": 934.3
+},
+{
+"env": 6,
+"step": 12828,
+"success": false,
+"landed": true,
+"wall_s": 973.4
+},
+{
+"env": 8,
+"step": 12864,
+"success": true,
+"landed": true,
+"wall_s": 1013.8
+},
+{
+"env": 4,
+"step": 12888,
+"success": true,
+"landed": true,
+"wall_s": 1028.8
+},
+{
+"env": 8,
+"step": 12888,
+"success": true,
+"landed": true,
+"wall_s": 1028.8
+},
+{
+"env": 5,
+"step": 12912,
+"success": false,
+"landed": false,
+"wall_s": 1047.5
+},
+{
+"env": 2,
+"step": 12936,
+"success": false,
+"landed": true,
+"wall_s": 1079.3
+},
+{
+"env": 5,
+"step": 12960,
+"success": true,
+"landed": true,
+"wall_s": 1133.9
+},
+{
+"env": 6,
+"step": 12972,
+"success": true,
+"landed": true,
+"wall_s": 1141.6
+},
+{
+"env": 9,
+"step": 12972,
+"success": false,
+"landed": true,
+"wall_s": 1141.6
+},
+{
+"env": 10,
+"step": 12984,
+"success": true,
+"landed": true,
+"wall_s": 1164.6
+},
+{
+"env": 9,
+"step": 13020,
+"success": true,
+"landed": true,
+"wall_s": 1212.1
+},
+{
+"env": 6,
+"step": 13032,
+"success": true,
+"landed": true,
+"wall_s": 1222.9
+},
+{
+"env": 7,
+"step": 13056,
+"success": false,
+"landed": true,
+"wall_s": 1253.5
+},
+{
+"env": 6,
+"step": 13068,
+"success": true,
+"landed": true,
+"wall_s": 1269.1
+},
+{
+"env": 10,
+"step": 13068,
+"success": true,
+"landed": true,
+"wall_s": 1269.1
+},
+{
+"env": 11,
+"step": 13080,
+"success": false,
+"landed": true,
+"wall_s": 1277.9
+},
+{
+"env": 8,
+"step": 13092,
+"success": true,
+"landed": true,
+"wall_s": 1282.0
+},
+{
+"env": 0,
+"step": 13104,
+"success": false,
+"landed": false,
+"wall_s": 1305.9
+},
+{
+"env": 6,
+"step": 13116,
+"success": true,
+"landed": true,
+"wall_s": 1316.1
+},
+{
+"env": 8,
+"step": 13128,
+"success": true,
+"landed": true,
+"wall_s": 1340.6
+},
+{
+"env": 1,
+"step": 13140,
+"success": false,
+"landed": false,
+"wall_s": 1365.6
+},
+{
+"env": 5,
+"step": 13140,
+"success": false,
+"landed": true,
+"wall_s": 1365.6
+},
+{
+"env": 0,
+"step": 13152,
+"success": true,
+"landed": true,
+"wall_s": 1374.5
+},
+{
+"env": 8,
+"step": 13164,
+"success": true,
+"landed": true,
+"wall_s": 1381.2
+},
+{
+"env": 6,
+"step": 13188,
+"success": true,
+"landed": true,
+"wall_s": 1416.8
+},
+{
+"env": 8,
+"step": 13188,
+"success": true,
+"landed": true,
+"wall_s": 1416.8
+},
+{
+"env": 3,
+"step": 13248,
+"success": false,
+"landed": false,
+"wall_s": 1478.3
+},
+{
+"env": 5,
+"step": 13284,
+"success": true,
+"landed": true,
+"wall_s": 1504.3
+},
+{
+"env": 3,
+"step": 13296,
+"success": true,
+"landed": true,
+"wall_s": 1511.0
+},
+{
+"env": 4,
+"step": 13332,
+"success": false,
+"landed": true,
+"wall_s": 1563.2
+},
+{
+"env": 1,
+"step": 13356,
+"success": false,
+"landed": true,
+"wall_s": 1582.9
+},
+{
+"env": 4,
+"step": 13356,
+"success": true,
+"landed": true,
+"wall_s": 1582.9
+},
+{
+"env": 5,
+"step": 13356,
+"success": true,
+"landed": true,
+"wall_s": 1582.9
+},
+{
+"env": 5,
+"step": 13380,
+"success": true,
+"landed": true,
+"wall_s": 1612.1
+},
+{
+"env": 1,
+"step": 13392,
+"success": true,
+"landed": true,
+"wall_s": 1619.0
+},
+{
+"env": 5,
+"step": 13428,
+"success": true,
+"landed": true,
+"wall_s": 1677.2
+},
+{
+"env": 8,
+"step": 13428,
+"success": false,
+"landed": true,
+"wall_s": 1677.2
+},
+{
+"env": 3,
+"step": 13452,
+"success": true,
+"landed": true,
+"wall_s": 1689.7
+},
+{
+"env": 10,
+"step": 13452,
+"success": false,
+"landed": false,
+"wall_s": 1689.7
+},
+{
+"env": 11,
+"step": 13476,
+"success": false,
+"landed": false,
+"wall_s": 1741.2
+},
+{
+"env": 4,
+"step": 13488,
+"success": true,
+"landed": true,
+"wall_s": 1766.3
+},
+{
+"env": 3,
+"step": 13500,
+"success": true,
+"landed": true,
+"wall_s": 1772.9
+},
+{
+"env": 6,
+"step": 13512,
+"success": false,
+"landed": true,
+"wall_s": 1785.3
+},
+{
+"env": 11,
+"step": 13524,
+"success": true,
+"landed": true,
+"wall_s": 1795.2
+},
+{
+"env": 8,
+"step": 13536,
+"success": true,
+"landed": true,
+"wall_s": 1819.4
+},
+{
+"env": 2,
+"step": 13548,
+"success": false,
+"landed": false,
+"wall_s": 1844.9
+},
+{
+"env": 3,
+"step": 13548,
+"success": true,
+"landed": true,
+"wall_s": 1844.9
+},
+{
+"env": 9,
+"step": 13548,
+"success": false,
+"landed": false,
+"wall_s": 1844.9
+},
+{
+"env": 6,
+"step": 13560,
+"success": true,
+"landed": true,
+"wall_s": 1874.7
+},
+{
+"env": 7,
+"step": 13560,
+"success": false,
+"landed": true,
+"wall_s": 1874.7
+},
+{
+"env": 8,
+"step": 13620,
+"success": true,
+"landed": true,
+"wall_s": 1932.8
+},
+{
+"env": 7,
+"step": 13644,
+"success": true,
+"landed": true,
+"wall_s": 1969.5
+},
+{
+"env": 11,
+"step": 13644,
+"success": true,
+"landed": true,
+"wall_s": 1969.5
+},
+{
+"env": 0,
+"step": 13668,
+"success": false,
+"landed": true,
+"wall_s": 1985.3
+},
+{
+"env": 2,
+"step": 13668,
+"success": true,
+"landed": true,
+"wall_s": 1985.3
+},
+{
+"env": 1,
+"step": 13692,
+"success": false,
+"landed": true,
+"wall_s": 2026.6
+},
+{
+"env": 2,
+"step": 13692,
+"success": true,
+"landed": true,
+"wall_s": 2026.6
+},
+{
+"env": 8,
+"step": 13692,
+"success": true,
+"landed": true,
+"wall_s": 2026.6
+},
+{
+"env": 11,
+"step": 13692,
+"success": true,
+"landed": true,
+"wall_s": 2026.6
+},
+{
+"env": 6,
+"step": 13716,
+"success": true,
+"landed": true,
+"wall_s": 2058.4
+},
+{
+"env": 7,
+"step": 13716,
+"success": true,
+"landed": true,
+"wall_s": 2058.4
+},
+{
+"env": 6,
+"step": 13764,
+"success": true,
+"landed": true,
+"wall_s": 2137.9
+},
+{
+"env": 1,
+"step": 13776,
+"success": true,
+"landed": true,
+"wall_s": 2147.8
+},
+{
+"env": 7,
+"step": 13776,
+"success": true,
+"landed": true,
+"wall_s": 2147.8
+},
+{
+"env": 0,
+"step": 13800,
+"success": true,
+"landed": true,
+"wall_s": 2177.3
+},
+{
+"env": 4,
+"step": 13800,
+"success": false,
+"landed": false,
+"wall_s": 2177.3
+},
+{
+"env": 5,
+"step": 13800,
+"success": false,
+"landed": true,
+"wall_s": 2177.3
+},
+{
+"env": 3,
+"step": 13824,
+"success": false,
+"landed": true,
+"wall_s": 2209.3
+},
+{
+"env": 6,
+"step": 13836,
+"success": true,
+"landed": true,
+"wall_s": 2235.4
+},
+{
+"env": 2,
+"step": 13848,
+"success": true,
+"landed": true,
+"wall_s": 2257.8
+},
+{
+"env": 3,
+"step": 13872,
+"success": true,
+"landed": true,
+"wall_s": 2278.2
+},
+{
+"env": 0,
+"step": 13884,
+"success": true,
+"landed": true,
+"wall_s": 2302.0
+},
+{
+"env": 8,
+"step": 13920,
+"success": false,
+"landed": true,
+"wall_s": 2361.5
+},
+{
+"env": 9,
+"step": 13920,
+"success": false,
+"landed": false,
+"wall_s": 2361.5
+},
+{
+"env": 10,
+"step": 13956,
+"success": false,
+"landed": false,
+"wall_s": 2425.3
+},
+{
+"env": 2,
+"step": 13968,
+"success": true,
+"landed": true,
+"wall_s": 2435.7
+},
+{
+"env": 11,
+"step": 13980,
+"success": false,
+"landed": true,
+"wall_s": 2446.5
+},
+{
+"env": 4,
+"step": 13992,
+"success": true,
+"landed": true,
+"wall_s": 2453.9
+},
+{
+"env": 9,
+"step": 13992,
+"success": true,
+"landed": true,
+"wall_s": 2453.9
+},
+{
+"env": 9,
+"step": 14016,
+"success": true,
+"landed": true,
+"wall_s": 2470.1
+},
+{
+"env": 7,
+"step": 14028,
+"success": false,
+"landed": true,
+"wall_s": 2494.2
+},
+{
+"env": 1,
+"step": 14040,
+"success": false,
+"landed": false,
+"wall_s": 2519.7
+},
+{
+"env": 6,
+"step": 14052,
+"success": true,
+"landed": true,
+"wall_s": 2530.0
+},
+{
+"env": 2,
+"step": 14088,
+"success": true,
+"landed": true,
+"wall_s": 2574.0
+},
+{
+"env": 7,
+"step": 14100,
+"success": true,
+"landed": true,
+"wall_s": 2581.1
+},
+{
+"env": 6,
+"step": 14124,
+"success": true,
+"landed": true,
+"wall_s": 2612.0
+},
+{
+"env": 3,
+"step": 14148,
+"success": false,
+"landed": false,
+"wall_s": 2633.7
+},
+{
+"env": 7,
+"step": 14148,
+"success": true,
+"landed": true,
+"wall_s": 2633.7
+},
+{
+"env": 8,
+"step": 14160,
+"success": true,
+"landed": true,
+"wall_s": 2643.9
+},
+{
+"env": 0,
+"step": 14208,
+"success": false,
+"landed": true,
+"wall_s": 2732.0
+},
+{
+"env": 6,
+"step": 14208,
+"success": true,
+"landed": true,
+"wall_s": 2732.0
+},
+{
+"env": 3,
+"step": 14220,
+"success": true,
+"landed": true,
+"wall_s": 2737.3
+},
+{
+"env": 4,
+"step": 14244,
+"success": true,
+"landed": true,
+"wall_s": 2752.4
+},
+{
+"env": 7,
+"step": 14256,
+"success": true,
+"landed": true,
+"wall_s": 2761.4
+},
+{
+"env": 5,
+"step": 14268,
+"success": false,
+"landed": false,
+"wall_s": 2789.8
+},
+{
+"env": 7,
+"step": 14280,
+"success": true,
+"landed": true,
+"wall_s": 2816.8
+},
+{
+"env": 11,
+"step": 14280,
+"success": true,
+"landed": true,
+"wall_s": 2816.8
+},
+{
+"env": 3,
+"step": 14304,
+"success": true,
+"landed": true,
+"wall_s": 2882.8
+},
+{
+"env": 4,
+"step": 14304,
+"success": true,
+"landed": true,
+"wall_s": 2882.8
+},
+{
+"env": 2,
+"step": 14328,
+"success": true,
+"landed": true,
+"wall_s": 2915.4
+},
+{
+"env": 1,
+"step": 14376,
+"success": false,
+"landed": true,
+"wall_s": 2999.8
+},
+{
+"env": 4,
+"step": 14376,
+"success": true,
+"landed": true,
+"wall_s": 2999.8
+},
+{
+"env": 9,
+"step": 14388,
+"success": false,
+"landed": true,
+"wall_s": 3016.2
+},
+{
+"env": 10,
+"step": 14388,
+"success": false,
+"landed": true,
+"wall_s": 3016.2
+},
+{
+"env": 0,
+"step": 14400,
+"success": true,
+"landed": true,
+"wall_s": 3024.4
+},
+{
+"env": 5,
+"step": 14412,
+"success": true,
+"landed": true,
+"wall_s": 3048.6
+},
+{
+"env": 10,
+"step": 14412,
+"success": true,
+"landed": true,
+"wall_s": 3048.6
+},
+{
+"env": 4,
+"step": 14436,
+"success": true,
+"landed": true,
+"wall_s": 3098.5
+},
+{
+"env": 5,
+"step": 14448,
+"success": true,
+"landed": true,
+"wall_s": 3109.9
+},
+{
+"env": 9,
+"step": 14460,
+"success": true,
+"landed": true,
+"wall_s": 3118.3
+},
+{
+"env": 9,
+"step": 14508,
+"success": true,
+"landed": true,
+"wall_s": 3164.0
+},
+{
+"env": 4,
+"step": 14544,
+"success": true,
+"landed": true,
+"wall_s": 3219.2
+},
+{
+"env": 8,
+"step": 14568,
+"success": false,
+"landed": false,
+"wall_s": 3238.1
+},
+{
+"env": 9,
+"step": 14568,
+"success": true,
+"landed": true,
+"wall_s": 3238.1
+},
+{
+"env": 11,
+"step": 14580,
+"success": false,
+"landed": true,
+"wall_s": 3246.7
+},
+{
+"env": 7,
+"step": 14616,
+"success": false,
+"landed": true,
+"wall_s": 3307.0
+},
+{
+"env": 2,
+"step": 14628,
+"success": false,
+"landed": false,
+"wall_s": 3330.1
+},
+{
+"env": 3,
+"step": 14628,
+"success": false,
+"landed": true,
+"wall_s": 3330.1
+},
+{
+"env": 5,
+"step": 14628,
+"success": true,
+"landed": true,
+"wall_s": 3330.1
+},
+{
+"env": 6,
+"step": 14628,
+"success": false,
+"landed": true,
+"wall_s": 3330.1
+},
+{
+"env": 6,
+"step": 14652,
+"success": true,
+"landed": true,
+"wall_s": 3369.3
+},
+{
+"env": 3,
+"step": 14676,
+"success": true,
+"landed": true,
+"wall_s": 3404.5
+},
+{
+"env": 0,
+"step": 14724,
+"success": false,
+"landed": true,
+"wall_s": 3481.3
+},
+{
+"env": 8,
+"step": 14724,
+"success": true,
+"landed": true,
+"wall_s": 3481.3
+},
+{
+"env": 4,
+"step": 14760,
+"success": false,
+"landed": true,
+"wall_s": 3515.6
+},
+{
+"env": 10,
+"step": 14760,
+"success": false,
+"landed": true,
+"wall_s": 3515.6
+},
+{
+"env": 9,
+"step": 14784,
+"success": false,
+"landed": true,
+"wall_s": 3572.4
+},
+{
+"env": 10,
+"step": 14808,
+"success": true,
+"landed": true,
+"wall_s": 3607.6
+},
+{
+"env": 6,
+"step": 14820,
+"success": true,
+"landed": true,
+"wall_s": 3614.7
+},
+{
+"env": 1,
+"step": 14892,
+"success": false,
+"landed": false,
+"wall_s": 3687.8
+},
+{
+"env": 11,
+"step": 14904,
+"success": false,
+"landed": true,
+"wall_s": 3700.5
+},
+{
+"env": 5,
+"step": 14916,
+"success": false,
+"landed": true,
+"wall_s": 3711.5
+},
+{
+"env": 0,
+"step": 14928,
+"success": false,
+"landed": false,
+"wall_s": 3735.6
+},
+{
+"env": 11,
+"step": 14952,
+"success": true,
+"landed": true,
+"wall_s": 3762.9
+},
+{
+"env": 5,
+"step": 14976,
+"success": true,
+"landed": true,
+"wall_s": 3788.2
+},
+{
+"env": 10,
+"step": 14976,
+"success": true,
+"landed": true,
+"wall_s": 3788.2
+},
+{
+"env": 2,
+"step": 15000,
+"success": false,
+"landed": false,
+"wall_s": 3802.7
+},
+{
+"env": 5,
+"step": 15024,
+"success": true,
+"landed": true,
+"wall_s": 3821.8
+},
+{
+"env": 7,
+"step": 15060,
+"success": false,
+"landed": true,
+"wall_s": 3855.0
+},
+{
+"env": 8,
+"step": 15060,
+"success": false,
+"landed": false,
+"wall_s": 3855.0
+},
+{
+"env": 11,
+"step": 15060,
+"success": true,
+"landed": true,
+"wall_s": 3855.0
+},
+{
+"env": 6,
+"step": 15108,
+"success": false,
+"landed": true,
+"wall_s": 3899.5
+},
+{
+"env": 6,
+"step": 15132,
+"success": true,
+"landed": true,
+"wall_s": 3925.7
+},
+{
+"env": 9,
+"step": 15144,
+"success": false,
+"landed": true,
+"wall_s": 3934.6
+},
+{
+"env": 7,
+"step": 15168,
+"success": true,
+"landed": true,
+"wall_s": 3950.6
+},
+{
+"env": 9,
+"step": 15180,
+"success": true,
+"landed": true,
+"wall_s": 3959.2
+},
+{
+"env": 11,
+"step": 15180,
+"success": true,
+"landed": true,
+"wall_s": 3959.2
+},
+{
+"env": 2,
+"step": 15192,
+"success": false,
+"landed": false,
+"wall_s": 3967.5
+},
+{
+"env": 7,
+"step": 15192,
+"success": true,
+"landed": true,
+"wall_s": 3967.5
+},
+{
+"env": 3,
+"step": 15204,
+"success": false,
+"landed": false,
+"wall_s": 3991.0
+},
+{
+"env": 3,
+"step": 15240,
+"success": true,
+"landed": true,
+"wall_s": 4030.2
+},
+{
+"env": 7,
+"step": 15252,
+"success": true,
+"landed": true,
+"wall_s": 4036.9
+},
+{
+"env": 2,
+"step": 15264,
+"success": true,
+"landed": true,
+"wall_s": 4059.1
+},
+{
+"env": 4,
+"step": 15264,
+"success": false,
+"landed": false,
+"wall_s": 4059.1
+},
+{
+"env": 3,
+"step": 15288,
+"success": true,
+"landed": true,
+"wall_s": 4108.2
+},
+{
+"env": 4,
+"step": 15300,
+"success": true,
+"landed": true,
+"wall_s": 4114.1
+},
+{
+"env": 2,
+"step": 15312,
+"success": true,
+"landed": true,
+"wall_s": 4119.7
+},
+{
+"env": 6,
+"step": 15324,
+"success": true,
+"landed": true,
+"wall_s": 4142.8
+},
+{
+"env": 5,
+"step": 15336,
+"success": false,
+"landed": false,
+"wall_s": 4163.5
+},
+{
+"env": 11,
+"step": 15360,
+"success": true,
+"landed": true,
+"wall_s": 4192.1
+},
+{
+"env": 6,
+"step": 15396,
+"success": true,
+"landed": true,
+"wall_s": 4239.6
+},
+{
+"env": 3,
+"step": 15408,
+"success": true,
+"landed": true,
+"wall_s": 4247.2
+},
+{
+"env": 5,
+"step": 15408,
+"success": true,
+"landed": true,
+"wall_s": 4247.2
+},
+{
+"env": 0,
+"step": 15420,
+"success": false,
+"landed": false,
+"wall_s": 4273.7
+},
+{
+"env": 10,
+"step": 15432,
+"success": false,
+"landed": false,
+"wall_s": 4280.2
+},
+{
+"env": 1,
+"step": 15456,
+"success": false,
+"landed": false,
+"wall_s": 4307.9
+},
+{
+"env": 10,
+"step": 15468,
+"success": true,
+"landed": true,
+"wall_s": 4316.0
+},
+{
+"env": 8,
+"step": 15504,
+"success": false,
+"landed": false,
+"wall_s": 4335.6
+},
+{
+"env": 2,
+"step": 15552,
+"success": false,
+"landed": true,
+"wall_s": 4406.3
+},
+{
+"env": 11,
+"step": 15564,
+"success": true,
+"landed": true,
+"wall_s": 4427.2
+},
+{
+"env": 4,
+"step": 15576,
+"success": false,
+"landed": true,
+"wall_s": 4433.0
+},
+{
+"env": 5,
+"step": 15588,
+"success": true,
+"landed": true,
+"wall_s": 4441.5
+},
+{
+"env": 2,
+"step": 15600,
+"success": true,
+"landed": true,
+"wall_s": 4462.8
+},
+{
+"env": 5,
+"step": 15636,
+"success": true,
+"landed": true,
+"wall_s": 4539.6
+},
+{
+"env": 0,
+"step": 15648,
+"success": true,
+"landed": true,
+"wall_s": 4563.5
+},
+{
+"env": 2,
+"step": 15684,
+"success": true,
+"landed": true,
+"wall_s": 4629.3
+},
+{
+"env": 3,
+"step": 15696,
+"success": true,
+"landed": true,
+"wall_s": 4635.7
+},
+{
+"env": 0,
+"step": 15720,
+"success": true,
+"landed": true,
+"wall_s": 4686.4
+},
+{
+"env": 2,
+"step": 15732,
+"success": true,
+"landed": true,
+"wall_s": 4697.3
+},
+{
+"env": 6,
+"step": 15732,
+"success": false,
+"landed": true,
+"wall_s": 4697.3
+},
+{
+"env": 10,
+"step": 15732,
+"success": false,
+"landed": false,
+"wall_s": 4697.3
+},
+{
+"env": 5,
+"step": 15744,
+"success": true,
+"landed": true,
+"wall_s": 4704.3
+},
+{
+"env": 8,
+"step": 15744,
+"success": true,
+"landed": true,
+"wall_s": 4704.3
+},
+{
+"env": 3,
+"step": 15768,
+"success": true,
+"landed": true,
+"wall_s": 4756.9
+},
+{
+"env": 6,
+"step": 15816,
+"success": true,
+"landed": true,
+"wall_s": 4829.2
+},
+{
+"env": 7,
+"step": 15828,
+"success": false,
+"landed": false,
+"wall_s": 4835.7
+},
+{
+"env": 9,
+"step": 15828,
+"success": false,
+"landed": false,
+"wall_s": 4835.7
+},
+{
+"env": 4,
+"step": 15840,
+"success": false,
+"landed": true,
+"wall_s": 4861.5
+},
+{
+"env": 7,
+"step": 15852,
+"success": true,
+"landed": true,
+"wall_s": 4887.3
+},
+{
+"env": 6,
+"step": 15864,
+"success": true,
+"landed": true,
+"wall_s": 4893.8
+},
+{
+"env": 7,
+"step": 15876,
+"success": true,
+"landed": true,
+"wall_s": 4901.5
+},
+{
+"env": 2,
+"step": 15900,
+"success": true,
+"landed": true,
+"wall_s": 4948.4
+},
+{
+"env": 10,
+"step": 15900,
+"success": true,
+"landed": true,
+"wall_s": 4948.4
+},
+{
+"env": 6,
+"step": 15912,
+"success": true,
+"landed": true,
+"wall_s": 4955.3
+},
+{
+"env": 11,
+"step": 15924,
+"success": false,
+"landed": true,
+"wall_s": 4977.1
+},
+{
+"env": 7,
+"step": 15936,
+"success": true,
+"landed": true,
+"wall_s": 5002.3
+},
+{
+"env": 11,
+"step": 15972,
+"success": true,
+"landed": true,
+"wall_s": 5018.6
+},
+{
+"env": 10,
+"step": 15984,
+"success": true,
+"landed": true,
+"wall_s": 5038.5
+},
+{
+"env": 6,
+"step": 15996,
+"success": true,
+"landed": true,
+"wall_s": 5044.9
+},
+{
+"env": 3,
+"step": 16020,
+"success": false,
+"landed": true,
+"wall_s": 5076.8
+},
+{
+"env": 5,
+"step": 16020,
+"success": false,
+"landed": true,
+"wall_s": 5076.8
+},
+{
+"env": 7,
+"step": 16020,
+"success": true,
+"landed": true,
+"wall_s": 5076.8
+},
+{
+"env": 11,
+"step": 16020,
+"success": true,
+"landed": true,
+"wall_s": 5076.8
+},
+{
+"env": 1,
+"step": 16032,
+"success": false,
+"landed": false,
+"wall_s": 5085.0
+},
+{
+"env": 8,
+"step": 16032,
+"success": false,
+"landed": true,
+"wall_s": 5085.0
+},
+{
+"env": 10,
+"step": 16044,
+"success": true,
+"landed": true,
+"wall_s": 5091.1
+},
+{
+"env": 0,
+"step": 16092,
+"success": false,
+"landed": false,
+"wall_s": 5146.6
+},
+{
+"env": 2,
+"step": 16140,
+"success": false,
+"landed": true,
+"wall_s": 5221.8
+},
+{
+"env": 7,
+"step": 16140,
+"success": true,
+"landed": true,
+"wall_s": 5221.8
+},
+{
+"env": 7,
+"step": 16176,
+"success": true,
+"landed": true,
+"wall_s": 5262.1
+},
+{
+"env": 10,
+"step": 16248,
+"success": false,
+"landed": false,
+"wall_s": 5315.3
+},
+{
+"env": 3,
+"step": 16260,
+"success": false,
+"landed": false,
+"wall_s": 5326.5
+},
+{
+"env": 9,
+"step": 16284,
+"success": false,
+"landed": true,
+"wall_s": 5340.2
+},
+{
+"env": 7,
+"step": 16296,
+"success": true,
+"landed": true,
+"wall_s": 5346.4
+},
+{
+"env": 4,
+"step": 16308,
+"success": false,
+"landed": false,
+"wall_s": 5351.8
+},
+{
+"env": 9,
+"step": 16308,
+"success": true,
+"landed": true,
+"wall_s": 5351.8
+},
+{
+"env": 8,
+"step": 16380,
+"success": false,
+"landed": true,
+"wall_s": 5421.8
+},
+{
+"env": 0,
+"step": 16416,
+"success": false,
+"landed": true,
+"wall_s": 5481.3
+},
+{
+"env": 3,
+"step": 16416,
+"success": true,
+"landed": true,
+"wall_s": 5481.3
+},
+{
+"env": 11,
+"step": 16428,
+"success": false,
+"landed": false,
+"wall_s": 5507.4
+},
+{
+"env": 4,
+"step": 16464,
+"success": true,
+"landed": true,
+"wall_s": 5532.9
+},
+{
+"env": 6,
+"step": 16464,
+"success": false,
+"landed": false,
+"wall_s": 5532.9
+},
+{
+"env": 8,
+"step": 16476,
+"success": true,
+"landed": true,
+"wall_s": 5545.1
+},
+{
+"env": 9,
+"step": 16476,
+"success": true,
+"landed": true,
+"wall_s": 5545.1
+},
+{
+"env": 2,
+"step": 16500,
+"success": false,
+"landed": true,
+"wall_s": 5580.0
+},
+{
+"env": 5,
+"step": 16512,
+"success": false,
+"landed": false,
+"wall_s": 5603.3
+},
+{
+"env": 1,
+"step": 16524,
+"success": false,
+"landed": true,
+"wall_s": 5626.7
+},
+{
+"env": 8,
+"step": 16524,
+"success": true,
+"landed": true,
+"wall_s": 5626.7
+},
+{
+"env": 0,
+"step": 16548,
+"success": true,
+"landed": true,
+"wall_s": 5665.5
+},
+{
+"env": 8,
+"step": 16548,
+"success": true,
+"landed": true,
+"wall_s": 5665.5
+},
+{
+"env": 2,
+"step": 16584,
+"success": true,
+"landed": true,
+"wall_s": 5712.6
+},
+{
+"env": 0,
+"step": 16596,
+"success": true,
+"landed": true,
+"wall_s": 5720.4
+},
+{
+"env": 8,
+"step": 16596,
+"success": true,
+"landed": true,
+"wall_s": 5720.4
+},
+{
+"env": 8,
+"step": 16620,
+"success": true,
+"landed": true,
+"wall_s": 5753.8
+},
+{
+"env": 3,
+"step": 16668,
+"success": false,
+"landed": true,
+"wall_s": 5811.8
+},
+{
+"env": 8,
+"step": 16668,
+"success": true,
+"landed": true,
+"wall_s": 5811.8
+},
+{
+"env": 2,
+"step": 16680,
+"success": true,
+"landed": true,
+"wall_s": 5819.6
+},
+{
+"env": 3,
+"step": 16716,
+"success": true,
+"landed": true,
+"wall_s": 5863.3
+},
+{
+"env": 10,
+"step": 16716,
+"success": false,
+"landed": false,
+"wall_s": 5863.3
+},
+{
+"env": 1,
+"step": 16728,
+"success": false,
+"landed": false,
+"wall_s": 5873.3
+},
+{
+"env": 11,
+"step": 16728,
+"success": false,
+"landed": false,
+"wall_s": 5873.3
+},
+{
+"env": 2,
+"step": 16740,
+"success": true,
+"landed": true,
+"wall_s": 5899.8
+},
+{
+"env": 6,
+"step": 16740,
+"success": false,
+"landed": true,
+"wall_s": 5899.8
+},
+{
+"env": 10,
+"step": 16740,
+"success": true,
+"landed": true,
+"wall_s": 5899.8
+},
+{
+"env": 1,
+"step": 16752,
+"success": true,
+"landed": true,
+"wall_s": 5905.6
+},
+{
+"env": 2,
+"step": 16764,
+"success": true,
+"landed": true,
+"wall_s": 5915.4
+},
+{
+"env": 7,
+"step": 16764,
+"success": false,
+"landed": true,
+"wall_s": 5915.4
+},
+{
+"env": 3,
+"step": 16776,
+"success": true,
+"landed": true,
+"wall_s": 5925.2
+},
+{
+"env": 9,
+"step": 16800,
+"success": false,
+"landed": true,
+"wall_s": 5975.1
+},
+{
+"env": 2,
+"step": 16848,
+"success": true,
+"landed": true,
+"wall_s": 6016.2
+},
+{
+"env": 9,
+"step": 16848,
+"success": true,
+"landed": true,
+"wall_s": 6016.2
+},
+{
+"env": 7,
+"step": 16860,
+"success": true,
+"landed": true,
+"wall_s": 6024.7
+},
+{
+"env": 5,
+"step": 16872,
+"success": false,
+"landed": true,
+"wall_s": 6048.0
+},
+{
+"env": 4,
+"step": 16884,
+"success": false,
+"landed": false,
+"wall_s": 6057.1
+},
+{
+"env": 5,
+"step": 16896,
+"success": true,
+"landed": true,
+"wall_s": 6083.5
+},
+{
+"env": 2,
+"step": 16956,
+"success": true,
+"landed": true,
+"wall_s": 6131.3
+},
+{
+"env": 4,
+"step": 16968,
+"success": true,
+"landed": true,
+"wall_s": 6140.8
+},
+{
+"env": 4,
+"step": 17004,
+"success": true,
+"landed": true,
+"wall_s": 6178.4
+},
+{
+"env": 2,
+"step": 17016,
+"success": true,
+"landed": true,
+"wall_s": 6184.2
+},
+{
+"env": 3,
+"step": 17040,
+"success": false,
+"landed": true,
+"wall_s": 6217.5
+},
+{
+"env": 4,
+"step": 17040,
+"success": true,
+"landed": true,
+"wall_s": 6217.5
+},
+{
+"env": 0,
+"step": 17088,
+"success": false,
+"landed": false,
+"wall_s": 6271.1
+},
+{
+"env": 4,
+"step": 17100,
+"success": true,
+"landed": true,
+"wall_s": 6276.4
+},
+{
+"env": 2,
+"step": 17112,
+"success": true,
+"landed": true,
+"wall_s": 6300.5
+},
+{
+"env": 8,
+"step": 17136,
+"success": false,
+"landed": false,
+"wall_s": 6330.2
+},
+{
+"env": 10,
+"step": 17136,
+"success": false,
+"landed": true,
+"wall_s": 6330.2
+},
+{
+"env": 0,
+"step": 17148,
+"success": true,
+"landed": true,
+"wall_s": 6352.2
+},
+{
+"env": 7,
+"step": 17160,
+"success": true,
+"landed": true,
+"wall_s": 6363.4
+},
+{
+"env": 0,
+"step": 17172,
+"success": true,
+"landed": true,
+"wall_s": 6397.5
+},
+{
+"env": 7,
+"step": 17172,
+"success": true,
+"landed": true,
+"wall_s": 6397.5
+},
+{
+"env": 2,
+"step": 17196,
+"success": true,
+"landed": true,
+"wall_s": 6438.0
+},
+{
+"env": 8,
+"step": 17196,
+"success": false,
+"landed": true,
+"wall_s": 6438.0
+},
+{
+"env": 1,
+"step": 17220,
+"success": false,
+"landed": false,
+"wall_s": 6473.0
+},
+{
+"env": 6,
+"step": 17220,
+"success": false,
+"landed": false,
+"wall_s": 6473.0
+},
+{
+"env": 0,
+"step": 17244,
+"success": true,
+"landed": true,
+"wall_s": 6492.8
+},
+{
+"env": 7,
+"step": 17244,
+"success": true,
+"landed": true,
+"wall_s": 6492.8
+},
+{
+"env": 5,
+"step": 17256,
+"success": false,
+"landed": false,
+"wall_s": 6527.5
+},
+{
+"env": 4,
+"step": 17268,
+"success": true,
+"landed": true,
+"wall_s": 6535.5
+},
+{
+"env": 2,
+"step": 17280,
+"success": true,
+"landed": true,
+"wall_s": 6568.9
+},
+{
+"env": 7,
+"step": 17280,
+"success": true,
+"landed": true,
+"wall_s": 6568.9
+},
+{
+"env": 11,
+"step": 17292,
+"success": false,
+"landed": false,
+"wall_s": 6583.2
+},
+{
+"env": 3,
+"step": 17304,
+"success": false,
+"landed": true,
+"wall_s": 6631.0
+},
+{
+"env": 5,
+"step": 17316,
+"success": true,
+"landed": true,
+"wall_s": 6673.7
+},
+{
+"env": 6,
+"step": 17340,
+"success": true,
+"landed": true,
+"wall_s": 6734.1
+},
+{
+"env": 10,
+"step": 17352,
+"success": false,
+"landed": true,
+"wall_s": 6746.9
+},
+{
+"env": 11,
+"step": 17352,
+"success": false,
+"landed": true,
+"wall_s": 6746.9
+},
+{
+"env": 7,
+"step": 17388,
+"success": true,
+"landed": true,
+"wall_s": 6831.3
+},
+{
+"env": 10,
+"step": 17436,
+"success": true,
+"landed": true,
+"wall_s": 6908.9
+},
+{
+"env": 10,
+"step": 17460,
+"success": true,
+"landed": true,
+"wall_s": 6942.9
+},
+{
+"env": 9,
+"step": 17472,
+"success": false,
+"landed": false,
+"wall_s": 6949.5
+},
+{
+"env": 1,
+"step": 17484,
+"success": false,
+"landed": true,
+"wall_s": 6958.2
+},
+{
+"env": 5,
+"step": 17520,
+"success": true,
+"landed": true,
+"wall_s": 7009.9
+},
+{
+"env": 9,
+"step": 17520,
+"success": true,
+"landed": true,
+"wall_s": 7009.9
+},
+{
+"env": 0,
+"step": 17532,
+"success": false,
+"landed": true,
+"wall_s": 7036.7
+},
+{
+"env": 10,
+"step": 17532,
+"success": true,
+"landed": true,
+"wall_s": 7036.7
+},
+{
+"env": 1,
+"step": 17544,
+"success": true,
+"landed": true,
+"wall_s": 7044.3
+},
+{
+"env": 2,
+"step": 17544,
+"success": true,
+"landed": true,
+"wall_s": 7044.3
+},
+{
+"env": 5,
+"step": 17556,
+"success": true,
+"landed": true,
+"wall_s": 7086.9
+},
+{
+"env": 11,
+"step": 17592,
+"success": true,
+"landed": true,
+"wall_s": 7144.3
+},
+{
+"env": 2,
+"step": 17604,
+"success": true,
+"landed": true,
+"wall_s": 7178.7
+},
+{
+"env": 8,
+"step": 17604,
+"success": false,
+"landed": true,
+"wall_s": 7178.7
+},
+{
+"env": 8,
+"step": 17628,
+"success": true,
+"landed": true,
+"wall_s": 7198.7
+},
+{
+"env": 9,
+"step": 17652,
+"success": true,
+"landed": true,
+"wall_s": 7254.3
+},
+{
+"env": 6,
+"step": 17664,
+"success": false,
+"landed": true,
+"wall_s": 7262.6
+},
+{
+"env": 3,
+"step": 17676,
+"success": false,
+"landed": true,
+"wall_s": 7289.3
+},
+{
+"env": 1,
+"step": 17724,
+"success": false,
+"landed": true,
+"wall_s": 7376.6
+},
+{
+"env": 11,
+"step": 17724,
+"success": true,
+"landed": true,
+"wall_s": 7376.6
+},
+{
+"env": 6,
+"step": 17736,
+"success": true,
+"landed": true,
+"wall_s": 7384.4
+},
+{
+"env": 7,
+"step": 17748,
+"success": false,
+"landed": true,
+"wall_s": 7419.1
+},
+{
+"env": 9,
+"step": 17760,
+"success": true,
+"landed": true,
+"wall_s": 7430.3
+},
+{
+"env": 8,
+"step": 17784,
+"success": true,
+"landed": true,
+"wall_s": 7460.4
+},
+{
+"env": 0,
+"step": 17796,
+"success": false,
+"landed": false,
+"wall_s": 7487.5
+},
+{
+"env": 6,
+"step": 17796,
+"success": true,
+"landed": true,
+"wall_s": 7487.5
+},
+{
+"env": 4,
+"step": 17808,
+"success": false,
+"landed": false,
+"wall_s": 7518.4
+},
+{
+"env": 7,
+"step": 17832,
+"success": true,
+"landed": true,
+"wall_s": 7586.1
+},
+{
+"env": 9,
+"step": 17856,
+"success": true,
+"landed": true,
+"wall_s": 7634.7
+},
+{
+"env": 7,
+"step": 17916,
+"success": true,
+"landed": true,
+"wall_s": 7686.1
+},
+{
+"env": 4,
+"step": 17928,
+"success": true,
+"landed": true,
+"wall_s": 7695.5
+},
+{
+"env": 5,
+"step": 17928,
+"success": false,
+"landed": true,
+"wall_s": 7695.5
+},
+{
+"env": 4,
+"step": 17976,
+"success": true,
+"landed": true,
+"wall_s": 7769.0
+},
+{
+"env": 9,
+"step": 17976,
+"success": true,
+"landed": true,
+"wall_s": 7769.0
+},
+{
+"env": 10,
+"step": 17976,
+"success": false,
+"landed": true,
+"wall_s": 7769.0
+},
+{
+"env": 11,
+"step": 18000,
+"success": false,
+"landed": true,
+"wall_s": 7836.6
+},
+{
+"env": 3,
+"step": 18024,
+"success": false,
+"landed": true,
+"wall_s": 7873.1
+},
+{
+"env": 0,
+"step": 18060,
+"success": true,
+"landed": true,
+"wall_s": 7902.2
+},
+{
+"env": 6,
+"step": 18060,
+"success": false,
+"landed": true,
+"wall_s": 7902.2
+},
+{
+"env": 9,
+"step": 18060,
+"success": true,
+"landed": true,
+"wall_s": 7902.2
+},
+{
+"env": 1,
+"step": 18084,
+"success": false,
+"landed": true,
+"wall_s": 7938.0
+},
+{
+"env": 11,
+"step": 18084,
+"success": true,
+"landed": true,
+"wall_s": 7938.0
+},
+{
+"env": 10,
+"step": 18096,
+"success": true,
+"landed": true,
+"wall_s": 7956.2
+},
+{
+"env": 9,
+"step": 18108,
+"success": true,
+"landed": true,
+"wall_s": 7961.8
+},
+{
+"env": 11,
+"step": 18120,
+"success": true,
+"landed": true,
+"wall_s": 7970.0
+},
+{
+"env": 11,
+"step": 18144,
+"success": true,
+"landed": true,
+"wall_s": 8008.4
+},
+{
+"env": 1,
+"step": 18156,
+"success": true,
+"landed": true,
+"wall_s": 8018.1
+},
+{
+"env": 2,
+"step": 18156,
+"success": false,
+"landed": false,
+"wall_s": 8018.1
+},
+{
+"env": 10,
+"step": 18156,
+"success": true,
+"landed": true,
+"wall_s": 8018.1
+},
+{
+"env": 6,
+"step": 18192,
+"success": true,
+"landed": true,
+"wall_s": 8094.5
+},
+{
+"env": 11,
+"step": 18240,
+"success": true,
+"landed": true,
+"wall_s": 8148.0
+},
+{
+"env": 10,
+"step": 18276,
+"success": true,
+"landed": true,
+"wall_s": 8196.5
+},
+{
+"env": 6,
+"step": 18300,
+"success": true,
+"landed": true,
+"wall_s": 8252.7
+},
+{
+"env": 8,
+"step": 18324,
+"success": false,
+"landed": false,
+"wall_s": 8281.4
+},
+{
+"env": 10,
+"step": 18336,
+"success": true,
+"landed": true,
+"wall_s": 8320.9
+},
+{
+"env": 2,
+"step": 18348,
+"success": true,
+"landed": true,
+"wall_s": 8350.8
+},
+{
+"env": 4,
+"step": 18348,
+"success": false,
+"landed": true,
+"wall_s": 8350.8
+},
+{
+"env": 1,
+"step": 18360,
+"success": false,
+"landed": true,
+"wall_s": 8387.6
+},
+{
+"env": 5,
+"step": 18360,
+"success": false,
+"landed": false,
+"wall_s": 8387.6
+},
+{
+"env": 7,
+"step": 18360,
+"success": false,
+"landed": false,
+"wall_s": 8387.6
+},
+{
+"env": 8,
+"step": 18396,
+"success": true,
+"landed": true,
+"wall_s": 8440.1
+},
+{
+"env": 10,
+"step": 18408,
+"success": true,
+"landed": true,
+"wall_s": 8452.6
+},
+{
+"env": 2,
+"step": 18432,
+"success": true,
+"landed": true,
+"wall_s": 8493.0
+},
+{
+"env": 9,
+"step": 18444,
+"success": false,
+"landed": true,
+"wall_s": 8501.8
+},
+{
+"env": 1,
+"step": 18456,
+"success": true,
+"landed": true,
+"wall_s": 8511.8
+},
+{
+"env": 6,
+"step": 18492,
+"success": false,
+"landed": true,
+"wall_s": 8592.6
+},
+{
+"env": 9,
+"step": 18504,
+"success": true,
+"landed": true,
+"wall_s": 8634.8
+},
+{
+"env": 6,
+"step": 18528,
+"success": true,
+"landed": true,
+"wall_s": 8666.1
+},
+{
+"env": 3,
+"step": 18552,
+"success": false,
+"landed": false,
+"wall_s": 8698.5
+},
+{
+"env": 10,
+"step": 18552,
+"success": true,
+"landed": true,
+"wall_s": 8698.5
+},
+{
+"env": 3,
+"step": 18612,
+"success": true,
+"landed": true,
+"wall_s": 8784.3
+},
+{
+"env": 7,
+"step": 18612,
+"success": false,
+"landed": false,
+"wall_s": 8784.3
+},
+{
+"env": 2,
+"step": 18648,
+"success": false,
+"landed": true,
+"wall_s": 8837.2
+},
+{
+"env": 3,
+"step": 18660,
+"success": true,
+"landed": true,
+"wall_s": 8846.8
+},
+{
+"env": 9,
+"step": 18672,
+"success": false,
+"landed": false,
+"wall_s": 8891.4
+},
+{
+"env": 10,
+"step": 18672,
+"success": true,
+"landed": true,
+"wall_s": 8891.4
+},
+{
+"env": 0,
+"step": 18684,
+"success": false,
+"landed": false,
+"wall_s": 8899.2
+},
+{
+"env": 2,
+"step": 18708,
+"success": true,
+"landed": true,
+"wall_s": 8915.4
+},
+{
+"env": 9,
+"step": 18720,
+"success": true,
+"landed": true,
+"wall_s": 8920.2
+},
+{
+"env": 2,
+"step": 18732,
+"success": true,
+"landed": true,
+"wall_s": 8927.6
+},
+{
+"env": 5,
+"step": 18744,
+"success": false,
+"landed": true,
+"wall_s": 8959.9
+},
+{
+"env": 11,
+"step": 18744,
+"success": false,
+"landed": false,
+"wall_s": 8959.9
+},
+{
+"env": 3,
+"step": 18756,
+"success": true,
+"landed": true,
+"wall_s": 8967.2
+},
+{
+"env": 9,
+"step": 18792,
+"success": true,
+"landed": true,
+"wall_s": 9055.9
+},
+{
+"env": 11,
+"step": 18792,
+"success": true,
+"landed": true,
+"wall_s": 9055.9
+},
+{
+"env": 8,
+"step": 18816,
+"success": false,
+"landed": true,
+"wall_s": 9097.0
+},
+{
+"env": 3,
+"step": 18840,
+"success": true,
+"landed": true,
+"wall_s": 9137.0
+},
+{
+"env": 5,
+"step": 18864,
+"success": true,
+"landed": true,
+"wall_s": 9195.7
+},
+{
+"env": 8,
+"step": 18864,
+"success": true,
+"landed": true,
+"wall_s": 9195.7
+},
+{
+"env": 0,
+"step": 18876,
+"success": true,
+"landed": true,
+"wall_s": 9204.5
+},
+{
+"env": 11,
+"step": 18876,
+"success": true,
+"landed": true,
+"wall_s": 9204.5
+},
+{
+"env": 1,
+"step": 18900,
+"success": false,
+"landed": true,
+"wall_s": 9233.0
+},
+{
+"env": 8,
+"step": 18900,
+"success": true,
+"landed": true,
+"wall_s": 9233.0
+},
+{
+"env": 5,
+"step": 18912,
+"success": true,
+"landed": true,
+"wall_s": 9270.5
+},
+{
+"env": 5,
+"step": 18960,
+"success": true,
+"landed": true,
+"wall_s": 9344.3
+},
+{
+"env": 1,
+"step": 18984,
+"success": true,
+"landed": true,
+"wall_s": 9375.1
+},
+{
+"env": 0,
+"step": 18996,
+"success": true,
+"landed": true,
+"wall_s": 9389.5
+},
+{
+"env": 4,
+"step": 18996,
+"success": false,
+"landed": false,
+"wall_s": 9389.5
+},
+{
+"env": 2,
+"step": 19032,
+"success": false,
+"landed": true,
+"wall_s": 9417.2
+},
+{
+"env": 1,
+"step": 19104,
+"success": true,
+"landed": true,
+"wall_s": 9478.1
+},
+{
+"env": 2,
+"step": 19104,
+"success": true,
+"landed": true,
+"wall_s": 9478.1
+},
+{
+"env": 4,
+"step": 19176,
+"success": true,
+"landed": true,
+"wall_s": 9558.3
+},
+{
+"env": 7,
+"step": 19200,
+"success": false,
+"landed": false,
+"wall_s": 9582.2
+},
+{
+"env": 4,
+"step": 19212,
+"success": true,
+"landed": true,
+"wall_s": 9589.3
+},
+{
+"env": 6,
+"step": 19212,
+"success": false,
+"landed": false,
+"wall_s": 9589.3
+},
+{
+"env": 1,
+"step": 19236,
+"success": true,
+"landed": true,
+"wall_s": 9626.1
+},
+{
+"env": 2,
+"step": 19284,
+"success": true,
+"landed": true,
+"wall_s": 9668.0
+},
+{
+"env": 9,
+"step": 19284,
+"success": false,
+"landed": false,
+"wall_s": 9668.0
+},
+{
+"env": 10,
+"step": 19320,
+"success": false,
+"landed": false,
+"wall_s": 9732.7
+},
+{
+"env": 6,
+"step": 19332,
+"success": true,
+"landed": true,
+"wall_s": 9743.2
+},
+{
+"env": 7,
+"step": 19332,
+"success": true,
+"landed": true,
+"wall_s": 9743.2
+},
+{
+"env": 3,
+"step": 19344,
+"success": false,
+"landed": true,
+"wall_s": 9768.0
+},
+{
+"env": 2,
+"step": 19356,
+"success": true,
+"landed": true,
+"wall_s": 9773.6
+},
+{
+"env": 5,
+"step": 19392,
+"success": false,
+"landed": true,
+"wall_s": 9811.9
+},
+{
+"env": 10,
+"step": 19392,
+"success": true,
+"landed": true,
+"wall_s": 9811.9
+},
+{
+"env": 11,
+"step": 19416,
+"success": false,
+"landed": true,
+"wall_s": 9868.5
+},
+{
+"env": 4,
+"step": 19440,
+"success": false,
+"landed": true,
+"wall_s": 9901.0
+},
+{
+"env": 5,
+"step": 19440,
+"success": true,
+"landed": true,
+"wall_s": 9901.0
+},
+{
+"env": 1,
+"step": 19452,
+"success": false,
+"landed": true,
+"wall_s": 9907.4
+},
+{
+"env": 11,
+"step": 19452,
+"success": true,
+"landed": true,
+"wall_s": 9907.4
+},
+{
+"env": 10,
+"step": 19464,
+"success": true,
+"landed": true,
+"wall_s": 9914.3
+},
+{
+"env": 5,
+"step": 19476,
+"success": true,
+"landed": true,
+"wall_s": 9927.6
+},
+{
+"env": 8,
+"step": 19476,
+"success": false,
+"landed": false,
+"wall_s": 9927.6
+},
+{
+"env": 8,
+"step": 19500,
+"success": true,
+"landed": true,
+"wall_s": 9981.3
+},
+{
+"env": 11,
+"step": 19512,
+"success": true,
+"landed": true,
+"wall_s": 9989.8
+},
+{
+"env": 4,
+"step": 19524,
+"success": true,
+"landed": true,
+"wall_s": 9994.7
+},
+{
+"env": 7,
+"step": 19560,
+"success": true,
+"landed": true,
+"wall_s": 10013.0
+},
+{
+"env": 11,
+"step": 19560,
+"success": true,
+"landed": true,
+"wall_s": 10013.0
+},
+{
+"env": 9,
+"step": 19584,
+"success": false,
+"landed": true,
+"wall_s": 10055.2
+},
+{
+"env": 8,
+"step": 19620,
+"success": true,
+"landed": true,
+"wall_s": 10129.2
+},
+{
+"env": 9,
+"step": 19632,
+"success": true,
+"landed": true,
+"wall_s": 10136.3
+},
+{
+"env": 11,
+"step": 19632,
+"success": true,
+"landed": true,
+"wall_s": 10136.3
+},
+{
+"env": 4,
+"step": 19644,
+"success": true,
+"landed": true,
+"wall_s": 10159.1
+},
+{
+"env": 0,
+"step": 19656,
+"success": false,
+"landed": false,
+"wall_s": 10165.5
+},
+{
+"env": 3,
+"step": 19656,
+"success": false,
+"landed": false,
+"wall_s": 10165.5
+},
+{
+"env": 9,
+"step": 19668,
+"success": true,
+"landed": true,
+"wall_s": 10192.0
+},
+{
+"env": 10,
+"step": 19680,
+"success": false,
+"landed": true,
+"wall_s": 10216.2
+},
+{
+"env": 6,
+"step": 19692,
+"success": false,
+"landed": true,
+"wall_s": 10260.5
+},
+{
+"env": 6,
+"step": 19716,
+"success": true,
+"landed": true,
+"wall_s": 10276.9
+},
+{
+"env": 11,
+"step": 19728,
+"success": true,
+"landed": true,
+"wall_s": 10290.0
+},
+{
+"env": 8,
+"step": 19752,
+"success": true,
+"landed": true,
+"wall_s": 10323.4
+},
+{
+"env": 9,
+"step": 19752,
+"success": true,
+"landed": true,
+"wall_s": 10323.4
+},
+{
+"env": 6,
+"step": 19776,
+"success": true,
+"landed": true,
+"wall_s": 10359.0
+},
+{
+"env": 8,
+"step": 19800,
+"success": true,
+"landed": true,
+"wall_s": 10388.4
+},
+{
+"env": 11,
+"step": 19812,
+"success": true,
+"landed": true,
+"wall_s": 10395.0
+},
+{
+"env": 9,
+"step": 19824,
+"success": true,
+"landed": true,
+"wall_s": 10402.0
+},
+{
+"env": 11,
+"step": 19836,
+"success": true,
+"landed": true,
+"wall_s": 10429.9
+},
+{
+"env": 10,
+"step": 19860,
+"success": false,
+"landed": false,
+"wall_s": 10443.5
+},
+{
+"env": 9,
+"step": 19872,
+"success": true,
+"landed": true,
+"wall_s": 10449.8
+},
+{
+"env": 2,
+"step": 19884,
+"success": false,
+"landed": true,
+"wall_s": 10457.1
+},
+{
+"env": 1,
+"step": 19896,
+"success": false,
+"landed": true,
+"wall_s": 10481.7
+},
+{
+"env": 4,
+"step": 19920,
+"success": false,
+"landed": true,
+"wall_s": 10514.0
+},
+{
+"env": 2,
+"step": 19944,
+"success": true,
+"landed": true,
+"wall_s": 10564.0
+},
+{
+"env": 8,
+"step": 19956,
+"success": true,
+"landed": true,
+"wall_s": 10568.4
+},
+{
+"env": 5,
+"step": 19968,
+"success": false,
+"landed": false,
+"wall_s": 10579.4
+},
+{
+"env": 11,
+"step": 19968,
+"success": true,
+"landed": true,
+"wall_s": 10579.4
+},
+{
+"env": 8,
+"step": 19980,
+"success": true,
+"landed": true,
+"wall_s": 10602.0
+},
+{
+"env": 10,
+"step": 19980,
+"success": true,
+"landed": true,
+"wall_s": 10602.0
+},
+{
+"env": 11,
+"step": 19992,
+"success": true,
+"landed": true,
+"wall_s": 10606.0
+},
+{
+"env": 2,
+"step": 20016,
+"success": true,
+"landed": true,
+"wall_s": 10631.2
+},
+{
+"env": 9,
+"step": 20016,
+"success": true,
+"landed": true,
+"wall_s": 10631.2
+},
+{
+"env": 11,
+"step": 20028,
+"success": true,
+"landed": true,
+"wall_s": 10636.8
+},
+{
+"env": 7,
+"step": 20040,
+"success": false,
+"landed": false,
+"wall_s": 10643.6
+},
+{
+"env": 10,
+"step": 20040,
+"success": true,
+"landed": true,
+"wall_s": 10643.6
+},
+{
+"env": 2,
+"step": 20088,
+"success": true,
+"landed": true,
+"wall_s": 10708.2
+},
+{
+"env": 10,
+"step": 20112,
+"success": true,
+"landed": true,
+"wall_s": 10758.1
+},
+{
+"env": 8,
+"step": 20136,
+"success": true,
+"landed": true,
+"wall_s": 10790.9
+},
+{
+"env": 7,
+"step": 20148,
+"success": true,
+"landed": true,
+"wall_s": 10811.7
+},
+{
+"env": 3,
+"step": 20160,
+"success": false,
+"landed": false,
+"wall_s": 10819.8
+},
+{
+"env": 4,
+"step": 20160,
+"success": true,
+"landed": true,
+"wall_s": 10819.8
+},
+{
+"env": 10,
+"step": 20160,
+"success": true,
+"landed": true,
+"wall_s": 10819.8
+},
+{
+"env": 9,
+"step": 20172,
+"success": true,
+"landed": true,
+"wall_s": 10842.8
+},
+{
+"env": 10,
+"step": 20184,
+"success": true,
+"landed": true,
+"wall_s": 10848.9
+},
+{
+"env": 11,
+"step": 20184,
+"success": true,
+"landed": true,
+"wall_s": 10848.9
+},
+{
+"env": 3,
+"step": 20208,
+"success": true,
+"landed": true,
+"wall_s": 10906.0
+},
+{
+"env": 7,
+"step": 20232,
+"success": true,
+"landed": true,
+"wall_s": 10936.5
+},
+{
+"env": 9,
+"step": 20244,
+"success": true,
+"landed": true,
+"wall_s": 10943.4
+},
+{
+"env": 10,
+"step": 20244,
+"success": true,
+"landed": true,
+"wall_s": 10943.4
+},
+{
+"env": 1,
+"step": 20292,
+"success": false,
+"landed": true,
+"wall_s": 10972.2
+},
+{
+"env": 11,
+"step": 20292,
+"success": true,
+"landed": true,
+"wall_s": 10972.2
+},
+{
+"env": 10,
+"step": 20340,
+"success": true,
+"landed": true,
+"wall_s": 11040.0
+},
+{
+"env": 0,
+"step": 20352,
+"success": false,
+"landed": false,
+"wall_s": 11050.1
+},
+{
+"env": 10,
+"step": 20376,
+"success": true,
+"landed": true,
+"wall_s": 11068.1
+},
+{
+"env": 0,
+"step": 20412,
+"success": true,
+"landed": true,
+"wall_s": 11133.8
+},
+{
+"env": 1,
+"step": 20448,
+"success": true,
+"landed": true,
+"wall_s": 11161.1
+},
+{
+"env": 4,
+"step": 20460,
+"success": false,
+"landed": true,
+"wall_s": 11195.3
+},
+{
+"env": 9,
+"step": 20460,
+"success": false,
+"landed": true,
+"wall_s": 11195.3
+},
+{
+"env": 1,
+"step": 20472,
+"success": true,
+"landed": true,
+"wall_s": 11224.0
+},
+{
+"env": 0,
+"step": 20484,
+"success": true,
+"landed": true,
+"wall_s": 11250.9
+},
+{
+"env": 8,
+"step": 20496,
+"success": false,
+"landed": true,
+"wall_s": 11282.0
+},
+{
+"env": 10,
+"step": 20508,
+"success": true,
+"landed": true,
+"wall_s": 11312.2
+},
+{
+"env": 11,
+"step": 20520,
+"success": true,
+"landed": true,
+"wall_s": 11319.7
+},
+{
+"env": 2,
+"step": 20532,
+"success": false,
+"landed": false,
+"wall_s": 11348.8
+},
+{
+"env": 5,
+"step": 20532,
+"success": false,
+"landed": false,
+"wall_s": 11348.8
+},
+{
+"env": 0,
+"step": 20544,
+"success": true,
+"landed": true,
+"wall_s": 11379.5
+},
+{
+"env": 10,
+"step": 20544,
+"success": true,
+"landed": true,
+"wall_s": 11379.5
+},
+{
+"env": 10,
+"step": 20580,
+"success": true,
+"landed": true,
+"wall_s": 11478.0
+},
+{
+"env": 2,
+"step": 20592,
+"success": true,
+"landed": true,
+"wall_s": 11491.3
+},
+{
+"env": 11,
+"step": 20592,
+"success": true,
+"landed": true,
+"wall_s": 11491.3
+},
+{
+"env": 9,
+"step": 20604,
+"success": true,
+"landed": true,
+"wall_s": 11499.9
+},
+{
+"env": 10,
+"step": 20604,
+"success": true,
+"landed": true,
+"wall_s": 11499.9
+},
+{
+"env": 1,
+"step": 20616,
+"success": true,
+"landed": true,
+"wall_s": 11529.7
+},
+{
+"env": 3,
+"step": 20616,
+"success": false,
+"landed": true,
+"wall_s": 11529.7
+},
+{
+"env": 8,
+"step": 20616,
+"success": true,
+"landed": true,
+"wall_s": 11529.7
+},
+{
+"env": 0,
+"step": 20628,
+"success": true,
+"landed": true,
+"wall_s": 11544.2
+},
+{
+"env": 10,
+"step": 20628,
+"success": true,
+"landed": true,
+"wall_s": 11544.2
+},
+{
+"env": 8,
+"step": 20640,
+"success": true,
+"landed": true,
+"wall_s": 11550.9
+},
+{
+"env": 2,
+"step": 20676,
+"success": true,
+"landed": true,
+"wall_s": 11600.9
+},
+{
+"env": 5,
+"step": 20676,
+"success": true,
+"landed": true,
+"wall_s": 11600.9
+},
+{
+"env": 6,
+"step": 20676,
+"success": false,
+"landed": false,
+"wall_s": 11600.9
+},
+{
+"env": 3,
+"step": 20688,
+"success": true,
+"landed": true,
+"wall_s": 11636.2
+},
+{
+"env": 9,
+"step": 20688,
+"success": true,
+"landed": true,
+"wall_s": 11636.2
+},
+{
+"env": 6,
+"step": 20700,
+"success": true,
+"landed": true,
+"wall_s": 11642.9
+},
+{
+"env": 7,
+"step": 20700,
+"success": false,
+"landed": false,
+"wall_s": 11642.9
+},
+{
+"env": 1,
+"step": 20712,
+"success": true,
+"landed": true,
+"wall_s": 11652.3
+},
+{
+"env": 5,
+"step": 20712,
+"success": true,
+"landed": true,
+"wall_s": 11652.3
+},
+{
+"env": 0,
+"step": 20748,
+"success": true,
+"landed": true,
+"wall_s": 11751.3
+},
+{
+"env": 6,
+"step": 20760,
+"success": true,
+"landed": true,
+"wall_s": 11786.6
+},
+{
+"env": 5,
+"step": 20772,
+"success": true,
+"landed": true,
+"wall_s": 11794.9
+},
+{
+"env": 7,
+"step": 20772,
+"success": true,
+"landed": true,
+"wall_s": 11794.9
+},
+{
+"env": 3,
+"step": 20808,
+"success": true,
+"landed": true,
+"wall_s": 11849.2
+},
+{
+"env": 4,
+"step": 20808,
+"success": false,
+"landed": true,
+"wall_s": 11849.2
+},
+{
+"env": 1,
+"step": 20820,
+"success": true,
+"landed": true,
+"wall_s": 11859.6
+},
+{
+"env": 0,
+"step": 20832,
+"success": true,
+"landed": true,
+"wall_s": 11868.5
+},
+{
+"env": 5,
+"step": 20844,
+"success": true,
+"landed": true,
+"wall_s": 11895.7
+},
+{
+"env": 9,
+"step": 20844,
+"success": true,
+"landed": true,
+"wall_s": 11895.7
+},
+{
+"env": 0,
+"step": 20880,
+"success": true,
+"landed": true,
+"wall_s": 11961.6
+},
+{
+"env": 1,
+"step": 20892,
+"success": true,
+"landed": true,
+"wall_s": 11973.2
+},
+{
+"env": 5,
+"step": 20904,
+"success": true,
+"landed": true,
+"wall_s": 12003.3
+},
+{
+"env": 9,
+"step": 20940,
+"success": true,
+"landed": true,
+"wall_s": 12060.2
+},
+{
+"env": 10,
+"step": 20940,
+"success": true,
+"landed": true,
+"wall_s": 12060.2
+},
+{
+"env": 11,
+"step": 20940,
+"success": false,
+"landed": false,
+"wall_s": 12060.2
+},
+{
+"env": 9,
+"step": 20976,
+"success": true,
+"landed": true,
+"wall_s": 12134.8
+},
+{
+"env": 10,
+"step": 20976,
+"success": true,
+"landed": true,
+"wall_s": 12134.8
+},
+{
+"env": 5,
+"step": 20988,
+"success": true,
+"landed": true,
+"wall_s": 12145.7
+},
+{
+"env": 4,
+"step": 21024,
+"success": false,
+"landed": true,
+"wall_s": 12207.2
+},
+{
+"env": 7,
+"step": 21024,
+"success": false,
+"landed": true,
+"wall_s": 12207.2
+},
+{
+"env": 4,
+"step": 21036,
+"success": true,
+"landed": true,
+"wall_s": 12216.3
+},
+{
+"env": 5,
+"step": 21048,
+"success": true,
+"landed": true,
+"wall_s": 12249.1
+},
+{
+"env": 11,
+"step": 21060,
+"success": true,
+"landed": true,
+"wall_s": 12282.8
+},
+{
+"env": 3,
+"step": 21072,
+"success": true,
+"landed": true,
+"wall_s": 12292.1
+},
+{
+"env": 4,
+"step": 21072,
+"success": true,
+"landed": true,
+"wall_s": 12292.1
+},
+{
+"env": 1,
+"step": 21096,
+"success": true,
+"landed": true,
+"wall_s": 12358.9
+},
+{
+"env": 7,
+"step": 21120,
+"success": true,
+"landed": true,
+"wall_s": 12380.3
+},
+{
+"env": 1,
+"step": 21144,
+"success": true,
+"landed": true,
+"wall_s": 12416.3
+},
+{
+"env": 0,
+"step": 21156,
+"success": false,
+"landed": false,
+"wall_s": 12430.6
+},
+{
+"env": 3,
+"step": 21156,
+"success": true,
+"landed": true,
+"wall_s": 12430.6
+},
+{
+"env": 6,
+"step": 21156,
+"success": false,
+"landed": false,
+"wall_s": 12430.6
+},
+{
+"env": 11,
+"step": 21156,
+"success": true,
+"landed": true,
+"wall_s": 12430.6
+},
+{
+"env": 2,
+"step": 21168,
+"success": false,
+"landed": false,
+"wall_s": 12440.1
+},
+{
+"env": 7,
+"step": 21168,
+"success": true,
+"landed": true,
+"wall_s": 12440.1
+},
+{
+"env": 11,
+"step": 21192,
+"success": true,
+"landed": true,
+"wall_s": 12504.4
+},
+{
+"env": 3,
+"step": 21204,
+"success": true,
+"landed": true,
+"wall_s": 12514.0
+},
+{
+"env": 4,
+"step": 21204,
+"success": true,
+"landed": true,
+"wall_s": 12514.0
+},
+{
+"env": 8,
+"step": 21204,
+"success": false,
+"landed": false,
+"wall_s": 12514.0
+},
+{
+"env": 8,
+"step": 21228,
+"success": true,
+"landed": true,
+"wall_s": 12546.4
+},
+{
+"env": 0,
+"step": 21240,
+"success": true,
+"landed": true,
+"wall_s": 12575.9
+},
+{
+"env": 2,
+"step": 21252,
+"success": true,
+"landed": true,
+"wall_s": 12606.0
+},
+{
+"env": 7,
+"step": 21252,
+"success": true,
+"landed": true,
+"wall_s": 12606.0
+},
+{
+"env": 7,
+"step": 21276,
+"success": true,
+"landed": true,
+"wall_s": 12661.6
+},
+{
+"env": 0,
+"step": 21288,
+"success": true,
+"landed": true,
+"wall_s": 12668.4
+},
+{
+"env": 3,
+"step": 21288,
+"success": true,
+"landed": true,
+"wall_s": 12668.4
+},
+{
+"env": 8,
+"step": 21300,
+"success": true,
+"landed": true,
+"wall_s": 12676.7
+},
+{
+"env": 2,
+"step": 21312,
+"success": true,
+"landed": true,
+"wall_s": 12686.3
+},
+{
+"env": 4,
+"step": 21312,
+"success": true,
+"landed": true,
+"wall_s": 12686.3
+},
+{
+"env": 0,
+"step": 21324,
+"success": true,
+"landed": true,
+"wall_s": 12722.6
+},
+{
+"env": 2,
+"step": 21348,
+"success": true,
+"landed": true,
+"wall_s": 12772.1
+},
+{
+"env": 8,
+"step": 21360,
+"success": true,
+"landed": true,
+"wall_s": 12780.2
+},
+{
+"env": 2,
+"step": 21372,
+"success": true,
+"landed": true,
+"wall_s": 12788.4
+},
+{
+"env": 3,
+"step": 21396,
+"success": true,
+"landed": true,
+"wall_s": 12819.5
+},
+{
+"env": 0,
+"step": 21420,
+"success": true,
+"landed": true,
+"wall_s": 12847.5
+},
+{
+"env": 10,
+"step": 21468,
+"success": false,
+"landed": true,
+"wall_s": 12902.5
+},
+{
+"env": 2,
+"step": 21492,
+"success": true,
+"landed": true,
+"wall_s": 12950.5
+},
+{
+"env": 6,
+"step": 21492,
+"success": false,
+"landed": true,
+"wall_s": 12950.5
+},
+{
+"env": 3,
+"step": 21516,
+"success": true,
+"landed": true,
+"wall_s": 12967.1
+},
+{
+"env": 10,
+"step": 21516,
+"success": true,
+"landed": true,
+"wall_s": 12967.1
+},
+{
+"env": 5,
+"step": 21528,
+"success": false,
+"landed": false,
+"wall_s": 12976.3
+},
+{
+"env": 9,
+"step": 21552,
+"success": false,
+"landed": false,
+"wall_s": 12993.8
+},
+{
+"env": 1,
+"step": 21564,
+"success": false,
+"landed": true,
+"wall_s": 13001.3
+},
+{
+"env": 8,
+"step": 21576,
+"success": false,
+"landed": false,
+"wall_s": 13032.0
+},
+{
+"env": 2,
+"step": 21600,
+"success": true,
+"landed": true,
+"wall_s": 13061.7
+},
+{
+"env": 4,
+"step": 21600,
+"success": false,
+"landed": true,
+"wall_s": 13061.7
+},
+{
+"env": 1,
+"step": 21612,
+"success": true,
+"landed": true,
+"wall_s": 13069.6
+},
+{
+"env": 3,
+"step": 21612,
+"success": true,
+"landed": true,
+"wall_s": 13069.6
+},
+{
+"env": 10,
+"step": 21612,
+"success": true,
+"landed": true,
+"wall_s": 13069.6
+},
+{
+"env": 2,
+"step": 21624,
+"success": true,
+"landed": true,
+"wall_s": 13090.7
+},
+{
+"env": 8,
+"step": 21648,
+"success": true,
+"landed": true,
+"wall_s": 13138.1
+},
+{
+"env": 10,
+"step": 21660,
+"success": true,
+"landed": true,
+"wall_s": 13164.1
+},
+{
+"env": 2,
+"step": 21684,
+"success": true,
+"landed": true,
+"wall_s": 13198.6
+},
+{
+"env": 1,
+"step": 21696,
+"success": true,
+"landed": true,
+"wall_s": 13203.6
+},
+{
+"env": 10,
+"step": 21732,
+"success": true,
+"landed": true,
+"wall_s": 13243.0
+},
+{
+"env": 2,
+"step": 21744,
+"success": true,
+"landed": true,
+"wall_s": 13253.4
+},
+{
+"env": 7,
+"step": 21744,
+"success": false,
+"landed": false,
+"wall_s": 13253.4
+},
+{
+"env": 11,
+"step": 21780,
+"success": false,
+"landed": false,
+"wall_s": 13300.7
+},
+{
+"env": 6,
+"step": 21792,
+"success": false,
+"landed": false,
+"wall_s": 13323.4
+},
+{
+"env": 10,
+"step": 21792,
+"success": true,
+"landed": true,
+"wall_s": 13323.4
+},
+{
+"env": 0,
+"step": 21828,
+"success": false,
+"landed": true,
+"wall_s": 13341.3
+},
+{
+"env": 3,
+"step": 21852,
+"success": false,
+"landed": false,
+"wall_s": 13359.1
+},
+{
+"env": 6,
+"step": 21876,
+"success": true,
+"landed": true,
+"wall_s": 13411.7
+},
+{
+"env": 9,
+"step": 21888,
+"success": false,
+"landed": true,
+"wall_s": 13414.8
+},
+{
+"env": 3,
+"step": 21912,
+"success": true,
+"landed": true,
+"wall_s": 13449.4
+},
+{
+"env": 2,
+"step": 21972,
+"success": false,
+"landed": true,
+"wall_s": 13506.1
+},
+{
+"env": 7,
+"step": 21972,
+"success": false,
+"landed": true,
+"wall_s": 13506.1
+},
+{
+"env": 3,
+"step": 21996,
+"success": true,
+"landed": true,
+"wall_s": 13538.3
+},
+{
+"env": 2,
+"step": 22020,
+"success": true,
+"landed": true,
+"wall_s": 13555.6
+},
+{
+"env": 9,
+"step": 22044,
+"success": false,
+"landed": true,
+"wall_s": 13591.7
+},
+{
+"env": 2,
+"step": 22068,
+"success": true,
+"landed": true,
+"wall_s": 13623.4
+},
+{
+"env": 4,
+"step": 22080,
+"success": false,
+"landed": true,
+"wall_s": 13631.0
+},
+{
+"env": 4,
+"step": 22104,
+"success": true,
+"landed": true,
+"wall_s": 13667.7
+},
+{
+"env": 11,
+"step": 22116,
+"success": false,
+"landed": false,
+"wall_s": 13672.6
+},
+{
+"env": 2,
+"step": 22128,
+"success": true,
+"landed": true,
+"wall_s": 13677.3
+},
+{
+"env": 8,
+"step": 22140,
+"success": false,
+"landed": true,
+"wall_s": 13686.3
+},
+{
+"env": 9,
+"step": 22140,
+"success": true,
+"landed": true,
+"wall_s": 13686.3
+},
+{
+"env": 3,
+"step": 22152,
+"success": true,
+"landed": true,
+"wall_s": 13694.1
+},
+{
+"env": 4,
+"step": 22152,
+"success": true,
+"landed": true,
+"wall_s": 13694.1
+},
+{
+"env": 5,
+"step": 22152,
+"success": false,
+"landed": false,
+"wall_s": 13694.1
+},
+{
+"env": 2,
+"step": 22164,
+"success": true,
+"landed": true,
+"wall_s": 13722.1
+},
+{
+"env": 8,
+"step": 22212,
+"success": true,
+"landed": true,
+"wall_s": 13771.4
+},
+{
+"env": 1,
+"step": 22224,
+"success": false,
+"landed": false,
+"wall_s": 13794.6
+},
+{
+"env": 8,
+"step": 22248,
+"success": true,
+"landed": true,
+"wall_s": 13808.4
+},
+{
+"env": 10,
+"step": 22272,
+"success": false,
+"landed": false,
+"wall_s": 13827.2
+},
+{
+"env": 8,
+"step": 22284,
+"success": false,
+"landed": true,
+"wall_s": 13853.2
+},
+{
+"env": 5,
+"step": 22308,
+"success": false,
+"landed": true,
+"wall_s": 13873.3
+},
+{
+"env": 6,
+"step": 22308,
+"success": false,
+"landed": true,
+"wall_s": 13873.3
+},
+{
+"env": 10,
+"step": 22308,
+"success": true,
+"landed": true,
+"wall_s": 13873.3
+},
+{
+"env": 10,
+"step": 22356,
+"success": true,
+"landed": true,
+"wall_s": 13939.4
+},
+{
+"env": 5,
+"step": 22368,
+"success": true,
+"landed": true,
+"wall_s": 13962.0
+},
+{
+"env": 5,
+"step": 22416,
+"success": true,
+"landed": true,
+"wall_s": 14006.2
+},
+{
+"env": 3,
+"step": 22428,
+"success": false,
+"landed": true,
+"wall_s": 14031.6
+},
+{
+"env": 6,
+"step": 22440,
+"success": true,
+"landed": true,
+"wall_s": 14038.1
+},
+{
+"env": 9,
+"step": 22452,
+"success": true,
+"landed": true,
+"wall_s": 14057.9
+},
+{
+"env": 5,
+"step": 22464,
+"success": true,
+"landed": true,
+"wall_s": 14065.0
+},
+{
+"env": 0,
+"step": 22524,
+"success": false,
+"landed": false,
+"wall_s": 14131.0
+},
+{
+"env": 5,
+"step": 22524,
+"success": true,
+"landed": true,
+"wall_s": 14131.0
+},
+{
+"env": 4,
+"step": 22536,
+"success": false,
+"landed": false,
+"wall_s": 14137.7
+},
+{
+"env": 10,
+"step": 22548,
+"success": false,
+"landed": true,
+"wall_s": 14145.4
+},
+{
+"env": 11,
+"step": 22548,
+"success": false,
+"landed": true,
+"wall_s": 14145.4
+},
+{
+"env": 9,
+"step": 22584,
+"success": true,
+"landed": true,
+"wall_s": 14199.8
+},
+{
+"env": 6,
+"step": 22596,
+"success": false,
+"landed": false,
+"wall_s": 14208.6
+},
+{
+"env": 2,
+"step": 22620,
+"success": false,
+"landed": false,
+"wall_s": 14225.7
+},
+{
+"env": 5,
+"step": 22620,
+"success": true,
+"landed": true,
+"wall_s": 14225.7
+},
+{
+"env": 2,
+"step": 22692,
+"success": true,
+"landed": true,
+"wall_s": 14304.0
+},
+{
+"env": 8,
+"step": 22716,
+"success": false,
+"landed": true,
+"wall_s": 14327.7
+},
+{
+"env": 3,
+"step": 22752,
+"success": false,
+"landed": true,
+"wall_s": 14376.3
+},
+{
+"env": 5,
+"step": 22752,
+"success": true,
+"landed": true,
+"wall_s": 14376.3
+},
+{
+"env": 6,
+"step": 22764,
+"success": false,
+"landed": true,
+"wall_s": 14382.2
+},
+{
+"env": 7,
+"step": 22764,
+"success": false,
+"landed": false,
+"wall_s": 14382.2
+},
+{
+"env": 8,
+"step": 22764,
+"success": true,
+"landed": true,
+"wall_s": 14382.2
+},
+{
+"env": 10,
+"step": 22764,
+"success": true,
+"landed": true,
+"wall_s": 14382.2
+},
+{
+"env": 6,
+"step": 22812,
+"success": true,
+"landed": true,
+"wall_s": 14474.7
+},
+{
+"env": 1,
+"step": 22824,
+"success": false,
+"landed": true,
+"wall_s": 14482.1
+},
+{
+"env": 7,
+"step": 22824,
+"success": true,
+"landed": true,
+"wall_s": 14482.1
+},
+{
+"env": 8,
+"step": 22824,
+"success": true,
+"landed": true,
+"wall_s": 14482.1
+},
+{
+"env": 6,
+"step": 22836,
+"success": true,
+"landed": true,
+"wall_s": 14486.8
+},
+{
+"env": 10,
+"step": 22836,
+"success": true,
+"landed": true,
+"wall_s": 14486.8
+},
+{
+"env": 4,
+"step": 22860,
+"success": true,
+"landed": true,
+"wall_s": 14520.9
+},
+{
+"env": 4,
+"step": 22884,
+"success": true,
+"landed": true,
+"wall_s": 14565.0
+},
+{
+"env": 1,
+"step": 22896,
+"success": true,
+"landed": true,
+"wall_s": 14575.3
+},
+{
+"env": 8,
+"step": 22932,
+"success": true,
+"landed": true,
+"wall_s": 14645.3
+},
+{
+"env": 5,
+"step": 22956,
+"success": false,
+"landed": true,
+"wall_s": 14663.6
+},
+{
+"env": 11,
+"step": 22956,
+"success": false,
+"landed": false,
+"wall_s": 14663.6
+},
+{
+"env": 2,
+"step": 22992,
+"success": false,
+"landed": true,
+"wall_s": 14716.5
+},
+{
+"env": 10,
+"step": 23004,
+"success": true,
+"landed": true,
+"wall_s": 14726.1
+},
+{
+"env": 5,
+"step": 23016,
+"success": true,
+"landed": true,
+"wall_s": 14747.0
+},
+{
+"env": 4,
+"step": 23040,
+"success": false,
+"landed": true,
+"wall_s": 14781.8
+},
+{
+"env": 10,
+"step": 23040,
+"success": true,
+"landed": true,
+"wall_s": 14781.8
+},
+{
+"env": 0,
+"step": 23052,
+"success": false,
+"landed": true,
+"wall_s": 14811.1
+},
+{
+"env": 5,
+"step": 23064,
+"success": true,
+"landed": true,
+"wall_s": 14818.5
+},
+{
+"env": 6,
+"step": 23064,
+"success": false,
+"landed": true,
+"wall_s": 14818.5
+},
+{
+"env": 0,
+"step": 23100,
+"success": true,
+"landed": true,
+"wall_s": 14875.4
+},
+{
+"env": 2,
+"step": 23112,
+"success": true,
+"landed": true,
+"wall_s": 14881.4
+},
+{
+"env": 4,
+"step": 23112,
+"success": true,
+"landed": true,
+"wall_s": 14881.4
+},
+{
+"env": 8,
+"step": 23136,
+"success": true,
+"landed": true,
+"wall_s": 14897.5
+},
+{
+"env": 3,
+"step": 23148,
+"success": false,
+"landed": false,
+"wall_s": 14922.7
+},
+{
+"env": 7,
+"step": 23160,
+"success": false,
+"landed": true,
+"wall_s": 14936.2
+},
+{
+"env": 8,
+"step": 23172,
+"success": true,
+"landed": true,
+"wall_s": 14942.2
+},
+{
+"env": 10,
+"step": 23172,
+"success": true,
+"landed": true,
+"wall_s": 14942.2
+},
+{
+"env": 10,
+"step": 23220,
+"success": true,
+"landed": true,
+"wall_s": 15028.7
+},
+{
+"env": 4,
+"step": 23232,
+"success": true,
+"landed": true,
+"wall_s": 15039.1
+},
+{
+"env": 1,
+"step": 23244,
+"success": false,
+"landed": true,
+"wall_s": 15061.9
+},
+{
+"env": 7,
+"step": 23244,
+"success": true,
+"landed": true,
+"wall_s": 15061.9
+},
+{
+"env": 1,
+"step": 23268,
+"success": true,
+"landed": true,
+"wall_s": 15080.9
+},
+{
+"env": 5,
+"step": 23280,
+"success": false,
+"landed": true,
+"wall_s": 15088.3
+},
+{
+"env": 1,
+"step": 23292,
+"success": true,
+"landed": true,
+"wall_s": 15093.1
+},
+{
+"env": 5,
+"step": 23352,
+"success": true,
+"landed": true,
+"wall_s": 15124.9
+},
+{
+"env": 11,
+"step": 23364,
+"success": false,
+"landed": false,
+"wall_s": 15130.3
+},
+{
+"env": 8,
+"step": 23376,
+"success": true,
+"landed": true,
+"wall_s": 15137.5
+},
+{
+"env": 9,
+"step": 23388,
+"success": false,
+"landed": false,
+"wall_s": 15141.2
+},
+{
+"env": 4,
+"step": 23436,
+"success": false,
+"landed": false,
+"wall_s": 15220.6
+},
+{
+"env": 9,
+"step": 23472,
+"success": true,
+"landed": true,
+"wall_s": 15276.4
+},
+{
+"env": 0,
+"step": 23484,
+"success": false,
+"landed": true,
+"wall_s": 15305.5
+},
+{
+"env": 11,
+"step": 23496,
+"success": true,
+"landed": true,
+"wall_s": 15312.6
+},
+{
+"env": 1,
+"step": 23544,
+"success": false,
+"landed": true,
+"wall_s": 15376.9
+},
+{
+"env": 6,
+"step": 23544,
+"success": false,
+"landed": true,
+"wall_s": 15376.9
+},
+{
+"env": 2,
+"step": 23592,
+"success": false,
+"landed": false,
+"wall_s": 15445.6
+},
+{
+"env": 6,
+"step": 23592,
+"success": true,
+"landed": true,
+"wall_s": 15445.6
+},
+{
+"env": 1,
+"step": 23604,
+"success": true,
+"landed": true,
+"wall_s": 15469.3
+},
+{
+"env": 1,
+"step": 23628,
+"success": true,
+"landed": true,
+"wall_s": 15485.5
+},
+{
+"env": 10,
+"step": 23628,
+"success": false,
+"landed": true,
+"wall_s": 15485.5
+},
+{
+"env": 11,
+"step": 23628,
+"success": true,
+"landed": true,
+"wall_s": 15485.5
+},
+{
+"env": 5,
+"step": 23652,
+"success": false,
+"landed": false,
+"wall_s": 15514.9
+},
+{
+"env": 2,
+"step": 23664,
+"success": true,
+"landed": true,
+"wall_s": 15523.5
+},
+{
+"env": 8,
+"step": 23676,
+"success": false,
+"landed": true,
+"wall_s": 15553.3
+},
+{
+"env": 9,
+"step": 23688,
+"success": false,
+"landed": false,
+"wall_s": 15581.8
+},
+{
+"env": 11,
+"step": 23700,
+"success": true,
+"landed": true,
+"wall_s": 15593.9
+},
+{
+"env": 5,
+"step": 23724,
+"success": true,
+"landed": true,
+"wall_s": 15610.6
+},
+{
+"env": 5,
+"step": 23748,
+"success": true,
+"landed": true,
+"wall_s": 15617.6
+},
+{
+"env": 7,
+"step": 23796,
+"success": false,
+"landed": true,
+"wall_s": 15687.6
+},
+{
+"env": 1,
+"step": 23820,
+"success": true,
+"landed": true,
+"wall_s": 15706.2
+},
+{
+"env": 4,
+"step": 23820,
+"success": false,
+"landed": true,
+"wall_s": 15706.2
+},
+{
+"env": 5,
+"step": 23820,
+"success": true,
+"landed": true,
+"wall_s": 15706.2
+},
+{
+"env": 10,
+"step": 23820,
+"success": true,
+"landed": true,
+"wall_s": 15706.2
+},
+{
+"env": 3,
+"step": 23832,
+"success": false,
+"landed": false,
+"wall_s": 15736.0
+},
+{
+"env": 2,
+"step": 23880,
+"success": true,
+"landed": true,
+"wall_s": 15790.1
+},
+{
+"env": 0,
+"step": 23916,
+"success": false,
+"landed": true,
+"wall_s": 15834.9
+},
+{
+"env": 3,
+"step": 23928,
+"success": true,
+"landed": true,
+"wall_s": 15857.8
+},
+{
+"env": 9,
+"step": 23928,
+"success": true,
+"landed": true,
+"wall_s": 15857.8
+},
+{
+"env": 5,
+"step": 23952,
+"success": true,
+"landed": true,
+"wall_s": 15889.8
+},
+{
+"env": 5,
+"step": 24036,
+"success": true,
+"landed": true,
+"wall_s": 15963.2
+},
+{
+"env": 9,
+"step": 24036,
+"success": true,
+"landed": true,
+"wall_s": 15963.2
+},
+{
+"env": 0,
+"step": 24072,
+"success": true,
+"landed": true,
+"wall_s": 15988.9
+},
+{
+"env": 6,
+"step": 24120,
+"success": false,
+"landed": true,
+"wall_s": 16036.4
+},
+{
+"env": 0,
+"step": 24132,
+"success": true,
+"landed": true,
+"wall_s": 16060.6
+},
+{
+"env": 6,
+"step": 24144,
+"success": true,
+"landed": true,
+"wall_s": 16066.3
+},
+{
+"env": 8,
+"step": 24168,
+"success": false,
+"landed": true,
+"wall_s": 16079.2
+},
+{
+"env": 9,
+"step": 24168,
+"success": true,
+"landed": true,
+"wall_s": 16079.2
+},
+{
+"env": 1,
+"step": 24180,
+"success": false,
+"landed": true,
+"wall_s": 16086.9
+},
+{
+"env": 2,
+"step": 24180,
+"success": false,
+"landed": true,
+"wall_s": 16086.9
+}
+]

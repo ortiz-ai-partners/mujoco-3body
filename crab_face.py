@@ -1,17 +1,18 @@
 """The crab's face: an expression composed from what a second AI infers and what the simulation measures.
 
-ゆうころ 10/28 夕〜夜:「カニの表情を AI 管理できたりする？」→ a table keyed by the manager's action (takes 30-37)
-→「本物の推論で 2 つの AI を走らせるように」→ a mood net beside the manager (takes 38-41)
-→「複数の確率と計測値から表情を組み立てるものを精密に設計したい」→ this version (take 42-): the face is composed from
-   the mood net's four outcome probabilities and the crossing estimate, and from measured effort, contact, progress
-   and events, by the priority rules below.  The monitor shows the values that decide the face.
+Design history: the first version chose the face from a table keyed by the manager's action; the second ran a mood
+net beside the manager (requirement: two AIs doing real inference in the video); this version (requirement: compose
+the expression precisely from several probabilities and measured values) builds the face from the mood net's four
+outcome probabilities and the crossing estimate, and from measured effort, contact, progress and events, by the
+priority rules below.  The monitor shows the values that decide the face.
 
-What is official and what is ours
+What is official and what this project adds
   * The real Jumper has two round 0.9-inch TFT "expression displays" (jumper/docs/HARDWARE.md).  The official repository
     ships one face animation, for the dance task (tasks/jumper/dance/media/demo.mp4: open, blink, half-closed, sparkle).
     There is no API that picks an expression from the robot's state.
-  * This module is the island's.  The screen derives from jumper/out/face_tools/face_display.py (10/11, the lesson
-    videos); the pictures are drawn with PIL; the sparkle borrows the official animation's four-pointed star.
+  * This module is the project's own work.  The screen derives from an earlier face-display tool by the same author
+    (made for lesson videos, not distributed); the pictures are drawn with PIL; the sparkle borrows the official
+    animation's four-pointed star.
 
 Render-only, physics untouched
   The screen is a contype=0 / conaffinity=0 / density=0 mesh geom on `display_module_link` (the 10.7 x 3.9 cm front
@@ -77,7 +78,7 @@ PANEL_HY, PANEL_HZ = 0.0170, 0.0500   # half extents of the drawn area (3.4 x 10
 
 TILT_ON, TILT_OFF = 50.0, 35.0      # deg from upright: spiral on above / off below
 SPIRAL_HOLD = 0.6                   # s the spiral stays after a fall
-HOLD = 0.5                          # s a face stays at least (ゆうころ: 0.5 秒以上保つ)
+HOLD = 0.5                          # s a face stays at least (requirement: a face is held at least 0.5 s)
 
 # the face monitor: a camera in front of the panel, rendered into a small inset in the caption's row
 PIP_W, PIP_H = 240, 120
@@ -85,9 +86,9 @@ CAM_DIST = 0.30                     # m in front of the panel (beyond the render
 PIP_FILL = 0.72                     # the panel's 10 cm fill this much of the inset's width
 
 # measured signals
-PUSH_SWEAT_S = 5.0                  # s of pushing in contact after which the face sweats (ゆうころ)
+PUSH_SWEAT_S = 5.0                  # s of pushing in contact after which the face sweats (requirement)
 PUSH_FORCE_REF = 10.0               # N: the contact force on the duck that reads as effort 1.0 (calibrated on a headless run,
-                                    # see HANDOVER; the duck weighs about 15 N)
+                                    # see docs/devlog/HANDOVER.md; the duck weighs about 15 N)
 EFFORT_HI, EFFORT_LO = 0.70, 0.55   # effort above: sweat while pushing; it stays until the effort is back under EFFORT_LO
 EFFORT_TAU = 0.3                    # s, smoothing of the effort
 CONTACT_GAP_S = 1.0                 # s without contact after which a push no longer counts as pushing
@@ -440,7 +441,7 @@ class FaceDriver:
     # -- the rules
     def choose(self, t, s):
         """(expression, reason, rule number, the values that decided it) for the state `s` this control step.  The
-        fourth item is what the monitor's top line shows (ゆうころ: every change of face names the values behind it)."""
+        fourth item is what the monitor's top line shows (requirement: every change of face names the values behind it)."""
         tilt = s["tilt"]
         if tilt > TILT_ON or (self.expr == "spiral" and tilt > TILT_OFF):
             self.spiral_until = t + SPIRAL_HOLD

@@ -5,7 +5,7 @@ No external forces anywhere.  Every robot moves through its own actuators:
   MD  official velstand.onnx / alpha_sitstand.onnx (pollen-robotics), XML servos.
   JP  official locomotion.onnx / jump.onnx (jumper bundle), PD kp 10 / 20.
 
-Stages (ゆうころ 10/27 夜の筋書き)
+Stages (the story, in order)
   BUILD      BZ builds the course; MD wanders beyond it; JP waits in the west.
   FOLLOW_IN  BZ crosses; MD walks to the foot of the ramp.
   RAMP       MD tries the 16-degree ramp, backs off, tries again, gives up and sits down.
@@ -13,18 +13,26 @@ Stages (ゆうころ 10/27 夜の筋書き)
              crest at full speed), crosses and comes down behind BZ.  MD watches,
              "ぐわぁぁ？", looks around.
   CALL       MD calls BZ; JP steps out of BZ's turning circle.
-  LIFT       BZ drives back around the course with JP trailing it, and JP goes round to the duck's
-             south side and cheers it with the official dance policy while BZ works the fork:
-               --ending push  (take 5) from the duck's side, fork at 6 cm: tips the seated duck over,
-                              velstand gets it back on its feet by itself.
+  RETURN     (--ending crab, the default) JP comes back round the east side of the course to the lane
+             behind the seated duck.  BZ never touches the duck.
+  RESCUE     the manager AI (--manager rule / ppo / tabq) picks the next skill from crab_help.py -
+             WAIT / SEAT / PUSH / BACK_OFF / STANDUP / WALK_ON - until the duck stands on the floor
+             north of the course; the mood net (--face-ai mood) drives JP's face monitor.
+  CELEBRATE  the three gather at the goal (--finale circle: a circle facing the centre, BZ pumps its
+             fork, MD squats and shakes its head, JP dances and holds its claws up).
+  LIFT       (--ending push / lift only: early endings, kept as options) BZ drives back around the
+             course with JP trailing it, and JP goes round to the duck's south side and cheers it with
+             the official dance policy while BZ works the fork:
+               --ending push  from the duck's side, fork at 6 cm: tips the seated duck over, velstand
+                              gets it back on its feet by itself.
                --ending lift  the duck first turns its back on the ramp and sits again; BZ docks
                               straight behind it (line following, fine aim, creep) and scoops it up
-                              with both tines under its hips - a 2 cm window (see HANDOVER.md), so
-                              whether it lifts, shoves or misses is decided by the physics of the take.
+                              with both tines under its hips - a 2 cm window (see docs/devlog/HANDOVER.md),
+                              so whether it lifts, shoves or misses is decided by the physics of the render.
 
-    <jumper venv python> v7_full.py --test            # no render
-    <jumper venv python> v7_full.py --preview DIR     # stills
-    <jumper venv python> v7_full.py                   # -> out/3body_arena_v7.mp4 (+ chirps)
+    python v7_full.py --test            # no render
+    python v7_full.py --preview DIR     # stills
+    python v7_full.py                   # -> out/3body_arena_v7.mp4 (+ chirps)
 """
 from __future__ import annotations
 
@@ -67,8 +75,10 @@ ASIDE_SPOT = (0.5, 2.0)                # the crab steps here before BZ drives ba
 CHEER_TEXT = {"wait": "BZ の後ろで待つ", "aside": "BZ の進路を空ける", "aside_done": "BZ を見る",
               "follow": "BZ について戻る（locomotion）", "detour": "BZ の東側を回り込む", "spot": "パッカンの南側へ",
               "face": "パッカンの方を向く", "dance": "応援ダンス（公式 dance ポリシー）"}
-# video speed per stage.  ゆうころ 10/28 昼: the submission rules allow up to 2x (3x would need the organisers' OK), so
-# nothing above 2x any more (takes 6-10 ran the construction at 4x); the celebration's dance itself plays at 1x
+# video speed per stage.  Requirement: the submission rules cap the playback speed (2x when the story was planned,
+# later raised to 8x), so the story from the ramp attempt on plays at 2x and the celebration's dance at 1x.  The
+# construction alone can be shown faster with --build-speed (a multiple of 2, together with --no-cuts; the submitted
+# video uses 4): frames are still sampled at 2x and only every n-th one is written, so the physics path is unchanged
 SPEED = {"BUILD": 2.0, "FOLLOW_IN": 2.0, "RAMP": 2.0, "CLIMB": 2.0, "CALL": 2.0, "LIFT": 2.0, "END": 1.0,
          "RETURN": 2.0, "RESCUE": 2.0, "CELEBRATE": 2.0}
 SPEED_DANCE = 1.0
@@ -77,8 +87,8 @@ MD_TEXT = {"STAND": "立位", "WALK": "歩行", "BACK": "後ずさり", "FALLEN"
            "SIT": "お座り（sitstand）", "CALL": "ブルドーザーを呼ぶ", "TURN": "向きを変える（velstand）",
            "WALK_ON": "レーンを北へ歩く（velstand）", "CHEER": "パタパタ（velstand の旋回＋首振り）"}
 
-# ── the goal celebration (ゆうころ 10/28 朝: 「坂を降り始めたらカニも後を追いかけて、ゴールで BZ もアームを上げて、
-#    パッカンもパタパタして、カニも腕を上げるダンス」) ──
+# ── the goal celebration (requirement: once the duck starts down the far ramp the crab follows it, and at the goal
+#    BZ raises its fork, the duck flaps and the crab dances with its arms up) ──
 ARM_SLOTS = slice(0, 10)        # the crab's two front arms in the policies' wire order: LF_J0..J4, RF_J0..J4
 # the official dance keeps the claws low for its first 4 s and has both up (0.21 m) from 8 to 13 s (v7_test_cheer.py
 # --dance-only); at 12.4 s the dance is frozen - the policy's last joint targets are held - for the final "banzai".
@@ -87,16 +97,17 @@ ARM_SLOTS = slice(0, 10)        # the crab's two front arms in the policies' wir
 CHEER_DANCE_S = 12.4            # the official dance (its claws go up), then
 CHEER_HOLD_S = 3.0              # the pose held with the fork up and the duck flapping
 
-# ── jump cuts (ゆうころ 10/28 夕: the submission must be 1-3 min including titles, at most 2x; the story is 3:30 at 2x,
+# ── jump cuts (requirement when they were made: 1-3 min including titles, at most 2x; the story is 3:30 at 2x,
 #    so the two empty drives of the construction are not shown: BZ going back for the second slope, and BZ going round
 #    to the start.  The physics runs through them; the frames are not written, a notice names the gap and the footer's
-#    sim clock jumps.  Default on; --no-cuts for the full record, --cut START:END:LABEL for others) ──
+#    sim clock jumps.  Default on; --no-cuts for the full record (used by the submitted video), --cut for others) ──
 DEFAULT_CUTS = [(22.0, 54.0, "BZ が空荷で保管場所へ戻る"),
                 (110.0, 172.0, "BZ が空荷でスタート地点へ回る")]      # (short: the notice must clear the footer)
 
-# ── the circle (ゆうころ 10/28 昼: 「みんなで顔を合わせようか、円になって中央を向き、ブルドーザーはアームを上下、アヒルは
-#    手がなかったので屈伸しながら首を振る」) ──
-# ── the crab cheers the duck's ramp attempts (ゆうころ 10/28 昼: 「カニ、ぱっかんがチャレンジしているとき万歳で踊って応援してほしい」) ──
+# ── the circle (requirement: the three face each other in a circle round a centre; BZ pumps its fork up and down,
+#    the duck, having no arms, squats while shaking its head, the crab dances) ──
+# ── the crab cheers the duck's ramp attempts (requirement: while the duck tries the ramp, the crab dances with its
+#    claws up to cheer it on) ──
 CHEER_SPOT = (2.4, -2.7)        # south-east of the ramp's foot, 1.4 m from the duck's lane, off BZ's course (BZ is done by then)
 CHEER_DANCE_START = 8.0         # where in the dance recording to begin: a claw is up 8-15 s, both 19-24.5 s, one 21-29.5 s,
                                 # both again 37.5-41 s (v7_test_cheer.py --dance-only --seconds 236); the attempts last ~32 s
@@ -146,9 +157,9 @@ def cheer_tick(rel, duck, crab, sim, model, data, t, pump_floor=0.2):
     does the official dance and then holds both arms up.  Policy commands and joint targets only (no external
     forces).  Returns True once the celebration is over.
 
-    pump_floor: the lowest the fork goes while pumping.  0.2 m when BZ's back is to the others (takes 9-33); 0.38 m
-    once BZ has turned round to face them (take 37-, ゆうころ 10/28 夕): the duck then stands under the raised tines,
-    0.9 m in front, and its head is 0.23 m high."""
+    pump_floor: the lowest the fork goes while pumping.  0.2 m when BZ's back is to the others (the first form of the
+    procession finale); 0.38 m once BZ has turned round to face them (design decision: BZ faces the others at the
+    goal): the duck then stands under the raised tines, 0.9 m in front, and its head is 0.23 m high."""
     if rel < 4.0:                                                             # two pumps: down for a second, up for a second
         if (rel % 2.0) < 1.0:
             sim.command(0.0, 0.0, -1.0 if sim.lift_target > pump_floor + 0.01 else 0.0)
@@ -207,7 +218,7 @@ class Chirps:
                   (0, 0, 0.03, 0, 0), (1600, 2900, 0.2, 0.35, 0.4)],
     }
 
-    MASTER_GAIN = 0.45          # ゆうころ: 音は小さめで
+    MASTER_GAIN = 0.45          # requirement: the voices stay quiet
 
     def __init__(self):
         self.events = []
@@ -415,49 +426,59 @@ def main():
     ap.add_argument("--max-sim", type=float, default=520.0)
     ap.add_argument("--dt-build", type=float, default=0.005)
     ap.add_argument("--dt-action", type=float, default=0.001)
-    ap.add_argument("--tag", default="", help="suffix for the output names, e.g. _take5 (keeps earlier takes)")
+    ap.add_argument("--tag", default="", help="suffix for the output names, e.g. _take51 (earlier outputs are kept)")
     ap.add_argument("--ending", choices=["push", "lift", "crab"], default="crab",
-                    help="push: take 5 - BZ comes at the seated duck's side, the fork tips it over, it gets up by itself; "
-                         "lift: the duck turns its back and BZ docks behind it to scoop it up (a 2 cm window - see HANDOVER); "
-                         "crab (take 6, ゆうころ 10/28: BZ must not handle the duck): the crab comes back and the manager AI "
-                         "chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk")
+                    help="crab (default; requirement: BZ must not handle the duck): the crab comes back and the manager AI "
+                         "chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk; "
+                         "push (early ending, kept): BZ comes at the seated duck's side, the fork tips it over, it gets up "
+                         "by itself; lift (early ending, kept): the duck turns its back and BZ docks behind it to scoop it "
+                         "up (a 2 cm window, see docs/devlog/HANDOVER.md)")
     ap.add_argument("--manager", choices=["rule", "ppo", "tabq"], default="rule",
                     help="who decides in the rescue: fixed rules, the PPO policy, or the learned Q table")
     ap.add_argument("--run", default="ppo2_small", help="out/manager_runs/<run>/ (ppo_manager.zip for ppo, tabq.json for tabq)")
     ap.add_argument("--rescue-max", type=float, default=240.0, help="simulated seconds the manager gets")
     ap.add_argument("--finale", choices=["circle", "procession", "around"], default="circle",
-                    help="circle (ゆうころ 10/28 昼, take 11-): the crab follows the duck down, BZ drives up and turns round, the three "
+                    help="circle (default): the crab follows the duck down, BZ drives up and turns round, the three "
                          "form a circle facing the centre - BZ pumps its fork, the duck squats and shakes its head, the crab dances; "
-                         "procession (take 9/10): the crab follows the duck down and the three cheer where the duck stopped; "
-                         "around (take 6/7): the crab backs down the up-ramp and walks round the course to the duck")
+                         "procession: the crab follows the duck down and the three cheer where the duck stopped; "
+                         "around: the crab backs down the up-ramp and walks round the course to the duck")
     ap.add_argument("--jitter", type=float, default=0.0,
-                    help="seconds added to where the crab's cheer dance starts in its recording (CHEER_DANCE_START). The only "
-                         "purpose is to change the physics path of a rendered take: the rendered physics is deterministic "
-                         "for given code, so a learned manager that fails on one path (take 17: the Q table re-seats "
-                         "instead of backing off after a stalled push) can be tried on another. Say which jitter a take used")
+                    help="seconds added to where the crab's cheer dance starts in its recording (CHEER_DANCE_START), default 0. "
+                         "The only purpose is to change the physics path of a render: the physics is deterministic for given "
+                         "code, so a learned manager that fails on one path can be tried on another. Record the jitter a "
+                         "render used")
     ap.add_argument("--no-prestage", action="store_true",
-                    help="switch off the pre-positioning (ゆうころ 10/28 昼): by default an idle robot already walks to where its "
+                    help="switch off the pre-positioning: by default an idle robot already walks to where its "
                          "next action starts - the crab to the foot of its lane while the duck tries the ramp again, back round "
                          "the course to the lane behind the seat while the duck is still calling, and BZ to its circle spot "
                          "while the duck walks on across the landing")
     ap.add_argument("--no-face", action="store_true",
-                    help="no face on the crab's display panel.  By default (ゆうころ 10/28 夕) the crab's expression is chosen from "
-                         "the manager's action and its result (crab_face.py's table) and shown in the face monitor, an inset at "
-                         "the bottom-left.  Render-only: the physics path is the same with and without it "
-                         "(--test, out/v7_full_report_facecheck_{A,B}.json)")
+                    help="no face on the crab's display panel.  By default the crab's expression is composed by crab_face.py "
+                         "from the mood net's inference and measured values (--face-ai) and shown in the face monitor, an "
+                         "inset beside the caption.  Render-only: the physics path is the same with and without it "
+                         "(--test, out/v7_full_report_facecheck_{A,B}.json, analysis/face_check.py)")
     ap.add_argument("--face-ai", choices=["mood", "critic", "table"], default="mood",
-                    help="mood (ゆうころ 10/28 夜, take 38-): a second AI beside the manager - the mood net, out/manager_runs/mood_net - "
-                         "infers every control step of the rescue whether the running move will end well, and its mood "
-                         "(confident / neutral / worried) colours the crab's face; critic: the PPO v2.2 critic's V(s) instead "
-                         "(the first attempt, a record); table: the expression table alone (takes 30-37)")
+                    help="mood (default): a second AI beside the manager - the mood net, out/manager_runs/mood_net - "
+                         "infers every control step of the rescue how the running move will end, and its outputs "
+                         "together with measured values choose the crab's face; critic: the PPO v2.2 critic's V(s) instead "
+                         "(the first design, kept as a record); table: the expression table alone (the earliest version)")
     ap.add_argument("--mood-run", default=crab_face.MOOD_RUN, help="the PPO whose critic --face-ai critic uses")
     ap.add_argument("--mood-net", default=crab_face.MOOD_NET, help="out/manager_runs/<name>/ of the mood net")
     ap.add_argument("--no-cuts", action="store_true", help="write every frame (no jump cuts): the full-length record")
     ap.add_argument("--cut", action="append", default=[], metavar="START:END[:LABEL]",
                     help="a jump cut in simulated seconds, added to the default ones (DEFAULT_CUTS)")
+    ap.add_argument("--build-speed", type=float, default=SPEED["BUILD"],
+                    help="video speed of the construction (the BUILD stage): 2 (default, the story's speed, with the jump cuts) "
+                         "or a multiple of 2 with --no-cuts (the submitted video uses 4; the submission rules allow up to 8x).  "
+                         "Frames are still sampled at 2x - the per-frame forward pass is part of the physics path (see "
+                         "docs/devlog/HANDOVER.md, section 0b) - and only every n-th one is written, so the physics is identical "
+                         "to a 2x render (changing the sampling cadence instead gives a different physics path)")
     args = ap.parse_args()
     args.prestage = not args.no_prestage
     args.face = not args.no_face
+    if args.build_speed < SPEED["BUILD"] or abs(args.build_speed / SPEED["BUILD"] - round(args.build_speed / SPEED["BUILD"])) > 1e-9:
+        ap.error(f"--build-speed must be {SPEED['BUILD']:g} or a multiple of it (got {args.build_speed:g})")
+    build_write_every = int(round(args.build_speed / SPEED["BUILD"]))     # 1 = write every sampled frame (2x)
     cuts = [] if args.no_cuts else list(DEFAULT_CUTS)
     for spec in args.cut:
         a, b, *label = spec.split(":")
@@ -498,6 +519,7 @@ def main():
         cam = CameraRig(lookat=[-0.5, 0, 0.2], distance=8.5, azimuth=55, elevation=-38, tau=1.5)
         cam.snap()
         clock = FrameClock(VIDEO_FPS, SPEED["BUILD"])
+        sampled = 0                                              # frames sampled by the clock (written or not)
         if args.preview:
             args.preview.mkdir(parents=True, exist_ok=True)
         else:
@@ -626,7 +648,7 @@ def main():
         """Circle and procession finales: BZ raises its fork (phase "raise") and turns round on the spot to face the goal
         ("turn" -> "ready"), while the duck is still walking on across the landing (pre-positioning): nobody is near its
         1.38 m tines then.  It cannot drive north (the wall is 5 cm from its raised tines), so it turns at its post.
-        (The procession's BZ kept its back to the others in takes 9-33: ゆうころ 10/28 夕「後ろ向いてるよ」.)"""
+        (Design decision: in its first form the procession finale left BZ with its back to the others; it now turns.)"""
         yaw = quat_to_yaw(data.xquat[bz_bid])
         if bzf["phase"] == "raise":
             sim.command(0.0, 0.0, 1.0 if sim.lift_target < 0.5 else 0.0)
@@ -749,7 +771,7 @@ def main():
     def render_frame(write=True):
         """One video frame.  write=False (inside a jump cut) does everything except drawing: the per-frame mj_forward
         and the track animation still run, so the physics path is the same as the full-length render (the first cut
-        version skipped them and the construction took 4 s longer: the story then failed, take 34 first attempt)."""
+        version skipped them and the construction took 4 s longer: the story then failed)."""
         sim.tracks.update(model, data)
         mujoco.mj_forward(model, data)
         p_md, p_jp, p_bz = duck.pos(data), crab.pos(data), data.xpos[bz_bid]
@@ -786,7 +808,7 @@ def main():
             cam.aim(lookat=look, distance=2.6 + 0.5 * float(np.linalg.norm(p_md[:2] - p_jp[:2])), azimuth=15, elevation=-14)
         elif stage == "CELEBRATE" and args.finale == "circle" and cel["phase"] in ("gather", "face", "dance"):
             # from the south, looking north: BZ at the far side facing the camera, the duck on the left, the crab on the
-            # right, both in profile facing the centre (take 14's view from the east put the duck far behind the fork)
+            # right, both in profile facing the centre (a view from the east put the duck far behind the fork)
             cam.aim(lookat=[(p_bz[0] + p_md[0] + p_jp[0]) / 3, (p_bz[1] + p_md[1] + p_jp[1]) / 3, 0.25], distance=3.6, azimuth=92, elevation=-20)
         elif stage == "CELEBRATE" and args.finale in ("procession", "circle") and cel["following"]:
             pts = [p_md, p_jp] if cel["phase"] == "follow" else [p_md, p_jp, p_bz]   # the procession, then the three
@@ -806,7 +828,7 @@ def main():
                 # face is toward the camera, BZ comes up behind it, the crab dances on the right
                 cam.aim(lookat=look, distance=2.6 if lift_phase in ("dock", "aim2", "creep", "lift", "hold", "lower", "back", "wait") else 3.4,
                         azimuth=330, elevation=-16)
-            else:                                                       # take 5's shot, from the south-east
+            else:                                                       # the push ending's shot, from the south-east
                 cam.aim(lookat=look, distance=2.6 if lift_phase in ("insert", "lift", "hold", "lower", "back", "wait") else 3.4,
                         azimuth=135, elevation=-18)
         camera = cam.step(1.0 / VIDEO_FPS)
@@ -821,7 +843,7 @@ def main():
                      "below": face.ai_label() or face.measured_label(), "reason": face.label()}
         notice = cut_state["notice"] if (video is not None and video.frames < cut_state["notice_until"]) else None
         title, lines = caption()
-        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed:g}", inset=inset, notice=notice)
+        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed * (build_write_every if stage == 'BUILD' else 1):g}", inset=inset, notice=notice)
 
     t_wall = time.perf_counter()
     k = 0
@@ -958,7 +980,7 @@ def main():
                 quack("quack")
         elif stage == "FOLLOW_IN":
             # the crab comes over from its watch spot to cheer at the ramp's foot (pre-positioning while BZ crosses) -
-            # only once the duck has passed on its way to the ramp (take 13: their paths crossed, the duck fell twice)
+            # only once the duck has passed on its way to the ramp (in an earlier render their paths crossed and the duck fell twice)
             if crab.mode != "WALK":
                 crab.set_mode("WALK", t, model)
             if p_md[0] < 2.2 or ramp.get("crab_coming"):
@@ -990,7 +1012,7 @@ def main():
                             cry("crab")
                             event(t, "JP cheers the duck on with its dance, claws up (official dance policy)")
             elif args.prestage:
-                # pre-positioning (ゆうころ 10/28 昼): once the duck gives up, the crab walks to the foot of its lane and
+                # pre-positioning (design decision, see --no-prestage): once the duck gives up, the crab walks to the foot of its lane and
                 # faces north, so the climb starts the moment the duck has sat down
                 if not climb.get("prestaged"):
                     climb["prestaged"] = True
@@ -1073,7 +1095,7 @@ def main():
             elif ph in ("pass", "climb", "boost"):
                 target_vx = 0.8 if (ph == "boost" and t < climb["boost_until"]) else 0.5
                 # lane keeping: the right half (x 1.72) past the sitting duck and up the ramp, then the course's centre
-                # (x 1.50) once over the crest - takes 11/12 (10/28 noon) drifted to x 1.90 on the landing after the jump
+                # (x 1.50) once over the crest - earlier renders drifted to x 1.90 on the landing after the jump
                 # and slipped off its east edge (feet reach 0.22 m, edge at 2.0), then lay wedged against the deck's side
                 lane_x = CRAB_LANE_X if p_jp[1] < -0.40 else 1.50
                 crab.steer(data, (lane_x, p_jp[1] + 0.6), target_vx)        # aim 0.6 m ahead on the lane
@@ -1089,7 +1111,7 @@ def main():
                     climb["phase"] = "approach"
                     climb["mark"] = (t, -9.0)
                     # away from the deck's side first (east), then south round the course, then the foot of the lane
-                    # (take 11: the straight way back from (2.33, -0.10) pressed it against the deck's side for 60 s)
+                    # (in an earlier render the straight way back from (2.33, -0.10) pressed it against the deck's side for 60 s)
                     climb["route"] = [(2.9, float(p_jp[1]) - 0.3), (2.7, -3.3)]
                     quack("worried")
                     event(t, f"JP slipped off the ramp's side at y={p_jp[1]:+.2f}; round the east side back to the foot (retry {climb['retries']})")
@@ -1100,7 +1122,7 @@ def main():
                 if ph != "boost" and t - climb["mark"][0] > 2.5 and p_jp[1] > -1.5:
                     heading_err = wrap(math.pi / 2 - crab.yaw(data))
                     if p_jp[2] > 0.38 and climb.get("jumps", 0) == 0 and abs(heading_err) < 0.15:
-                        climb["jumps"] = 1                                # the one showcase jump at the crest (ゆうころ)
+                        climb["jumps"] = 1                                # the one showcase jump at the crest (requirement: one jump, shown)
                         climb["phase"] = "jump"
                         crab.sweep = 1.0
                         crab.set_mode("JUMP", t, model)
@@ -1156,7 +1178,7 @@ def main():
             if crab.mode != "WALK":
                 crab.set_mode("WALK", t, model)
             if args.prestage and rel > 1.5:
-                # pre-positioning (ゆうころ 10/28 昼): the crab starts back while the duck is still calling, and its route
+                # pre-positioning (design decision, see --no-prestage): the crab starts back while the duck is still calling, and its route
                 # ends in the lane 0.8 m behind the seat - where the push skill starts - instead of 1.7 m away south-east
                 if not ret.get("set"):
                     ret.update(route=[(3.0, 2.4), (3.0, -2.4), (2.4, -3.3), (ch.LANE_X, ch.SEAT_Y - 0.8)], set=True)
@@ -1400,9 +1422,10 @@ def main():
                 climb["c2"] = True
                 quack("call")
             # then the duck turns its back on the ramp and sits down again (sulking), so that BZ can come up
-            # behind it: v7_test_fork.py lifts the seated duck cleanly only with both tines under its hips
+            # behind it: archive/v7_test_fork.py lifts the seated duck cleanly only with both tines under its hips
             # (approach from straight behind, centreline 1.5-3 cm to the duck's left); from the side one tine
-            # hooks it at best and the set-down tips it.  ゆうころ 10/27: being lifted is the heart-warming ending.
+            # hooks it at best and the set-down tips it.  Design history: the lift was the first intended ending; it is
+            # kept as an option but not used, because BZ must not handle the duck (--ending crab is the default).
             tb = turnback["phase"]
             if tb == "wait":
                 duck.sit.twist[:] = (1.0, 0.0, 0.0)
@@ -1450,14 +1473,14 @@ def main():
                     approach = p_md[:2] - 3.2 * facing                  # 3.2 m straight behind: room to line up while docking
                     event(t, f"BZ drives back around the course to behind the duck ({approach[0]:+.2f},{approach[1]:+.2f}); "
                              f"duck yaw {math.degrees(yaw_d):.0f} deg")
-                else:                                                   # "push" (take 5): at the seated duck's right side, from the east
+                else:                                                   # "push" ending: at the seated duck's right side, from the east
                     turnback["axis_u"] = np.array([-1.0, 0.0])
                     turnback["axis_p"] = p_md[:2].copy()
                     approach = np.array([p_md[0] + 1.9, p_md[1]])
                     event(t, "BZ drives back around the course to the duck's east side")
                 nav = make_navigator(sim, [[3.3, 3.0], [float(approach[0]), float(approach[1])]])
         elif stage == "LIFT":
-            # the crab comes back with BZ and cheers the duck with a dance (ゆうころ 10/27 深夜):
+            # the crab comes back with BZ and cheers the duck with a dance (lift / push endings):
             # trail BZ at 1.7 m, then go round BZ's east side to the duck's south, face it, dance.
             if cheer["phase"] == "follow":
                 d_bz = float(np.linalg.norm(p_jp[:2] - p_bz[:2]))
@@ -1523,8 +1546,8 @@ def main():
                              + ("docks along the line at floor level" if args.ending == "lift" else "slides the fork in at 6 cm")
                              + f" ({dist_bz:.2f} m)")
             elif lift_phase == "insert":
-                # "push" ending (take 5): fork held ~6 cm up while sliding in from the side.  At floor level the
-                # tines shove the seated duck along (v7_test_fork.py: pushed 0.3 m, no tip); at 6 cm they catch it
+                # "push" ending: fork held ~6 cm up while sliding in from the side.  At floor level the
+                # tines shove the seated duck along (archive/v7_test_fork.py: pushed 0.3 m, no tip); at 6 cm they catch it
                 # above its seat and tip it over (tilt 92) - and velstand gets it back on its feet by itself.
                 lift_cmd = 1.0 if sim.lift_target < 0.06 else (-1.0 if sim.lift_target > 0.075 else 0.0)
                 sim.command(0.15, float(np.clip(2.0 * err, -0.3, 0.3)), lift_cmd)
@@ -1534,7 +1557,7 @@ def main():
                     event(t, f"BZ lifts (duck {dist_bz:.2f} m ahead, touching={robots_in_contact(model, data, md_root, bz_root)})")
             elif lift_phase == "dock":
                 # line following onto the docking line (lateral + heading feedback), tines at floor level.
-                # v7_test_fork.py from straight behind: both tines slide under the hips and lift the duck when
+                # archive/v7_test_fork.py from straight behind: both tines slide under the hips and lift the duck when
                 # the centreline is 1.5-3 cm to its left; 0 or 4.5 cm shoves / tips it, 6 cm misses.  Test #17:
                 # pure pursuit left 3.7 cm and ~4 deg of skew at contact -> lifted crooked (tilt 35) and dropped.
                 # Test #18: line following alone still arrived 5 cm / 4 deg off -> three steps: follow the line
@@ -1566,7 +1589,7 @@ def main():
                              f"touching={robots_in_contact(model, data, md_root, bz_root)})")
             elif lift_phase == "lift":
                 gentle = args.ending == "lift"
-                sim.command(0.0, 0.0, 0.6 if gentle else 1.0)           # lift: gently to 0.30 m; push: to the top (take 5)
+                sim.command(0.0, 0.0, 0.6 if gentle else 1.0)           # lift: gently to 0.30 m; push: to the top
                 if sim.lift_target >= (0.30 if gentle else 0.49) - 1e-6 or t - lift_t0 > 4.0:
                     lift_phase = "hold"
                     lift_t0 = t
@@ -1593,7 +1616,7 @@ def main():
                     sim.command(-0.15, 0.0, 0.0)                        # slowly, until the tines are clear of the duck
                     done_back = dist_bz > 2.0 or t - lift_t0 > 25.0
                 else:
-                    sim.command(-0.25, 0.0, 0.0)                        # take 5
+                    sim.command(-0.25, 0.0, 0.0)                        # push ending
                     done_back = t - lift_t0 > 2.5
                 if done_back:
                     sim.command(0, 0, 0)
@@ -1620,7 +1643,7 @@ def main():
                     set_stage(t, "END")
         if stage == args.until and args.until != "END":
             set_stage(t, "END")
-        # the course must survive the rescue (ゆうころ): report any part nudged beyond course-builder's 4 cm
+        # the course must survive the rescue (requirement): report any part nudged beyond course-builder's 4 cm
         if course_ref is not None:
             for n, p0 in course_ref.items():
                 moved = float(np.linalg.norm(data.xpos[mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, n)][:2] - p0))
@@ -1659,7 +1682,11 @@ def main():
                         cut_state.update(active=None, notice=f"≫ 省略（sim {a:.0f}→{b:.0f} s）：{label}",
                                          notice_until=video.frames + int(3.0 * VIDEO_FPS))
                         event(data.time, f"JUMP CUT: sim {a:.0f}-{b:.0f} s not shown ({label})")
-                    video.add(render_frame())
+                    sampled += 1
+                    if stage == "BUILD" and build_write_every > 1 and sampled % build_write_every != 0:
+                        render_frame(write=False)                # 4x construction: sampled as at 2x, not written
+                    else:
+                        video.add(render_frame())
         if args.preview and (data.time - last_shot >= 15.0):
             last_shot = data.time
             cam.snap()

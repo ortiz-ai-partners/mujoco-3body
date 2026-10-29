@@ -1,7 +1,7 @@
 """Tabular Q-learning manager on the v2 environment - the comparison baseline for the PPO (MLP) manager.
 
-    <jumper venv python> manager2_tabq.py train --episodes 120 --run tabq2_small
-    <jumper venv python> manager2_tabq.py eval  --run tabq2_small --episodes 30 --seed0 5000
+    python manager2_tabq.py train --episodes 120 --run tabq2_small
+    python manager2_tabq.py eval  --run tabq2_small --episodes 30 --seed0 5000
 
 The observation is discretised to a small key (last result x duck state x stage x facing ok x at the seat x
 crab close x pushes); Q-learning with epsilon-greedy exploration.  Single process (one scene), about

@@ -1,6 +1,6 @@
 """How far forward/down can velstand bring the head while staying balanced? (physics only)
 
-    <jumper venv python> v7_test_head_reach.py
+    python v7_test_head_reach.py
 """
 from __future__ import annotations
 

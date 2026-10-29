@@ -3,7 +3,7 @@
 MD: velstand, official servos, standing.  JP: locomotion with heading control, then a
 forward jump (sweep 1.2).  No external forces.  dt = 0.001 (jumper contract).
 
-    <jumper venv python> v7_test_collision.py [--sweep 1.2] [--jump-dist 0.55] [--preview DIR]
+    python v7_test_collision.py [--sweep 1.2] [--jump-dist 0.55] [--preview DIR]
 """
 from __future__ import annotations
 

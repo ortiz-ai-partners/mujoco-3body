@@ -5,7 +5,7 @@ Scene A: jumper walks (locomotion policy), turns, then three forward jumps (jump
 Scene B: microduck (velstand) rights itself from its back, walks, turns, and does the
          head choreography (peer down, tilt, straighten, look around).
 
-    <jumper venv python> v7_progress_video.py   -> out/v7_progress_physics_only.mp4
+    python v7_progress_video.py   -> out/v7_progress_physics_only.mp4
 """
 from __future__ import annotations
 

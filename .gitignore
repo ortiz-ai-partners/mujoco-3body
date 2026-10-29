@@ -10,3 +10,10 @@ out/*_chirps.wav
 # early takes kept locally only (v1 is 15 MB of z-fighting; 3body_arena.mp4 duplicates v3)
 out/3body_arena_v1.mp4
 out/3body_arena.mp4
+
+# render variants kept locally only (failed or superseded renders) and stray error logs
+out/*.err
+out/*_cutbug*
+out/*_longnotice*
+out/*_widebox*
+out/*.notion.mp4

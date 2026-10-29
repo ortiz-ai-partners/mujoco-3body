@@ -1,8 +1,8 @@
 """Train and evaluate the v2 manager (crab-assisted crossing) with Stable-Baselines3 PPO on manager2_env.
 
-    <jumper venv python> manager2_train.py train --envs 12 --steps 3000 --run ppo2_small
-    <jumper venv python> manager2_train.py eval  --run ppo2_small --episodes 30
-    <jumper venv python> manager2_train.py demo  --run ppo2_small --policy ppo --seed 5003
+    python manager2_train.py train --envs 12 --steps 3000 --run ppo2_small
+    python manager2_train.py eval  --run ppo2_small --episodes 30
+    python manager2_train.py demo  --run ppo2_small --policy ppo --seed 5003
 
 train: PPO, small MLP (64x64), parallel envs (one MuJoCo scene per process).  One env step is one
 skill (4-90 simulated seconds), so `--steps` counts decisions, not simulator ticks.
@@ -63,8 +63,8 @@ class CurveCallback:
             self.path.write_text(json.dumps(self.rows, indent=0), encoding="utf-8")
         if self.run_dir is not None:
             # checkpoints every `ckpt_every` decisions, numbered by the model's step count plus a "latest" copy
-            # (10/28: ppo2_medium3 was stopped at 4.9k of 12k decisions and its weights were lost - until here the
-            # model was only saved at the end; intermediate policies can now also be evaluated)
+            # (the continued-training run ppo2_medium3 was interrupted part-way and its weights were lost - until here
+            # the model was only saved at the end; intermediate policies can now also be evaluated)
             step = int(model.num_timesteps)
             if self.next_ckpt is None:
                 self.next_ckpt = (step // self.ckpt_every + 1) * self.ckpt_every
@@ -134,7 +134,7 @@ def evaluate(args):
     out_dir.mkdir(parents=True, exist_ok=True)
     if getattr(args, "rule_near_lip", "on") == "off":
         import crab_help
-        crab_help.RULE_NEAR_LIP = False                    # the morning's rule, for a like-for-like check
+        crab_help.RULE_NEAR_LIP = False                    # the earlier rule (baselines_v2), for a like-for-like check
     env = ManagerEnv(seed=0, max_episode_s=args.max_episode_s, log_path=out_dir / "eval_decisions.jsonl")
     policies = load_policies(run_dir)
     report = {}

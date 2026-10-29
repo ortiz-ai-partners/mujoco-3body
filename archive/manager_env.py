@@ -1,6 +1,6 @@
 """The manager's world: the LIFT scene as a Gym episode whose actions are the existing skills.
 
-ゆうころ (2026-10-27): put a manager AI ("Island Master") that decides what to do next when the
+Requirement: put a manager AI that decides what to do next when the
 fork rescue does not go to plan.  The robots keep moving with the code already here (course-builder
 rule control for BZ, the official Microduck and Jumper policies, physics only, no external forces);
 the manager only chooses which skill runs next.
@@ -19,16 +19,16 @@ Actions (and the fixed line the manager's speech bubble shows):
                                                            the manager then sees the achieved alignment
   2 LIFT       "BZ、そっと持ち上げて"                          creep in, scoop with both tines, lift gently,
                                                            set down, back off clear
-  3 PUSH_SIDE  "別の方法にしよう — BZ、横から起こしてあげて"    take-5 method: at the duck's side, fork at
+  3 PUSH_SIDE  "別の方法にしよう — BZ、横から起こしてあげて"    the push ending's method: at the duck's side, fork at
                                                            6 cm, tip it over, velstand gets it up
   4 STANDUP    "BZ は離れて。パッカン、自分で立てる？"          BZ backs away, the duck stands by itself
                                                            (sitstand flag 0 -> velstand)
   5 CLEAR      "カニさん、道を空けてね"                        the crab walks out of BZ's way
 
-Observation: 32 floats from the simulator (duck/BZ/crab pose and status, BZ's alignment to the
+Observation: 35 floats (OBS_DIM = 16 + 3 + 8 results + 6 actions + 2) from the simulator (duck/BZ/crab pose and status, BZ's alignment to the
 docking line, fork height, progress, last result, last action).  See Scene.observation().
 
-Calibration facts (v7_test_fork.py and the offset sweep of 10/27): both tines go under the seated
+Calibration facts (v7_test_fork.py and its offset sweep): both tines go under the seated
 duck's hips only with BZ's centreline about 2.5 cm to the duck's left (window well under 1 cm here)
 and up to ~6 deg of approach skew; a lift succeeds in a minority of well-docked attempts.  That is
 the point: the manager has to learn when the odds are worth another go and when to switch.
@@ -44,6 +44,8 @@ import math
 import re
 import time
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # archive/: resolve v6_common etc. from the repository root
 
 import gymnasium as gym
 import mujoco
@@ -58,7 +60,7 @@ from v7_policies import MD_CONTROL_DT, set_pd_gains
 
 STAGE_XML = OUT_DIR / "v6_stage_built.xml"
 DUCK_SEAT = (1.22, -2.65, math.pi)          # the duck's sulking spot: 0.65 m south of the up-ramp's edge (y=-2.0), facing
-                                            # west = back to the east.  At -2.10 (10 cm from the edge, as in take 5) BZ's
+                                            # west = back to the east.  At -2.10 (10 cm from the edge, as in the push ending) BZ's
                                             # docking line crossed the ramp's corner and the tines shoved up_1 by 37 cm;
                                             # at -2.40 BZ's own right-front wheel clipped the corner (5-12 cm) when the
                                             # duck faced up to 10 deg off west.  The duck must back off before it sits.
@@ -79,9 +81,9 @@ LINES = {
 RESULT_SLOTS = ["none", "docked", "lifted", "shoved", "missed", "tipped", "standing", "aborted"]
 TINE_REACH = 1.3                            # m from BZ's centre to the tine tips
 OBS_DIM = 16 + 3 + len(RESULT_SLOTS) + len(ACTIONS) + 2
-# Reward (per decision).  The job is recovery; the lift is the outcome ゆうころ prefers, so it carries a
+# Reward (per decision).  The job is recovery; the lift is the preferred outcome (requirement), so it carries a
 # bonus large enough that attempting it pays when the alignment makes success likely and not otherwise.
-# The course is the whole point of the scene (ゆうころ: コースを壊さないようにしなきゃ): a slope part or block
+# The course is the whole point of the scene (requirement: the course must not be damaged): a slope part or block
 # moved by more than course-builder's own 4 cm tolerance ends the episode as a failure.
 REWARD = {"success": 10.0, "per_second": -0.03, "lift_bonus": 6.0, "wasted": -1.0, "wait_seated": -0.5,
           "collision": -3.0, "bz_tips_duck": -3.0, "timeout": -5.0, "course_damaged": -10.0}
@@ -284,7 +286,7 @@ class Scene:
             duck_xy = np.array(DUCK_SEAT[:2]) + np.asarray(draw["duck_dxy"])
             f, l = unit(yaw_d), left_of(yaw_d)
             bz_xy = duck_xy - 2.6 * f + draw["lat"] * l
-            # course-builder's block_2 sits at (4, -3): a BZ written on top of it explodes (debug 10/27).  Redraw.
+            # course-builder's block_2 sits at (4, -3): a BZ written on top of it explodes (debug run).  Redraw.
             if float(np.linalg.norm(bz_xy - block2)) > 1.0 or hard:
                 break
         self.draw = draw
@@ -323,7 +325,7 @@ class Scene:
         return duck_xy, yaw_d, bz_xy, yaw_bz, f, l, A, e_lat, psi, err, dist
 
     def tines_threaten_ramp(self, margin=0.08):
-        """Safety stop (ゆうころ: コースを壊さない): True when the tine tips are inside, or about to enter, the
+        """Safety stop (requirement: the course must not be damaged): True when the tine tips are inside, or about to enter, the
         up-ramp's footprint.  Checked every tick of the fork skills; the skill then stops and reports 'aborted'."""
         bz_xy, yaw_bz = self.bz_pose()
         f, l = unit(yaw_bz), left_of(yaw_bz)
@@ -334,7 +336,8 @@ class Scene:
         return any((x_min - 0.10 < p[0] < x_max + 0.10) and p[1] > y_south - margin for p in points)
 
     def duck_feet_on_floor(self):
-        """ゆうころ: おろすときは下までおろさない、足がついたら止める - any duck foot touching the floor."""
+        """Requirement: when setting the duck down, stop as soon as its feet touch the floor instead of lowering
+        the fork all the way - any duck foot touching the floor."""
         for i in range(self.data.ncon):
             c = self.data.contact[i]
             g1, g2 = int(c.geom[0]), int(c.geom[1])
@@ -495,7 +498,7 @@ class Scene:
                 if self.t - t0 > 4.0:
                     phase, t0 = "lower", self.t
             elif phase == "lower":
-                # lower only until the duck's feet touch the floor (ゆうころ): set all the way down, the duck sits on
+                # lower only until the duck's feet touch the floor (requirement): set all the way down, the duck sits on
                 # the tines and rides them when BZ reverses; with its feet on the floor it can stand off them
                 feet_down = self.sim.lift_target < 0.25 and self.duck_feet_on_floor()
                 self.sim.command(0.0, 0.0, 0.0 if feet_down else -0.4)
@@ -505,7 +508,7 @@ class Scene:
                     back_start = bz_xy.copy()
             elif phase == "duck_up":
                 # set down on the tines, the duck stays seated on them and BZ's reverse would carry it off and
-                # topple it onto the fork (smoke 10/27: 1.3 m, then stuck).  So the duck stands first: its feet
+                # topple it onto the fork (smoke test: 1.3 m, then stuck).  So the duck stands first: its feet
                 # land inside the 13 cm tine gap and its hips come clear, then BZ can back out.
                 self.sim.command(0, 0, 0)
                 if self.duck.mode == "SIT":
@@ -516,7 +519,7 @@ class Scene:
                         self.duck.set_mode("STAND", self.t)
                 if (self.duck.mode == "STAND" and self.t - t0 > 5.0) or self.t - t0 > 9.0:
                     if self.duck.mode == "STAND":
-                        # standing with a foot on a tine, the duck rides along when BZ reverses (smoke 10/27: carried
+                        # standing with a foot on a tine, the duck rides along when BZ reverses (smoke test: carried
                         # 3 m).  It walks a few steps off the tips first, then BZ backs out.
                         dx, yd = self.duck_pose()
                         self.duck.walk_to(dx + 0.7 * unit(yd), self.t, stop_dist=0.15)
@@ -529,7 +532,7 @@ class Scene:
             elif phase == "back":
                 touching = robots_in_contact(self.model, self.data, self.md_root, self.bz_root)
                 if self.duck.mode == "FALLEN" and touching and free_t0 is None:
-                    free_t0 = self.t          # fallen onto / against the fork: tines 8 cm up, then reverse (experiment 10/27)
+                    free_t0 = self.t          # fallen onto / against the fork: tines 8 cm up, then reverse (experiment)
                 if free_t0 is not None:
                     lift_cmd = 1.0 if self.sim.lift_target < 0.08 else 0.0
                     cmd = -0.3 if self.t - free_t0 > 2.5 else 0.0
@@ -561,13 +564,13 @@ class Scene:
         return self._lift_outcome(start_xy, lifted)
 
     def skill_push_side(self, max_s=130.0):
-        """Take 5's ending: come at the seated duck's right side, fork at 6 cm, tip it, back off."""
+        """The push ending: come at the seated duck's right side, fork at 6 cm, tip it, back off."""
         self.fell_in_skill = False
         self.attempts += 1
         self.docked = False
         start_xy, yaw_d = self.duck_pose()
         # The duck sits 14 cm from the ramp's toe, so the tines must never point at the ramp when they pass
-        # the duck (ゆうころ: コースを壊さないようにしなきゃ; the first try from the south shoved up_1 by 9 cm).
+        # the duck (requirement: the course must not be damaged; the first try from the south shoved up_1 by 9 cm).
         # Candidates around the duck; keep those whose tine direction is not toward the ramp and whose start
         # is clear of it; prefer the duck's front (a genuinely different method from the lift from behind).
         f, l = unit(yaw_d), left_of(yaw_d)
@@ -635,7 +638,7 @@ class Scene:
         t0 = self.t
         back_start, _ = self.bz_pose()
         # a duck fallen onto / against the fork cannot get up until the fork is out of the way; dragging it does not
-        # work (velstand needs clear floor) - raising the tines 8 cm and then reversing freed it (experiment 10/27)
+        # work (velstand needs clear floor) - raising the tines 8 cm and then reversing freed it (experiment)
         free_t0 = self.t if (self.duck.mode == "FALLEN" and robots_in_contact(self.model, self.data, self.md_root, self.bz_root)) else None
         while self.t < t_end:                                 # BZ clears off first
             self.duck_sit_cmd()

@@ -1,7 +1,7 @@
 """The manager's world, v2: getting the duck across the course with the crab's help, as a Gym episode
 whose actions are the skills in crab_help.py.
 
-ゆうころ (2026-10-27/28): the manager AI ("Island Master") decides what to do next when things do not
+Requirement: the manager AI decides what to do next when things do not
 go to plan; the robots keep moving with the code already here (official Microduck and Jumper
 policies, physics only, no external forces); the bulldozer must not handle the duck, the crab helps.
 The overall success condition is that all three cross the built course; BZ and the crab already do,
@@ -43,20 +43,21 @@ STAGE_XML = OUT_DIR / "v6_stage_built.xml"
 BZ_PARK = (3.4, -1.6, math.pi)              # BZ watches from the east, well off the lane; it never moves here
 REWARD = {"success": 10.0, "per_second": -0.03, "landing_bonus": 3.0, "fall": -1.0, "wasted": -1.0,
           "wait_idle": -0.5, "timeout": -5.0, "course_damaged": -10.0}
-# (10/28 01:40: "wasted" now also covers a skill that ends stalled / slipped - reward v2.1; ppo2_small and
+# (reward v2.1: "wasted" also covers a skill that ends stalled / slipped; ppo2_small and
 #  baselines_v2 were run under v2.0 without it, their returns differ by that term only)
-# reward v2.2 (10/28 08:30, after take 8 and the ppo2_medium2 evaluation): a SEAT / STANDUP that ends "still_down"
+# reward v2.2 (after the ppo2_medium2 evaluation): a SEAT / STANDUP that ends "still_down"
 #  (called on a fallen duck that cannot get up, usually because the crab is still against it) also counts as a
 #  wasted move.  Under v2.1 such a call cost only its time (about -0.4) while a BACK_OFF with nobody close cost -1,
-#  so PPO never learned to make room first (BACK_OFF after a fall 3/10 in the eval, flat through 4.9k decisions of
-#  continued training).  Training-only: the shared-seed evaluations keep v2.1 so their returns stay comparable.
+#  so PPO never learned to make room first (BACK_OFF after a fall 3/10 in the eval; still 13/52 at the 4.9k-decision
+#  check of the continued training ppo2_medium3, docs/devlog/MANAGER_DESIGN.md section 7.7, stopped at +7.5k).
+#  Training-only: the shared-seed evaluations keep v2.1 so their returns stay comparable.
 REWARD_VERSIONS = ("v2.1", "v2.2")
 COURSE_BODIES = ("up_1", "down_1", "block_1", "block_2")
 COURSE_TOLERANCE = 0.04                     # m, course-builder's own "Placed slope disturbed" tolerance
 SCENARIOS = [("toe_seated_ok", 0.30), ("toe_seated_wrong", 0.20), ("toe_standing", 0.20), ("toe_fallen", 0.10),
              ("deck_seated", 0.15), ("deck_fallen", 0.05), ("ramp_fallen", 0.0)]
-# ramp_fallen (10/28 08:30): the duck lying on the up-ramp with the crab against it from below - the state a push
-# that toppled it leaves behind (take 8, 3:05).  The placed toe_fallen + touching start did not reproduce it: there
+# ramp_fallen: the duck lying on the up-ramp with the crab against it from below - the state a push
+# that toppled it leaves behind (seen in an early render).  The placed toe_fallen + touching start did not reproduce it: there
 # the duck got up under SEAT 9/13 times, so nothing pushed the policy toward BACK_OFF.  Weight 0 in the default
 # table (appended last) so the shared-seed evaluations keep their draws; continued training weights it in.
 CRAB_SPOTS_TOE = [("behind", 0.65), ("beside", 0.25), ("touching", 0.10)]
@@ -219,7 +220,7 @@ class Scene:
         (scenario, crab, dx, dy, yaw_err_deg, gap, lat, ramp_y).  `scenarios` / `crab_spots_*` replace the default
         draw tables (continued training with more weight on rare starts; evaluation keeps the defaults)."""
         qpos, qvel, ctrl, act = self.init
-        # a full MjData reset first (10/28 noon): restoring only qpos/qvel/ctrl/act left the solver's warm start and
+        # a full MjData reset first: restoring only qpos/qvel/ctrl/act left the solver's warm start and
         # the rest of MjData from the previous episode, so an episode's physics depended on the episodes run before
         # it in the same process (seed 5009's first push: 66.0 s fresh, 63.8 s after seed 5008; with this reset 68.2 s
         # either way).  Episodes are now independent and reproducible one by one - evaluation v3
@@ -301,14 +302,14 @@ class Scene:
             yaw_c = math.pi / 2
         # on the incline the crab is pitched nose-up to the slope and dropped from 3 cm: a level crab written
         # onto the 16-degree ramp had its front feet 4 cm inside the incline and the contact solver threw both
-        # robots a metre (debug 10/28: duck fallen on the far ramp, crab on the floor beside the course)
+        # robots a metre (debug run: duck fallen on the far ramp, crab on the floor beside the course)
         on_incline = 0.0 < ramp_z(crab_xy[1]) < 0.44 and abs(crab_xy[0] - LANE_X) < 0.5   # in the lane, not beside it
         self.teleport("jp", crab_xy, yaw_c, z=ramp_z(crab_xy[1]) + 0.115 + (0.03 if on_incline else 0.0),
                       pitch=(-SLOPE * math.cos(yaw_c - math.pi / 2)) if on_incline else 0.0)
         mujoco.mj_forward(self.model, self.data)
         # the crab holds its home pose (PD) until a skill walks it, as in the experiment; standing under the
         # locomotion policy with a zero command for the 4 s of the duck's sit changed its state enough that
-        # every push then toppled the duck at the ramp's lip (sweeps 10/28: 0/14 vs the experiment's 2/2)
+        # every push then toppled the duck at the ramp's lip (sweeps: 0/14 vs the experiment's 2/2)
         c.loco.set_command(0, 0, 0)
         if fallen:
             d.resume, d.fell_at, d.upright_since = "STAND", self.t, None
@@ -386,7 +387,7 @@ class ManagerEnv(gym.Env):
             wasted += 1.0
         if result in ("stalled", "slipped"):
             wasted += 1.0                                    # a futile call (e.g. WALK_ON into the ramp): the small PPO
-                                                             # run of 10/28 repeated it 24 times at -0.9 each (time only)
+                                                             # run (before v2.1) repeated it 24 times at -0.9 each (time only)
         if self.reward_version == "v2.2" and result == "still_down":
             wasted += 1.0                                    # v2.2: SEAT / STANDUP on a duck that cannot get up (make room first)
         if name == "WAIT" and mode0 != "FALLEN" and stage0 != "north":

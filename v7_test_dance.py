@@ -1,6 +1,6 @@
 """v7 check: does the jumper dance under its official dance policy, physics only?
 
-    <jumper venv python> v7_test_dance.py [--seconds 30] [--start 0] [--dt 0.001] [--name dance_crab]
+    python v7_test_dance.py [--seconds 30] [--start 0] [--dt 0.001] [--name dance_crab]
                                           [--video out/v7_dance_test.mp4]
 
 Reports height / tilt / drift every 2 s and the first fall (tilt > 60 deg), optionally writing a

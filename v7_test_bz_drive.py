@@ -1,6 +1,6 @@
 """BZ's drive and turn on the built stage, for the circle finale (test only: BZ is placed by teleport).
 
-    <jumper venv python> v7_test_bz_drive.py          # forward with the fork low / high, then a turn on the spot
+    python v7_test_bz_drive.py          # forward with the fork low / high, then a turn on the spot
 """
 from __future__ import annotations
 
@@ -42,7 +42,7 @@ def main():
     s = Scene(dt=0.001)
     s.course_ref = s.data.xpos[s.course_bids][:, :2].copy()
     s.course_damage, s.course_moved_body, s.falls, s.was_fallen = 0.0, "", 0, False
-    # (10/28 noon) from its post (1.55, 3.07) facing north BZ cannot drive on: with the fork raised its tines reach 1.38 m,
+    # from its post (1.55, 3.07) facing north BZ cannot drive on: with the fork raised its tines reach 1.38 m,
     # the wall's inner face is at y 4.5 - it moved 6 cm and stopped, fork up or down.  So the circle forms around its post.
     place(s, (1.55, 3.07), math.pi / 2)
     run(s, 6.0, lambda rel, p, yaw: (0.6, float(np.clip(2.0 * wrap(math.pi / 2 - yaw), -0.4, 0.4)), -1.0 if s.sim.lift_target > 0.02 else 0.0),
