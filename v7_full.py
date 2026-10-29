@@ -473,12 +473,32 @@ def main():
                          "Frames are still sampled at 2x - the per-frame forward pass is part of the physics path (see "
                          "docs/devlog/HANDOVER.md, section 0b) - and only every n-th one is written, so the physics is identical "
                          "to a 2x render (changing the sampling cadence instead gives a different physics path)")
+    ap.add_argument("--speedup", action="append", default=[], metavar="STAGE=SPEED",
+                    help="video speed of another stage, written the same way as --build-speed (sampled at the stage's own "
+                         "speed, every n-th frame written; the physics is unchanged).  e.g. CALL=4 RETURN=4 CELEBRATE=4.  "
+                         "CELEBRATE applies only before the circle's dance, which stays at 1x")
+    ap.add_argument("--tail-write", type=float, default=2.5,
+                    help="seconds of the 2.5 s after END that are written to the video (the tail is always simulated, so the "
+                         "final state is the same); less than 2.5 when an end card follows the video")
     args = ap.parse_args()
     args.prestage = not args.no_prestage
     args.face = not args.no_face
-    if args.build_speed < SPEED["BUILD"] or abs(args.build_speed / SPEED["BUILD"] - round(args.build_speed / SPEED["BUILD"])) > 1e-9:
-        ap.error(f"--build-speed must be {SPEED['BUILD']:g} or a multiple of it (got {args.build_speed:g})")
-    build_write_every = int(round(args.build_speed / SPEED["BUILD"]))     # 1 = write every sampled frame (2x)
+
+    def _factor(stage_name, speed):
+        base = SPEED[stage_name]
+        n = speed / base
+        if speed < base or abs(n - round(n)) > 1e-9 or speed > 8.0:
+            ap.error(f"{stage_name}: video speed must be {base:g} or a multiple of it, at most 8 (got {speed:g})")
+        return int(round(n))
+    write_every = {"BUILD": _factor("BUILD", args.build_speed)}   # stage -> write every n-th sampled frame (1 = all)
+    for spec in args.speedup:
+        name, _, val = spec.partition("=")
+        name = name.strip().upper()
+        if name not in SPEED or name in ("BUILD", "END") or not val:
+            ap.error(f"--speedup {spec}: use STAGE=SPEED with STAGE one of {sorted(k for k in SPEED if k not in ('BUILD', 'END'))}")
+        write_every[name] = _factor(name, float(val))
+    if not 0.0 <= args.tail_write <= 2.5:
+        ap.error("--tail-write must be between 0 and 2.5")
     cuts = [] if args.no_cuts else list(DEFAULT_CUTS)
     for spec in args.cut:
         a, b, *label = spec.split(":")
@@ -768,6 +788,12 @@ def main():
                 [f"BZ: {lift_phase or 'navigating'}   跳跳: {CHEER_TEXT.get(cheer['phase'], cheer['phase'])}",
                  f"パッカン: {MD_TEXT.get(duck.mode, duck.mode)}  高さ {p_md[2]:.3f} m"])
 
+    def write_factor():
+        """Every how many sampled frames one is written in the current stage (1 = all).  Only while the clock runs at
+        the stage's own speed, so the circle's dance (1x) inside CELEBRATE is always written in full."""
+        f = write_every.get(stage, 1)
+        return f if f > 1 and abs(clock.speed - SPEED.get(stage, clock.speed)) < 1e-9 else 1
+
     def render_frame(write=True):
         """One video frame.  write=False (inside a jump cut) does everything except drawing: the per-frame mj_forward
         and the track animation still run, so the physics path is the same as the full-length render (the first cut
@@ -843,7 +869,7 @@ def main():
                      "below": face.ai_label() or face.measured_label(), "reason": face.label()}
         notice = cut_state["notice"] if (video is not None and video.frames < cut_state["notice_until"]) else None
         title, lines = caption()
-        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed * (build_write_every if stage == 'BUILD' else 1):g}", inset=inset, notice=notice)
+        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed * write_factor():g}", inset=inset, notice=notice)
 
     t_wall = time.perf_counter()
     k = 0
@@ -1683,8 +1709,9 @@ def main():
                                          notice_until=video.frames + int(3.0 * VIDEO_FPS))
                         event(data.time, f"JUMP CUT: sim {a:.0f}-{b:.0f} s not shown ({label})")
                     sampled += 1
-                    if stage == "BUILD" and build_write_every > 1 and sampled % build_write_every != 0:
-                        render_frame(write=False)                # 4x construction: sampled as at 2x, not written
+                    wf = write_factor()
+                    if wf > 1 and sampled % wf != 0:
+                        render_frame(write=False)                # faster stage: sampled as at its own speed, not written
                     else:
                         video.add(render_frame())
         if args.preview and (data.time - last_shot >= 15.0):
@@ -1701,6 +1728,7 @@ def main():
                   flush=True)
 
     if video is not None:
+        tail_frames = int(round(args.tail_write * VIDEO_FPS))
         for _ in range(int(2.5 / CONTROL_DT)):
             duck.control(data, data.time)
             dt = model.opt.timestep
@@ -1712,7 +1740,11 @@ def main():
                 mujoco.mj_step(model, data)
                 sub_k += 1
                 if clock.due(data.time):
-                    video.add(render_frame())
+                    if tail_frames > 0:
+                        video.add(render_frame())
+                        tail_frames -= 1
+                    else:
+                        render_frame(write=False)                # simulated and forwarded as always, not written
     if render:
         renderer.close()
         if pip is not None:
@@ -1720,7 +1752,10 @@ def main():
 
     # the final state, to compare two runs (the face check: with and without the render-only face)
     digest = hashlib.sha256(np.ascontiguousarray(data.qpos).tobytes() + np.ascontiguousarray(data.qvel).tobytes()).hexdigest()
-    report = {"mujoco": mujoco.__version__, "sim_seconds": round(float(data.time), 2),
+    settings = {"manager": args.manager, "run": args.run if args.manager != "rule" else None, "finale": args.finale,
+                "jitter": args.jitter, "face": args.face, "face_ai": args.face_ai, "prestage": args.prestage,
+                "write_every": write_every, "tail_write_s": args.tail_write, "cuts": [list(c) for c in cuts]}
+    report = {"mujoco": mujoco.__version__, "settings": settings, "sim_seconds": round(float(data.time), 2),
               "state_digest": digest, "ngeom": int(model.ngeom),
               "face": {"on": face is not None, "log": face.log if face is not None else None,
                        "effort_series": face.effort_series if face is not None else None,

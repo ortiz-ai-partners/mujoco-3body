@@ -17,3 +17,7 @@ out/*_cutbug*
 out/*_longnotice*
 out/*_widebox*
 out/*.notion.mp4
+# the course opening / end cards (the course's material, kept locally only)
+out/oped/
+out/submission*.mp4
+out/intro_draft*
