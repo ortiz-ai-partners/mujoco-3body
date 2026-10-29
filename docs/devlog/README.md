@@ -121,7 +121,7 @@
 | 3 | ppo2_medium3 は +4.9k（4,869）決定で中断（旧 README L51、設計メモ L385） | 12,108 → 19,644 で +7,536 決定、実時間 10,876 s（約 3 h）。重みは未保存 | `ppo2_medium3/train_curve.json` の先頭・末尾の `step`・`wall_s` |
 | 4 | 停滞の判定が「2 秒窓」と「3 s」で並ぶ（HANDOVER L81、図メモ L56・L79） | 一般の停滞は 2 s 窓で進み 2 cm 未満、押し中は 3 s。対象が違い両方正しい | `crab_face.py` の `STALL_V`・`STALL_S`・`PUSH_STALL_S` |
 | 5 | 見出し「筋書き（v5 = take 6）」（旧 README L14） | 本文は take 46 の筋書き（支配人 5 手、輪の万歳）。見出しだけ更新漏れ | 旧 README L16、`take46.json` の `manager.decisions`（5 手） |
-| 6 | `report/timeline_ortiz.png` の時刻は take 46 版（図メモ L106） | take 51 は物理同一（sha256・5 手の sim 時刻）、施工 ×4・省略なしで以後の動画は約 +2.86 s（5 手は 2.8〜2.9 s） | 両 JSON `state_digest`・`decisions[].video_t`・`cuts`、依頼文 L42 |
+| 6 | `report/timeline_ortiz.png` の時刻は take 46 版（図メモ L106。take 51 版に描き直し済み、旧図は `figures/timeline_ortiz_take46.png`） | take 51 は物理同一（sha256・5 手の sim 時刻）、施工 ×4・省略なしで以後の動画は約 +2.86 s（5 手は 2.8〜2.9 s） | 両 JSON `state_digest`・`decisions[].video_t`・`cuts`、依頼文 L42 |
 | 7 | 提出版は 2:44、省略 2 か所 sim 22→54 s・110→172 s（HANDOVER §0b、旧 README L24、構成案） | take 46 の仕様。提出版 take 51 は施工 ×4・省略なしで 2:47（167.0 s） | `take51.json` の `cuts`（空）・`video_silent.seconds` |
 | 8 | 気分ネットの学習「CPU 1 分」（図メモ L102、旧 README L86） | 学習ループは 3.5 s。「1 分」はデータ読み込みを含むスクリプト全体の目安 | `mood_net/meta.json` の `train_s` |
 | 9 | 「§7.16b の設計表どおり」（設計メモ L573） | §7.16b は存在しない。§7.16 の表情表を指す | 設計メモの見出し一覧 |
@@ -160,13 +160,13 @@ Microduck の外観が映る図と提出動画は、コードの MIT と分け�
 
 | 図 | ファイル（`report/`） | 生成元 | 照合した内容と出所 |
 |---|---|---|---|
-| 全体の仕組み（2 つの AI と 3 体） | `system_overview_ortiz.png` | 依頼文から作図 | 観測 46、6 手、3 方式の規模、気分ネット 53-32-32-5、公式ポリシー 5 本（次元は 4 本分。face_rules_chart.md L90 は `alpha_sitstand` を欠く、訂正表 14）。図中の「CPU で 1 分」は訂正表 8 |
+| 全体の仕組み（2 つの AI と 3 体） | `system_overview_ortiz.png` | 依頼文から作図 | 観測 46、6 手、3 方式の規模、気分ネット 53-32-32-5、公式ポリシー 5 本（次元は 4 本分。face_rules_chart.md L90 は `alpha_sitstand` を欠く、訂正表 14）。図中の「CPU で 1 分」は訂正表 8。作品名・「カニ」・「CPU 1 分」の表記を直した版に差し替え、旧版は `figures/system_overview_ortiz_v1.png` |
 | 表情の決め方（17 規則） | `face_rules_chart_ortiz.png` | face_rules_chart.md の判定図を顔アイコン付きで清書。元 `.webp` は `figures/` | 条件と順序が `crab_face.py` の 17 規則と一致（face_rules_chart.md L84） |
 | 支配人 AI の比較（30 シード、2×2） | `results_managers_ortiz.png` | 作図 | 評価 v4 の渡り切り・天面到達・2×2・手数・転倒（`out/manager_runs/comparison_v4.md`） |
 | コースと 3 体の動線（平面図） | `course_plan_ortiz.png` | 作図 | 座標が `crab_help.py`・`v7_full.py`・`../physical-ai-course-builder/scene_fork_tracks.xml` と一致（face_rules_chart.md L98） |
 | 気分ネットの学習データと流れ | `mood_net_pipeline_ortiz.png` | 作図 | 35 話・47,952 サンプル・450 エポック・0.80／0.83（`mood_net/meta.json`・`report.md`）。「CPU 1 分」は訂正表 8 |
 | 表情 11 種の一覧 | `faces_sheet_ja.png` | `analysis/face_sheet.py` が生成 | `crab_face.py` の描画そのもの |
-| 動画の構成タイムライン | `timeline_ortiz.png` | 作図。初版 `figures/timeline_ortiz_v1_dense.png` を帯 2 本と印だけに絞って作り直し | take 46 の `video_t` と表情ログ。take 51 版への差し替え予定（`timeline_brief_take51.md`） |
+| 動画の構成タイムライン | `timeline_ortiz.png` | 作図。初版 `figures/timeline_ortiz_v1_dense.png` を帯 2 本と印だけに絞って作り直し | take 51 の `video_t` と表情ログ（`timeline_brief_take51.md` の依頼で描き直し、時刻・速度区間・5 手・顔の 12 区間が一致）。旧図は `figures/timeline_ortiz_take46.png` |
 
 ## 結果表の原本（`out/manager_runs/`）
 

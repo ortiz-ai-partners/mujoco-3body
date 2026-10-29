@@ -224,9 +224,9 @@ Q 表版は本リポジトリで実装した表形式 Q 学習で（`manager2_ta
 `report/faces_sheet_ja.png` は `analysis/face_sheet.py` が描く。
 
 図中の数値と規則は `crab_face.py`、`crab_help.py`、報告 JSON、`out/manager_runs/comparison_v4.md` と照合した（記録は `docs/devlog/face_rules_chart.md`）。
-照合で見つかったずれは `docs/devlog/README.md` の訂正表に記す：タイムライン図の時刻は提出版より前の版のもの（訂正表 6）、
-全体図は公式ポリシー 5 本のうち 4 本分の次元だけを載せる（訂正表 14）、
-全体図と気分ネットの図の「CPU 1 分」は学習ループ（3.5 s、`out/manager_runs/mood_net/meta.json` の `train_s`）でなくスクリプト全体の目安（訂正表 8）。
+照合で見つかったずれは `docs/devlog/README.md` の訂正表に記す：全体図は公式ポリシー 5 本のうち 4 本分の次元だけを載せる（訂正表 14）、
+気分ネットの図の「CPU 1 分」は学習ループ（3.5 s、`out/manager_runs/mood_net/meta.json` の `train_s`）でなくスクリプト全体の目安（訂正表 8）。
+タイムライン図と全体図は提出版に合わせて描き直した（訂正表 6、旧図は `docs/devlog/figures/`）。
 
 公式ポリシーが見せる歩行・ジャンプ・ダンスの出来は提供元の成果である。
 本作で作成したのは、3 体の統合、失敗したときの次の一手を選ぶ支配人 AI、表情を推論する気分ネットである。

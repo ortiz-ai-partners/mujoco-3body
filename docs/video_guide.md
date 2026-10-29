@@ -15,6 +15,10 @@ python analysis/timeline_times.py out/v7_full_report_take51.json
 動画には Microduck の 3D モデル（メッシュは CC BY-NC-SA 4.0、`microduck_rl` の `LICENSE-MODELS.md`）の外観が映るため、
 動画は CC BY-NC-SA 4.0 の条件で扱う（帰属：Pollen Robotics、microduck_rl）。リポジトリのコードは MIT（`LICENSE`、詳細は `THIRD_PARTY.md`）。
 
+![提出動画の構成](../report/timeline_ortiz.png)
+
+図：上のかっこが再生速度、帯が場面と主役（色）、星が渡り切り、A〜E が支配人 AI の 5 手、下の帯が跳跳の顔。時刻は本書の表と同じ出所。
+
 ## 1. 画面の読み方
 
 ### 速度区間

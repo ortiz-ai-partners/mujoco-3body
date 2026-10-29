@@ -306,8 +306,8 @@ torch の乱数は `--seed` で固定するが、別の CPU・別の torch 版�
 
 `report/` の他の図（`system_overview_ortiz.png`、`course_plan_ortiz.png`、`results_managers_ortiz.png`、`mood_net_pipeline_ortiz.png`、
 `face_rules_chart_ortiz.png`、`timeline_ortiz.png`）は本プロジェクトで作成した説明図で、コードからは生成しない。載せた数値は §4.5・§4.6・§4.8 の出力と照合する。
-ただし `timeline_ortiz.png` は 2 倍速＋省略 2 か所の版（§4.2、`out/v7_full_report_take46.json`）の時刻で描いた図で、省略のない提出動画（§4.1）の時刻と合わないため、
-README には載せていない。提出動画の時刻は §4.8 の表を正とする。
+`timeline_ortiz.png` は提出動画（§4.1、`out/v7_full_report_take51.json`）の時刻で描いた図で、§4.8 の表と一致する。
+2 倍速＋省略版の時刻で描いた旧図は `docs/devlog/figures/timeline_ortiz_take46.png` に残す。
 
 ### 4.8 時刻表（動画時刻と sim 時刻の対応）
 
