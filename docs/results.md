@@ -55,7 +55,7 @@ run ディレクトリはすべて `out/manager_runs/<run>/` 以下。
 
 ### 評価の条件
 
-- コース：峠の継ぎ目の設計値 1 cm（`../physical-ai-course-builder/slope_assembly.py` の `INSTALLATION_GAP = 0.01`、commit ea5b4e7）。提出動画と同じコース。
+- コース：峠の継ぎ目の設計値 1 cm（`../physical-ai-course-builder/slope_assembly.py` の `INSTALLATION_GAP = 0.01`、commit 483dbf9）。提出動画と同じコース。
 - シード：5000〜5029 の 30 話。同じシードは全方式で同じ開始場面と同じ跳跳の初期位置になる
   （各 `eval_*.json` の `scenario`・`crab` がシードごとに 5 方式で一致することを確認した）。
 - 開始場面の抽選結果：`toe_seated_ok` 6、`toe_seated_wrong` 8、`toe_standing` 6、`toe_fallen` 3、`deck_seated` 7。跳跳の初期位置は `behind` 17、`beside` 6、`touching` 7。
@@ -437,7 +437,7 @@ Q 表版（`out/v7_full_report_take53.json`）：
 1 話は押し上げ中の `fell`（5008）、1 話は天面で `WALK_ON` が `stalled` のあと転倒（5023）。`WAIT` が 470 手中 327 手を占める（`baselines_v3/eval_rule.json`）。
 PPO v2.2 は押しが効かないと `BACK_OFF` → `PUSH` を繰り返し（`BACK_OFF` 465 回、5026 で 145 回、5027 で 140 回）、無駄な手 14.90/話になった。「両方失敗」が 2〜6 話あるのは、スキルの失敗がコースの不備で起きていたことを示す。
 
-なぜ提出の数値にしないか：継ぎ目は置き誤差ではなく course-builder の設計値だったので、設計値を 1 cm に直した（commit ea5b4e7、新コース）。提出動画は新コースで描いており、旧コースの評価は存在しない環境の成績である。
+なぜ提出の数値にしないか：継ぎ目は置き誤差ではなく course-builder の設計値だったので、設計値を 1 cm に直した（commit 483dbf9、新コース）。提出動画は新コースで描いており、旧コースの評価は存在しない環境の成績である。
 修正の効果は評価 v4 との差に出る：固定ルール 23 → 29、Q 表 24 → 25、PPO 中規模 16 → 23、PPO v2.2 16 → 26、ランダム 9 → 14、両方失敗 2〜6 → 0。環境の不備は PPO の 2 方式にいちばん厳しく出ていた（PPO v2.2 +10 話、PPO 中規模 +7 話。固定ルール +6、ランダム +5、Q 表 +1）。
 
 ## 付録 B：評価 v2（エピソード非独立）

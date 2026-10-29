@@ -53,7 +53,7 @@ OpenCV（`cv2`）のどちらかを追加で要する。
 
 | ディレクトリ | 取得先（github.com/） | commit | 本リポジトリが読むもの | 定数 |
 |---|---|---|---|---|
-| `../physical-ai-course-builder/` | ortiz-ai-partners/physical-ai-course-builder | `ea5b4e7` | `scene_fork_tracks.xml`、モジュール `app`・`slope_assembly`・`tracks`・`navigation` | `COURSE_BUILDER`、`BZ_XML` |
+| `../physical-ai-course-builder/` | ortiz-ai-partners/physical-ai-course-builder | `483dbf9` | `scene_fork_tracks.xml`、モジュール `app`・`slope_assembly`・`tracks`・`navigation` | `COURSE_BUILDER`、`BZ_XML` |
 | `../microduck_rl/` | pollen-robotics/microduck_rl | `b02fdea4` | `src/mjlab_microduck/robot/microduck/scene.xml` | `MD_XML` |
 | `../jumper/` | KingKongRobotics/jumper | `61d0652` | `assets/jumper/jumper.xml`、`out/bundle_example/jumper/`（§2.1） | `JP_XML`、`JP_BUNDLE` |
 
@@ -64,7 +64,7 @@ OpenCV（`cv2`）のどちらかを追加で要する。
 ```
 git clone https://github.com/ortiz-ai-partners/mujoco-3body.git
 git clone https://github.com/ortiz-ai-partners/physical-ai-course-builder.git
-git -C physical-ai-course-builder checkout ea5b4e7
+git -C physical-ai-course-builder checkout 483dbf9
 git clone https://github.com/pollen-robotics/microduck_rl.git
 git -C microduck_rl checkout b02fdea4
 git clone https://github.com/KingKongRobotics/jumper.git
@@ -72,7 +72,7 @@ git -C jumper checkout 61d0652
 ```
 
 course-builder のモジュールは `v6_common.course_builder()` が sys.path に `COURSE_BUILDER` を足して import する。
-course-builder の commit `ea5b4e7` は峠の継ぎ目を 0.05 m から 0.01 m にした版で、評価 v4 と提出動画はこの版で作った。
+course-builder の commit `483dbf9` は峠の継ぎ目を 0.05 m から 0.01 m にした版で、評価 v4 と提出動画はこの版で作った。
 別の commit では施工結果が変わり、§4 の照合値（最終状態の sha256 など）は一致しない。
 跳跳の `tasks/jumper/common/constants.py`（基準姿勢 `JP_HOME`）と `deploy/fsm/src/obs.rs`（観測の契約）は、
 `v6_robots.py`・`v7_policies.py` に転記した元ファイルで、実行時には読まない。

@@ -29,7 +29,7 @@
 | Jumper の MJCF とメッシュ（KingKong Robotics） | https://github.com/KingKongRobotics/jumper | commit 61d0652 | Apache-2.0 | 既製。MJCF を読み込むのみ、改変なし | なし |
 | Jumper 公式 ONNX `locomotion`・`jump`・`dance_crab` と契約 JSON | 同上 `out/bundle_example/jumper/` | 同上（初版 004afda から不変） | Apache-2.0 | 既製。推論のみ、改変なし | なし |
 | Jumper の観測契約と定数（`obs.rs`・`trajectory.rs`・`constants.py`） | 同上 | 同上 | Apache-2.0 | 転記。`v7_policies.py`・`v6_robots.py` に書き写した | 転記部分のみ |
-| physical-ai-course-builder（ブルドーザー） | https://github.com/ortiz-ai-partners/physical-ai-course-builder | commit ea5b4e7 | MIT | 自作（同じ作者の別リポジトリ）。import して使う | なし |
+| physical-ai-course-builder（ブルドーザー） | https://github.com/ortiz-ai-partners/physical-ai-course-builder | commit 483dbf9 | MIT | 自作（同じ作者の別リポジトリ）。import して使う | なし |
 | rsplan（course-builder が同梱） | https://github.com/builtrobotics/rsplan | commit 47b3ab5 | MIT | 既製。本作の実行経路からは呼ばれない | なし |
 | Python パッケージ 10 本と Python 本体 | 下の「Python パッケージ」 | `requirements.txt` | 各ライセンス | 既製。pip で導入 | なし |
 
@@ -123,7 +123,7 @@ MJCF は `assets/jumper/jumper.xml`（`v6_common.JP_XML`）で、メッシュは
 
 ## physical-ai-course-builder（ブルドーザー）と rsplan
 
-出典は https://github.com/ortiz-ai-partners/physical-ai-course-builder 、使用 commit ea5b4e7。
+出典は https://github.com/ortiz-ai-partners/physical-ai-course-builder 、使用 commit 483dbf9。
 本リポジトリと同じ作者が同じ課題のために作成した自作リポジトリで、MIT（同リポジトリ `LICENSE`、Copyright (c) 2026 ortiz-ai-partners）。
 本作は `sys.path` 経由で `app`（`Simulation`）、`slope_assembly`（`assembly_xml`・`SlopeAssembly`）、`tracks`、`navigation`（`Navigator`）を import する（`v6_common.course_builder`、`v7_full.py`）。
 ブルドーザーの土台シーンは `scene_fork_tracks.xml`。ブルドーザー側に AI 推論はなく、実行時に LLM も動かない。同梱しない。
@@ -217,7 +217,7 @@ Q 表版は本リポジトリで実装した表形式 Q 学習で（`manager2_ta
 
 本リポジトリの設計・実装・文書は、作者が LLM（Anthropic の Claude、Claude Code）の支援を受けて作成した。
 ブルドーザー側の course-builder の開発では、OpenAI の Codex の対話型セッションも使った。
-坂と門の配置の計画 JSON と、施工結果を読んだ評価はそのセッションが作成した（同リポジトリ commit ea5b4e7 の `README.md` L349、
+坂と門の配置の計画 JSON と、施工結果を読んだ評価はそのセッションが作成した（同リポジトリ commit 483dbf9 の `README.md` L349、
 `examples/ortiz-slope-plan.json`・`examples/ortiz-gate-plan.json` の `provenance`、`examples/ortiz-slope-review.json`）。
 本作はその計画 JSON を読まず、坂の配置は `slope_assembly.assembly_xml` の定数で決まる。
 

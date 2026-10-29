@@ -230,7 +230,7 @@
 | 追走版 | 固定ルール、結末 `--finale procession`、2:44 | procession run | `out/3body_arena_v7_take54.mp4`、`out/v7_full_report_take54.json` |
 | 2 倍速・省略ありの版 | 以前の 2:47 版・PPO 版・Q 表版・追走版と同じ物理で、施工も 2 倍速、空荷走行 2 か所を省略 | 2x render with jump cuts | `out/3body_arena_v7_take46.mp4`〜`out/3body_arena_v7_take49.mp4`（`state_digest` が一致） |
 | 評価 v4（新コース・30 シード） | 継ぎ目 1 cm、エピソード独立、決定的方策、シード 5000〜5029 | evaluation v4 | `out/manager_runs/comparison_v4.md` |
-| 旧コース（継ぎ目 5 cm） | course-builder の `INSTALLATION_GAP` を 0.05 m から 0.01 m にする前の施工（変更は commit `ea5b4e7`） | old course (5 cm seam) | 旧舞台 `out/v6_stage_built_gap5cm.xml` |
+| 旧コース（継ぎ目 5 cm） | course-builder の `INSTALLATION_GAP` を 0.05 m から 0.01 m にする前の施工（変更は commit `483dbf9`） | old course (5 cm seam) | 旧舞台 `out/v6_stage_built_gap5cm.xml` |
 | 評価 v2（エピソード非独立） | エピソード間で `MjData` を持ち越していた時期の評価 | evaluation v2 | `out/manager_runs/comparison_v2.md` |
 
 長さは各報告 JSON の `video_silent.seconds`（本編 155.5、固定ルール版 157.3、以前の 2:47 版 167.0、PPO 版 165.2、Q 表版 166.3、追走版 163.7 s）、提出動画の長さは `assemble.py` の印字の `total_s`（176.58 s）。

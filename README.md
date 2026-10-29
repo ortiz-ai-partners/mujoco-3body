@@ -226,7 +226,7 @@ Q 表版は 8 手で `STANDUP` → `WALK_ON` が止まってから座らせ直�
 - 技術力：同一シード評価と 2×2 帰属で判断の失敗とスキルの失敗を分け、顔・気分ネット・倍速の有無で物理が同一であることを最終状態の sha256 で検証した。
 - 技術力：前方ジャンプを公式 `jump` への関節目標の重ね合わせだけで実現した（外力なし）。
 - 実用性：スキル（固定プログラム）と判断（AI）を分けたので学習は CPU 数時間で済み、固定ルール 1 本でも 29/30 に届く。
-- 実用性：峠の継ぎ目でパッカンがつまずく問題を施工精度（継ぎ目 5 → 1 cm、course-builder commit ea5b4e7）で解決し、環境の不備を学習に押し付けなかった。
+- 実用性：峠の継ぎ目でパッカンがつまずく問題を施工精度（継ぎ目 5 → 1 cm、course-builder commit 483dbf9）で解決し、環境の不備を学習に押し付けなかった。
 - 表現力：顔モニターに決め手の数値、右下に倍速と sim 時計、判断の瞬間だけ吹き出しと画面下の帯（日本語と英語）。鳴き声は機体の画面上の位置で左右に振る。省略なしで全区間を見せる。
 
 ## 分かったこと・限界・反省
@@ -258,7 +258,7 @@ Jumper の公式バンドルは jumper リポジトリの `out/bundle_example/ju
 ```
 <parent>/
   mujoco_3body/                  このリポジトリ（名前は任意。clone の既定名は mujoco-3body）
-  physical-ai-course-builder/    ブルドーザー（自作、commit ea5b4e7）
+  physical-ai-course-builder/    ブルドーザー（自作、commit 483dbf9）
   microduck_rl/                  Microduck の MJCF（Pollen Robotics）
   jumper/                        Jumper の MJCF と公式バンドル out/bundle_example/jumper（KingKong Robotics）
 ```

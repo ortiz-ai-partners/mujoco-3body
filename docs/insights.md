@@ -136,7 +136,7 @@ PPO v2.2 は評価 v3 で手数 30.9、無駄な手 14.90、BACK_OFF 465 回だ�
 
 ### 対処
 
-`INSTALLATION_GAP` を 0.01 m に変更した（`../physical-ai-course-builder/slope_assembly.py`、commit ea5b4e7。目標 y、保管位置、検証、画面表示も同じ定数から導く）。
+`INSTALLATION_GAP` を 0.01 m に変更した（`../physical-ai-course-builder/slope_assembly.py`、commit 483dbf9。目標 y、保管位置、検証、画面表示も同じ定数から導く）。
 再施工は成功（4/4 面、上昇 0.440 m、199.3 s）、置き位置は `up_1` y −0.999 m、`down_1` y 1.009 m（目標 1.01 m、`out/v6_stage_built.xml`）、継ぎ目はレイキャストで 0.25〜1.25 cm（`down_1` が 0.6° 傾いて置かれたので西側が広い）、
 天面に座った開始 8 シードで 8/8 渡り切り・転倒 0（`out/manager2_smoke_gap1cm_deck.jsonl`）。旧ステージは `out/v6_stage_built_gap5cm.xml` に保存した。
 採用しなかった対策は 4 つある。座ったまま継ぎ目の先まで押す案は跳跳自身の体が峠をまたいだ所で locomotion が進めず止まる。0.8 m/s で押し切る案は `down_1` を 7.3 cm 動かしてコース破損になった。

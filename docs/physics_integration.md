@@ -11,7 +11,7 @@
 
 | 機体 | MJCF の出典（版） | 結合方法 | アクチュエータ | 動かしているもの |
 |---|---|---|---|---|
-| ブルドーザー（BZ） | 自作 course-builder のシーン（commit `ea5b4e7`） | 土台（接頭辞なし） | シーンのまま：速度 4 本 `drive_*`、フォークの位置 1 本 `blade_lift` | ルール制御（`SlopeAssembly`／`Navigator`）、AI なし |
+| ブルドーザー（BZ） | 自作 course-builder のシーン（commit `483dbf9`） | 土台（接頭辞なし） | シーンのまま：速度 4 本 `drive_*`、フォークの位置 1 本 `blade_lift` | ルール制御（`SlopeAssembly`／`Navigator`）、AI なし |
 | パッカン（MD） | `microduck_rl` の `scene.xml`（既製、commit `b02fdea`） | `MjSpec.attach(prefix="md-")` | XML の位置サーボ 14 本（kp 0.55、±0.96 N·m） | 公式 ONNX 2 本（推論のみ） |
 | 跳跳（JP） | `jumper` の `jumper.xml`（既製、commit `61d0652`） | `MjSpec.attach(prefix="jp-")` | 結合時に追加した位置サーボ 22 本（kp 10、kd 0.5、±1.7464 N·m） | 公式 ONNX 3 本（推論のみ） |
 
@@ -246,7 +246,7 @@ PD は kp 20／kd 0.5、契約の `sim_dt 0.0025`・`decimation 2`、方策ネ�
 
 ## 7. course-builder との境界
 
-ブルドーザー側は自作リポジトリ physical-ai-course-builder（commit `ea5b4e7`、峠の継ぎ目 `INSTALLATION_GAP` 0.01 m）をそのまま使い、本体は変更しない。
+ブルドーザー側は自作リポジトリ physical-ai-course-builder（commit `483dbf9`、峠の継ぎ目 `INSTALLATION_GAP` 0.01 m）をそのまま使い、本体は変更しない。
 `v6_common.course_builder()` が隣のディレクトリ `COURSE_BUILDER`（`../physical-ai-course-builder`）を `sys.path` に加え、
 `app`（`Simulation`）、`slope_assembly`（`assembly_xml`／`SlopeAssembly`）、`tracks`（`TrackAnimation`）を import する。
 `ArenaSim`（`v6_phase4_full.py`）が `Simulation` 互換の薄いラッパ（`observe`／`command`／`lift_target`／`tracks`）で、`SlopeAssembly` は結合後の `model`／`data` の上でそのまま動く。
@@ -361,4 +361,4 @@ python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v
   `TOE_Y` と一致する（`out/v6_stage_built.xml` の `up_1`：`pos` の y −0.999 に頂点の y −1.0）。−1.86 m は斜面メッシュの底面側の頂点（y −0.86）の位置にあたる。
   本ノートと `docs/glossary.md` の位置の記述は `TOE_Y` に従う。
 - 描画版とヘッドレス版は経路が異なる（8 節）。数値の照合は同じ描画設定どうし、またはヘッドレスどうしで行う。
-- MuJoCo 3.11.0 と course-builder commit `ea5b4e7`、同じバンドルと ONNX、同じ CPU 向けビルドが前提で、版が違えばダイジェストは一致しない。環境の版は `requirements.txt` と `docs/reproduce.md`。
+- MuJoCo 3.11.0 と course-builder commit `483dbf9`、同じバンドルと ONNX、同じ CPU 向けビルドが前提で、版が違えばダイジェストは一致しない。環境の版は `requirements.txt` と `docs/reproduce.md`。

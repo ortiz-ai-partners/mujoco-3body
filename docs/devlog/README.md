@@ -13,6 +13,7 @@
 - 原文に出てくる呼び名は開発チーム内のハンドル名である。役割は 4 つ：要件と判断を出した企画者（本リポジトリの作者）、コードと文書を書いた開発補助 AI（LLM）、図版の清書を手伝った別の AI、
   隣のリポジトリ physical-ai-course-builder 側の開発補助 AI（`HANDOVER.md` L110 の申し送り先）。読者向け文書ではこれらを「要件：」「設計判断：」「本プロジェクトで作成」という役割語に置き換えた。
 - 「アイランドマスター」は開発補助 AI（LLM）の呼び名で、動画の支配人 AI が自己紹介と字幕で名乗るキャラクター名はここから取った（作品名ではない）。原文の「アイランドマスター追記」は開発補助 AI による追記の意味で、動画の中で次の一手を選ぶ主体は常に「支配人 AI」である。
+- コミット ID：公開リポジトリ 2 本の履歴の作者アドレスを GitHub の noreply アドレスに置き換えたとき、すべてのコミット ID が変わった（中身・日付・メッセージは同じ）。原文（HANDOVER.md、MANAGER_DESIGN.md）の ID は置き換え前のもので、course-builder の ea5b4e7 は 483dbf9、本リポジトリの e3a40dd は 94e273b、13124be は 3dabe92、1b7c1fe は 69427a9、0a9322f は 4b15858 にあたる。
 - 日付・時刻・take 番号・未決の事項は作業時点のものである。提出動画の本編は take 58（`out/3body_arena_v7_take58.mp4`、PPO の支配人、物理は take 52 と同一）で、同じ設定の固定ルール版 take 57（物理は take 51 と同一）は比較用に残す。原文の多くは take 46 以前や take 51 を「提出版」と呼んでいる（訂正表 6・7）。
 - 原文中のローカルの絶対パス、開発中の仮想環境名、開発中の外部の記録ページへのリンクは公開リポジトリの外を指しており、読者は辿れない。再現はリポジトリ直下で `python …` と相対パスで行う（`docs/reproduce.md`）。
 - 個人の実名・所属・個人メールアドレスは原文にも載せていない（メールアドレスは GitHub の noreply のみ、`report_outline.md` L22）。
@@ -128,7 +129,7 @@
 | 10 | 評価 v2：固定ルール 25、Q 表 23、PPO 中 19、PPO 小 0、ランダム 9（/30）（HANDOVER L34、設計メモ §7.6） | 話が独立していない版。最終は評価 v4：29／26／25／23／14（固定ルール／PPO v2.2／Q 表／PPO 中／ランダム） | `comparison_v2.md`・`comparison_v4.md` |
 | 11 | 「course-builder は講座のもの」（構成案 L14 が指す案 2） | 自作。別リポジトリ physical-ai-course-builder を同じ課題のために開発 | 構成案 L14、`../physical-ai-course-builder/LICENSE` |
 | 12 | 表情ログ「23 区間」（図メモ L106） | take 46 の表情ログは 26 行。23 は図で隣接する区間をまとめた数 | `take46.json` の `face.log`（26 要素） |
-| 13 | 支配人 v1 の観測 32 次元（HANDOVER L122、設計メモ L167） | 35＝16+3+結果 8+手 6+2。32 は初版 13124be の docstring、コードは 33→34（1b7c1fe）→35（0a9322f） | `archive/manager_env.py` `OBS_DIM`、`git log -p -- manager_env.py` |
+| 13 | 支配人 v1 の観測 32 次元（HANDOVER L122、設計メモ L167） | 35＝16+3+結果 8+手 6+2。32 は初版 3dabe92 の docstring、コードは 33→34（69427a9）→35（4b15858） | `archive/manager_env.py` `OBS_DIM`、`git log -p -- manager_env.py` |
 | 14 | 公式ポリシー 4 本（構成案 L13・L32）。図メモ L90 の列挙も 4 つ | 5 本：Microduck の `velstand`・`alpha_sitstand`、Jumper の `locomotion`・`jump`・`dance_crab` | `v7_full.py`・`v7_policies.py` の読み込み |
 | 15 | 押し上げ 63%（22/35）（旧 README L57、設計メモ L303・L339・L345・L366） | 旧コース・評価 v2 の固定ルールの値。新コース・評価 v4 の固定ルールは 22/30＝73% | v2 は設計メモ §7.6（決定ログの集計）、v4 は `baselines_v4/eval_rule.json` |
 | 16 | 行動（6）とセリフ：6 手に 1 本ずつ（設計メモ L260） | 実装の定型セリフは 8 本。6 手の 6 本に、2 回目以降の PUSH の `PUSH_RETRY` と、倒れた相手への PUSH の `NUDGE` が加わる | `crab_help.py` の `LINES`・`bubble_line` |

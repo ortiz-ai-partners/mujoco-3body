@@ -12,7 +12,7 @@
   - 支配人（`manager.policy`）：rule＝固定ルール（`crab_help.rule_action`）、PPO＝`ppo2_v22`（報酬 v2.2 で継続学習した PPO）、PPO 中＝`ppo2_medium2`、Q＝表形式 Q `tabq2_small`。
   - 結末（`ending`）：push＝BZ のフォークが座ったパッカンを押し倒し自力で起きる（`--ending push`、take 4・5）、crab＝跳跳が押し上げる（`--ending crab`、take 6 以降すべて）。
   - 終幕（`--finale`、JSON の `events` の文言で判別）：around＝跳跳が東側を回り込んで離れた所でダンス、procession＝跳跳が追走しゴールで三人の万歳、circle＝輪になって万歳。
-    終幕に至らない失敗 take 8・11〜13・15・17・19・21・26 は `HANDOVER.md` §0b の記述による。take 8 は `--finale` の追加（git コミット e3a40dd）より前で、終幕は around だけだった。
+    終幕に至らない失敗 take 8・11〜13・15・17・19・21・26 は `HANDOVER.md` §0b の記述による。take 8 は `--finale` の追加（git コミット 94e273b）より前で、終幕は around だけだった。
   - 顔（`face.on`、`face.mood_ai.kind`）：なし／表＝表情表（`--face-ai table` 相当）／気分 v1＝気分ネット 53-32-32-2（`--face-ai mood`）／組み立て＝気分ネット v2 53-32-32-5＋計測値（11 顔・17 規則）／決め手＝組み立て＋決め手の値をモニターに表示。
   - 速度・省略：施工区間の倍速（×4 または ×2）。施工より後は ×2、万歳のダンスは ×1（`SPEED`、`SPEED_DANCE`）。省略 2＝ジャンプカット 2 か所（sim 22→54 s、110→172 s、`cuts`）。
   - jitter：`--jitter` の秒数（応援ダンスの開始位置をずらして物理経路だけを変えるダイヤル、既定 0）。JSON に記録されないため devlog の記述（`HANDOVER.md` §0b）から転記した。

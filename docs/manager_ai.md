@@ -308,11 +308,11 @@ PPO v2.2 は `ppo2_medium2` の重みと最適化器を引き継ぎ、報酬 v2.
 
 ## 12. コース v2（峠の継ぎ目 1 cm）
 
-天面は 2 枚の部材の天板でできており、継ぎ目の幅は course-builder の設計値 `INSTALLATION_GAP` で決まる（`../physical-ai-course-builder/slope_assembly.py`、commit ea5b4e7）。
+天面は 2 枚の部材の天板でできており、継ぎ目の幅は course-builder の設計値 `INSTALLATION_GAP` で決まる（`../physical-ai-course-builder/slope_assembly.py`、commit 483dbf9）。
 設計値 0.05 m のコース（旧コース）では歩くパッカンの足が継ぎ目に落ちてつまずき、6 シードの掃引で 0.3 m/s は 4/6、0.2 m/s は 3/6 しか渡れなかった（`crab_help.py` `WALK_DECK_VX` のコメント）。転倒後に velstand が起きられない回もあった。
 
 設計判断：転んだ相手を助ける新しいスキルを足すより、施工側で継ぎ目を作らない方が確実と判断し、設計値を 0.01 m に変えた（コース v2）。
-再施工後の継ぎ目の幅はレイキャストで 0.25〜1.25 cm（course-builder の commit ea5b4e7 のコミットメッセージと `docs/devlog/MANAGER_DESIGN.md` §7.14、再計算スクリプトなし）、天面開始の煙試験は 8/8 渡り切り・転倒 0（`out/manager2_smoke_gap1cm_deck.jsonl`）。
+再施工後の継ぎ目の幅はレイキャストで 0.25〜1.25 cm（course-builder の commit 483dbf9 のコミットメッセージと `docs/devlog/MANAGER_DESIGN.md` §7.14、再計算スクリプトなし）、天面開始の煙試験は 8/8 渡り切り・転倒 0（`out/manager2_smoke_gap1cm_deck.jsonl`）。
 
 同じ 30 シード・同じ方策で、旧コース（評価 v3、`out/manager_runs/comparison_v3b.md`）とコース v2（評価 v4）を比べると、固定ルール 23→29、PPO v2.2 16→26、表形式 Q 24→25、PPO 中規模 16→23、ランダム 9→14 である。
 環境の不備は学習方式に厳しく出る。旧コースの PPO v2.2 は `BACK_OFF` を 465 回使い（無駄な手 14.9／話）、押しが効かないと「下がる→押す」を繰り返していた。学習環境・評価・提出動画はすべてコース v2 で統一した。
