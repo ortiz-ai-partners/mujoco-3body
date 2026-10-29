@@ -27,7 +27,7 @@ There are no jump cuts: every simulated second of the 404 s run is on screen.
 The face overlay and the mood net do not change the physics: headless A/B runs end in the same state hash and the same manager decisions
 (with the mood net, one event message differs in wording only).
 
-Terms: BZ = the bulldozer; Pakkan (パッカン) = the Microduck; Tyao-Tyao (跳跳) = the Jumper; manager AI (支配人 AI) = the skill-selection policy; mood net (気分ネット) = the face network.
+Terms: BZ = the bulldozer; Pakkan (パッカン) = the Microduck; Chōchō (跳跳, nickname Cho-san) = the Jumper; manager AI (支配人 AI) = the skill-selection policy; mood net (気分ネット) = the face network.
 Code identifiers keep the English names (`MD` / `duck`, `JP` / `crab`, `BZ`; skills `WAIT` / `SEAT` / `PUSH` / `BACK_OFF` / `STANDUP` / `WALK_ON`). Glossary: [docs/glossary.md](docs/glossary.md).
 
 ## 提出物と注記

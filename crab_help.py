@@ -13,13 +13,14 @@ Every skill is a generator: it sets commands for the duck (official velstand / s
 and the crab (official locomotion policy), yields once per control tick (the owner steps the
 physics), and finally returns a result string.  Physics only - nothing is ever moved by hand.
 
-Actions (and the fixed line the manager's speech bubble shows):
+Actions (and the fixed line the manager says: the caption and the band at the bottom of the video;
+"ちょーさん" (Cho-san) is the crab's nickname, introduced in the video's opening):
   0 WAIT      「ちょっと待とう」                           4 s, everybody holds (a fallen duck gets up by itself)
-  1 SEAT      「パッカン、カニさんの方を向いて座って」       stand if needed, walk to the seat at the ramp's foot,
+  1 SEAT      「パッカン、ちょーさんの方を向いて座って」     stand if needed, walk to the seat at the ramp's foot,
                                                         turn to face south (the crab's side), sit
-  2 PUSH      「カニさん、そっと押し上げてあげて」           the crab gets behind the duck in the lane, closes in
+  2 PUSH      「ちょーさん、そっと押し上げてあげて」         the crab gets behind the duck in the lane, closes in
                                                         gently, pushes at 0.3 m/s until the landing, settles
-  3 BACK_OFF  「カニさん、少し離れて」                      the crab reverses until 0.6 m clear (a fallen or
+  3 BACK_OFF  「ちょーさん、少し離れて」                    the crab reverses until 0.6 m clear (a fallen or
                                                         seated duck needs room to get up)
   4 STANDUP   「パッカン、立てる？」                        sitstand flag 0 -> velstand; a fallen duck: wait for
                                                         velstand's own recovery
@@ -61,14 +62,29 @@ WALK_DECK_VX = 0.3                 # across the landing (the seam between the tw
 ACTIONS = ["WAIT", "SEAT", "PUSH", "BACK_OFF", "STANDUP", "WALK_ON"]
 LINES = {
     "WAIT": "ちょっと待とう",
-    "SEAT": "パッカン、カニさんの方を向いて座って",
-    "PUSH": "カニさん、そっと押し上げてあげて",
-    "PUSH_RETRY": "もう一回いこう。カニさん、そっと押し上げてあげて",
-    "NUDGE": "カニさん、そっと押してずらしてあげて",
-    "BACK_OFF": "カニさん、少し離れて",
+    "SEAT": "パッカン、ちょーさんの方を向いて座って",
+    "PUSH": "ちょーさん、そっと押し上げてあげて",
+    "PUSH_RETRY": "もう一回いこう。ちょーさん、そっと押し上げてあげて",
+    "NUDGE": "ちょーさん、そっと押してずらしてあげて",
+    "BACK_OFF": "ちょーさん、少し離れて",
     "STANDUP": "パッカン、立てる？",
     "WALK_ON": "パッカン、そのまま進んで",
 }
+LINES_EN = {                       # the English line under each one in the video's band (for viewers abroad)
+    "WAIT": "Let's wait a moment.",
+    "SEAT": "Pakkan, sit down facing Cho-san.",
+    "PUSH": "Cho-san, give it a gentle push up.",
+    "PUSH_RETRY": "One more try. Cho-san, give it a gentle push up.",
+    "NUDGE": "Cho-san, gently nudge it aside.",
+    "BACK_OFF": "Cho-san, step back a little.",
+    "STANDUP": "Pakkan, can you stand?",
+    "WALK_ON": "Pakkan, keep going.",
+}
+
+
+def line_en(line):
+    """The English line for one of LINES (None for any other text)."""
+    return next((LINES_EN[k] for k, v in LINES.items() if v == line), None)
 RESULT_SLOTS = ["none", "waited", "seated", "pushed_up", "fell", "stalled", "slipped", "cleared", "standing",
                 "still_down", "crossed", "walked", "nothing"]
 STAGES = ["toe", "ramp_up", "deck", "ramp_down", "north", "beside"]

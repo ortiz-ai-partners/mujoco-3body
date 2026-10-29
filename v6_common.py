@@ -55,8 +55,9 @@ class Captioner:
         except ImportError:
             self.ok = False
             return
-        self.Image, self.ImageDraw = Image, ImageDraw
+        self.Image, self.ImageDraw, self.ImageFont = Image, ImageDraw, ImageFont
         font_path = next((p for p in _FONTS if p.exists()), None)
+        self.font_path, self._sized = font_path, {}
         if font_path is None:
             self.title = self.body = self.small = self.tiny = ImageFont.load_default()
         else:
@@ -86,11 +87,46 @@ class Captioner:
             out.append(cur)
         return out or [""]
 
-    def draw(self, frame, title, lines=(), footer=None, inset=None, notice=None):
+    def _font(self, px):
+        if px not in self._sized:
+            self._sized[px] = (self.ImageFont.truetype(str(self.font_path), px) if self.font_path is not None
+                               else self.ImageFont.load_default())
+        return self._sized[px]
+
+    def _fit(self, d, text, px, max_w):
+        """The largest font up to px at which text fits in max_w pixels."""
+        while px > 12 and d.textbbox((0, 0), text, font=self._font(px))[2] > max_w:
+            px -= 1
+        return self._font(px)
+
+    BAND_FRAC = 0.2                                                       # the band: the bottom fifth of the frame
+
+    def _band(self, img, band):
+        """The manager's line in a band across the bottom fifth, with its round face on the left (the same face and
+        look as the video's opening).  band: {"jp": the typed part, "full": the whole line (sets the font size),
+        "en": the English line or None, "alpha": 0..1, "face": callable(draw, cx, cy, r)}.  The right end is left
+        free for the footer box, which is drawn over the band."""
+        w, h = img.size
+        bh = int(round(h * self.BAND_FRAC))
+        layer = self.Image.new("RGBA", (w, bh), (10, 18, 30, 215))
+        d = self.ImageDraw.Draw(layer)
+        r = int(bh * 0.34)
+        cx, cy = 34 + r, bh // 2
+        band["face"](d, cx, cy, r)
+        x, right = cx + r + 34, w - 270
+        d.text((x, 24), band["jp"], font=self._fit(d, band["full"], 34, right - x), fill=(240, 244, 250, 255))
+        if band.get("en"):
+            d.text((x + 2, 84), band["en"], font=self._fit(d, band["en"], 22, right - x), fill=(170, 184, 204, 255))
+        a = max(0.0, min(1.0, float(band.get("alpha", 1.0))))
+        if a < 1.0:
+            layer.putalpha(layer.getchannel("A").point(lambda v: int(v * a)))
+        img.paste(layer, (0, h - bh), layer)
+
+    def draw(self, frame, title, lines=(), footer=None, inset=None, notice=None, band=None):
         """inset: (image HxWx3, label above, label below) - the crab's face monitor, a small box at the top-right in the
         same row as the caption box (requirement: one row together with the caption box, not a second row).  The
         caption shrinks its fonts, then wraps its lines, so that it always fits beside the monitor.  notice: a line in a
-        box at the bottom-left (a jump cut)."""
+        box at the bottom-left (a jump cut).  band: the manager's line across the bottom fifth (see _band)."""
         if not self.ok:
             return frame
         img = self.Image.fromarray(frame)
@@ -167,6 +203,8 @@ class Captioner:
             for t in reason:
                 d.text((x0 + ipad, yy), t, font=self.small, fill=(255, 255, 255, 255))
                 yy += line_h(self.small)
+        if band is not None:
+            self._band(img, band)
         if notice:
             h, w = frame.shape[:2]
             nb = d.textbbox((0, 0), notice, font=self.body)

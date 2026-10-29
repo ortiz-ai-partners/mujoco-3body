@@ -8,13 +8,13 @@
 | 呼び名 | 正式名・製作元 | 英語 | コード識別子 | 出所 |
 |---|---|---|---|---|
 | パッカン | Microduck（Pollen Robotics）。既製の機体モデル | Microduck, "Pakkan" | `MD`、`md-`（プレフィックス）、`duck`、`Duck` | `v6_common.py` `MD_XML`、`v6_robots.py`、`v7_full.py` |
-| 跳跳 | Jumper（KingKong Robotics）。既製の機体モデル | Jumper, "Tyao-Tyao" | `JP`、`jp-`、`crab`、`Crab` | `v6_common.py` `JP_XML`、`v7_full.py`、`crab_help.py` |
+| 跳跳 | Jumper（KingKong Robotics）。既製の機体モデル | Jumper, "Chōchō" (nickname "Cho-san") | `JP`、`jp-`、`crab`、`Crab` | `v6_common.py` `JP_XML`、`v7_full.py`、`crab_help.py` |
 | ブルドーザー | 自作 physical-ai-course-builder のフォーク付き車体。ルール制御 | bulldozer | `BZ`、body `dozer`、自由関節 `base` | `v6_common.py` `BZ_XML`、`scene_fork_tracks.xml` |
 | 支配人 AI | 失敗したときの次の一手を選ぶ方策。自作、PPO と表形式 Q は学習、本番は推論（固定ルールは学習なし）。観測 46 次元、6 手 | manager AI | `manager`、`OBS_DIM`、`--manager {rule,ppo,tabq}` | `crab_help.py`、`manager2_*.py`、`v7_full.py` |
 | 気分ネット | 跳跳の表情を決める小さな MLP（53-32-32-5）。自作、学習して本番は推論 | mood net | `MoodAI`、`MOOD_NET = "mood_net"`、`--face-ai mood` | `crab_face.py`、`analysis/mood_train.py` |
 | 公式ポリシー | 提供元が配布した ONNX 5 本（Microduck 2、Jumper 3）。既製、推論のみ、改変なし | official policy | `velstand`、`alpha_sitstand`、`locomotion`、`jump`、`dance_crab` | `policies/microduck/manifest.json`、`v7_policies.py` |
 
-コード識別子 `crab` と、字幕の定型文に残る「カニさん」（「カニさん、そっと押し上げてあげて」）は跳跳（Jumper）を指す。開発中の呼び名に由来し、本文では跳跳と書く。
+コード識別子 `crab` と、定型文の愛称「ちょーさん」（「ちょーさん、そっと押し上げてあげて」。take 55 までの動画では「カニさん」）は跳跳（Jumper）を指す。本文では跳跳と書く。
 `duck` はパッカン。`MD`／`JP`／`BZ` は 3 体の省略形で、観測や報告 JSON のキー（`three_crossed` の `bz`／`crab`／`duck`）にも現れる。
 
 ## 2. コースと場所
@@ -44,9 +44,9 @@
 | 呼び名 | 定型の吹き出し | 英語 | コード識別子 | 出所 |
 |---|---|---|---|---|
 | 様子を見る（待つ） | 「ちょっと待とう」 | WAIT: everybody holds 4 s | `WAIT` (0) | `crab_help.py` `ACTIONS`、`LINES`、`bubble_line()` |
-| 座らせる | 「パッカン、カニさんの方を向いて座って」 | SEAT: walk to the seat, face south, sit | `SEAT` (1) | 同上 |
-| 押しに行く（押し上げ） | 「カニさん、そっと押し上げてあげて」（2 回目以降は「もう一回いこう。…」） | PUSH: the crab pushes at 0.3 m/s to the landing | `PUSH` (2)、`PUSH_RETRY` | 同上 |
-| 少し離れる | 「カニさん、少し離れて」 | BACK_OFF: reverse until 0.6 m clear | `BACK_OFF` (3) | 同上 |
+| 座らせる | 「パッカン、ちょーさんの方を向いて座って」 | SEAT: walk to the seat, face south, sit | `SEAT` (1) | 同上 |
+| 押しに行く（押し上げ） | 「ちょーさん、そっと押し上げてあげて」（2 回目以降は「もう一回いこう。…」） | PUSH: the crab pushes at 0.3 m/s to the landing | `PUSH` (2)、`PUSH_RETRY` | 同上 |
+| 少し離れる | 「ちょーさん、少し離れて」 | BACK_OFF: reverse until 0.6 m clear | `BACK_OFF` (3) | 同上 |
 | 立たせる | 「パッカン、立てる？」 | STANDUP: sitstand flag 0, or wait for recovery | `STANDUP` (4) | 同上 |
 | 見送る（進ませる） | 「パッカン、そのまま進んで」 | WALK_ON: walk north along the lane | `WALK_ON` (5) | 同上 |
 
@@ -54,7 +54,7 @@
 顔モニターの表示にも使う。「無駄な手」の定義は 11 節の表にある。
 
 定型の吹き出しは `LINES` に 8 本ある：6 手の 6 本と、2 回目以降の押しに使う `PUSH_RETRY`、転んだパッカンに `PUSH` を選んだときの `NUDGE`
-（「カニさん、そっと押してずらしてあげて」）。どれを出すかは `crab_help.bubble_line()` が決める。
+（「ちょーさん、そっと押してずらしてあげて」）。どれを出すかは `crab_help.bubble_line()` が決める。
 `NUDGE` は吹き出しの名前で、7 番目の手ではない。押してずらす実験のスキル `skill_nudge` は `SKILLS` に含まれず、本番でも評価でも使わない（`crab_help.py` の docstring）。
 転んだパッカンへの `PUSH` は通常の `skill_push` が実行され、何もせずに終わる。
 

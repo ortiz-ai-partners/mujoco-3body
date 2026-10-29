@@ -219,6 +219,10 @@ class Chirps:
     }
 
     MASTER_GAIN = 0.45          # requirement: the voices stay quiet
+    DUCK_KINDS = {"quack", "worried", "gwaa", "call", "happy", "sigh"}
+    DUCK_GAIN = 1.0 / 3.0       # requirement (10/29): the duck's voice at a third of its level (-9.5 dB)
+    SFX = {"blip", "chime"}     # the manager's band: one blip per typed character, a chime when it appears
+    SFX_LEVEL = {"blip": 0.16, "chime": 0.27}   # the same final levels as the opening's typing and card chime
 
     def __init__(self):
         self.events = []
@@ -236,16 +240,37 @@ class Chirps:
         env = env * np.linspace(0.6, 1.0, n) if f1 > f0 else env
         return amp * env * (np.sin(ph) + 0.25 * np.sin(2 * ph))
 
+    @staticmethod
+    def _sfx(kind, sr, k):
+        """The band's sounds, synthesised as in the opening (intro.py): a short decaying blip whose pitch steps through
+        four notes, and a three-partial chime (C6, E6, C7)."""
+        if kind == "blip":
+            tt = np.arange(int(0.035 * sr)) / sr
+            f = 760 + 120 * (k * 7 % 4)
+            return np.exp(-tt / 0.012) * np.minimum(1, tt / 0.002) * np.sin(2 * np.pi * f * tt)
+        tt = np.arange(int(0.9 * sr)) / sr
+        return (np.exp(-tt / 0.28) * np.minimum(1, tt / 0.004)
+                * (np.sin(2 * np.pi * 1046.5 * tt) + 0.6 * np.sin(2 * np.pi * 1318.5 * tt) + 0.25 * np.sin(2 * np.pi * 2093.0 * tt))
+                / 1.85)
+
     def wav(self, path, length_s, sr=22050):
         out = np.zeros(int((length_s + 1.0) * sr))
-        for t0, kind, pitch in self.events:
+        sfx = np.zeros_like(out)
+        for k, (t0, kind, pitch) in enumerate(self.events):
             cursor = int(t0 * sr)
+            if kind in self.SFX:                             # mixed after the master gain, at the opening's levels
+                w = self.SFX_LEVEL[kind] * self._sfx(kind, sr, k)
+                n = min(len(w), len(sfx) - cursor)
+                if n > 0:
+                    sfx[cursor:cursor + n] += w[:n]
+                continue
+            gain = self.DUCK_GAIN if kind in self.DUCK_KINDS else 1.0
             for f0, f1, dur, vib, amp in self.KINDS[kind]:
                 n = int(dur * sr)
                 if f0 > 0 and cursor + n < len(out):
-                    out[cursor:cursor + n] += self._tone(f0 * pitch, f1 * pitch, dur, sr, amp, vib)
+                    out[cursor:cursor + n] += gain * self._tone(f0 * pitch, f1 * pitch, dur, sr, amp, vib)
                 cursor += n
-        out = np.clip(out * self.MASTER_GAIN, -1, 1)
+        out = np.clip(out * self.MASTER_GAIN + sfx, -1, 1)
         with wave.open(str(path), "wb") as w:
             w.setnchannels(1)
             w.setsampwidth(2)
@@ -465,6 +490,8 @@ def main():
     ap.add_argument("--mood-run", default=crab_face.MOOD_RUN, help="the PPO whose critic --face-ai critic uses")
     ap.add_argument("--mood-net", default=crab_face.MOOD_NET, help="out/manager_runs/<name>/ of the mood net")
     ap.add_argument("--no-cuts", action="store_true", help="write every frame (no jump cuts): the full-length record")
+    ap.add_argument("--no-band", action="store_true",
+                    help="no band at the bottom for the manager's lines (takes 1-55 had none; the line is in the caption either way)")
     ap.add_argument("--cut", action="append", default=[], metavar="START:END[:LABEL]",
                     help="a jump cut in simulated seconds, added to the default ones (DEFAULT_CUTS)")
     ap.add_argument("--build-speed", type=float, default=SPEED["BUILD"],
@@ -597,6 +624,17 @@ def main():
         return (video.frames if video is not None else 0) / VIDEO_FPS
 
     cut_state = {"active": None, "notice": "", "notice_until": -1}
+    # the manager's band: each decision's line is typed into a band across the bottom fifth with the manager's face
+    # (the opening's look), a chime when it appears and a blip per character; it stays BAND_HOLD s after the line is
+    # complete, then fades.  A new decision while a band is up replaces the line without fading out.
+    BAND_CPS, BAND_HOLD, BAND_IN, BAND_OUT = 15.0, 2.5, 0.2, 0.35
+    band = {"t0": None, "line": "", "en": None, "typed": 0, "cont": False}
+    draw_avatar = None
+    if render and not args.no_band:
+        from intro import draw_avatar                         # the opening's face (render-only, no physics)
+
+    def band_end(b):
+        return b["t0"] + len(b["line"]) / BAND_CPS + BAND_HOLD
 
     def cut_at(t_sim):
         """The jump cut containing simulated time t_sim, or None."""
@@ -620,6 +658,11 @@ def main():
         if video is not None and cut_at(data.time) is not None:
             return                                           # a cry inside a jump cut is not heard
         chirps.add(video_t(), kind, pitch)
+
+    def sfx(kind):
+        """A sound of the manager's band (never inside a jump cut, like the cries)."""
+        if video is not None and cut_at(data.time) is None:
+            chirps.add(video_t(), kind)
 
     def cry(who):
         """A random cry: the duck's or the crab's, with a random pitch."""
@@ -869,7 +912,26 @@ def main():
                      "below": face.ai_label() or face.measured_label(), "reason": face.label()}
         notice = cut_state["notice"] if (video is not None and video.frames < cut_state["notice_until"]) else None
         title, lines = caption()
-        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed * write_factor():g}", inset=inset, notice=notice)
+        return cap.draw(frame, title, lines, footer=f"sim {data.time:6.1f} s   x{clock.speed * write_factor():g}", inset=inset, notice=notice,
+                        band=band_frame())
+
+    def band_frame():
+        """This frame's band (None when none is up); types the line and queues its blips."""
+        if draw_avatar is None or band["t0"] is None:
+            return None
+        vt = video_t()
+        e, line = vt - band["t0"], band["line"]
+        if vt > band_end(band) + BAND_OUT:
+            return None
+        n = min(len(line), int(e * BAND_CPS + 1e-9))
+        for _ in range(n - band["typed"]):
+            sfx("blip")
+        band["typed"] = max(band["typed"], n)
+        alpha = (1.0 if band["cont"] else min(1.0, e / BAND_IN)) * (1.0 - min(1.0, max(0.0, (vt - band_end(band)) / BAND_OUT)))
+        talk = n < len(line) and int(e * 10) % 2 == 0
+        blink = (vt % 2.7) < 0.12
+        return {"jp": line[:n], "full": line, "en": band["en"] if n >= len(line) else None, "alpha": alpha,
+                "face": lambda d, cx, cy, r: draw_avatar(d, cx, cy, r, blink, talk)}
 
     t_wall = time.perf_counter()
     k = 0
@@ -1253,6 +1315,10 @@ def main():
                                          "last_result": book.last_result})
                 event(t, f"MANAGER #{mgr['n']}: {name} 「{mgr['line']}」 (duck {duck.mode}/{h.stage()}, crab {h.crab_dist():.2f} m, "
                          f"touching={h.touching()}, last={book.last_result})")
+                if draw_avatar is not None:                   # the band: render-only (no physics, no scene rng)
+                    up = band["t0"] is not None and video_t() <= band_end(band) + BAND_OUT
+                    band.update(t0=video_t(), line=mgr["line"], en=ch.line_en(mgr["line"]), typed=0, cont=up)
+                    sfx("chime")
                 if name in ("SEAT", "STANDUP", "WALK_ON"):
                     quack("quack")
                 elif name == "PUSH":
@@ -1754,7 +1820,10 @@ def main():
     digest = hashlib.sha256(np.ascontiguousarray(data.qpos).tobytes() + np.ascontiguousarray(data.qvel).tobytes()).hexdigest()
     settings = {"manager": args.manager, "run": args.run if args.manager != "rule" else None, "finale": args.finale,
                 "jitter": args.jitter, "face": args.face, "face_ai": args.face_ai, "prestage": args.prestage,
-                "write_every": write_every, "tail_write_s": args.tail_write, "cuts": [list(c) for c in cuts]}
+                "write_every": write_every, "tail_write_s": args.tail_write, "cuts": [list(c) for c in cuts],
+                "band": (None if draw_avatar is None else {"cps": BAND_CPS, "hold_s": BAND_HOLD, "in_s": BAND_IN, "out_s": BAND_OUT,
+                                                           "height_frac": Captioner.BAND_FRAC}),
+                "duck_voice_gain": round(Chirps.DUCK_GAIN, 4)}
     report = {"mujoco": mujoco.__version__, "settings": settings, "sim_seconds": round(float(data.time), 2),
               "state_digest": digest, "ngeom": int(model.ngeom),
               "face": {"on": face is not None, "log": face.log if face is not None else None,
