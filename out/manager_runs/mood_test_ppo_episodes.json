@@ -1,0 +1,156 @@
+[
+ {
+  "id": 0,
+  "policy": "ppo",
+  "scenario": "toe_seated_ok",
+  "seed": 9000,
+  "steps": 3,
+  "crossed": true,
+  "damaged": false,
+  "samples": 791,
+  "sim_s": 81.2
+ },
+ {
+  "id": 1,
+  "policy": "ppo",
+  "scenario": "toe_seated_ok",
+  "seed": 9001,
+  "steps": 3,
+  "crossed": false,
+  "damaged": true,
+  "samples": 919,
+  "sim_s": 92.0
+ },
+ {
+  "id": 2,
+  "policy": "ppo",
+  "scenario": "toe_seated_wrong",
+  "seed": 9000,
+  "steps": 6,
+  "crossed": true,
+  "damaged": false,
+  "samples": 932,
+  "sim_s": 95.5
+ },
+ {
+  "id": 3,
+  "policy": "ppo",
+  "scenario": "toe_seated_wrong",
+  "seed": 9001,
+  "steps": 40,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2382,
+  "sim_s": 238.4
+ },
+ {
+  "id": 4,
+  "policy": "ppo",
+  "scenario": "toe_standing",
+  "seed": 9000,
+  "steps": 4,
+  "crossed": true,
+  "damaged": false,
+  "samples": 902,
+  "sim_s": 92.3
+ },
+ {
+  "id": 5,
+  "policy": "ppo",
+  "scenario": "toe_standing",
+  "seed": 9001,
+  "steps": 25,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2412,
+  "sim_s": 241.3
+ },
+ {
+  "id": 6,
+  "policy": "ppo",
+  "scenario": "toe_fallen",
+  "seed": 9000,
+  "steps": 4,
+  "crossed": true,
+  "damaged": false,
+  "samples": 871,
+  "sim_s": 89.2
+ },
+ {
+  "id": 7,
+  "policy": "ppo",
+  "scenario": "toe_fallen",
+  "seed": 9001,
+  "steps": 4,
+  "crossed": true,
+  "damaged": false,
+  "samples": 857,
+  "sim_s": 87.8
+ },
+ {
+  "id": 8,
+  "policy": "ppo",
+  "scenario": "deck_seated",
+  "seed": 9000,
+  "steps": 2,
+  "crossed": true,
+  "damaged": false,
+  "samples": 106,
+  "sim_s": 12.6
+ },
+ {
+  "id": 9,
+  "policy": "ppo",
+  "scenario": "deck_seated",
+  "seed": 9001,
+  "steps": 2,
+  "crossed": true,
+  "damaged": false,
+  "samples": 158,
+  "sim_s": 17.8
+ },
+ {
+  "id": 10,
+  "policy": "ppo",
+  "scenario": "deck_fallen",
+  "seed": 9000,
+  "steps": 11,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2611,
+  "sim_s": 261.2
+ },
+ {
+  "id": 11,
+  "policy": "ppo",
+  "scenario": "deck_fallen",
+  "seed": 9001,
+  "steps": 3,
+  "crossed": true,
+  "damaged": false,
+  "samples": 130,
+  "sim_s": 15.1
+ },
+ {
+  "id": 12,
+  "policy": "ppo",
+  "scenario": "ramp_fallen",
+  "seed": 9000,
+  "steps": 40,
+  "crossed": false,
+  "damaged": false,
+  "samples": 640,
+  "sim_s": 64.5
+ },
+ {
+  "id": 13,
+  "policy": "ppo",
+  "scenario": "ramp_fallen",
+  "seed": 9001,
+  "steps": 35,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2424,
+  "sim_s": 242.5
+ }
+]

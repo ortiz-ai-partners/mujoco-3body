@@ -1,0 +1,156 @@
+[
+ {
+  "id": 0,
+  "policy": "rule",
+  "scenario": "toe_seated_ok",
+  "seed": 9000,
+  "steps": 4,
+  "crossed": true,
+  "damaged": false,
+  "samples": 809,
+  "sim_s": 83.0
+ },
+ {
+  "id": 1,
+  "policy": "rule",
+  "scenario": "toe_seated_ok",
+  "seed": 9001,
+  "steps": 4,
+  "crossed": true,
+  "damaged": false,
+  "samples": 782,
+  "sim_s": 80.3
+ },
+ {
+  "id": 2,
+  "policy": "rule",
+  "scenario": "toe_seated_wrong",
+  "seed": 9000,
+  "steps": 5,
+  "crossed": true,
+  "damaged": false,
+  "samples": 936,
+  "sim_s": 95.8
+ },
+ {
+  "id": 3,
+  "policy": "rule",
+  "scenario": "toe_seated_wrong",
+  "seed": 9001,
+  "steps": 5,
+  "crossed": true,
+  "damaged": false,
+  "samples": 833,
+  "sim_s": 85.4
+ },
+ {
+  "id": 4,
+  "policy": "rule",
+  "scenario": "toe_standing",
+  "seed": 9000,
+  "steps": 5,
+  "crossed": true,
+  "damaged": false,
+  "samples": 981,
+  "sim_s": 100.2
+ },
+ {
+  "id": 5,
+  "policy": "rule",
+  "scenario": "toe_standing",
+  "seed": 9001,
+  "steps": 40,
+  "crossed": false,
+  "damaged": false,
+  "samples": 1692,
+  "sim_s": 169.4
+ },
+ {
+  "id": 6,
+  "policy": "rule",
+  "scenario": "toe_fallen",
+  "seed": 9000,
+  "steps": 7,
+  "crossed": true,
+  "damaged": false,
+  "samples": 946,
+  "sim_s": 96.8
+ },
+ {
+  "id": 7,
+  "policy": "rule",
+  "scenario": "toe_fallen",
+  "seed": 9001,
+  "steps": 7,
+  "crossed": true,
+  "damaged": false,
+  "samples": 842,
+  "sim_s": 86.3
+ },
+ {
+  "id": 8,
+  "policy": "rule",
+  "scenario": "deck_seated",
+  "seed": 9000,
+  "steps": 2,
+  "crossed": true,
+  "damaged": false,
+  "samples": 106,
+  "sim_s": 12.6
+ },
+ {
+  "id": 9,
+  "policy": "rule",
+  "scenario": "deck_seated",
+  "seed": 9001,
+  "steps": 3,
+  "crossed": true,
+  "damaged": false,
+  "samples": 182,
+  "sim_s": 20.3
+ },
+ {
+  "id": 10,
+  "policy": "rule",
+  "scenario": "deck_fallen",
+  "seed": 9000,
+  "steps": 10,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2520,
+  "sim_s": 252.1
+ },
+ {
+  "id": 11,
+  "policy": "rule",
+  "scenario": "deck_fallen",
+  "seed": 9001,
+  "steps": 2,
+  "crossed": true,
+  "damaged": false,
+  "samples": 96,
+  "sim_s": 11.6
+ },
+ {
+  "id": 12,
+  "policy": "rule",
+  "scenario": "ramp_fallen",
+  "seed": 9000,
+  "steps": 40,
+  "crossed": false,
+  "damaged": false,
+  "samples": 1600,
+  "sim_s": 160.2
+ },
+ {
+  "id": 13,
+  "policy": "rule",
+  "scenario": "ramp_fallen",
+  "seed": 9001,
+  "steps": 40,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2255,
+  "sim_s": 225.8
+ }
+]

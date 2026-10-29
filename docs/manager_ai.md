@@ -222,9 +222,9 @@ PPO v2.2 は `ppo2_medium2` の重みと最適化器を引き継ぎ、報酬 v2.
 
 コース破損は全方式 0（`out/manager_runs/comparison_v4.md`）。場面別・行動回数・失敗の型は `docs/results.md`。
 
-![評価 v4 の帯図](../report/results_managers_ortiz.png)
+![支配人 AI の評価](../report/results_managers.png)
 
-図：評価 v4 の 5 方式の帯図。濃い帯が渡り切り、薄い帯が天面到達（いずれも 30 シード中の話数）。右側は固定ルールとの同一シード 2×2（第 10.4 節）。
+図：評価 v4 の 5 方式の帯図。濃い帯がパッカンの救助タスクの成功、薄い帯が天面到達（いずれも 30 シード中の話数）。右下は施工を含む 3 体の通し（[results.md](results.md)）。右側は固定ルールとの同一シード 2×2（第 10.4 節）。
 数値の出所は `out/manager_runs/comparison_v4.md`。
 
 ### 10.2 評価の独立性の修正
@@ -235,7 +235,7 @@ PPO v2.2 は `ppo2_medium2` の重みと最適化器を引き継ぎ、報酬 v2.
 
 ### 10.3 スキルの信頼度
 
-スキルは正しい状態で呼んでも必ず成功するわけではない。この「状態 s で期待どおりの不成功」を支配人 AI の判断の失敗と分けるために、決定ログからスキルごとの結果の内訳を数える。
+スキルは正しい状態で呼んでも必ず成功するわけではない。この「状態 s で期待どおりの不成功」がどれくらいあるかを見るために、決定ログからスキルごとの結果の内訳を数える。
 下表は評価 v4 の `eval_*.json`（`actions` と `results` の列）を `analysis/skill_stats.py` で集計した出力である（`python analysis/skill_stats.py out/manager_runs/baselines_v4/eval_rule.json`）。
 
 | スキル | 固定ルール（正しい状態でだけ呼ぶ） | ランダム（状態を問わず呼ぶ） |
@@ -252,7 +252,7 @@ PPO v2.2 は `ppo2_medium2` の重みと最適化器を引き継ぎ、報酬 v2.
 ### 10.4 2×2 の帰属
 
 各シードを、固定ルールとの同一シード比較で 4 つに分ける。両方渡った／ルールは渡ったが方策は失敗／方策だけ渡った／両方失敗。
-「ルールは渡ったが方策は失敗」を判断の失敗の候補、「両方失敗」をスキルの失敗の候補として読む（`out/manager_runs/comparison_v4.md` 失敗の帰属）。
+（`out/manager_runs/comparison_v4.md` 失敗の帰属）。同一シードで成否の対応を比較したが、途中の接触や姿勢も変わるため、判断とスキルの寄与は切り分けられていない。
 
 | 方式 | 両方渡った | ルールだけ渡った | 方策だけ渡った | 両方失敗 |
 |---|---|---|---|---|
@@ -264,7 +264,7 @@ PPO v2.2 は `ppo2_medium2` の重みと最適化器を引き継ぎ、報酬 v2.
 読み方の注意：手順が違えば接触以降の物理の経路も変わるので、「ルールだけ渡った」の中には判断の良し悪しではなく経路の違いで結果が分かれた話も含まれる。
 
 それでも PPO 中規模の失敗 7 本は、どれも転んで起きられない相手に `SEAT` か `STANDUP` を繰り返して `still_down` が続く型である。
-うち 5 本（シード 5000・5002・5011・5018・5029）は押しで転んだ後の `SEAT` の連打で、固定ルールなら `BACK_OFF` で場所を空ける場面だから判断の失敗である。
+うち 5 本（シード 5000・5002・5011・5018・5029）は押しで転んだ後の `SEAT` の連打で、固定ルールなら `BACK_OFF` で場所を空ける場面で、手の選び方に型が出ている（ただし同じシードでも途中の接触や姿勢が変わるので、失敗の原因を判断だけに帰すことはできない）。
 残る 2 本（5003・5026）は `WALK_ON` の途中で転んだ後に `SEAT`／`STANDUP` と `WALK_ON` を交互に選んだ話で、第 14 節の「転んだ相手に打つ手がない」型に近い。
 出所は `out/manager_runs/ppo2_medium2_v4/eval_ppo.json` の `actions`／`results`（型の分類は `docs/devlog/MANAGER_DESIGN.md` §7.15 にもある）。
 
@@ -319,13 +319,13 @@ PPO v2.2 は `ppo2_medium2` の重みと最適化器を引き継ぎ、報酬 v2.
 
 ## 13. 提出動画での支配人 AI
 
-本編（PPO v2.2、`out/3body_arena_v7_take58.mp4`、2:35、提出動画では 0:18.1 から。動画の公開先は `README.md`）の支配人 AI は 4 手で、3 体とも渡り切り、コース部品は動かず、パッカンの転倒は 0 回だった。
-出所は `out/v7_full_report_take58.json` の `manager.policy`（「PPO 方策（ppo2_v22）」）、`manager.decisions`、`three_crossed`、`course_disturbed`（空）、`md_events`（`FALLEN` の記録なし）である。
+本編（PPO v2.2、`out/3body_arena_v7_take61.mp4`、2:35、提出動画では 0:18.1 から。動画の公開先は `README.md`）の支配人 AI は 4 手で、3 体とも渡り切り、コース部品は動かず、パッカンの転倒は 0 回だった。
+出所は `out/v7_full_report_take61.json` の `manager.policy`（「PPO 方策（ppo2_v22）」）、`manager.decisions`、`three_crossed`、`course_disturbed`（空）、`md_events`（`FALLEN` の記録なし）である。
 
 時刻は提出動画 m:ss.s（本編 m:ss.s｜sim 秒）で書き、提出動画の時刻は本編の時刻＋18.14 s（講座の OP カードと自己紹介の長さ）である。
 本編は 0:00〜0:44.1（sim 0〜176.4 s）が 4 倍速、0:44.1〜1:20.4（sim 176.4〜248.9 s）が 2 倍速、仲間を呼んで戻る 1:20.4〜1:24.3（sim 248.9〜264.6 s）が 4 倍速、
 救助の 1:24.3〜2:14.8（sim 264.6〜365.6 s）が 2 倍速、輪へ集まる 2:14.8〜2:19.1（sim 365.6〜382.7 s）が 4 倍速、2:19.1 以降（輪の万歳）が等速である。
-施工の完了は 2 倍速区間に入った後の本編 0:54.0（sim 196.1 s）である。区間と時刻は `events` の `t`／`video_t` から `python analysis/timeline_times.py out/v7_full_report_take58.json` が求める。
+施工の完了は 2 倍速区間に入った後の本編 0:54.0（sim 196.1 s）である。区間と時刻は `events` の `t`／`video_t` から `python analysis/timeline_times.py out/v7_full_report_take61.json` が求める。
 
 | 手 | 結果 | 開始（提出動画｜本編｜sim） | 所要（sim） |
 |---|---|---|---|
@@ -368,5 +368,5 @@ Q 表版は 8 手 `STANDUP`→`WALK_ON`（`stalled`）→`SEAT`→`PUSH`→`BACK
 | 比較表と 2×2 | `manager2_report.py`、`out/manager_runs/comparison_v4.md`（旧コースは `comparison_v3b.md`） |
 | 押し上げの鍵実験 | `v7_test_crab_push.py`、`out/v7_crab_push_cross.log` |
 | 本番での支配人 AI の呼び出し | `v7_full.py --manager {rule,ppo,tabq} --run <run> --rescue-max 240` |
-| 動画の判断ログ | 本編 `out/v7_full_report_take58.json`、比較用 `out/v7_full_report_take57.json`・`out/v7_full_report_take51.json`〜`out/v7_full_report_take54.json` の `manager.decisions` |
+| 動画の判断ログ | 本編 `out/v7_full_report_take61.json`、比較用 `out/v7_full_report_take57.json`・`out/v7_full_report_take51.json`〜`out/v7_full_report_take54.json` の `manager.decisions` |
 | 開発記録（経緯・不採用案・日付つき） | `docs/devlog/MANAGER_DESIGN.md`、`docs/devlog/HANDOVER.md` |

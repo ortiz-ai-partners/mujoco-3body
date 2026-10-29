@@ -4,12 +4,14 @@
 
 *MuJoCo three-robot integration: a cooperative simulation with official policies and learned AI — "Let's cross the pass together"*
 
-松尾研 Physical AI 応用1 最終課題の提出物。自作のルール制御で動くブルドーザーが坂 2 枚（勾配 16.3°、峠の高さ 0.44 m）を運んで峠を組み、
+動画（YouTube）：https://youtu.be/Ypg7ExFu8Ig　｜　説明資料（PDF）：[report/説明資料_PAI最終課題_83485.pdf](report/説明資料_PAI最終課題_83485.pdf)
+
+松尾・岩澤研究室 Physical AI 応用1 最終課題の提出物。自作のルール制御で動くブルドーザーが坂 2 枚（勾配 16.3°、峠の高さ 0.44 m）を運んで峠を組み、
 公式ポリシーだけでは登れない Microduck（愛称パッカン）が坂の入口で座り込み、Jumper（愛称 跳跳＝ちょうちょう、呼び名「ちょーさん」）が後ろから押し上げて 3 体とも渡り切る。
 失敗したときの次の一手を選ぶ「支配人 AI」と、跳跳の表情を推論する「気分ネット」の 2 つの自作 AI を本番で推論する。
-物理は 1 つの MuJoCo 3.11.0 ワールドで連続し、外力・テレポートは使わない。同一 30 シードの評価では固定ルールの支配人が 29/30、
-PPO が 26/30 を渡り切った（`out/manager_runs/comparison_v4.md`）。提出動画の本編では判断する役を学習した AI とするため PPO の支配人（`ppo2_v22`）を使い、
-3 体とも渡り切った（`out/v7_full_report_take58.json` の `manager.policy`・`three_crossed`）。評価で最良の固定ルールは、同じ設定で描いた比較用の固定ルール版で示す。
+物理は 1 つの MuJoCo 3.11.0 ワールドで連続し、通し実行の間は外力・テレポートを使わない（支配人 AI の学習・評価では各試行のリセット時に初期配置を書き込む）。
+支配人 AI はパッカンの救助タスク（坂の足元などで止まったパッカンを渡らせる部分。施工は含まない）で評価し、同一 30 シードでのパッカンの救助タスクの成功数は固定ルール 29/30、PPO 26/30（`out/manager_runs/comparison_v4.md`）。施工を含む 3 体の通しの成功率とは別の数値である。提出動画の本編では判断する役を学習した AI とするため PPO の支配人（`ppo2_v22`）を使い、
+3 体とも渡り切った（`out/v7_full_report_take61.json` の `manager.policy`・`three_crossed`）。評価で最良の固定ルールは、同じ設定で描いた比較用の固定ルール版で示す。
 提出動画（2:56.6）は講座の OP カード、支配人 AI の自己紹介（15.1 s）、本編（2:35.5）、講座の ED カードを `assemble.py` でつないだもので、自作のマリンバ曲を BGM に敷く。
 ブルドーザーで坂を運んでコースを組む題材は、子ども向けの体操教室でサーキット（坂・マット・跳び箱などを並べる運動のコース）の設営を手伝うロボットを、将来の応用先に考えたことから始まった。
 
@@ -20,7 +22,8 @@ PPO が 26/30 を渡り切った（`out/manager_runs/comparison_v4.md`）。提�
 
 ## English summary
 
-One continuous MuJoCo 3.11.0 simulation, no external forces and no teleports: every robot moves only through its own actuators.
+One continuous MuJoCo 3.11.0 simulation, no external forces and no teleports during the run: every robot moves only through its own actuators
+(the manager's training and evaluation episodes start from poses written at reset).
 A rule-controlled bulldozer (the author's own course builder, `physical-ai-course-builder`) carries two ramps and assembles a 16.3° pass 0.44 m high.
 A Microduck (Pollen Robotics, official ONNX policies `velstand` / `alpha_sitstand`, inference only) cannot climb the ramp and sits down at its foot.
 A Jumper (KingKong Robotics, official ONNX `locomotion` / `jump` / `dance_crab`, inference only) crosses the pass by itself, comes back,
@@ -28,7 +31,7 @@ and pushes the seated duck up the ramp.
 The bulldozer comes from a practical aim: a robot that helps set up the circuits (ramps, mats, vaulting boxes) of children's gymnastics classes.
 
 Two self-trained networks run inference during the submitted run: a manager policy that picks the next skill for the stuck duck
-(rule / PPO / tabular-Q versions; rule 29/30, PPO 26/30 over 30 shared seeds; the submitted run uses the learned PPO policy `ppo2_v22`,
+(rule / PPO / tabular-Q versions; successes in the duck-rescue task over 30 shared seeds: rule 29/30, PPO 26/30, not a rate for the full three-robot run; the submitted run uses the learned PPO policy `ppo2_v22`,
 and the fixed rule is shown in a comparison render with the same settings), and a mood net (53-32-32-5 MLP) that drives the Jumper's face.
 
 The submitted video (2:56.6) joins the course's opening card (3.0 s), a 15.1 s self-introduction by the manager AI, the 2:35.5 main video (from 0:18.1) and the course's end card (3.0 s).
@@ -45,23 +48,25 @@ Code identifiers keep the English names (`MD` / `duck`, `JP` / `crab`, `BZ`; ski
 
 ## 提出物と注記
 
-- 提出動画（YouTube、URL は提出時に追記）：2:56.6（176.58 s）、PPO の支配人（`ppo2_v22`）、輪の万歳の結末。講座の OP カード（3.04 s）→ 自己紹介 `out/intro.mp4`（15.1 s、`python intro.py`）→
-  本編 `out/3body_arena_v7_take58.mp4`（155.5 s、提出動画の 0:18.1 から）→ 講座の ED カード（2.97 s）を `assemble.py` でつなぐ（各部の長さは `assemble.py` が印字する `parts[].duration_s`）。
-  本編の動画ファイルと記録 `out/v7_full_report_take58.json` をリポジトリに同梱する。講座のカード 2 枚は講座の素材なので同梱せず、結合済みの提出ファイルも同梱しない。
+- 提出動画（YouTube、https://youtu.be/Ypg7ExFu8Ig ）：2:56.6（176.58 s）、PPO の支配人（`ppo2_v22`）、輪の万歳の結末。講座の OP カード（3.04 s）→ 自己紹介 `out/intro.mp4`（15.1 s、`python intro.py`）→
+  本編 `out/3body_arena_v7_take61.mp4`（155.5 s、提出動画の 0:18.1 から）→ 講座の ED カード（2.97 s）を `assemble.py` でつなぐ（各部の長さは `assemble.py` が印字する `parts[].duration_s`）。
+  本編の動画ファイルと記録 `out/v7_full_report_take61.json` をリポジトリに同梱する。本編 `out/3body_arena_v7_take61.mp4` は、以前の本編 `out/3body_arena_v7_take58.mp4` と物理が同一（`state_digest` `aafa49e7a869`、支配人の判断・表情の記録も同じ）で、音だけを変えたもの：パッカンの声を Microduck 公式の声（`microduck_voice.py`、性格の種 276）にし、跳跳のジャンプの音を足が離れた瞬間と着地の瞬間に合わせ、パッカンのセリフを増やし（坂へ向かう道中と押し上げの間、乱数を使わない決まった間隔）、2 体の声の音量を半分にした。以前の本編（合成の声）は比較用に残す。
+ 講座のカード 2 枚は講座の素材なので同梱せず、結合済みの提出ファイルも同梱しない。
 - 再生速度（提出動画の時刻＝本編の時刻＋18.14 s）：0:18.1〜1:02.2 は 4 倍速（sim 0〜176.4 s、施工）、1:02.2〜1:38.5 は 2 倍速（sim 176.4〜248.9 s）、
   1:38.5〜1:42.4 は 4 倍速（sim 248.9〜264.6 s、仲間を呼ぶ・跳跳が戻る）、1:42.4〜2:32.9 は 2 倍速（sim 264.6〜365.6 s、救助）、2:32.9〜2:37.2 は 4 倍速（sim 365.6〜382.7 s、輪へ集まる）、
-  2:37.2〜2:53.6 は等速（sim 382.7 s から、万歳のダンスと END の後の 1 s）。出所は `python analysis/timeline_times.py out/v7_full_report_take58.json` の speed segments。
+  2:37.2〜2:53.6 は等速（sim 382.7 s から、万歳のダンスと END の後の 1 s）。出所は `python analysis/timeline_times.py out/v7_full_report_take61.json` の speed segments。
   画面右下に sim 時計と x4 / x2 / x1 を常時表示する（`v7_full.py` の footer）。ジャンプカット（省略）はなく、END（sim 398.1 s）までのシミュレーションの全区間が画面に出る
   （END の後に回す 2.5 s のうち書き出すのは最初の 1 s、`--tail-write 1.0`）。4 倍速の区間は 2 倍速で標本化したフレームを 1 枚おきに書くだけで、物理は以前の速度設定で描いた PPO 版と同一（`state_digest` `aafa49e7a869`）。
 - 画面と音：支配人 AI が手を選ぶたびに、画面下 1/5 の帯に支配人の丸い顔とセリフが 1 秒 15 文字で打ち込まれ（チャイムと打鍵音つき）、日本語が出そろうと英語の行が出る。
-  ロボットの鳴き声はパッカン 1/3・跳跳 1/2 の音量で、鳴いた機体が画面のどこにいるかで左右に振る（ステレオ）。BGM は `music/marimba_bgm.py` が numpy/scipy の加算合成だけで作る自作のマリンバ曲
+  パッカンの声は Microduck 公式ランタイムの声の合成器（pollen-robotics/microduck の `sounds`、Apache-2.0）を `microduck_voice.py` に移植したもの、跳跳の声は自作の合成（跳跳には公開された声がない）。跳跳のジャンプは、足が離れた瞬間と着地の瞬間を接触から検出して音を鳴らす。
+  鳴き声はパッカン 1/6・跳跳 1/4 の音量で（はじめの合成音の音量に対して）、鳴いた機体が画面のどこにいるかで左右に振る（ステレオ）。BGM は `music/marimba_bgm.py` が numpy/scipy の加算合成だけで作る自作のマリンバ曲
   （既存の曲・音源・サンプルは不使用、乱数は seed 固定）で、OP カードの終わりから一定の音量で鳴り、最後の和音が ED カードに響く。いずれも描画と音声だけで、物理は変えない。
 - 比較用の動画（いずれも 3 体渡り切り）：本編と同じ最終設定で支配人だけを固定ルールにした固定ルール版 `out/3body_arena_v7_take57.mp4`（2:37.3、5 手、`state_digest` `678fd3cae2ca`）。
   以前の速度設定（施工 4 倍速・以後 2 倍速・ダンス等速）で描いた 4 本：以前の 2:47 版 `..._take51.mp4`（固定ルール、5 手、固定ルール版と物理が同一）、PPO 版 `..._take52.mp4`（2:45、4 手、本編と物理が同一）、
   Q 表版 `..._take53.mp4`（2:46、8 手）、追走の結末 `..._take54.mp4`（2:44、5 手）。長さは各 report JSON の `video_silent.seconds`。
   2 倍速＋省略 2 か所で描いた旧版 `..._take46〜49.mp4` も記録として残す（物理は同一、`state_digest` が一致）。
   比較用の動画と報告 JSON（`out/v7_full_report_take57.json`、`take51〜54.json`）、4 倍速の初版の記録 `out/v7_full_report_take50.json` も同梱する。
-- レポート PDF：`report/説明資料_PAI最終課題_83485.pdf`（7 ページ、提出時に追加）。原稿は `report/src/report.html`（図は `report/*.png`、動画のフレームは `report/src/stills/`）で、`python report/build_report.py --youtube <動画の URL>` が Chrome（または Edge）の印刷機能で PDF にする。
+- レポート PDF：`report/説明資料_PAI最終課題_83485.pdf`（A4・8 ページ）。原稿は `report/src/report.html`（図は `report/*.png`、動画のフレームは `report/src/stills/`）で、`python report/build_report.py --youtube <動画の URL>` が Chrome（または Edge）の印刷機能で PDF にする。
 - ブルドーザー側のリポジトリ [physical-ai-course-builder](https://github.com/ortiz-ai-partners/physical-ai-course-builder) は同一作者の自作（同じ課題のために作成、MIT）。
 - AI の使用：本番で推論するのは公式 ONNX ポリシー 5 本（Microduck 2 本・Jumper 3 本）、支配人 AI、気分ネット。学習したのは支配人 AI（PPO・表形式 Q）と気分ネット（いずれも CPU）。
   設計・実装・文書・図の作成には LLM（Claude）の支援を受けた。詳細は「第三者資産・ライセンス・AI の使用」。
@@ -88,8 +93,8 @@ README は全体の地図で、根拠の全文は次の文書にある。動画�
 ## 課題設定と 3 つの原則
 
 1. 1 つのワールド：3 体を 1 つの MuJoCo 3.11.0 モデルに `MjSpec.attach` で結合し（名前空間 `md-` / `jp-`、`v6_robots.py`）、同時に物理シミュレーションする（report JSON の `mujoco`）。
-2. 外力・テレポートなし：各機体は自分のアクチュエータだけで動く。Microduck のサーボは XML の公式値（kp 0.55、±0.96 Nm、`v7_full.py` の `official_md_servos`）。
-   例外は学習環境のリセット配置のみで、動画には出ない。外力（`xfrc_applied`）を使った旧版は採用せず [archive/](archive/README.md) に残した。
+2. 通し実行中は外力・テレポートなし：各機体は自分のアクチュエータだけで動く。Microduck のサーボは XML の公式値（kp 0.55、±0.96 Nm、`v7_full.py` の `official_md_servos`）。
+   例外は支配人 AI の学習・評価で各試行のリセット時に書き込む初期配置のみで、動画には出ない。外力（`xfrc_applied`）を使った旧版は採用せず [archive/](archive/README.md) に残した。
 3. 公式ポリシーは推論のみ・改変なし：ONNX をそのまま読み、観測の契約を転記して渡す（`v7_policies.py`）。
 
 付記：顔・字幕・気分ネットは描画専用で物理を変えない。顔あり／なしのヘッドレス通しで最終状態（qpos＋qvel）の sha256 が一致することを確認した
@@ -115,7 +120,7 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 
 ## 動画で起きていること（時間軸）
 
-提出動画（2:56.6）の場面ごとに、動いている機体と制御の出どころを並べる。時刻は提出動画の時刻で、本編の時刻（`out/v7_full_report_take58.json` の `events[].video_t`）に
+提出動画（2:56.6）の場面ごとに、動いている機体と制御の出どころを並べる。時刻は提出動画の時刻で、本編の時刻（`out/v7_full_report_take61.json` の `events[].video_t`）に
 講座の OP カードと自己紹介の長さ 18.14 s（3.04＋15.1、`assemble.py` の `parts[].start_s`）を足して算出した。sim 時刻は同じ JSON の `events[].t`。
 
 ![提出動画の構成](report/timeline_ortiz.png)
@@ -141,7 +146,7 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 支配人 AI の 4 手は `SEAT` → `PUSH` → `STANDUP` → `WALK_ON` で全て成功し、転倒 0、コースの部材の移動なし（`manager.decisions`、`course_disturbed`）。
 固定ルールが押し上げの後に挟む `BACK_OFF` を省き、跳跳が 0.25 m 後ろに残ったまま立たせた（`manager.decisions[2].crab_dist`、`touching` false）。
 右上の顔モニター（240×120、`crab_face.py` の `PIP_W` / `PIP_H`）は気分ネットの推論（本番で 5,050 回、`face.mood_ai.inferences`）と「決め手の値」を表示し、表情の切替は 25 回（`face.log` は初期状態を含めて 26 行）。
-表の時刻は秒に丸めた（支配人の 4 手だけ小数 1 桁、`manager.decisions[].video_t`＋18.14 s）。本編の全時刻は `python analysis/timeline_times.py out/v7_full_report_take58.json` で出せ、18.14 s を足すと提出動画の時刻になる。長版は [docs/video_guide.md](docs/video_guide.md)。
+表の時刻は秒に丸めた（支配人の 4 手だけ小数 1 桁、`manager.decisions[].video_t`＋18.14 s）。本編の全時刻は `python analysis/timeline_times.py out/v7_full_report_take61.json` で出せ、18.14 s を足すと提出動画の時刻になる。長版は [docs/video_guide.md](docs/video_guide.md)。
 
 ## AI 1：支配人 AI — 失敗したときの次の一手を選ぶ
 
@@ -178,6 +183,8 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 学習データは学習環境で固定ルール・PPO・ランダムの支配人を 7 場面で走らせた 35 話・47,952 サンプル（0.1 s ごと、`analysis/mood_data.py`）。
 話単位で 1/4 を見送りにし、600 エポック中 450 エポック目を採用。見送り分 10,772 サンプルで 4 分類 0.80、成功 vs 失敗 0.80（均衡正解率 0.83）、渡れる 0.67。
 学習ループは CPU で 3.5 s（`out/manager_runs/mood_net/meta.json` の `metrics`、`train_s`、`analysis/mood_train.py`）。
+ただし、入力の正規化（平均と標準偏差）に見送り分を含み、モデル選択（採用するエポック）にも同じ見送り分を使用したため、見送り分の成績は独立したテスト性能ではない（表情の線も同じ見送り分の分布から決めた）。
+独立テスト（`analysis/mood_test.py`）：学習に使っていないシード（9000〜9001、ランダムは 9100）で同じ作り方の 35 試行・44,230 サンプルを集め直し（`analysis/mood_data.py --seed0 9000`）、提出動画で使ったネットを重み・正規化・しきい値ごとそのまま採点した。4 分類の正解率 0.762、成功 vs 失敗の正解率 0.830・均衡正解率 0.846、渡れるの正解率 0.645・均衡正解率 0.621（`out/manager_runs/mood_net/test_report.md`、`test_metrics.json`）。
 
 表情は 11 種、優先順の規則 17 本で決める（`crab_face.py`）。計測値（傾き 50° で目を回す `TILT_ON`、接触力÷10 N の力 0.70 以上で汗 `EFFORT_HI`、
 押して 5 s で汗 `PUSH_SWEAT_S`、停滞は 2 s 窓・押し中 3 s `STALL_S` / `PUSH_STALL_S`）と推論値（p(転ばせる) ≥ 0.30 `P_FALL` など）を組み合わせ、
@@ -185,13 +192,13 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 
 ## 結果
 
-![支配人 3 方式の比較](report/results_managers_ortiz.png)
+![支配人 AI の評価](report/results_managers.png)
 
-図：評価 v4（新コース、30 シード）の渡り切り数と、固定ルールとの同一シード 2×2。帯の長さが渡り切り数、印が 2×2 の内訳。出所 `out/manager_runs/comparison_v4.md`。
+図：左はパッカンの救助タスクの成功数と天面到達（評価 v4、同じ 30 シード）、右上は固定ルールとの成否の対応、右下は施工を含む 3 体の通しの成功数（各 30 回）。`analysis/fig_results.py` が評価の記録（`out/manager_runs/*_v4/eval_*.json`、`out/fullrun_stats/*/summary.json`）から描く。
 
-評価 v4：峠の継ぎ目 1 cm の新コース、30 シード（5000〜5029）を全方式で共有、決定的方策、開始場面は乱数（`manager2_train.py eval`、`manager2_tabq.py eval`）。
+評価 v4（パッカンの救助タスク）：峠の継ぎ目 1 cm の新コース、30 シード（5000〜5029）を全方式で共有、決定的方策、開始場面は乱数（`manager2_train.py eval`、`manager2_tabq.py eval`）。
 
-| 方式 | 渡り切り | 天面到達 | 無駄な手／話 | 転倒／話 | 学習コスト（CPU） |
+| 方式 | 救助の成功 | 天面到達 | 無駄な手／話 | 転倒／話 | 学習コスト（CPU） |
 |---|---|---|---|---|---|
 | 固定ルール | 29/30 | 100% | 0.07 | 0.33 | なし |
 | PPO v2.2（`ppo2_v22`） | 26/30 | 97% | 0.60 | 1.03 | 8 h 41 min（累計） |
@@ -203,16 +210,27 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 天面転倒（抽選の重み 0.05）は 30 本の抽選に出ず、坂の途中の転倒は既定の抽選表で重み 0 のため評価には含まれない（場面別の表で 0/0）。
 重みの出所は `manager2_env.py` の `SCENARIOS`。継続学習 `ppo2_v22` だけ坂の途中の転倒を 0.20 で抽選した（`out/manager_runs/ppo2_v22/train_summary.json` の `draw_tables`）。
 
-| 方式 | 両方渡った | ルールだけ渡った（判断の失敗） | 方策だけ渡った | 両方失敗（スキルの失敗） |
+| 方式 | 両方成功 | ルールだけ成功 | 方策だけ成功 | 両方失敗 |
 |---|---|---|---|---|
 | PPO v2.2 | 25 | 4 | 1 | 0 |
 | 表形式 Q | 24 | 5 | 1 | 0 |
 | PPO 中規模 | 22 | 7 | 1 | 0 |
 | ランダム | 14 | 15 | 0 | 1 |
 
-固定ルールとの同一シード 2×2 で、「ルールは渡ったが方策は失敗」を判断の失敗、「両方失敗」をスキルの失敗として分ける（`comparison_v4.md`「失敗の帰属」、`manager2_report.py` が生成）。
+固定ルールとの同一シード 2×2（`comparison_v4.md`「失敗の帰属」、`manager2_report.py` が生成）。同一シードで成否の対応を比較したが、途中の接触や姿勢も変わるため、判断とスキルの寄与は切り分けられていない。
 
-動画との対応（いずれも 3 体渡り切り・コース破損なし、`out/v7_full_report_take58.json`・`take57.json` と `take51〜54.json` の `three_crossed`、`course_disturbed`、`manager.decisions`）：
+### 施工を含む 3 体の通し
+
+提出動画と同じ設定の `v7_full.py --test` を支配人ごとに 30 回（シード 7000〜7029、`analysis/fullrun_stats.py`）。回ごとに `--spawn-jitter` で開始時の配置をずらし（BZ ±2 cm・±2°、パッカンと跳跳 ±5 cm・±10°。最初の 1 歩の前に書き込む）、`--seed` で場面の乱数（遊びの歩き先・鳴く時刻）も変える。描画なしでは描画用の `mj_forward` を省くので、物理の経路は描画した動画と同一でない。成功＝3 体とも渡り切り（報告の `three_crossed`）、コースの部材が 4 cm 以上動かない（`course_disturbed` が空）。
+
+| 支配人 | 通しの成功 | 施工で停止 | 部材の移動 | 救助の失敗 |
+|---|---|---|---|---|
+| PPO v2.2（提出動画と同じ） | 13/30 | 12 | 1 | 4 |
+| 固定ルール | 16/30 | 12 | 1 | 1 |
+
+施工で止まった 12 回は両方式で同じシードで、支配人が動く前に決まる。BZ が右回りに 1° 以上ずれて始めた 10 回はすべて施工で止まり、それ以外の 20 回で止まったのは 2 回（`out/fullrun_stats/*/summary.json` の `bz_yaw_deg`）。止まった所は course-builder の置き終わりの確認（`transport.py` の `CHECK`）。表示は位置の誤差だけだが、多くの回で位置は基準（6 cm）以内で、位置以外の条件（部材の高さ・離れた距離・持ち上げの高さ・運んだ距離のどれか）で止まっている（どの条件かは記録していない）。施工が終わりコースも動かなかった 17 回では、救助の成功は PPO 13、固定ルール 16。PPO の救助の失敗 4 回のうち 3 回（7001・7009・7026）は押し上げが止まった後に `BACK_OFF` を 50 回以上選び続けて時間切れ、1 回（7007）は転倒後の `WAIT` の連続で、固定ルールも同じシードで同じように失敗した。
+
+動画との対応（いずれも 3 体渡り切り・コース破損なし、`out/v7_full_report_take61.json`・`take57.json` と `take51〜54.json` の `three_crossed`、`course_disturbed`、`manager.decisions`）：
 提出動画の本編は PPO v2.2 の 4 手で、固定ルールが押し上げの後に挟む `BACK_OFF` を省く（本編 2:35、以前の速度設定の PPO 版と同じ手と sim 時刻）。
 同じ最終設定の固定ルール版は 5 手（2:37、以前の 2:47 版と同じ手と sim 時刻）。以前の速度設定の比較用は、PPO 版が 4 手（2:45）、
 Q 表版は 8 手で `STANDUP` → `WALK_ON` が止まってから座らせ直す（2:46）、追走版は固定ルール 5 手（2:44）。
@@ -220,14 +238,18 @@ Q 表版は 8 手で `STANDUP` → `WALK_ON` が止まってから座らせ直�
 
 ## 工夫点
 
-- 創造性：公式ポリシーが 16° の坂を登れない事実を隠さず物語の核にし、座った相手を別のロボットが押し上げる結末を作った。
-- 創造性：「相手の方を向いて座ると縁で倒れない」という実験の発見を `SEAT` スキルの仕様にした。
-- 技術力：3 系統の MJCF と 5 本の ONNX を 1 ワールドに統合し（`MjSpec.attach`、名前空間、PD アクチュエータの追加）、ポリシー切替の周期と観測契約を転記で合わせた（[docs/physics_integration.md](docs/physics_integration.md)）。
-- 技術力：同一シード評価と 2×2 帰属で判断の失敗とスキルの失敗を分け、顔・気分ネット・倍速の有無で物理が同一であることを最終状態の sha256 で検証した。
-- 技術力：前方ジャンプを公式 `jump` への関節目標の重ね合わせだけで実現した（外力なし）。
-- 実用性：スキル（固定プログラム）と判断（AI）を分けたので学習は CPU 数時間で済み、固定ルール 1 本でも 29/30 に届く。
-- 実用性：峠の継ぎ目でパッカンがつまずく問題を施工精度（継ぎ目 5 → 1 cm、course-builder commit 483dbf9）で解決し、環境の不備を学習に押し付けなかった。
-- 表現力：顔モニターに決め手の数値、右下に倍速と sim 時計、判断の瞬間だけ吹き出しと画面下の帯（日本語と英語）。鳴き声は機体の画面上の位置で左右に振る。省略なしで全区間を見せる。
+ロボットや環境の困りごとを、何でどう補ったか。
+
+| # | 困りごと | 施策 | 結果 |
+|---|---|---|---|
+| 1 | パッカンは公式の歩行ポリシーでは 16° の坂を登れない（指令 0.3 m/s に実速約 0.10 m/s） | 跳跳が後ろから押し上げる。座ったパッカンが跳跳の方を向いていると縁で倒れないという実験の発見を `SEAT` の仕様にした | 押されている間の傾きは 6〜12° で、天面まで届く |
+| 2 | 押し上げは失敗することがある（固定ルールが呼んだ 30 回のうち成功 22 回） | 失敗したら次の一手を選ぶ支配人 AI。動作は既製のポリシーとスキル、選ぶのは AI | 救助タスクで PPO 26/30、固定ルール 29/30。学習は CPU 数時間 |
+| 3 | ブルドーザーだけでは、作ったコースを子どもが渡れるかの確かめにならない | 体格も歩き方も違う 2 体（二足の小型、六脚のカニ型）に渡らせる | 六脚の跳跳は自力で越え、二足のパッカンは 16° を登れず助けが要った。体のつくりで難しさが違うことを確かめられた |
+| 4 | 峠の継ぎ目（5 cm）でつまずく | 学習で補わず、施工の精度を 1 cm に（course-builder commit 483dbf9） | 救助タスクで PPO 16→26、固定ルール 23→29 |
+| 5 | 跳跳の公式 `jump` はその場で真上に跳ぶ | 関節目標に股関節の後ろへの掃きを重ねて前へ跳ぶ（外力なし、`v7_policies.py` の `SWEEP_SIGN`） | 跳跳が自分で峠を越える |
+| 6 | 3 体の公式ポリシーは周期も観測の作り方も違う | `MjSpec.attach` で 1 モデルに結合し、配布元のコードから観測の作り方を転記（[docs/physics_integration.md](docs/physics_integration.md)） | 公式ポリシー 5 本を改変せず推論だけで同時に動かせた |
+| 7 | 施工の約 3 分、画面が地味 | パッカンと跳跳を空き地で遊ばせ、施工は 4 倍速 | 施工の全区間を省略なしで 44 秒に |
+| 8 | AI が何を考えているか見えない | 判断の瞬間に画面下の帯（顔とセリフ）、跳跳の表情を気分ネットで決め、決め手の値を顔モニターに | 判断とその根拠を画面で追える |
 
 ## 分かったこと・限界・反省
 
@@ -239,9 +261,9 @@ Q 表版は 8 手で `STANDUP` → `WALK_ON` が止まってから座らせ直�
    報酬 v2.1 では時間しか引かれず学ぶ圧力がなかった＝報酬設計の不足。報酬 v2.2 で無駄な手として教え、評価ではその型が 0 本になった（`ppo2_v22_v4/eval_ppo.json`）。
 3. 評価エピソードが独立していなかった。`Scene.reset` が `mj_resetData` を呼んでおらず、同じシードで `PUSH` の所要時間が変わった＝評価環境の不備。
    `mj_resetData` を入れて修正し（`manager2_env.py`）、修正前の表（`out/manager_runs/comparison_v2.md`）は開発記録としてのみ残す。
-4. 環境の不備は学習方式に厳しく出る。継ぎ目 5 cm の旧コースでは PPO v2.2 が 16/30、固定ルール 23/30 だったが、1 cm にすると 26/30 と 29/30 になった
+4. 環境の不備は学習方式に厳しく出る。パッカンの救助タスクの成功数は、継ぎ目 5 cm の旧コースでは PPO v2.2 が 16/30、固定ルール 23/30 だったが、1 cm にすると 26/30 と 29/30 になった
    （`out/manager_runs/comparison_v3b.md` と `comparison_v4.md`）。学習前に環境の精度を疑うべきだった。
-5. スキルの精度の限界。押し上げは正しい状態で呼んでも、評価 v4（新コース）の固定ルールで 22/30＝73%（`out/manager_runs/baselines_v4/eval_rule.json` の集計、[docs/manager_ai.md](docs/manager_ai.md)）、
+5. スキルの精度の限界。評価 v4（新コース）で固定ルールが呼んだ押し上げ 30 回のうち、天面まで押し上げたのは 22 回＝73%（30 シードの成功数とは別の、呼び出し回数）（`out/manager_runs/baselines_v4/eval_rule.json` の集計、[docs/manager_ai.md](docs/manager_ai.md)）、
    旧コース（継ぎ目 5 cm）の評価 v2 では 22/35＝63%（決定ログの集計、再計算スクリプトなし、[docs/devlog/MANAGER_DESIGN.md](docs/devlog/MANAGER_DESIGN.md) §7.6）にとどまる。
    固定ルール唯一の失敗（seed 5021、`out/manager_runs/baselines_v4/eval_rule.json`）は下り坂側で転んだ相手に打つ手が行動集合にない型。
    公式 `velstand` は 16° を登れず、歩行指令 0.3 m/s に対し実速は約 0.10 m/s（開発記録の計測値）。これは公式ポリシーの設計範囲の外であり、本作はそれを前提に物語を組んだ。
@@ -249,6 +271,9 @@ Q 表版は 8 手で `STANDUP` → `WALK_ON` が止まってから座らせ直�
    いずれも最終状態の sha256 で見つけ、2 倍速で標本化したフレームを間引く実装に直した。残る限界：シミュレーションのみ、固定コース 1 種、字幕は日本語フォントに依存、
    ブルドーザーが相手を持ち上げる結末は安全上の理由で捨てた（[archive/v7_test_fork.py](archive/v7_test_fork.py)）。長版は [docs/insights.md](docs/insights.md)。
 
+7. 施工の向きへの弱さ。施工を含む通しの 30 回で、BZ が右回りに 1° 以上ずれて始めた 10 回はすべて施工の置き終わりの確認で止まった（上の「施工を含む 3 体の通し」）。施工のルール制御（course-builder）に向きの補正を入れることが、通しの成功を上げる最大の課題。
+8. 実機で同じことをしたら。シミュレータの上の成功で、実機では別の困難が出ると考える。熱（押し上げの約 70 s の連続負荷で小型サーボが熱を持ち、トルクが落ちたり保護停止したりする）、姿勢の推定（公式ポリシーはジャイロの角速度と重力の向きを入力に使う。実機のジャイロには雑音とずれがある）、転倒による損傷（通しで施工が終わった 18 回のうち、パッカンが 1 回以上転んだのは PPO で 15 回、固定ルールで 8 回）、観測と接触（支配人 AI の観測はシミュレータの真値で、実機では俯瞰カメラなどで測る必要がある。坂の摩擦や継ぎ目の段差も一致しない）。
+9. 次への宿題。倒れて起き上がれないパッカンを跳跳が爪で押して体勢を変える手を加え、支配人 AI を学び直す（手が 7 つになるので PPO の学び直しと評価のやり直しが要る）。前のコースで試した押してずらす手（`crab_help.skill_nudge`、未使用）は、跳跳が継ぎ目で止まり部材を 1.6 cm 動かしたためやめた。
 ## 再現方法
 
 環境：Python 3.10、`pip install -r requirements.txt`（mujoco 3.11.0、onnxruntime 1.23.2、stable-baselines3 2.9.2、torch CPU、gymnasium 1.0.0、imageio＋imageio-ffmpeg、Pillow、numpy、glfw。版は `requirements.txt`）。
@@ -269,10 +294,10 @@ Jumper の公式バンドルは jumper リポジトリの `out/bundle_example/ju
 | 2a | `python v7_full.py --test --no-face --tag _A` | 約 1.5 分（描画なし） | `out/v7_full_report_A.json`（顔なし） |
 | 2b | `python v7_full.py --test --tag _B` | 約 1.5 分（描画なし） | `out/v7_full_report_B.json`（顔と気分ネットあり） |
 | 2c | `python analysis/face_check.py out/v7_full_report_facecheck_A.json out/v7_full_report_facecheck_B.json` | 数秒 | 同梱の組で 8 項目すべて same、ngeom 290→291、終了コード 0 |
-| 3 | `python v7_full.py --manager ppo --run ppo2_v22 --tag _take58 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0` | 約 5〜8 分 | 本編 `out/3body_arena_v7_take58.mp4`（155.5 s、ステレオ音声）＋報告 JSON（4 手、digest `aafa49e7a869`） |
+| 3 | `python v7_full.py --manager ppo --run ppo2_v22 --tag _take61 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0` | 約 5〜8 分 | 本編 `out/3body_arena_v7_take61.mp4`（155.5 s、ステレオ音声）＋報告 JSON（4 手、digest `aafa49e7a869`） |
 | 3a | `python intro.py` | 約 10 秒 | 自己紹介 `out/intro.mp4`（15.1 s、`intro.py` の `DURATION`） |
 | 3b | `python music/marimba_bgm.py` | 約 20 秒 | BGM `out/music/bgm_marimba.wav`（44,100 Hz・ステレオ・173.6 s、同ファイルの `DUR`）。`BGM_MAIN=take57` を付けると固定ルール版の本編に合わせた版を `out/music/bgm_marimba_take57.wav`（175.4 s）に書く |
-| 3c | `python assemble.py --op <講座の OP> --intro out/intro.mp4 --main out/3body_arena_v7_take58.mp4 --ed <講座の ED> --out out/submission.mp4 --bgm out/music/bgm_marimba.wav --bgm-gain -16 --bgm-until end --bgm-fade 0` | 約 30 秒 | 提出動画 `out/submission.mp4`。印字の `total_s` 176.58、`parts[].start_s` 0／3.04／18.14／173.61 |
+| 3c | `python assemble.py --op <講座の OP> --intro out/intro.mp4 --main out/3body_arena_v7_take61.mp4 --ed <講座の ED> --out out/submission.mp4 --bgm out/music/bgm_marimba.wav --bgm-gain -16 --bgm-until end --bgm-fade 0` | 約 30 秒 | 提出動画 `out/submission.mp4`。印字の `total_s` 176.58、`parts[].start_s` 0／3.04／18.14／173.61 |
 | 3d | `python v7_full.py --tag _take51 --build-speed 4 --no-cuts` | 約 5〜8 分 | 以前の 2:47 版 `..._take51.mp4`＋報告 JSON（5 手、digest `678fd3cae2ca`、3h の固定ルール版と同一） |
 | 3e | `python v7_full.py --manager ppo --run ppo2_v22 --tag _take52 --build-speed 4 --no-cuts` | 約 5〜8 分 | PPO 版 `..._take52.mp4`＋報告 JSON（4 手、digest `aafa49e7a869`、本編と同一） |
 | 3f | `python v7_full.py --manager tabq --run tabq2_small --jitter 0.4 --tag _take53 --build-speed 4 --no-cuts` | 約 5〜8 分 | Q 表版 `..._take53.mp4`＋報告 JSON（8 手、digest `f53de6e45af7`） |
@@ -282,7 +307,7 @@ Jumper の公式バンドルは jumper リポジトリの `out/bundle_example/ju
 | 5 | `python manager2_report.py --runs baselines_v4 tabq2_small_v4 ppo2_medium2_v4 ppo2_v22_v4 --name comparison_v4` | 数秒 | `out/manager_runs/comparison_v4.md` |
 | 6 | `python analysis/mood_train.py --data mood_data --out mood_net_rerun --epochs 600 --hidden 32 --seed 0` | 1 分以内 | `meta.json`（best_epoch 450、見送り分の 4 分類 0.80） |
 
-報告 JSON は `out/v7_full_report<tag>.json`、digest は `state_digest` の先頭 12 桁、照合値の出所は同梱の `out/v7_full_report_take58.json`・`take57.json` と `take51〜54.json`。
+報告 JSON は `out/v7_full_report<tag>.json`、digest は `state_digest` の先頭 12 桁、照合値の出所は同梱の `out/v7_full_report_take61.json`・`take57.json` と `take51〜54.json`。
 3c の `<講座の OP>`・`<講座の ED>` は講座が配布するカード（同梱しない）で、`assemble.py` は 1280×720・30 fps にそろえ、音のないカードには無音を入れ、BGM を OP カードの終わり（`--bgm-start` の既定）から一定の音量で重ねる。
 4 の出力は `out/manager_runs/baselines_v4_rerun/`、6 の出力は `out/manager_runs/mood_net_rerun/` で、同梱の `baselines_v4/` と `mood_net/` を上書きせずに照合できる。
 6 の学習ループは 3.5 s で、「1 分以内」はスクリプト全体の目安（`out/manager_runs/mood_net/meta.json` の `train_s`）。
@@ -290,7 +315,7 @@ Jumper の公式バンドルは jumper リポジトリの `out/bundle_example/ju
 2c は同梱の組（表情ログ `face.log` の行が 3 要素だった時期の報告）で終了コード 0 になり、`VERDICT: identical physics path` を印字する。
 現行コードの表情ログは 1 行 5 要素（規則番号と計測値を足した）なので、2a・2b で新しく作った組を渡すと、8 項目の same／DIFFERS と ngeom の行を印字した後、
 表情ログの一覧で止まる（終了コード 1、`VERDICT` 行なし）。新しい組は印字された 8 項目で判定する。`face_check.py` は digest が一致していても出来事が 1 件違えば終了コード 1 を返す。
-本編と以前の速度設定の PPO 版の物理同一は `python analysis/timeline_times.py out/v7_full_report_take58.json --compare out/v7_full_report_take52.json` の末尾
+本編と以前の速度設定の PPO 版の物理同一は `python analysis/timeline_times.py out/v7_full_report_take61.json --compare out/v7_full_report_take52.json` の末尾
 `state_digest equal: True` で確かめられる（出来事の動画時刻は CALL から −0.4〜−8.2 s ずれ、sim 時刻は同じ）。固定ルール版と 2:47 版の組は `take57.json --compare take51.json`、
 2:47 版と 2 倍速＋省略版の組は `take51.json --compare take46.json` で同じ行が出る。
 同じコマンドはヘッドレスの報告どうしにも使える（[docs/reproduce.md](docs/reproduce.md) §4.3）。
@@ -330,9 +355,9 @@ Windows 以外では字幕のフォントが既定に退避する。cp932 のコ
 
 ## 第三者資産・ライセンス・AI の使用
 
-コードは MIT ライセンス（[LICENSE](LICENSE)）。Microduck の外観（CC BY-NC-SA 4.0 の 3D メッシュ）を含む動画（本編 `out/3body_arena_v7_take58.mp4`、比較用の `..._take57.mp4`・`..._take51〜54.mp4` ほか）、
+コードは MIT ライセンス（[LICENSE](LICENSE)）。Microduck の外観（CC BY-NC-SA 4.0 の 3D メッシュ）を含む動画（本編 `out/3body_arena_v7_take61.mp4`、比較用の `..._take57.mp4`・`..._take51〜54.mp4` ほか）、
 自己紹介 `out/intro.mp4`、`report/*.png` は CC BY-NC-SA 4.0（帰属：Pollen Robotics、`microduck_rl`）に従う。提出動画の前後の OP／ED カードは講座の素材で、本リポジトリのライセンスの対象外である。
-BGM は本作の作者が `music/marimba_bgm.py` で合成した自作の曲で、第三者の曲・音源を含まない。第三者資産の全文一覧は [THIRD_PARTY.md](THIRD_PARTY.md)。
+BGM は本作の作者が `music/marimba_bgm.py` で合成した自作の曲で、第三者の曲・音源を含まない。パッカンの声は Microduck 公式ランタイムの `sounds`（Apache-2.0）を移植した `microduck_voice.py` で作る（帰属は THIRD_PARTY.md）。第三者資産の全文一覧は [THIRD_PARTY.md](THIRD_PARTY.md)。
 
 | 資産 | 提供元 | ライセンス | 使い方 |
 |---|---|---|---|
@@ -345,7 +370,7 @@ BGM は本作の作者が `music/marimba_bgm.py` で合成した自作の曲で�
 注記：Microduck 公式 ONNX は、配布元の Hugging Face のモデルページ（`pollen-robotics/microduck-policies`）のライセンス表示は Apache-2.0（README 本文は空）。同梱はその条件に従う（LICENSE の写しと帰属は [THIRD_PARTY.md](THIRD_PARTY.md)）。
 
 AI の使用：推論は公式 ONNX ポリシー 5 本、支配人 AI、気分ネット。学習は支配人 AI（PPO・表形式 Q）と気分ネット（すべて CPU）。
-開発補助：本作のリポジトリの設計・コード・文書は、LLM（Anthropic の Claude、Claude Code）の支援を受けて作成した。ブルドーザー側（course-builder）の開発には、OpenAI の Codex の対話型セッションを使った。図のうち 6 枚（`report/*_ortiz.png`）は、本作で書いた数値入りの依頼文をもとに対話型 AI「GPTAstra」が清書した。
+開発補助：本作のリポジトリの設計・コード・文書は、LLM（Anthropic の Claude、Claude Code）の支援を受けて作成した。ブルドーザー側（course-builder）の開発には、OpenAI の Codex の対話型セッションを使った。図のうち 5 枚（`report/*_ortiz.png`）は、本作で書いた数値入りの依頼文をもとに対話型 AI「GPTAstra」が清書した（`system_overview_ortiz.png` は後から画像の上で表記を直した）。支配人 AI の評価の図（`report/results_managers.png`）と表情の一覧（`report/faces_sheet_ja.png`）はスクリプトで描く。
 動画の支配人 AI は、自己紹介（`intro.py` の `HELLO`）と救助場面の字幕（`v7_full.py` の `RESCUE` 段の見出し）で
 「アイランドマスター」と名乗る。この呼び名は開発を補助した LLM の呼び名から取ったキャラクター名で、動画の中で次の一手を選ぶのは支配人 AI である（LLM はシミュレーションの実行時には動かない）。
 

@@ -1,0 +1,61 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><style>
+* { box-sizing: border-box; }
+body { margin: 0; width: 1360px; height: 700px; background: #f6f8fa; font-family: "BIZ UDPGothic", sans-serif; color: #1d2430; }
+.wrap { padding: 28px 36px; }
+h1 { font-size: 31px; margin: 0 0 6px; letter-spacing: .01em; }
+.sub { font-size: 16px; color: #556070; margin: 0 0 18px; }
+.grid { display: grid; grid-template-columns: 1.08fr 1fr; gap: 22px; }
+.card { background: #ffffff; border: 1px solid #dfe4ea; border-radius: 10px; padding: 18px 22px; }
+h2 { font-size: 21px; margin: 0 0 10px; }
+.legend { font-size: 15px; color: #556070; margin: 0 0 12px; }
+.legend i { display: inline-block; width: 22px; height: 12px; border-radius: 0 3px 3px 0; vertical-align: -1px; margin: 0 6px 0 0; }
+.legend b { font-weight: normal; margin-right: 22px; }
+.row { display: grid; grid-template-columns: 170px 1fr 118px; align-items: center; height: 56px; }
+.lab { font-size: 18px; font-weight: bold; line-height: 1.15; }
+.lab span { display: block; font-size: 12.5px; font-weight: normal; color: #7a8494; }
+.track { position: relative; height: 24px; border-left: 1px solid #b9c2cd;
+         background: repeating-linear-gradient(90deg, transparent 0 calc(100% / 3 - 1px), #dfe4ea calc(100% / 3 - 1px) calc(100% / 3)); }
+.bar { position: absolute; left: 0; top: 0; height: 24px; background: #2f8f86; border-radius: 0 4px 4px 0; }
+.bar.back { background: #a9d6cf; }
+.val { font-size: 17px; padding-left: 12px; font-variant-numeric: tabular-nums; }
+.val b { font-size: 21px; }
+.val span { display: block; font-size: 12.5px; color: #7a8494; }
+.axis { display: grid; grid-template-columns: 170px 1fr 118px; font-size: 13px; color: #7a8494; margin-top: 4px; }
+.axis div:nth-child(2) { display: flex; justify-content: space-between; }
+table { border-collapse: collapse; width: 100%; font-size: 17px; font-variant-numeric: tabular-nums; }
+th { font-size: 14px; color: #556070; font-weight: normal; text-align: right; padding: 4px 8px; border-bottom: 1px solid #dfe4ea; }
+th:first-child, td:first-child { text-align: left; }
+td { text-align: right; padding: 6px 8px; border-bottom: 1px solid #dfe4ea; }
+td:first-child { font-weight: bold; }
+.small { font-size: 13px; color: #7a8494; margin: 8px 0 0; line-height: 1.5; }
+.right { display: grid; grid-template-rows: auto 1fr; gap: 22px; }
+.detail { font-size: 13px; color: #7a8494; margin: -6px 0 6px 170px; }
+.pending { font-size: 16px; color: #7a8494; }
+.notes { font-size: 13.5px; color: #556070; margin: 16px 2px 0; line-height: 1.6; }
+</style></head><body><div class="wrap">
+<h1>支配人 AI の評価 ― パッカンの救助タスクと、施工を含む 3 体の通し</h1>
+<p class="sub">新コース（峠の継ぎ目 1 cm）。救助タスクは坂の足元などで止まったパッカンを跳跳の助けで渡らせる部分（施工は含まない）、通しは施工からゴールまで。</p>
+<div class="grid">
+ <div class="card">
+  <h2>パッカンの救助タスクの成功数（同じ 30 シード）</h2>
+  <p class="legend"><i style="background:#2f8f86"></i><b>救助の成功</b><i style="background:#a9d6cf"></i><b>天面到達</b></p>
+  <div class="row"><div class="lab">固定ルール<span></span></div><div class="track"><div class="bar back" style="width:100.00%"></div><div class="bar" style="width:96.67%"></div></div><div class="val"><b>29</b> / 30<span>天面 30</span></div></div><div class="row"><div class="lab">PPO v2.2<span>継続学習、提出動画で使用</span></div><div class="track"><div class="bar back" style="width:96.67%"></div><div class="bar" style="width:86.67%"></div></div><div class="val"><b>26</b> / 30<span>天面 29</span></div></div><div class="row"><div class="lab">表形式 Q<span></span></div><div class="track"><div class="bar back" style="width:96.67%"></div><div class="bar" style="width:83.33%"></div></div><div class="val"><b>25</b> / 30<span>天面 29</span></div></div><div class="row"><div class="lab">PPO 中規模<span>継続学習の前</span></div><div class="track"><div class="bar back" style="width:83.33%"></div><div class="bar" style="width:76.67%"></div></div><div class="val"><b>23</b> / 30<span>天面 25</span></div></div><div class="row"><div class="lab">ランダム<span></span></div><div class="track"><div class="bar back" style="width:73.33%"></div><div class="bar" style="width:46.67%"></div></div><div class="val"><b>14</b> / 30<span>天面 22</span></div></div>
+  <div class="axis"><div></div><div><span>0</span><span>10</span><span>20</span><span>30</span></div><div></div></div>
+  <p class="small">各方式を各シードで 1 回、方策は決定的。30 試行で出た開始場面は 7 種のうち 5 種（天面で転倒・坂の途中で転倒は出ていない）。</p>
+ </div>
+ <div class="right">
+  <div class="card">
+   <h2>固定ルールとの成否の対応（同じ 30 シード）</h2>
+   <table><tr><th>方式</th><th>両方成功</th><th>ルールだけ成功</th><th>方策だけ成功</th><th>両方失敗</th></tr><tr><td>PPO v2.2</td><td>25</td><td>4</td><td>1</td><td>0</td></tr><tr><td>表形式 Q</td><td>24</td><td>5</td><td>1</td><td>0</td></tr><tr><td>PPO 中規模</td><td>22</td><td>7</td><td>1</td><td>0</td></tr><tr><td>ランダム</td><td>14</td><td>15</td><td>0</td><td>1</td></tr></table>
+   <p class="small">途中の接触や姿勢も変わるため、判断とスキルの寄与は切り分けていない。</p>
+  </div>
+  <div class="card">
+   <h2>施工を含む 3 体の通しの成功数（各 30 回）</h2>
+   <div class="row"><div class="lab">PPO v2.2<span>提出動画と同じ支配人</span></div><div class="track"><div class="bar" style="width:43.33%"></div></div><div class="val"><b>13</b> / 30</div></div><div class="detail">失敗の内訳：施工で停止 12・部材の移動 1・救助の失敗 4</div><div class="row"><div class="lab">固定ルール<span>比較</span></div><div class="track"><div class="bar" style="width:53.33%"></div></div><div class="val"><b>16</b> / 30</div></div><div class="detail">失敗の内訳：施工で停止 12・部材の移動 1・救助の失敗 1</div>
+   <p class="small">描画なしで通しを実行。回ごとに開始位置をずらす（BZ ±2 cm・±2°、パッカンと跳跳 ±5 cm・±10°）。
+   成功＝3 体とも渡り切り、コースの部材が 4 cm 以上動かない。施工で止まった回は両方式で同じシード。BZ が右回りに 1° 以上ずれて始めた 10 回はすべて施工で止まった。</p>
+  </div>
+ </div>
+</div>
+<p class="notes">出所：救助タスクは同一シード評価（評価 v4）の記録、通しは通しの集計スクリプトの出力。図は評価の記録から直接描いた（手で写した数値はない）。</p>
+</div></body></html>

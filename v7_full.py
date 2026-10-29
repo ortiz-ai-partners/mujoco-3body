@@ -31,6 +31,7 @@ Stages (the story, in order)
                               so whether it lifts, shoves or misses is decided by the physics of the render.
 
     python v7_full.py --test            # no render
+    python analysis/fullrun_stats.py    # three-robot success over many full runs (--seed, --spawn-jitter)
     python v7_full.py --preview DIR     # stills
     python v7_full.py                   # -> out/3body_arena_v7.mp4 (+ chirps)
 """
@@ -220,14 +221,46 @@ class Chirps:
 
     MASTER_GAIN = 0.45          # requirement: the voices stay quiet
     DUCK_KINDS = {"quack", "worried", "gwaa", "call", "happy", "sigh"}
-    DUCK_GAIN = 1.0 / 3.0       # requirement (10/29): the duck's voice at a third of its level (-9.5 dB)
+    # requirement (10/29): the duck speaks with its official voice - the seedable synth of pollen-robotics/microduck
+    # (`sounds`, Apache-2.0), ported in microduck_voice.py.  Each of the story's cry kinds plays the tag the robot uses
+    # for that mood; "happy" is the joy ride's rise and fall without its loop.  The variant follows the cue's index
+    # (no scene rng); a cue's pitch only shapes the old synthesised voice (--duck-voice synth, takes up to 58).
+    DUCK_TAG = {"quack": "chirp", "worried": "inquire", "gwaa": "alarm", "call": "greet", "happy": "wheee", "sigh": "coo"}
+    DUCK_SEED = 276             # requirement (10/29): a sweet, clingy, much-loved duck - higher (454 Hz), soft (quackiness 0.38),
+    #                             rising glides (glide_bias +0.42), a soft attack; a real robot's seed comes from its SoC serial
+    DUCK_GAIN = 1.0 / 6.0       # requirement (10/29): the duck's voice at a third of its level (-9.5 dB), then halved again (-15.6 dB)
     CRAB_KINDS = {"clack", "trill"}
-    CRAB_GAIN = 0.5             # requirement (10/29): the crab's voice at half its level (-6 dB)
+    CRAB_GAIN = 0.25            # requirement (10/29): the crab's voice at half its level (-6 dB), then halved again (-12 dB)
     SFX = {"blip", "chime"}     # the manager's band: one blip per typed character, a chime when it appears
     SFX_LEVEL = {"blip": 0.16, "chime": 0.27}   # the same final levels as the opening's typing and card chime
 
-    def __init__(self):
+    def __init__(self, duck_voice="official", duck_seed=DUCK_SEED):
         self.events = []
+        self.duck_voice, self.duck_seed = duck_voice, duck_seed
+        self._official = {}
+
+    def official(self, kind, k, sr):
+        """The official voice for a duck cue: tag by kind, variant by cue index, resampled from 48 kHz to sr and scaled to
+        the RMS of the synthesised cry it replaces (the 10/29 balance: the duck at a third of its level)."""
+        import microduck_voice as mv
+        from scipy.signal import resample_poly
+        tag = self.DUCK_TAG[kind]
+        v = (k * 7 + 3) % mv.variant_count(tag)
+        key = (kind, v, sr)
+        if key not in self._official:
+            p = mv.Personality(self.duck_seed)
+            if tag == "wheee":
+                start, _, end = mv.wheee_segments(p, v)
+                x = np.concatenate([start, end])
+            else:
+                x = mv.render(tag, p, v)
+            g = math.gcd(int(sr), mv.SR)
+            x = resample_poly(x.astype(np.float64), int(sr) // g, mv.SR // g)
+            old = np.concatenate([self._tone(f0, f1, dur, sr, amp, vib) if f0 > 0 else np.zeros(int(dur * sr))
+                                  for f0, f1, dur, vib, amp in self.KINDS[kind]])
+            x *= float(np.sqrt(np.mean(old ** 2)) / (np.sqrt(np.mean(x ** 2)) + 1e-12))
+            self._official[key] = x
+        return self._official[key]
 
     PAN_WIDTH = 0.8             # requirement (10/29): a voice comes from its robot's side of the frame; 0.8 keeps it off the hard edge
 
@@ -279,6 +312,12 @@ class Chirps:
                     sfx[cursor:cursor + n] += w[:n, None] * lr
                 continue
             gain = (self.DUCK_GAIN if kind in self.DUCK_KINDS else self.CRAB_GAIN if kind in self.CRAB_KINDS else 1.0)
+            if kind in self.DUCK_KINDS and self.duck_voice == "official":
+                w = gain * self.official(kind, k, sr)
+                n = min(len(w), len(out) - cursor)
+                if n > 0:
+                    out[cursor:cursor + n] += w[:n, None] * lr
+                continue
             for f0, f1, dur, vib, amp in self.KINDS[kind]:
                 n = int(dur * sr)
                 if f0 > 0 and cursor + n < len(out):
@@ -486,6 +525,19 @@ def main():
                          "The only purpose is to change the physics path of a render: the physics is deterministic for given "
                          "code, so a learned manager that fails on one path can be tried on another. Record the jitter a "
                          "render used")
+    ap.add_argument("--seed", type=int, default=11,
+                    help="seed of the scene's random draws (where the duck and the crab wander in the play zone, when and how "
+                         "they cry); every take uses 11")
+    ap.add_argument("--spawn-jitter", type=int, default=None, metavar="SEED",
+                    help="for the statistics of the full run (analysis/fullrun_stats.py): offset the three robots' starting "
+                         "poses by a draw from this seed - BZ by up to 2 cm and 2 deg, the duck and the crab by up to 5 cm and "
+                         "10 deg - written before the first step, like the reset placement of the learning environment (nothing "
+                         "moves a robot during the run).  Off by default: every take starts from the same poses")
+    ap.add_argument("--duck-voice", choices=["official", "synth"], default="official",
+                    help="official (default): the duck's cries in the official Microduck voice (microduck_voice.py, ported "
+                         "from pollen-robotics/microduck, Apache-2.0); synth: the earlier synthesised cries (takes up to 58).  "
+                         "Sound only: the physics is the same either way")
+    ap.add_argument("--duck-seed", type=int, default=Chirps.DUCK_SEED, help="the official voice's personality seed")
     ap.add_argument("--no-prestage", action="store_true",
                     help="switch off the pre-positioning: by default an idle robot already walks to where its "
                          "next action starts - the crab to the foot of its lane while the duck tries the ramp again, back round "
@@ -548,7 +600,22 @@ def main():
 
     app, slope_assembly, tracks_mod = course_builder()
     xml = slope_assembly.assembly_xml(app.ROOT / "scene_fork_tracks.xml")
-    model, data = build_arena(xml, md_pose=MD_START, jp_pose=JP_PARK, timestep=args.dt_build, face=args.face)
+    md_pose, jp_pose, bz_offset = MD_START, JP_PARK, None
+    if args.spawn_jitter is not None:
+        srng = np.random.default_rng(args.spawn_jitter)
+
+        def nudge(pose, d, deg):
+            return (pose[0] + srng.uniform(-d, d), pose[1] + srng.uniform(-d, d), pose[2] + math.radians(srng.uniform(-deg, deg)))
+        md_pose, jp_pose = nudge(MD_START, 0.05, 10.0), nudge(JP_PARK, 0.05, 10.0)
+        bz_offset = (srng.uniform(-0.02, 0.02), srng.uniform(-0.02, 0.02), math.radians(srng.uniform(-2.0, 2.0)))
+    model, data = build_arena(xml, md_pose=md_pose, jp_pose=jp_pose, timestep=args.dt_build, face=args.face)
+    if bz_offset is not None:
+        a = model.joint("base").qposadr[0]                       # BZ's free joint (course-builder's scene)
+        data.qpos[a:a + 2] += bz_offset[:2]
+        turn, q = np.array([math.cos(bz_offset[2] / 2), 0.0, 0.0, math.sin(bz_offset[2] / 2)]), np.zeros(4)
+        mujoco.mju_mulQuat(q, turn, data.qpos[a + 3:a + 7].copy())
+        data.qpos[a + 3:a + 7] = q
+        mujoco.mj_forward(model, data)
     official_md_servos(model)
     duck, crab = Duck(model, data), Crab(model, data)
     mood = (crab_face.MoodAI(args.face_ai, run=args.mood_run, net=args.mood_net) if (args.face and args.face_ai != "table")
@@ -560,7 +627,7 @@ def main():
     sim = ArenaSim(model, data, tracks_mod)
     pilot = slope_assembly.SlopeAssembly(sim)
     nav = None
-    rng = np.random.default_rng(11)
+    rng = np.random.default_rng(args.seed)
     bz_bid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "dozer")
     md_root, jp_root, bz_root = (model.body_rootid[duck.bid], model.body_rootid[crab.bid],
                                  model.body_rootid[bz_bid])
@@ -569,7 +636,7 @@ def main():
 
     render = not args.test
     video = None
-    chirps = Chirps()
+    chirps = Chirps(args.duck_voice, args.duck_seed)
     if render:
         renderer = mujoco.Renderer(model, height=VIDEO_H, width=VIDEO_W)
         opt = mujoco.MjvOption()
@@ -685,6 +752,59 @@ def main():
         """A sound of the manager's band (never inside a jump cut, like the cries)."""
         if video is not None and cut_at(data.time) is None:
             chirps.add(video_t(), kind)
+
+    def crab_touches_anything():
+        """Does any contact join the crab to something else (floor, course, a robot)?  Reads data.contact only."""
+        for i in range(data.ncon):
+            ga, gb = map(int, data.contact[i].geom)
+            ra, rb = model.body_rootid[model.geom_bodyid[ga]], model.body_rootid[model.geom_bodyid[gb]]
+            if (ra == jp_root) != (rb == jp_root):
+                return True
+        return False
+
+    def cue(vt, kind, pitch=1.0):
+        """A cry at a given video time (the jump's takeoff is confirmed a tick after it happens)."""
+        if video is not None and cut_at(data.time) is not None:
+            return
+        chirps.add(vt, kind, pitch, voice_pan(kind))
+
+    def watch_jump(t):
+        """The showcase jump's sounds on its real takeoff and touchdown (requirement 10/29: the jump's sound in time with
+        the jump).  Two control ticks without any contact = off the ground, the first of them is the takeoff; the first
+        contact after that = the touchdown.  Sound and log only: no scene rng, no physics."""
+        air = not crab_touches_anything()
+        if "takeoff" not in climb:
+            if air:
+                if climb.get("air_n", 0) == 0:
+                    climb["air_vt"], climb["air_t"] = video_t(), t
+                climb["air_n"] = climb.get("air_n", 0) + 1
+                if climb["air_n"] >= 2:
+                    climb["takeoff"] = climb["air_t"]
+                    cue(climb["air_vt"], "trill", 1.15)                     # the crab: off it goes
+                    cue(climb["air_vt"] + 0.08, "gwaa")                     # the duck: wah!
+                    event(climb["air_t"], "JP takes off (duck: わぁ！)")
+            else:
+                climb["air_n"] = 0
+        elif not air:
+            climb["touchdown"] = t
+            cue(video_t(), "clack")                                         # and lands
+            event(t, f"JP touches down after {t - climb['takeoff']:.2f} s in the air")
+
+    # requirement (10/29): the duck talks more - a sweet, clingy duck.  Timer-based lines in the stretches where it was
+    # silent (on its way to the ramp, while it is pushed up), cycling through the kinds; never the scene rng, so the
+    # physics path is the same as without them.
+    DUCK_CHATTER = {"FOLLOW_IN": (6.0, ["quack", "call", "quack", "worried"]),
+                    "PUSH": (8.0, ["sigh", "worried", "quack"])}
+    talk = {"key": None, "next": 0.0, "i": 0}
+
+    def chatter(key, kind_set, t):
+        every, kinds = DUCK_CHATTER[kind_set]
+        if talk["key"] != key:
+            talk.update(key=key, next=t + 0.5 * every, i=0)
+        if t >= talk["next"]:
+            quack(kinds[talk["i"] % len(kinds)])
+            talk["i"] += 1
+            talk["next"] = t + every
 
     def cry(who):
         """A random cry: the duck's or the crab's, with a random pitch."""
@@ -1089,6 +1209,7 @@ def main():
                 duck.walk_to((DUCK_LANE_X, RAMP_START_Y), t, stop_dist=0.25)
                 quack("quack")
         elif stage == "FOLLOW_IN":
+            chatter("FOLLOW_IN", "FOLLOW_IN", t)
             # the crab comes over from its watch spot to cheer at the ramp's foot (pre-positioning while BZ crosses) -
             # only once the duck has passed on its way to the ramp (in an earlier render their paths crossed and the duck fell twice)
             if crab.mode != "WALK":
@@ -1190,6 +1311,8 @@ def main():
         elif stage == "CLIMB":
             duck.sit.twist[:] = (1.0, 0.0, 0.0)
             ph = climb["phase"]
+            if climb.get("jumps") == 1 and "touchdown" not in climb:
+                watch_jump(t)
             if ph == "approach":
                 if climb.get("route"):                                      # after a slip: round the course's east side first
                     if crab_go(climb["route"][0], 0.5, stop=0.35):
@@ -1227,8 +1350,8 @@ def main():
                     event(t, f"JP slipped off the ramp's side at y={p_jp[1]:+.2f}; round the east side back to the foot (retry {climb['retries']})")
                 if p_jp[2] > 0.5 and not climb["crest_said"]:
                     climb["crest_said"] = True
-                    quack("gwaa")
-                    event(t, f"JP on the crest (z={p_jp[2]:.2f}); duck: ぐわぁぁ？")
+                    quack("worried")
+                    event(t, f"JP on the crest (z={p_jp[2]:.2f}); duck: …？")
                 if ph != "boost" and t - climb["mark"][0] > 2.5 and p_jp[1] > -1.5:
                     heading_err = wrap(math.pi / 2 - crab.yaw(data))
                     if p_jp[2] > 0.38 and climb.get("jumps", 0) == 0 and abs(heading_err) < 0.15:
@@ -1345,6 +1468,7 @@ def main():
                     quack("quack")
                 elif name == "PUSH":
                     cry("crab")
+                    quack("call")                                   # the duck: please!
             try:
                 next(mgr["gen"])
             except StopIteration as stop:
@@ -1369,6 +1493,8 @@ def main():
                              + ("" if result == "crossed" else f" (on its feet on the north floor after {mgr['name']} -> {result})"))
                     set_stage(t, "CELEBRATE")
                     cel.update(phase="start")
+            if mgr["gen"] is not None and mgr["name"] == "PUSH" and duck.mode == "SIT":
+                chatter(f"PUSH{mgr['n']}", "PUSH", t)               # while it is pushed up: hmm... ? ...!
             # procession finale: once the duck walks on across the landing, the crab (in the lane behind it) follows
             # 0.8 m behind, over the top and down the far ramp.  (Starting only at the far ramp's lip left the crab
             # at the crest when the duck was already down: a 30 s gap, headless test 1.)
@@ -1841,7 +1967,13 @@ def main():
     # the final state, to compare two runs (the face check: with and without the render-only face)
     digest = hashlib.sha256(np.ascontiguousarray(data.qpos).tobytes() + np.ascontiguousarray(data.qvel).tobytes()).hexdigest()
     settings = {"manager": args.manager, "run": args.run if args.manager != "rule" else None, "finale": args.finale,
-                "jitter": args.jitter, "face": args.face, "face_ai": args.face_ai, "prestage": args.prestage,
+                "jitter": args.jitter, "seed": args.seed, "spawn_jitter": args.spawn_jitter,
+                "duck_voice": ({"source": "official Microduck voice (pollen-robotics/microduck sounds, Apache-2.0), microduck_voice.py",
+                                "seed": args.duck_seed, "tags": Chirps.DUCK_TAG} if args.duck_voice == "official" else "synth"),
+                "spawn": (None if args.spawn_jitter is None else
+                          {"md": [round(float(v), 4) for v in md_pose], "jp": [round(float(v), 4) for v in jp_pose],
+                           "bz_offset": [round(float(v), 4) for v in bz_offset]}),
+                "face": args.face, "face_ai": args.face_ai, "prestage": args.prestage,
                 "write_every": write_every, "tail_write_s": args.tail_write, "cuts": [list(c) for c in cuts],
                 "band": (None if draw_avatar is None else {"cps": BAND_CPS, "hold_s": BAND_HOLD, "in_s": BAND_IN, "out_s": BAND_OUT,
                                                            "height_frac": Captioner.BAND_FRAC}),

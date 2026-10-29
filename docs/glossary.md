@@ -186,11 +186,11 @@
 | sim 時計 | 画面右下の「sim … s」。シミュレーション時刻 | sim clock | `render_frame` の footer |
 | 倍速 | 動画時刻に対するシミュレーション時刻の比（x4／x2／x1）。×4 は 2 倍速で標本化したフレームを 1 枚おきに書くだけで、物理を変えない | playback speed | `SPEED`、`SPEED_DANCE`、`--build-speed`、`--speedup`、報告 JSON の `settings.write_every` |
 | 動画時刻／sim 時刻 | 動画の m:ss と「sim 404 s」。両方を添えて書く。提出動画の時刻は本編の時刻＋18.14 s | video time / sim time | `events` の `video_t`／`t` |
-| 提出動画／本編 | 提出動画は講座の OP カード＋自己紹介＋本編＋講座の ED カードを結合した 2:56.6 の動画。本編はその 0:18.1 からの 1 本の連続シミュレーションの記録（2:35.5） | submitted video / main video | `assemble.py`、`out/3body_arena_v7_take58.mp4` |
+| 提出動画／本編 | 提出動画は講座の OP カード＋自己紹介＋本編＋講座の ED カードを結合した 2:56.6 の動画。本編はその 0:18.1 からの 1 本の連続シミュレーションの記録（2:35.5） | submitted video / main video | `assemble.py`、`out/3body_arena_v7_take61.mp4` |
 | 自己紹介 | 本編の前の 15.1 s。支配人 AI が丸い顔と打ち込みの文字で名乗り、3 体をカードで紹介する。物理は進めない描画のみ | self-introduction | `intro.py`、`out/intro.mp4` |
 | 講座の OP／ED カード | 提出動画の最初と最後に付ける講座の素材（3.04 s／2.97 s）。リポジトリに含まない | the course's opening / end card | `assemble.py --op`／`--ed` |
 | 支配人の帯 | 支配人 AI が手を選ぶたびに画面下 1/5 に出る帯。支配人の丸い顔とセリフを 1 秒 15 文字で打ち込み（チャイムと打鍵音つき）、日本語が出そろうと英語の行を出す。描画のみ | the manager's band | `v7_full.py` `band_frame()`・`BAND_CPS`、`v6_common.Captioner._band`、`crab_help.LINES_EN`、`--no-band`、`settings.band` |
-| 声の音量と振り分け | パッカンの鳴き声は 1/3、跳跳は 1/2 の音量。鳴いた機体の画面上の位置で左右に振る（定電力のパン、幅 0.8）。音声のみ | voice levels and panning | `Chirps.DUCK_GAIN`／`CRAB_GAIN`／`PAN_WIDTH`、`v6_common.screen_xy`、`settings.voice_pan` |
+| 声の音量と振り分け | パッカンの鳴き声は 1/6、跳跳は 1/4 の音量（はじめの合成音に対して）。鳴いた機体の画面上の位置で左右に振る（定電力のパン、幅 0.8）。音声のみ | voice levels and panning | `Chirps.DUCK_GAIN`／`CRAB_GAIN`／`PAN_WIDTH`、`v6_common.screen_xy`、`settings.voice_pan` |
 | BGM | 提出動画の背景音楽。numpy/scipy の加算合成だけで作る自作のマリンバ曲（既存の曲・音源・サンプルは不使用、seed 固定）。OP カードの終わりから一定の音量（−16 dB）で鳴る | background music | `music/marimba_bgm.py`、`out/music/bgm_marimba.wav`、`assemble.py --bgm` |
 | 時間刻み | 物理の 1 ステップ。施工中 0.005 s、以後 0.001 s | physics timestep | `--dt-build`、`--dt-action` |
 | 制御周期 | 推論の間隔。パッカン 0.02 s、跳跳 0.005 s（ダンス 0.02 s） | control period | `MD_CONTROL_DT`、`control_dt` |
@@ -206,9 +206,9 @@
 | コース破損 | 設置済み部材が 4 cm を超えて動いた（失敗、−10） | course damaged | `manager2_env.py` `COURSE_TOLERANCE = 0.04`、`REWARD["course_damaged"]` |
 | 同一シード評価 | 全方式を同じ 30 シード（5000〜5029）・同じ開始場面で評価する | shared-seed evaluation | `manager2_train.py eval --seed0 5000` |
 | 評価 v4 | 新コース（継ぎ目 1 cm）・エピソード独立・決定的方策での同一シード評価 | evaluation v4 | `out/manager_runs/comparison_v4.md` |
-| 2×2 帰属 | 固定ルールと方策の成否を 4 象限に分け、判断の失敗とスキルの失敗を切り分ける | 2×2 attribution | 同上「失敗の帰属」 |
-| 判断の失敗 | ルールは渡ったが方策は失敗した話 | decision failure | 同上 |
-| スキルの失敗 | 両方失敗した話（手の実行側の限界） | skill failure | 同上 |
+| 2×2 帰属 | 固定ルールと方策の成否を同一シードで 4 象限に分ける。途中の接触や姿勢も変わるため、判断とスキルの寄与は切り分けられない | 2×2 attribution | 同上「失敗の帰属」 |
+| 判断の失敗 | ルールは渡ったが方策は失敗した話（`comparison_v4.md` の列名。原因を断定する呼び名ではない） | decision failure | 同上 |
+| スキルの失敗 | 両方失敗した話（`comparison_v4.md` の列名。原因を断定する呼び名ではない） | skill failure | 同上 |
 | 固定ルール／PPO／Q 表／ランダム | 支配人 AI の 4 方式（PPO は SB3、Q 表は表形式 Q 学習） | rule / PPO / tabular Q / random | `crab_help.rule_action`、`manager2_train.py`、`manager2_tabq.py` |
 | 報酬 v2.1／v2.2 | 学習の報酬の版。v2.2 は `still_down` で終わる `SEAT`／`STANDUP` も無駄な手に数える（学習のみ、評価は v2.1） | reward v2.1 / v2.2 | `manager2_env.py` `REWARD`、`REWARD_VERSIONS` |
 
@@ -222,7 +222,7 @@
 | 呼び名 | 条件 | 英語 | ファイル・出所 |
 |---|---|---|---|
 | 提出動画 | 講座の OP カード＋自己紹介＋本編＋講座の ED カード、BGM つき、2:56.6 | submitted video | `assemble.py` の出力（講座の素材を含むので同梱しない） |
-| 本編（PPO） | PPO v2.2 の支配人（`--manager ppo --run ppo2_v22`）、4 手、輪の万歳、施工・仲間を呼んで戻る区間・輪へ集まる区間は 4 倍速、省略なし、END の後は 1 s、支配人の帯つき、2:35。PPO 版と物理が同一 | main video (PPO) | `out/3body_arena_v7_take58.mp4`、`out/v7_full_report_take58.json` |
+| 本編（PPO） | PPO v2.2 の支配人（`--manager ppo --run ppo2_v22`）、4 手、輪の万歳、施工・仲間を呼んで戻る区間・輪へ集まる区間は 4 倍速、省略なし、END の後は 1 s、支配人の帯つき、2:35。PPO 版と物理が同一 | main video (PPO) | `out/3body_arena_v7_take61.mp4`、`out/v7_full_report_take61.json` |
 | 固定ルール版 | 本編と同じ設定で支配人だけを固定ルールにした比較用、5 手、2:37。以前の 2:47 版と物理が同一 | rule comparison (same settings) | `out/3body_arena_v7_take57.mp4`、`out/v7_full_report_take57.json` |
 | 以前の 2:47 版 | 固定ルール版と物理が同一（`state_digest` 一致）。施工 4 倍速・以後 2 倍速・省略なし、帯なし、2:47。比較の基準 | earlier 2:47 cut | `out/3body_arena_v7_take51.mp4`、`out/v7_full_report_take51.json` |
 | PPO 版 | PPO v2.2（`--manager ppo --run ppo2_v22`）、以前の 2:47 版と同じ速度設定、帯なし、2:45。本編と物理が同一 | PPO run | `out/3body_arena_v7_take52.mp4`、`out/v7_full_report_take52.json` |

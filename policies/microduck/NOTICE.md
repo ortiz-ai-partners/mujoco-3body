@@ -7,3 +7,6 @@ downloaded from the Hugging Face model repository `pollen-robotics/microduck-pol
 They are bundled unmodified and used for inference only. `LICENSE` in this folder is the Apache License 2.0 text
 (copied from the `microduck_rl` repository by Pollen Robotics, which uses the same license).
 Versions and training sources are in `manifest.json`; the full third-party list is in `THIRD_PARTY.md` at the repository root.
+
+`microduck_voice.py` at the repository root is a Python port of the `sounds` crate of the official Microduck runtime
+(https://github.com/pollen-robotics/microduck, Apache-2.0, Copyright Pollen Robotics), used for the duck's voice in the videos.

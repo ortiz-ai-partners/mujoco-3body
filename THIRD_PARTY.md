@@ -26,6 +26,7 @@
 | Microduck の MJCF（`microduck_rl`） | https://github.com/pollen-robotics/microduck_rl | commit b02fdea | Apache-2.0 | 既製。MJCF を読み込むのみ、改変なし | なし |
 | Microduck の 3D メッシュ（`assets/*.stl`） | 同上 | 同上 | CC BY-NC-SA 4.0 | 既製。描画のみ（動画と図に映る） | なし |
 | Microduck の観測契約（`scripts/infer_policy.py`） | 同上 | 同上 | Apache-2.0 | 転記。`v7_policies.py` に書き写した | 転記部分のみ |
+| Microduck の声の合成器 `sounds`（公式ランタイム） | https://github.com/pollen-robotics/microduck の `sounds/src/` | commit 52a8e23 | Apache-2.0 | 移植。`microduck_voice.py` に Python で書き写し、パッカンの鳴き声に使う | 移植部分のみ |
 | Jumper の MJCF とメッシュ（KingKong Robotics） | https://github.com/KingKongRobotics/jumper | commit 61d0652 | Apache-2.0 | 既製。MJCF を読み込むのみ、改変なし | なし |
 | Jumper 公式 ONNX `locomotion`・`jump`・`dance_crab` と契約 JSON | 同上 `out/bundle_example/jumper/` | 同上（初版 004afda から不変） | Apache-2.0 | 既製。推論のみ、改変なし | なし |
 | Jumper の観測契約と定数（`obs.rs`・`trajectory.rs`・`constants.py`） | 同上 | 同上 | Apache-2.0 | 転記。`v7_policies.py`・`v6_robots.py` に書き写した | 転記部分のみ |
@@ -78,6 +79,11 @@
 既定姿勢（`infer_policy.py` の `DEFAULT_POSE` → `v7_policies.MD_DEFAULT_POSE`）と行動の変換（target = default + action × scale）も同じ元から書き写した。
 転記元は Apache-2.0（`microduck_rl` の `LICENSE`、Copyright 2026 Pollen Robotics。本文は http://www.apache.org/licenses/LICENSE-2.0 ）。
 帰属表示をこの節で行い、転記部分はこの条件に従う。`infer_policy.py` のファイル自体は含まない。
+
+### 公式の声（`sounds` → `microduck_voice.py`）
+
+パッカンの鳴き声は、Microduck の公式ランタイム（https://github.com/pollen-robotics/microduck）の `sounds` を `microduck_voice.py` に Python で書き写したもので鳴らす。`sounds` は実機が声のバンクを作る合成器で、実機はそれを音声コーデック（TLV320AIC3104）で鳴らす（`robotd/src/sound.rs`）。乱数（splitmix64 で種を広げた xoshiro256++）、性格の値（声の高さ・倍音・ガア声の強さなど）を引く順番、7 つの鳴き方（`chirp`・`greet`・`inquire`・`alarm`・`peck`・`coo`・`wheee`）の作り方と 48 kHz の生成は元のとおりで、移植の確かめに元のテストと同じ条件（全ての鳴き方・変種が有限で、山の高さが 0.3〜1.0）を通した。性格の種は 276（パッカンの役柄＝甘えん坊の愛されアヒルに合わせ、やや高く（454 Hz）、やわらかく（ガア声 0.38）、語尾が上がる声を候補から選んだ。実機では本体の SoC の番号から決まる）。場面ごとの鳴き方の対応は `v7_full.Chirps.DUCK_TAG`、音量は置き換える前の合成音の RMS にそろえた。
+転記元は Apache-2.0（`Cargo.toml` の `license = "Apache-2.0"`、Copyright Pollen Robotics。本文は http://www.apache.org/licenses/LICENSE-2.0 ）。帰属表示をこの節と `microduck_voice.py` の冒頭で行い、移植部分はこの条件に従う。元のファイル自体は含まない。跳跳には公開された声がない（公式バンドルとリポジトリにあるのは動作とポリシーだけ。実機にはスピーカーが 2 個ある）ので、跳跳の声と効果音は本作で合成した。
 
 ## Jumper（KingKong Robotics）
 
@@ -163,10 +169,10 @@ Python 本体は 3.10（3.10.6 で確認、PSF License）。上の 10 本が引�
 
 上の第三者資産と転記部分を除くコードは、すべて本プロジェクトで作成した。
 学習済みの支配人 AI（`out/manager_runs/ppo2_v22/ppo_manager.zip`、`out/manager_runs/tabq2_small/tabq.json` ほか）と気分ネット（`out/manager_runs/mood_net/`）も本プロジェクトの成果物である。
-評価の生成物（`out/manager_runs/*.md`、`*.json`）と報告 JSON（`out/v7_full_report_take58.json` など）も含め、MIT で公開する。
+評価の生成物（`out/manager_runs/*.md`、`*.json`）と報告 JSON（`out/v7_full_report_take61.json` など）も含め、MIT で公開する。
 動画の効果音は `v7_full.py` の `Chirps` と `intro.py` が合成するもので、BGM は `music/marimba_bgm.py` が numpy/scipy の加算合成だけで作る自作曲である。第三者の音源・既存の曲・サンプルは使わない。提出動画の最初と最後の講座の OP／ED カード（計 6 s、音声なし）は講座が配布した素材で、本リポジトリには含めない。
 
-動画と静止画も本プロジェクトで作成した。動画は `out/` 以下の `*.mp4` のすべてで、提出動画の本編（PPO の支配人）は `out/3body_arena_v7_take58.mp4`、自己紹介は `out/intro.mp4`、
+動画と静止画も本プロジェクトで作成した。動画は `out/` 以下の `*.mp4` のすべてで、提出動画の本編（PPO の支配人）は `out/3body_arena_v7_take61.mp4`、自己紹介は `out/intro.mp4`、
 本編と同じ設定で支配人を固定ルールにした固定ルール版は `out/3body_arena_v7_take57.mp4`、固定ルール版と物理が同一の以前の 2:47 版は `out/3body_arena_v7_take51.mp4`、
 PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_arena_v7_take53.mp4`・`out/3body_arena_v7_take54.mp4`。
 静止画は報告書の図（`report/*.png`）、差し替え前の図と元データ（`docs/devlog/figures/`）、表情の確認画像（`out/face_test/`）である。
@@ -191,7 +197,7 @@ PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_a
 | 支配人 AI | 自作 | 提出動画の PPO 版と Q 表版は学習、固定ルール版は学習なし | 46 → 6 手、前の手が終わるたびに 1 回 | 失敗したときの次の一手を選ぶ |
 | 気分ネット | 自作 | 学習 | 53 → 5、救助中に支配人の手を実行している間の毎制御ステップ | 跳跳の表情の元になる 5 つの値を推論する |
 
-支配人 AI の観測は 46 次元（`crab_help.py` の `OBS_DIM`）、手は 6 つ（同 `ACTIONS`）。提出動画は学習済みの PPO 版で（`out/manager_runs/ppo2_v22/ppo_manager.zip`、`manager.policy` は「PPO 方策（ppo2_v22）」）、4 手を打った（`out/v7_full_report_take58.json` の `manager.decisions`）。
+支配人 AI の観測は 46 次元（`crab_help.py` の `OBS_DIM`）、手は 6 つ（同 `ACTIONS`）。提出動画は学習済みの PPO 版で（`out/manager_runs/ppo2_v22/ppo_manager.zip`、`manager.policy` は「PPO 方策（ppo2_v22）」）、4 手を打った（`out/v7_full_report_take61.json` の `manager.decisions`）。
 気分ネットは 53-32-32-5 の MLP で（`analysis/mood_train.py` の `MoodNet`、`out/manager_runs/mood_net/meta.json` の `n_in`・`hidden`・`n_out`）、提出動画では 5,050 回推論した（同 JSON の `face.mood_ai.inferences`）。
 出力は 4 つの結末の確率と「渡れる」の確率である（`crab_face.MoodAI` の `KEYS`）。ブルドーザーは規則制御で、AI 推論はない。
 
@@ -221,9 +227,9 @@ Q 表版は本リポジトリで実装した表形式 Q 学習で（`manager2_ta
 `examples/ortiz-slope-plan.json`・`examples/ortiz-gate-plan.json` の `provenance`、`examples/ortiz-slope-review.json`）。
 本作はその計画 JSON を読まず、坂の配置は `slope_assembly.assembly_xml` の定数で決まる。
 
-報告書の図のうち 6 枚（`report/*_ortiz.png`）は、本プロジェクトで書いた数値入りの依頼文をもとに、
+報告書の図のうち 5 枚（`report/*_ortiz.png`）は、本プロジェクトで書いた数値入りの依頼文をもとに、
 開発補助の LLM とは別の対話型 AI「GPTAstra」が清書した（版は記録していない）。
-`report/faces_sheet_ja.png` は `analysis/face_sheet.py` が描く。
+`report/faces_sheet_ja.png` は `analysis/face_sheet.py`、`report/results_managers.png` は `analysis/fig_results.py` が描く（どちらも BIZ UDPGothic）。
 
 図中の数値と規則は `crab_face.py`、`crab_help.py`、報告 JSON、`out/manager_runs/comparison_v4.md` と照合した（記録は `docs/devlog/face_rules_chart.md`）。
 照合で見つかったずれは `docs/devlog/README.md` の訂正表に記す：全体図は公式ポリシー 5 本のうち 4 本分の次元だけを載せる（訂正表 14）、

@@ -12,11 +12,13 @@
   （`analysis/mood_train.py` MoodNet、`v7_full.py` CONTROL_DT）。
 - 学習データは学習環境で 35 話・47,952 サンプル（`out/manager_runs/mood_net/meta.json` n_episodes, n_samples）。
   見送り分 10,772 サンプルで 4 分類の正解率 0.80、成功 vs 失敗の均衡正解率 0.83（同 metrics）。
+  見送り分は正規化とモデル選択にも使ったので、これは独立したテスト性能ではない（「学習」の節）。
+  学習に使っていないシードの 35 試行で採点し直した独立テストでは、4 分類 0.76、成功 vs 失敗の均衡正解率 0.85、渡れるの均衡正解率 0.62。
 - 表情は 11 種、優先順の 17 規則で決める（`crab_face.py` EXPRESSIONS、FaceDriver.choose）。入力は推論値と
   MuJoCo の計測値（接触力、押している時間、進み、転倒、傾き）の両方で、顔モニターに決め手の値を表示する。
 - 顔と気分ネットは描画専用で物理を変えない。顔あり／なしのヘッドレス通しで最終状態の sha256 が一致した
   （`analysis/face_check.py`、`out/v7_full_report_facecheck_A.json`・`out/v7_full_report_facecheck_B.json`）。
-- 提出動画の本編（PPO の支配人）での推論回数は 5,050 回（`out/v7_full_report_take58.json` `face.mood_ai.inferences`、PPO 版も同じ。固定ルール版は 5,236 回）。
+- 提出動画の本編（PPO の支配人）での推論回数は 5,050 回（`out/v7_full_report_take61.json` `face.mood_ai.inferences`、PPO 版も同じ。固定ルール版は 5,236 回）。
 
 ## 位置づけ：2 つ目の AI は何を読み、何に触れないか
 
@@ -81,6 +83,19 @@
 サンプル単位で切ると同じ話の隣接サンプルが学習と検証の両方に入り、成績が実力より高く出るためである。
 採用するエポックは 10 エポックごとに見送り分で測った「成功 vs 失敗」の均衡正解率（損失 ×0.01 を引く）が
 最大のもので、600 中 450 エポック目になった（meta.json best_epoch）。学習ループは CPU で 3.5 s（meta.json train_s）。
+ただし、入力の正規化（平均と標準偏差）に見送り分を含み、モデル選択（採用するエポック）にも同じ見送り分を使用したため、見送り分の成績は独立したテスト性能ではない（表情の線も同じ見送り分の分布から決めた）。
+
+独立テスト（`analysis/mood_test.py`）：学習に使っていないシード（9000〜9001、ランダムは 9100）で同じ作り方の 35 試行・44,230 サンプルを集め直し（`analysis/mood_data.py --seed0 9000`）、提出動画で使ったネットを重み・正規化・しきい値ごとそのまま採点した。4 分類の正解率 0.762、成功 vs 失敗の正解率 0.830・均衡正解率 0.846、渡れるの正解率 0.645・均衡正解率 0.621（`out/manager_runs/mood_net/test_report.md`、`test_metrics.json`）。
+
+| 指標 | 独立テスト（35 試行、44,230） | 見送り分（独立でない、10,772） |
+|---|---|---|
+| 4 分類の正解率 | 0.762 | 0.80 |
+| 成功 vs 失敗の正解率 | 0.830 | 0.80 |
+| 成功 vs 失敗の均衡正解率 | 0.846 | 0.83 |
+| 渡れるの正解率 | 0.645 | 0.672 |
+| 渡れるの均衡正解率 | 0.621 | 0.684 |
+
+スキル別の線（見送り分で、うまく終わった手の 8 割が上・失敗した手の 8 割が下になるよう決めた）は、新しいデータでは分かれ方がずれた。うまく終わった手のうちにっこりの線以上：`WAIT` 0.19、`SEAT` 0.81、`PUSH` 0.71、`BACK_OFF` 0.34、`STANDUP` 0.57、`WALK_ON` 0.51。失敗した手のうち困りの線以下：`SEAT` 0.74、`PUSH` 0.18、`BACK_OFF` 0.95、`STANDUP` 0.99、`WALK_ON` 0.23。線を見送り分の少ない話数（8 話）から決めたため、手によっては新しいデータに合わない。
 
 成績（`out/manager_runs/mood_net/report.md` の転記）：
 
@@ -145,7 +160,7 @@
 推論値は 0.5 s の時定数で平滑化し（`crab_face.py` MOOD_TAU）、規則が読むのは平滑化後の値である。
 1 s ごとの標本が報告 JSON の `face.mood_ai.series` に残る（[t, p_success, p_stall, p_fall, p_nothing, p_cross]）。
 
-本編（PPO v2.2、`out/v7_full_report_take58.json`）での推論は 5,050 回。手ごとの p(成功) の中央値は、
+本編（PPO v2.2、`out/v7_full_report_take61.json`）での推論は 5,050 回。手ごとの p(成功) の中央値は、
 SEAT 0.84（標本 11）、PUSH 0.99（72）、STANDUP 1.00（5）、WALK_ON 0.98（13）で、
 p(渡れる) は救助の開始時 0.08 から終了時 0.85 まで上がった（同 `face.mood_ai.series`）。
 固定ルール版（`out/v7_full_report_take57.json`）では BACK_OFF 0.96（2）が加わり、STANDUP 0.99（5）、WALK_ON 0.98（14）、終了時の p(渡れる) は 0.79 である。
@@ -153,7 +168,7 @@ PUSH の標本の最小 0.57 は手が切り替わった直後の 1 標本で、
 
 | 版 | 支配人 | 手数 | 推論回数 | 出所 |
 |---|---|---|---|---|
-| 本編（提出） | PPO v2.2 | 4 | 5,050 | `out/v7_full_report_take58.json`（PPO 版 `take52.json` も同じ） |
+| 本編（提出） | PPO v2.2 | 4 | 5,050 | `out/v7_full_report_take61.json`（PPO 版 `take52.json` も同じ） |
 | 固定ルール版 | 固定ルール | 5 | 5,236 | `out/v7_full_report_take57.json`（以前の 2:47 版 `take51.json` も同じ） |
 | Q 表版 | 表形式 Q | 8 | 5,239 | `out/v7_full_report_take53.json` |
 | 追走版 | 固定ルール | 5 | 5,236 | `out/v7_full_report_take54.json` |
@@ -295,7 +310,7 @@ flowchart TD
 力の目盛り 10 N は、ヘッドレス通しで測った押している間の接触力（法線成分の合計）の分布から決めた：
 p10／p50／p90／最大 ＝ 0／6.4／10.2／13.5 N、パッカンの重さは約 15 N（開発記録の集計、再計算スクリプトなし；
 `crab_face.py` PUSH_FORCE_REF の注記）。本編の 1 s ごとの標本でも、力が掛かっている 49 標本の中央値 7.5 N、
-最大 17.2 N で同じ桁である（`out/v7_full_report_take58.json` `face.effort_series`、固定ルール版・以前の 2:47 版と同じ値）。
+最大 17.2 N で同じ桁である（`out/v7_full_report_take61.json` `face.effort_series`、固定ルール版・以前の 2:47 版と同じ値）。
 
 力の計測には最初「脚のアクチュエータの力の合計」を試したが、歩行 4.9 と押し 5.4 N·m で差が出ず採用しなかった
 （`crab_face.py` docstring）。接触は押している間 0.5 s ごとに途切れるので、1 s 途切れるまでは押し続きと扱う
@@ -304,8 +319,8 @@ p10／p50／p90／最大 ＝ 0／6.4／10.2／13.5 N、パッカンの重さは�
 
 ## 提出動画の表情の時系列
 
-本編（`out/3body_arena_v7_take58.mp4`）の顔の変化 26 行を、提出動画の時刻・本編の時刻・sim 時刻で並べる。
-出所は `out/v7_full_report_take58.json` の `face.log` で、`python analysis/timeline_times.py out/v7_full_report_take58.json`
+本編（`out/3body_arena_v7_take61.mp4`）の顔の変化 26 行を、提出動画の時刻・本編の時刻・sim 時刻で並べる。
+出所は `out/v7_full_report_take61.json` の `face.log` で、`python analysis/timeline_times.py out/v7_full_report_take61.json`
 が本編の時刻（m:ss.s）に変換して出力する。提出動画の時刻は本編の時刻＋18.14 s（講座の OP カードと自己紹介の長さ、`docs/video_guide.md` 第 1 節）。
 本編は施工 ×4（0:00〜0:44.1）、以後 ×2、仲間を呼んで戻る区間（1:20.4〜1:24.3）と輪へ集まる区間（2:14.8〜2:19.1）は ×4、万歳 ×1（2:19.1〜2:35.5）。
 
@@ -380,7 +395,7 @@ python analysis/face_check.py out/v7_full_report_facecheck_A.json out/v7_full_re
 | A vs C | 顔なし／気分ネットあり（推論 4,518 回） | ダイジェスト・判断・モード変化・渡り切り一致、出来事は文言 1 件のみ差 | `out/v7_full_report_moodcheck_C.json` `face.mood_ai.inferences` |
 | 以前の 2:47 版 | 省略あり ×2 版と省略なし ×4 版 | ダイジェスト 678fd3cae2caa4e7 が一致、判断 5 手が同じ sim 時刻 | `out/v7_full_report_take46.json`・`out/v7_full_report_take51.json` `state_digest` |
 | 固定ルール版 | 以前の 2:47 版と、書き出しの倍速・END 後の尾・帯・声の音量と左右の振り分けを変えた固定ルール版 | ダイジェスト 678fd3cae2caa4e7 が一致、判断 5 手と `face.log` が同じ | `out/v7_full_report_take51.json`・`out/v7_full_report_take57.json` `state_digest` |
-| 本編（提出） | 以前の速度設定の PPO 版と、同じ変更を加えた本編 | ダイジェスト aafa49e7a8698eac が一致、判断 4 手と `face.log` が同じ | `out/v7_full_report_take52.json`・`out/v7_full_report_take58.json` `state_digest` |
+| 本編（提出） | 以前の速度設定の PPO 版と、同じ変更を加えた本編 | ダイジェスト aafa49e7a8698eac が一致、判断 4 手と `face.log` が同じ | `out/v7_full_report_take52.json`・`out/v7_full_report_take61.json` `state_digest` |
 
 検証：本書の執筆時に A・B・C の報告 JSON を同じ 8 項目で比較し直し、上の表のとおりであることを確認した。
 A vs C で違う出来事 1 件は文言だけで（「BZ faces south: the circle is complete」が C では
@@ -466,7 +481,7 @@ Interaction の行）。公式リポジトリに含まれる表情は dance タ�
 | `python analysis/face_sheet.py` | 未計測（描画 11 枚） | `report/faces_sheet_ja.png` | 11 種の顔 |
 | `python v7_test_face.py` | 未計測（描画のみ） | `out/face_test/` | 各表情の PNG |
 | A/B/C のコマンド（前節） | 描画なし | `out/v7_full_report_facecheck_A.json`・`out/v7_full_report_facecheck_B.json`・`out/v7_full_report_moodcheck_C.json` | ダイジェスト一致 |
-| `python analysis/timeline_times.py out/v7_full_report_take58.json` | 数秒 | 標準出力 | 表情の時系列（本編の時刻。提出動画は＋18.14 s） |
+| `python analysis/timeline_times.py out/v7_full_report_take61.json` | 数秒 | 標準出力 | 表情の時系列（本編の時刻。提出動画は＋18.14 s） |
 
 データ収集は `--run ppo2_v22` の重み `out/manager_runs/ppo2_v22/ppo_manager.zip` を要する。
 通し台本の顔は `--no-face` で外せ、`--face-ai {mood,critic,table}` で気分ネット／批評家／固定の表を選べる

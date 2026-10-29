@@ -1,0 +1,63 @@
+{
+ "episodes": 35,
+ "samples": 44230,
+ "outcome4_acc": 0.762,
+ "success_vs_not_acc": 0.83,
+ "success_vs_not_balanced_acc": 0.846,
+ "crossed_acc": 0.645,
+ "crossed_balanced_acc": 0.621,
+ "face_lines_by_skill": {
+  "WAIT": {
+   "good_above_smile": 0.19,
+   "bad_below_trouble": null,
+   "n_good": 7200,
+   "n_bad": 0
+  },
+  "SEAT": {
+   "good_above_smile": 0.81,
+   "bad_below_trouble": 0.74,
+   "n_good": 2719,
+   "n_bad": 5940
+  },
+  "PUSH": {
+   "good_above_smile": 0.71,
+   "bad_below_trouble": 0.18,
+   "n_good": 11197,
+   "n_bad": 4865
+  },
+  "BACK_OFF": {
+   "good_above_smile": 0.34,
+   "bad_below_trouble": 0.95,
+   "n_good": 382,
+   "n_bad": 2093
+  },
+  "STANDUP": {
+   "good_above_smile": 0.57,
+   "bad_below_trouble": 0.99,
+   "n_good": 1450,
+   "n_bad": 4040
+  },
+  "WALK_ON": {
+   "good_above_smile": 0.51,
+   "bad_below_trouble": 0.23,
+   "n_good": 3955,
+   "n_bad": 389
+  }
+ },
+ "heldout_in_training": {
+  "outcome4/heldout": {
+   "n": 10772,
+   "acc": 0.8
+  },
+  "success_vs_not/heldout": {
+   "n": 10772,
+   "acc": 0.8,
+   "balanced_acc": 0.83
+  },
+  "crossed/heldout": {
+   "n": 10772,
+   "acc": 0.672,
+   "balanced_acc": 0.684
+  }
+ }
+}

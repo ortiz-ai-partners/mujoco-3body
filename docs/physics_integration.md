@@ -205,7 +205,7 @@ PD は kp 20／kd 0.5、契約の `sim_dt 0.0025`・`decimation 2`、方策ネ�
 ダンスは 200 Hz の `Crab.step()` の中で `dance_every = 4` 回に 1 回だけ推論する（`Crab.__init__`）。
 
 時間刻みは 2 段階である。施工中は `--dt-build 0.005`、施工完了の瞬間に `--dt-action 0.001` へ切り替える（`model.opt.timestep = args.dt_action`、既定値は `v7_full.main()` の argparse）。
-提出動画の本編では sim 196.08 s（本編 0:54.0、提出動画 1:12.1）に `physics step -> 0.001` の出来事が記録されている（`out/v7_full_report_take58.json` の `events`）。
+提出動画の本編では sim 196.08 s（本編 0:54.0、提出動画 1:12.1）に `physics step -> 0.001` の出来事が記録されている（`out/v7_full_report_take61.json` の `events`）。
 0.005 は course-builder が施工を検証した刻み（`scene_fork_tracks.xml` の `<option>`）で、0.001 は Jumper の契約 `sim_dt`（`locomotion.json`）である。
 施工を 0.002 で回すと復路 `TO_START` で時間切れになったという記述は開発記録（`docs/devlog/HANDOVER.md`）にあり、再計算スクリプトはない。
 
@@ -220,7 +220,7 @@ PD は kp 20／kd 0.5、契約の `sim_dt 0.0025`・`decimation 2`、方策ネ�
 
 制御周期はどのポリシーも契約どおりに守る。物理の刻みは 3 体で 1 つしか持てないため、坂の場面は最も細かい `locomotion` の 0.001 にそろえた。
 施工中（刻み 0.005）の跳跳は東側の空き地で歩いて跳ねる戯れだけで（本編で `WALK` 10 回・`JUMP` 9 回）、坂を登るのは刻みを 0.001 に切り替えた後である
-（`out/v7_full_report_take58.json` の `jp_events` と `events`）。戯れの間は `locomotion` と `jump` が契約より粗い刻みで動き、
+（`out/v7_full_report_take61.json` の `jp_events` と `events`）。戯れの間は `locomotion` と `jump` が契約より粗い刻みで動き、
 坂の場面の `jump` と `dance_crab` は契約より細かい刻みで動く。この差が動きに与える影響は、契約の刻みどおりの場合と比べておらず確かめていない。
 
 ## 6. 外力なしの原則の実装
@@ -239,7 +239,7 @@ PD は kp 20／kd 0.5、契約の `sim_dt 0.0025`・`decimation 2`、方策ネ�
    提出動画の台本（`v7_full.py`）は t = 0 の前に `build_arena()` が初期姿勢を書くだけで、以後は `qpos` に一度も書き込まない。
 
 跳跳は結合時に追加した PD アクチュエータ（2-6 節）だけで歩き、跳び、押す。座ったパッカンを押し上げる力は接触から生まれる。
-本編の報告 JSON（`out/v7_full_report_take58.json`、PUSH の区間は固定ルール版・以前の 2:47 版と同じ値）の `face.effort_series`（1 秒ごとの標本、3 列目がパッカンへの接触力）を PUSH の区間 sim 276.5〜347.9 s で集計すると、
+本編の報告 JSON（`out/v7_full_report_take61.json`、PUSH の区間は固定ルール版・以前の 2:47 版と同じ値）の `face.effort_series`（1 秒ごとの標本、3 列目がパッカンへの接触力）を PUSH の区間 sim 276.5〜347.9 s で集計すると、
 71 点の中央値 6.8 N、90 パーセンタイル 11.7 N である（本ノート執筆時に集計）。表情の基準値 `crab_face.PUSH_FORCE_REF` 10 N は、
 開発記録のヘッドレスの較正（中央値 6.4 N、90 パーセンタイル 10.2 N、`docs/devlog/HANDOVER.md`）から決めた値である。
 パッカンの重さは 7.2 N（0.74 kg、1 節）で、16.3° の坂に沿った成分は 2.0 N にとどまる。残りは座ったまま坂を滑らせる摩擦に使われていると考える。
@@ -255,7 +255,7 @@ PD は kp 20／kd 0.5、契約の `sim_dt 0.0025`・`decimation 2`、方策ネ�
   施工が終わった配置は `v6_common.built_stage_xml()` で各部材の `pos`／`quat` に書き戻し、`out/v6_stage_built.xml` として保存する（`v6_phase1_build.py`）。
   学習環境（`manager2_env.STAGE_XML`）と単体実験はこの保存済み舞台を読む。
 - 履帯：`tracks.TrackAnimation.update()` は描画用の装飾ジオメトリ（`class="decor"`）を動かすだけで、接触はしない。車体は 4 輪（`drive_lf`／`drive_lr`／`drive_rf`／`drive_rr`）で接地する。
-- 施工結果：`Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m`（`out/v7_full_report_take58.json` の `construction.reason`）。
+- 施工結果：`Placed 2 slopes; crossed 4/4 surfaces; rise 0.440 m`（`out/v7_full_report_take61.json` の `construction.reason`）。
   各部材は 0.21 m 持ち上げて約 2.98 m 運ぶ（同 `construction.parts[].lift_m`／`carry_m`）。
 
 ### 7-1. Navigator の差し替え（復路の壁）
@@ -269,7 +269,7 @@ BZ は角 `(-1, -3.2)` へ向けて南に走り、経由点に近づくと次の
 （`navigation.py` の `Empty transfer touched course geometry.`）が施工を中断した。
 
 対処：台本は `TO_START` に入った瞬間に同じ設定の `Navigator` を角 `y = -3.0` で差し替える（`v7_full.main()`：`Navigator(sim, [[-1, .75], [-1, -3.0], [target_x, -3.0]], fast_empty=…)`）。
-course-builder 本体は無変更である。本編では sim 106.06 s（本編 0:26.5、提出動画 0:44.6）に `TO_START route: corner at y=-3.0` の出来事が残る（`out/v7_full_report_take58.json` の `events`）。
+course-builder 本体は無変更である。本編では sim 106.06 s（本編 0:26.5、提出動画 0:44.6）に `TO_START route: corner at y=-3.0` の出来事が残る（`out/v7_full_report_take61.json` の `events`）。
 施工後に BZ が自分で移動する場面では `Navigator(sim, waypoints, allow_reverse=True)` を使い、後退を許す（`v7_full.make_navigator`）。
 
 ### 7-2. 施工中の制約
@@ -287,7 +287,7 @@ course-builder は空荷の走行中に車体が何かに触れると施工を�
 
 END はヘッドレス sim 385.6 s、描画版 sim 401.7 s である。支配人の 5 手の種類と順序（SEAT→PUSH→BACK_OFF→STANDUP→WALK_ON）は同じだが、出来事は一致しない。
 ヘッドレス版はパッカンが渡り切った直後（sim 354.9 s）の sim 355.2 s に転倒し（傾き 84°）、2.2 s で自力で起き上がる。描画版にはこの転倒がない。
-`events` はヘッドレス 64 件、描画版 62 件である（`out/v7_full_report_facecheck_A.json` と以前の 2:47 版の `_take51.json` の `events`・`manager.decisions`、本ノート執筆時に数字を除いて行ごとに照合。固定ルール版 `_take57.json` も同じ 62 件。PPO の本編 `_take58.json` は `BACK_OFF` の 2 行がなく 60 件）。
+`events` はヘッドレス 64 件、描画版 62 件である（`out/v7_full_report_facecheck_A.json` と以前の 2:47 版の `_take51.json` の `events`・`manager.decisions`、本ノート執筆時に数字を除いて行ごとに照合。固定ルール版 `_take57.json` も同じ 62 件。PPO の本編 `_take61.json` は `BACK_OFF` の 2 行がなく 60 件）。
 描画版の報告の `sim_seconds` 404.22 は、END の後に回す 2.5 s を含む（`v7_full.main()` の末尾。本編と固定ルール版はそのうち最初の 1 s だけを書き出す、`--tail-write 1.0`）。
 
 一方、描画版同士はコードとフレームの時刻が同じなら決定的で、カメラの向きは物理に影響しない
@@ -309,7 +309,7 @@ END はヘッドレス sim 385.6 s、描画版 sim 401.7 s である。支配人
 | 比較（左／右） | 報告 JSON（`out/`） | ダイジェスト | `sim_seconds` | 手数 | 動画長 s |
 |---|---|---|---|---|---|
 | 顔なし／顔あり（ヘッドレス） | `v7_full_report_facecheck_A.json`／`_B.json` | 一致 `c083a03c…` | 385.6／385.6 | 5／5 | 描画なし（`ngeom` 290／291） |
-| 本編（提出）／PPO 版 | `v7_full_report_take58.json`／`_take52.json` | 一致 `aafa49e7…` | 400.6／400.6 | 4／4 | 155.5／165.2 |
+| 本編（提出）／PPO 版 | `v7_full_report_take61.json`／`_take52.json` | 一致 `aafa49e7…` | 400.6／400.6 | 4／4 | 155.5／165.2 |
 | 固定ルール版／以前の 2:47 版 | `v7_full_report_take57.json`／`_take51.json` | 一致 `678fd3ca…` | 404.22／404.22 | 5／5 | 157.3／167.0 |
 | 以前の 2:47 版（固定ルール）／2 倍速・省略あり | `v7_full_report_take51.json`／`_take46.json` | 一致 `678fd3ca…` | 404.22／404.22 | 5／5 | 167.0／164.1 |
 | PPO 版／2 倍速・省略あり | `v7_full_report_take52.json`／`_take47.json` | 一致 `aafa49e7…` | 400.6／400.6 | 4／4 | 165.2／162.3 |
@@ -320,12 +320,12 @@ END はヘッドレス sim 385.6 s、描画版 sim 401.7 s である。支配人
 2・3 行目は、仲間を呼んで戻る区間と輪へ集まる区間も 4 倍速で書き出し（`--speedup`）、END の後の書き出しを 1 s にした本編（PPO の支配人）・固定ルール版と、以前の速度設定で描いた同じ支配人の版の組である。
 本編と固定ルール版には支配人の帯、声の音量と左右の振り分けもあるが、どれも描画と音声だけなので digest は変わらない。
 4〜7 行目の左は施工 4 倍速・省略なし、右は施工も 2 倍速で空荷走行 2 か所を省略した版である。最終行の初版も 3 体とも渡り切るが、別の経路である。
-動画は報告 JSON と同じ番号の `out/3body_arena_v7_take58.mp4` などで、番号はファイルの固有名としてそのまま引用している。
+動画は報告 JSON と同じ番号の `out/3body_arena_v7_take61.mp4` などで、番号はファイルの固有名としてそのまま引用している。
 `sim_seconds` は描画版では END の後の 2.5 s を含む（本編も 2.5 s 回し、書き出すのは最初の 1 s）。
 
 本編の速度区間は ×4 が本編 0:00〜0:44.1（sim 0〜176.4 s）、×2 が 0:44.1〜1:20.4（sim 176.4〜248.9 s）、×4 が 1:20.4〜1:24.3（sim 248.9〜264.6 s）、
 ×2 が 1:24.3〜2:14.8（sim 264.6〜365.6 s）、×4 が 2:14.8〜2:19.1（sim 365.6〜382.7 s）、×1 が 2:19.1〜2:35.5（sim 382.7 s〜）である。提出動画の時刻はこれに 18.14 s を足す。
-動画時刻の区間は `python analysis/timeline_times.py out/v7_full_report_take58.json` が END（本編 2:34.4、sim 398.1 s）まで出す。
+動画時刻の区間は `python analysis/timeline_times.py out/v7_full_report_take61.json` が END（本編 2:34.4、sim 398.1 s）まで出す。
 その後の等速の尾は `v7_full.main()` 末尾のループ（`range(int(2.5 / CONTROL_DT))`）が回し、`--tail-write 1.0` で最初の 1 s だけを書くので、本編の全長は 2:35.5（`video_silent.seconds` 155.5）になる。
 sim の区切りは `events` の `stage -> FOLLOW_IN`（176.38 s）、`stage -> CALL`（248.94 s）、`stage -> RESCUE`（264.56 s）、`stage -> CELEBRATE`（365.64 s）、輪のダンスの開始（382.70 s）の時刻である。
 固定ルール版は `stage -> CELEBRATE` が 369.38 s、輪のダンスの開始が 386.32 s で、×2 が 1:24.3〜2:16.7、×4 が 2:16.7〜2:20.9、×1 が 2:20.9〜2:37.3 になる（`out/v7_full_report_take57.json`）。
@@ -335,7 +335,7 @@ sim の区切りは `events` の `stage -> FOLLOW_IN`（176.38 s）、`stage -> 
 
 ```
 python analysis/face_check.py out/v7_full_report_facecheck_A.json out/v7_full_report_facecheck_B.json
-python analysis/timeline_times.py out/v7_full_report_take58.json --compare out/v7_full_report_take52.json
+python analysis/timeline_times.py out/v7_full_report_take61.json --compare out/v7_full_report_take52.json
 python analysis/timeline_times.py out/v7_full_report_take57.json --compare out/v7_full_report_take51.json
 python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v7_full_report_take46.json
 ```
@@ -354,7 +354,7 @@ python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v
   `--no-bam` で XML の位置アクチュエータに切り替わる（同ファイルの argparse の help）。本リポジトリは後者の経路で、BAM も backlash も入れていない
   （`velstand` の学習タスク名は `Mjlab-VelStand-Rough-Backlash-MicroDuck`、`manifest.json` の `training.task_id`）。学習時の駆動系との差は残る。
 - 公式の `velstand` はこの環境で 16.3° の坂を登れない。本編では前進の指令を 1 回目 14 s、2 回目 11 s 与えても、胴体の到達は y −1.99 m／−2.00 m である。
-  これは上り坂の下端（`crab_help.TOE_Y` −2.0 m）の位置で、そこから坂を登れなかった（`out/v7_full_report_take58.json` の `events`、挑戦の秒数は `v7_full.py` の RAMP 段）。
+  これは上り坂の下端（`crab_help.TOE_Y` −2.0 m）の位置で、そこから坂を登れなかった（`out/v7_full_report_take61.json` の `events`、挑戦の秒数は `v7_full.py` の RAMP 段）。
   座り込むのはこの時間が過ぎた後の台本の動作である。
   登れない原因が上の駆動系の差か、勾配そのものかは切り分けていない。本作はこれを支配人 AI が次の一手を選ぶ場面として筋書きの核にした。
 - RAMP 段の字幕と出来事の文言は坂の入口を y −1.86 m と表示する（`v7_full.py` に書き込まれた文字列）。斜面の上面の下端は y ≈ −2.00 m で、

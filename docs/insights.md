@@ -34,10 +34,10 @@
 固定ルールとの同一シード 2×2（両方渡った／ルールだけ／方策だけ／両方失敗）は PPO v2.2 25/4/1/0、表形式 Q 24/5/1/0、PPO 中規模 22/7/1/0、
 ランダム 14/15/0/1（同ファイル「失敗の帰属」）。
 
-![評価 v4 の比較](../report/results_managers_ortiz.png)
+![支配人 AI の評価](../report/results_managers.png)
 
-図：同じ 30 シードでの渡り切り（濃い棒）と天面到達（薄い棒）、および固定ルールとの 2×2。
-読み方：2×2 の右上「ルールは渡ったが方策は失敗」が判断の失敗の候補、右下「両方失敗」がスキルの失敗の候補。出所は上と同じ。
+図：同じ 30 シードでのパッカンの救助タスクの成功数（濃い棒）と天面到達（薄い棒）、固定ルールとの成否の対応（2×2）、施工を含む 3 体の通しの成功数（各 30 回、[results.md](results.md)）。
+読み方：2×2 の右上は「ルールだけ成功」、右下は「両方失敗」。同一シードで成否の対応を比較したが、途中の接触や姿勢も変わるため、判断とスキルの寄与は切り分けられていない。出所は上と同じ。
 
 ### 原因（なぜ設計した規則で足りたか）
 
@@ -55,7 +55,7 @@
 「勝った」は新コース・30 シードの条件付きの結論である。旧コース（継ぎ目 5 cm）の評価 v3 では表形式 Q 24/30 が固定ルール 23/30 を上回っていた（`out/manager_runs/comparison_v3b.md`）。
 評価 v4 の差（3〜6 話）も 30 シードの比較としては小さく、PPO v2.2 と表形式 Q の順位は別のシード集合で入れ替わりうる。順位より確かなのは、学習した 3 方式はいずれも 2×2 の「両方失敗」が 0 本（ランダムは 1 本）で、学習方式の差はすべて判断の側にあったことである（`comparison_v4.md`「失敗の帰属」）。
 教訓として、判断対象が小さく整理できる問題では、まず規則を書いて基準にし、学習は「規則が見落とす状況を探す道具」と位置づける方が速い。
-学習方式の価値はそれでも 2 つあった。設計者の手順をなぞらず近道を見つけたこと（PPO は BACK_OFF を省いて 4 手で渡り、提出動画の本編もこの手順である。`out/v7_full_report_take58.json`・`take52.json` の `manager.decisions`）と、失敗の型を数で示して報酬と環境の不備を露わにしたこと（2 節・4 節）である。
+学習方式の価値はそれでも 2 つあった。設計者の手順をなぞらず近道を見つけたこと（PPO は BACK_OFF を省いて 4 手で渡り、提出動画の本編もこの手順である。`out/v7_full_report_take61.json`・`take52.json` の `manager.decisions`）と、失敗の型を数で示して報酬と環境の不備を露わにしたこと（2 節・4 節）である。
 
 ## 2. PPO 中規模の「転んだ相手に SEAT 連打」と報酬 v2.2
 
@@ -91,7 +91,7 @@ PPO 中規模 2/16（残りは PUSH 8、SEAT 3、STANDUP 2、話の終わり 1�
 ### 読み
 
 学習方式の穴は、アルゴリズムの失敗ではなく報酬設計の穴だった。「下がれ」を規則として押し付けず、転んだ相手への無駄な手をコストとして教えると、1 回の継続学習で穴は埋まった。
-代償として、転んだ相手には何もしない（待つ）方策になり、6 節の型の失敗は残る。PPO 中規模が見つけた近道（押し上げ直後に BACK_OFF を省いて立たせる）は継続学習後も残り、提出動画の本編と PPO 版の動画は 4 手で渡る（`out/v7_full_report_take58.json`・`take52.json` の `manager.decisions`）。
+代償として、転んだ相手には何もしない（待つ）方策になり、6 節の型の失敗は残る。PPO 中規模が見つけた近道（押し上げ直後に BACK_OFF を省いて立たせる）は継続学習後も残り、提出動画の本編と PPO 版の動画は 4 手で渡る（`out/v7_full_report_take61.json`・`take52.json` の `manager.decisions`）。
 
 ## 3. 評価のエピソードが独立していなかった
 
@@ -265,7 +265,7 @@ Q 表版は 0.4 である（`docs/video_guide.md` と `docs/reproduce.md` の描
 気分ネット・計測つきの版（`out/v7_full_report_moodcheck_B.json`〜`_E.json`）も同じ `state_digest` で、推論 4,518〜4,523 回を挟んでも物理は変わらない。
 描画版でも、顔なし（`out/v7_full_report_take24.json`）と顔付きの撮り直し（`out/v7_full_report_take30.json`）は sim 404.22 s・5 手・出来事 62 件が一致し、
 以前の 2:47 版とその省略版（`out/v7_full_report_take51.json`・`out/v7_full_report_take46.json`）、固定ルール版（`out/v7_full_report_take57.json`）の `state_digest` 678fd3ca… は `out/v7_full_report_take30.json` と同一である。
-PPO の支配人でも、提出動画の本編（`out/v7_full_report_take58.json`）、PPO 版とその省略版（`take52.json`・`take47.json`）、顔付きの全長版（`take31.json`）の `state_digest` aafa49e7… が一致する。
+PPO の支配人でも、提出動画の本編（`out/v7_full_report_take61.json`）、PPO 版とその省略版（`take52.json`・`take47.json`）、顔付きの全長版（`take31.json`）の `state_digest` aafa49e7… が一致する。
 本編と固定ルール版で足した支配人の帯、声の音量と左右の振り分けも、カメラと文字を読むだけで力学に関わらず、digest を変えなかった。
 理由は、顔の板が質量・接触・関節を持たず（`contype 0`、`density 0`）、既存 geom の順序も変えないこと、カメラと推論が力学に無関係なことにある。
 
@@ -291,9 +291,9 @@ PPO の支配人でも、提出動画の本編（`out/v7_full_report_take58.json
 2:47 版の動画は 167.0 s（`video_silent.seconds`）で、速度区間は ×4 が 0:00〜0:44.1（sim 0〜176.4 s）、×2 が 0:44.1〜2:29.1（sim 176.4〜386.3 s）、×1 が 2:29.1 以降（END は 2:44.5、sim 401.7 s）。
 一致の確認は `python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v7_full_report_take46.json` で、末尾に `state_digest equal: True` が出る。
 
-提出動画の本編（`out/3body_arena_v7_take58.mp4`、`out/v7_full_report_take58.json`、PPO の支配人）は、同じ間引きを仲間を呼んで戻る段階と輪へ集まる段階にも使い（`--speedup CALL=4 RETURN=4 CELEBRATE=4`）、
+提出動画の本編（`out/3body_arena_v7_take61.mp4`、`out/v7_full_report_take61.json`、PPO の支配人）は、同じ間引きを仲間を呼んで戻る段階と輪へ集まる段階にも使い（`--speedup CALL=4 RETURN=4 CELEBRATE=4`）、
 END の後に回す 2.5 s のうち最初の 1 s だけを書く（`--tail-write 1.0`）。動画は 155.5 s に縮んだが、`state_digest`・`sim_seconds` 400.6・支配人の 4 手の sim 時刻は以前の速度設定の PPO 版と同一で、
-`python analysis/timeline_times.py out/v7_full_report_take58.json --compare out/v7_full_report_take52.json` の末尾も `state_digest equal: True` になる。
+`python analysis/timeline_times.py out/v7_full_report_take61.json --compare out/v7_full_report_take52.json` の末尾も `state_digest equal: True` になる。
 同じ設定で支配人だけを固定ルールにした固定ルール版（`out/3body_arena_v7_take57.mp4`、157.3 s）も、`state_digest`・`sim_seconds` 404.22・5 手の sim 時刻が 2:47 版と同一である（`take57.json --compare take51.json`）。
 
 PPO 版・Q 表版・追走版（`out/v7_full_report_take52.json`〜`take54.json`）も、同じ 4 倍設定で 2 倍速＋省略版（`out/v7_full_report_take47.json`〜`take49.json`）と
@@ -315,7 +315,7 @@ PPO 版は本編と同じ SEAT→PUSH→STANDUP→WALK_ON の 4 手、Q 表版�
 - 立ったパッカンは跳跳が押すと 6 条件すべてで転ぶか登れないが、座ったパッカン（重心 6 cm）は 0.3 m/s で 1.9 m 登り切る。天面の縁で座面が急に水平に戻る瞬間に転倒するが、相手を向いて座ると倒れ込む先がなく転ばない（`docs/devlog/MANAGER_DESIGN.md` §6.2・§6.2b・§7.1）。
 - 跳跳（locomotion）は指令 0.3 m/s で実速 0.28 m/s、jump の高さは 13.6 cm（公式値 14 cm）。公式 jump に股関節ヨーの後方掃き 0.3〜1.2 rad を重ねると前方に 8〜39 cm 跳ぶ
   （数値は `docs/devlog/HANDOVER.md` §0 の観察。仕組みは `v7_policies.py` の `SWEEP_*` で、関節目標の重ね合わせのみ、外力なし）。
-  提出動画では峠で止まった跳跳がこの前方ジャンプで越える（`out/v7_full_report_take58.json` の `events`「JP stuck at the crest; forward jump」sim 239.0 s＝本編 1:15.4、提出動画 1:33.6）。
+  提出動画では峠で止まった跳跳がこの前方ジャンプで越える（`out/v7_full_report_take61.json` の `events`「JP stuck at the crest; forward jump」sim 239.0 s＝本編 1:15.4、提出動画 1:33.6）。
 - 跳跳は体が峠をまたぐ位置で locomotion が進めなくなる。この性質が、押し上げを天面の縁で終えて天面はパッカンが歩く設計（`crab_help.py` の `PUSH_TO_Y`）と、6 節の「跳跳が継ぎ目を越えて助けに行けない」限界の両方を決めた。
 - dance_crab は素の MuJoCo で 30 s 踊って転倒なし（傾き 7° 以下、横滑りは dt 0.001 で 9 cm、dt 0.005 で 22 cm）。時間刻みは施工中 0.005 s（0.002 s では施工の復路でタイムアウト）、施工完了後は Jumper の契約に合わせて 0.001 s に切り替える。
 - 跳跳が密着したままだとパッカンは起き上がれない。BACK_OFF という手の存在理由であり、2 節の報酬 v2.2 で教えた内容でもある。

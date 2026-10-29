@@ -64,10 +64,9 @@ run ディレクトリはすべて `out/manager_runs/<run>/` 以下。
 - 評価の報酬は全方式 v2.1（`eval` に報酬の引数はなく `manager2_env.py` の既定値）。報酬 v2.2 は PPO v2.2 の学習だけに使った。
 - エピソードは `Scene.reset()` の中で `mj_resetData` を呼んで独立させてある（`manager2_env.py`）。独立していなかった評価 v2 は付録 B。
 
-図：`report/results_managers_ortiz.png`。左上が渡り切り（濃い棒）と天面到達（薄い棒）、右上が固定ルールとの同一シード 2×2、
-下段が手数・転倒の平均と旧コースとの対比。数値は本文書の表と同じで、出所は `out/manager_runs/comparison_v4.md` と `comparison_v3b.md`。
+図：`report/results_managers.png`（`analysis/fig_results.py` が評価の記録から描く）。左がパッカンの救助タスクの成功数（濃い棒）と天面到達（薄い棒）、右上が固定ルールとの成否の対応（同一シード 2×2）、右下が施工を含む 3 体の通しの成功数（下の「施工を含む 3 体の通し」）。
 
-![支配人 AI の比較（評価 v4）](../report/results_managers_ortiz.png)
+![支配人 AI の評価](../report/results_managers.png)
 
 ### 総合表
 
@@ -153,7 +152,7 @@ PPO 中規模の `SEAT` 114 回のうち 96 回は転んだ相手に呼んで `s
 
 ### 固定ルールとの同一シード 2×2
 
-同じシードで固定ルールと比べ、失敗を「判断の失敗（ルールは渡った）」と「スキルの失敗（両方失敗）」に分ける。
+同じシードで固定ルールと比べ、成否を 4 象限に分ける。同一シードで成否の対応を比較したが、途中の接触や姿勢も変わるため、判断とスキルの寄与は切り分けられていない。
 
 | 方式 | 両方渡った | ルールだけ渡った | 方策だけ渡った | 両方失敗 |
 |---|---|---|---|---|
@@ -212,6 +211,19 @@ PPO 中規模 7 話：5 話（5000・5002・5011・5029・5018）は押しで転
 
 再生成（失敗した話の一覧）：`python analysis/failures.py out/manager_runs/<run>/eval_<policy>.json`。
 
+## 施工を含む 3 体の通し（30 回 × 2 方式）
+
+提出動画と同じ設定の `v7_full.py --test` を支配人ごとに 30 回（シード 7000〜7029、`analysis/fullrun_stats.py`）。回ごとに `--spawn-jitter` で開始時の配置をずらし（BZ ±2 cm・±2°、パッカンと跳跳 ±5 cm・±10°。最初の 1 歩の前に書き込む）、`--seed` で場面の乱数（遊びの歩き先・鳴く時刻）も変える。描画なしでは描画用の `mj_forward` を省くので、物理の経路は描画した動画と同一でない。成功＝3 体とも渡り切り（報告の `three_crossed`）、コースの部材が 4 cm 以上動かない（`course_disturbed` が空）。
+
+| 支配人 | 通しの成功 | 施工で停止 | 部材の移動 | 救助の失敗 |
+|---|---|---|---|---|
+| PPO v2.2（提出動画と同じ） | 13/30 | 12 | 1 | 4 |
+| 固定ルール | 16/30 | 12 | 1 | 1 |
+
+施工で止まった 12 回は両方式で同じシードで、支配人が動く前に決まる。BZ が右回りに 1° 以上ずれて始めた 10 回はすべて施工で止まり、それ以外の 20 回で止まったのは 2 回（`out/fullrun_stats/*/summary.json` の `bz_yaw_deg`）。止まった所は course-builder の置き終わりの確認（`transport.py` の `CHECK`）。表示は位置の誤差だけだが、多くの回で位置は基準（6 cm）以内で、位置以外の条件（部材の高さ・離れた距離・持ち上げの高さ・運んだ距離のどれか）で止まっている（どの条件かは記録していない）。施工が終わりコースも動かなかった 17 回では、救助の成功は PPO 13、固定ルール 16。PPO の救助の失敗 4 回のうち 3 回（7001・7009・7026）は押し上げが止まった後に `BACK_OFF` を 50 回以上選び続けて時間切れ、1 回（7007）は転倒後の `WAIT` の連続で、固定ルールも同じシードで同じように失敗した。
+
+回ごとの成否と失敗の所は `out/fullrun_stats/ppo2_v22/summary.md`、`out/fullrun_stats/rule/summary.md`。パッカンが 1 回以上転んだ回は、施工が終わった 18 回のうち PPO 15、固定ルール 8。
+
 ## 学習コストと学習曲線
 
 ### 学習コスト
@@ -269,7 +281,7 @@ PPO v2.2 の曲線が平らに見えるのは、開始分布に `ramp_fallen`（
 
 | 条件名 | ファイル（`out/`） | 支配人 | 手数 | 長さ | 物理（`state_digest` 先頭 8 桁） |
 |---|---|---|---|---|---|
-| 本編（提出、PPO・輪の万歳） | `3body_arena_v7_take58.mp4` | PPO v2.2（`ppo2_v22`） | 4 | 2:35.5 | `aafa49e7`、PPO 版と同じ |
+| 本編（提出、PPO・輪の万歳） | `3body_arena_v7_take61.mp4` | PPO v2.2（`ppo2_v22`） | 4 | 2:35.5 | `aafa49e7`、PPO 版と同じ |
 | 固定ルール版（比較用、本編と同じ設定） | `3body_arena_v7_take57.mp4` | 固定ルール | 5 | 2:37.3 | `678fd3ca`、以前の 2:47 版と同じ |
 | 以前の 2:47 版（固定ルール・輪の万歳） | `3body_arena_v7_take51.mp4` | 固定ルール | 5 | 2:47.0 | `678fd3ca`、省略版 `v7_full_report_take46.json` と同じ |
 | PPO 版 | `3body_arena_v7_take52.mp4` | PPO v2.2（`ppo2_v22`） | 4 | 2:45.2 | `aafa49e7`、省略版 `v7_full_report_take47.json` と同じ |
@@ -285,13 +297,13 @@ PPO v2.2 の曲線が平らに見えるのは、開始分布に `ramp_fallen`（
 施工 4 倍速の初版（`out/v7_full_report_take50.json`、2:40.2）は描画の標本周期が変わったことで物理の経路が変わり（`state_digest` が `768e78f7` で異なる）、
 同じ 5 手で 3 体渡り切りだが提出には使わない。
 
-出所：`out/v7_full_report_take58.json`・`take57.json` と `take51.json`〜`take54.json`（`manager.policy`、`manager.decisions`、`state_digest`、`three_crossed`、`course_disturbed`、`video_silent`、`sim_seconds`、`mujoco`）
+出所：`out/v7_full_report_take61.json`・`take57.json` と `take51.json`〜`take54.json`（`manager.policy`、`manager.decisions`、`state_digest`、`three_crossed`、`course_disturbed`、`video_silent`、`sim_seconds`、`mujoco`）
 と `out/v7_full_report_take46.json`〜`take49.json` の `state_digest`。
 
 再生成（約 8 分／本。`--ending crab`、`--manager rule`、`--finale circle` は既定値。Q 表版の `--jitter 0.4` は省略版の記録から）：
 
 ```
-python v7_full.py --manager ppo --run ppo2_v22 --tag _take58 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0
+python v7_full.py --manager ppo --run ppo2_v22 --tag _take61 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0
 python v7_full.py --tag _take57 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0
 python v7_full.py --tag _take51 --build-speed 4 --no-cuts
 python v7_full.py --manager ppo --run ppo2_v22 --tag _take52 --build-speed 4 --no-cuts
@@ -315,7 +327,7 @@ python v7_full.py --finale procession --tag _take54 --build-speed 4 --no-cuts
 （本編 2:34.4／sim 398.1 s、固定ルール版 2:36.3／sim 401.7 s、以前の 2:47 版 2:44.5／sim 401.7 s、PPO 版 2:42.6／sim 398.1 s、Q 表版 2:43.8／sim 400.4 s、追走版 2:41.2／sim 395.2 s）。末尾も ×1 で描かれる。
 
 出所：各 report JSON の `events` の `t` と `video_t` から `analysis/timeline_times.py` が区間を推定したもの（同スクリプトは ×1 の区間を最後の出来事までとして出す）。
-再生成：`python analysis/timeline_times.py out/v7_full_report_take58.json`（表情ログも動画時刻で出る）。
+再生成：`python analysis/timeline_times.py out/v7_full_report_take61.json`（表情ログも動画時刻で出る）。
 
 ### 本編の主な出来事（提出動画｜本編｜sim 秒）
 
@@ -334,7 +346,7 @@ python v7_full.py --finale procession --tag _take54 --build-speed 4 --no-cuts
 | 輪の万歳が始まる（以後 ×1） | 2:37.2 | 2:19.1 | 382.7 | 3 体 | 公式 `dance_crab`（推論）ほか |
 | 終了 | 2:52.6 | 2:34.4 | 398.1 | — | — |
 
-出所：`out/v7_full_report_take58.json` の `events`（`video_t`、`t`）。sim 秒は以前の速度設定の PPO 版（`out/v7_full_report_take52.json`）と全行で同じで、
+出所：`out/v7_full_report_take61.json` の `events`（`video_t`、`t`）。sim 秒は以前の速度設定の PPO 版（`out/v7_full_report_take52.json`）と全行で同じで、
 PPO 版の動画時刻は跳跳の渡り切りまで本編と同じ、支配人の引き継ぎは 1:28.2、輪の万歳は 2:27.3、終了は 2:42.6 である。
 固定ルール版（`out/v7_full_report_take57.json`）は支配人の 2 手目までと sim 時刻が本編と同じで、その後は `BACK_OFF` 2:05.9、`STANDUP` 2:06.8、`WALK_ON` 2:09.6、
 渡り切り 2:16.7（sim 369.4 s）、輪の万歳 2:20.9（sim 386.3 s）、終了 2:36.3（sim 401.7 s）（固定ルール版の動画時刻。sim 秒は以前の 2:47 版と全行で同じ）。
@@ -343,12 +355,12 @@ Q 表版は `--jitter 0.4`（跳跳の応援ダンスの開始点を 0.4 s ず�
 支配人の引き継ぎは比較用の 4 本とも 1:28.2（sim 264.6 s）。
 渡り切り・万歳・終了は次の表の下に記す。制御の列は `docs/physics_integration.md` §1（構成の全体）の「動かしているもの」に対応する。
 
-再生成：`python analysis/timeline_times.py out/v7_full_report_take58.json`。`--compare out/v7_full_report_take52.json` を足すと、
+再生成：`python analysis/timeline_times.py out/v7_full_report_take61.json`。`--compare out/v7_full_report_take52.json` を足すと、
 PPO 版との出来事ごとの動画時刻のずれと `state_digest` の一致も出る（固定ルール版と 2:47 版の組は `take57.json --compare take51.json`、2:47 版と省略版の組は `take51.json --compare take46.json`）。
 
 ### 支配人 AI の手（本編と比較用の 4 本）
 
-本編（PPO v2.2、`out/v7_full_report_take58.json` の `manager.decisions`）：
+本編（PPO v2.2、`out/v7_full_report_take61.json` の `manager.decisions`）：
 
 | 手 | 提出動画 | 本編 | sim 秒 | 所要 s | 結果 |
 |---|---|---|---|---|---|
@@ -435,7 +447,7 @@ Q 表版（`out/v7_full_report_take53.json`）：
 パッカンが天面を歩くと継ぎ目でつまずいて転倒し、どの支配人にも転んだ相手を助ける手がなかった。
 固定ルールの失敗 7 話はすべて転倒後に `WAIT` だけで時間切れになる型で、5 話は `WALK_ON` が `walked`（5003・5006・5009・5015・5025）、
 1 話は押し上げ中の `fell`（5008）、1 話は天面で `WALK_ON` が `stalled` のあと転倒（5023）。`WAIT` が 470 手中 327 手を占める（`baselines_v3/eval_rule.json`）。
-PPO v2.2 は押しが効かないと `BACK_OFF` → `PUSH` を繰り返し（`BACK_OFF` 465 回、5026 で 145 回、5027 で 140 回）、無駄な手 14.90/話になった。「両方失敗」が 2〜6 話あるのは、スキルの失敗がコースの不備で起きていたことを示す。
+PPO v2.2 は押しが効かないと `BACK_OFF` → `PUSH` を繰り返し（`BACK_OFF` 465 回、5026 で 145 回、5027 で 140 回）、無駄な手 14.90/話になった。「両方失敗」が 2〜6 話あるのは、旧コースではどの方式でも失敗するシードがあったことを示す（原因の寄与は切り分けていない）。
 
 なぜ提出の数値にしないか：継ぎ目は置き誤差ではなく course-builder の設計値だったので、設計値を 1 cm に直した（commit 483dbf9、新コース）。提出動画は新コースで描いており、旧コースの評価は存在しない環境の成績である。
 修正の効果は評価 v4 との差に出る：固定ルール 23 → 29、Q 表 24 → 25、PPO 中規模 16 → 23、PPO v2.2 16 → 26、ランダム 9 → 14、両方失敗 2〜6 → 0。環境の不備は PPO の 2 方式にいちばん厳しく出ていた（PPO v2.2 +10 話、PPO 中規模 +7 話。固定ルール +6、ランダム +5、Q 表 +1）。

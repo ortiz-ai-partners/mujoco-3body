@@ -22,6 +22,7 @@ from v6_robots import build_arena                   # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 W, H = 2 * crab_face.PIP_W, 2 * crab_face.PIP_H      # 480 x 240
+BIZ, BIZ_BOLD = r"C:\Windows\Fonts\BIZ-UDGothicR.ttc", r"C:\Windows\Fonts\BIZ-UDGothicB.ttc"
 ORDER = ["neutral", "serious", "happy", "cross", "sweat", "troubled_sweat", "troubled", "relief", "sparkle", "shock", "spiral"]
 WHEN = {
     "neutral": ["戯れ・待機・移動（救助の外）", "様子見で「渡れる」が中くらい"],
@@ -54,11 +55,16 @@ def main():
         pics[e] = Image.fromarray(renderer.render().copy())
     renderer.close()
 
-    font_path = next((p for p in _FONTS if p.exists()), None)
-    f_title = ImageFont.truetype(str(font_path), 34)
-    f_name = ImageFont.truetype(str(font_path), 28)
-    f_key = ImageFont.truetype(str(font_path), 17)
-    f_when = ImageFont.truetype(str(font_path), 18)
+    def font(px, bold=False):
+        # BIZ UDPGothic (face 1 of the BIZ UDGothic collection, Windows), the report's typeface; else the captions' fonts
+        biz = BIZ_BOLD if bold else BIZ
+        if os.path.exists(biz):
+            return ImageFont.truetype(biz, px, index=1)
+        return ImageFont.truetype(str(next(p for p in _FONTS if p.exists())), px)
+    f_title = font(34, bold=True)
+    f_name = font(28, bold=True)
+    f_key = font(17)
+    f_when = font(18)
     cols, rows = 3, 4
     pad, text_h = 28, 120
     cw, ch = W + pad, H + text_h + pad
@@ -80,7 +86,7 @@ def main():
     x0, y0 = pad + c * cw, 90 + pad + r * ch
     d.rounded_rectangle([x0 - 8, y0 - 8, x0 + W + 8, y0 + H + text_h + 8], radius=12, fill=(240, 244, 250), outline=(200, 206, 216))
     legend = ["顔は跳跳の前面パネル（10.7 × 3.9 cm）に描画した板で、", "顔カメラ（パネルの 30 cm 前）から見た絵。",
-              "どの顔を出すかは 2 つ目の AI（気分ネット）の確率と", "計測値（接触力・押している時間・進み・転倒・傾き）", "から 17 の規則で決める。描画のみで物理には戻らない。",
+              "どの顔を出すかは 2 つ目の AI（気分ネット）の確率と", "計測値（接触力・押している時間・進み・転倒・傾き）", "から 17 の規則で決める。描画のみで物理には影響しない。",
               "キラキラは公式の目アニメ（dance 用）の星型を借用。"]
     for k, line in enumerate(legend):
         d.text((x0 + 8, y0 + 16 + k * 28), line, font=f_when, fill=(60, 70, 90))

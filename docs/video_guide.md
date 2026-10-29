@@ -1,15 +1,15 @@
 # 提出動画の見方：動画時刻・sim 時刻・場面・機体・制御の対応表
 
-本書は提出動画（YouTube、長さ 2:56.6＝176.58 s）と、その中心である本編 `out/3body_arena_v7_take58.mp4`（1280×720、30 fps、長さ 2:35.5＝155.5 s）を読み解くための対応表である。
+本書は提出動画（YouTube https://youtu.be/Ypg7ExFu8Ig 、長さ 2:56.6＝176.58 s）と、その中心である本編 `out/3body_arena_v7_take61.mp4`（1280×720、30 fps、長さ 2:35.5＝155.5 s）を読み解くための対応表である。
 提出動画は講座の OP カード（3.04 s）、自己紹介 `out/intro.mp4`（15.1 s）、本編、講座の ED カード（2.97 s）を `assemble.py` でつないだもので、本編は提出動画の 0:18.1（18.14 s）から始まる（第 1 節）。
-画面の大きさとフレームレートは `v6_common.py` の `VIDEO_W`／`VIDEO_H`／`VIDEO_FPS`、本編の長さは `out/v7_full_report_take58.json` の `video_silent.seconds`、各部の長さは `assemble.py` が印字する `parts[].duration_s`。
+画面の大きさとフレームレートは `v6_common.py` の `VIDEO_W`／`VIDEO_H`／`VIDEO_FPS`、本編の長さは `out/v7_full_report_take61.json` の `video_silent.seconds`、各部の長さは `assemble.py` が印字する `parts[].duration_s`。
 本編は 1 本の連続した MuJoCo 3.11.0 シミュレーション（sim 400.6 s、同 JSON の `mujoco`、`sim_seconds`）の記録で、省略（ジャンプカット）はなく、外力もテレポートもない。
 本編の支配人 AI は学習済みの PPO 方策 `ppo2_v22`（同 JSON の `manager.policy`）である。同じ設定で支配人だけを固定ルールにした版は比較用に残す（第 5 節）。
 時刻は三つの時計で示す。提出動画の時刻と本編の時刻は m:ss.s、シミュレーション時刻は「sim 秒」と書く。提出動画の時刻＝本編の時刻＋18.14 s で、表では小数 1 桁に丸めた。
 本編の時刻の出所は報告 JSON の `events[].video_t`・`events[].t`、`manager.decisions`、`face.log` で、次のコマンドで本編の時刻の表が出る。
 
 ```
-python analysis/timeline_times.py out/v7_full_report_take58.json
+python analysis/timeline_times.py out/v7_full_report_take61.json
 ```
 
 登場するのはブルドーザー（BZ、自作 course-builder の規則制御）、パッカン（Microduck, Pollen Robotics）、跳跳（Jumper, KingKong Robotics）の 3 体と、
@@ -30,7 +30,7 @@ python analysis/timeline_times.py out/v7_full_report_take58.json
 |---|---|---|---|---|
 | 0:00.0〜0:03.0 | 3.04 s | 講座の OP カード | 講座の素材（リポジトリに含まない）。音なし | 講座 |
 | 0:03.0〜0:18.1 | 15.1 s | 自己紹介 `out/intro.mp4` | 支配人 AI が丸い顔と打ち込みの文字（1 秒 15 文字、`intro.py` の `CPS`）で名乗り、課題の内容を述べ、ブルドーザー・パッカン・跳跳をカード 3 枚で紹介し、「うまくいかないとき、次の一手を考える」のが自分の仕事だと結ぶ。各文の下に小さく英語の行が出る | 自作（`python intro.py`） |
-| 0:18.1〜2:53.6 | 155.5 s | 本編 `out/3body_arena_v7_take58.mp4` | 1 本の連続シミュレーション（本書の第 1〜6 節） | 自作（`v7_full.py`） |
+| 0:18.1〜2:53.6 | 155.5 s | 本編 `out/3body_arena_v7_take61.mp4` | 1 本の連続シミュレーション（本書の第 1〜6 節） | 自作（`v7_full.py`） |
 | 2:53.6〜2:56.6 | 2.97 s | 講座の ED カード | 講座の素材（リポジトリに含まない）。音なし | 講座 |
 
 出所：`assemble.py` が印字する `parts[]`（`start_s` 0／3.04／18.14／173.61、`duration_s` 3.04／15.1／155.47／2.97）と `total_s` 176.58。
@@ -80,10 +80,10 @@ END のあとも物理は 2.5 s 回し（`main()` 末尾のループ、`sim_seco
 カメラは段階ごとに自動で構図を変える（`render_frame` の `cam.aim`）：施工は BZ とコース中心の間を見る俯瞰（仰角 −38°）、
 坂の挑戦・登坂・救助（押し上げ）は方位 15° の横から 2 体の間を見る（坂の挑戦はパッカン寄りの 0.6:0.4、登坂の後半は跳跳だけ）。
 輪は南から 3 体の重心を見る（方位 92°）。
-本編の音はパッカンと跳跳の電子的な鳴き声と帯の効果音で、`v7_full.py` `Chirps` が動画時刻（`add(video_t, …)`）に置いて合成する（鳴き声全体の音量 `MASTER_GAIN` 0.45）。
-パッカンの声は 1/3（`DUCK_GAIN`）、跳跳の声は 1/2（`CRAB_GAIN`）の音量に下げてある。音声はステレオで、鳴いた瞬間にその機体が画面のどこに映っているかを
+本編の音はパッカンと跳跳の鳴き声と帯の効果音で、`v7_full.py` `Chirps` が動画時刻（`add(video_t, …)`）に置いて合成する（鳴き声全体の音量 `MASTER_GAIN` 0.45）。パッカンの声は Microduck 公式ランタイムの声の合成器（pollen-robotics/microduck の `sounds`、Apache-2.0）を移植した `microduck_voice.py` で作る（場面の鳴き方は `Chirps.DUCK_TAG`：ふだん `chirp`、心配 `inquire`、驚き `alarm`、呼ぶ `greet`、喜び `wheee`、ため息 `coo`。性格の種 276：甘えん坊の愛されアヒルらしい、やや高くやわらかい声）。跳跳の声は自作の合成（跳跳には公開された声がない）。パッカンは坂へ向かう道中（sim 6 秒ごと）と押し上げられている間（8 秒ごと）にも話し、支配人が押し上げを選ぶと呼ぶ声で応える（`DUCK_CHATTER`、決まった間隔で鳴らし乱数を使わないので、物理の経路は変わらない）。跳跳の峠のジャンプでは、接触の判定で足がすべて地面を離れた瞬間（2 制御周期続いたら離陸、その最初の周期）と着地の瞬間を見張り、離陸に跳跳の声とパッカンの驚きの声、着地に跳跳の短い声を置く（`watch_jump`、報告の `events` の「JP takes off」「JP touches down」。描画と音だけで物理は変えない）。
+パッカンの声は 1/6（`DUCK_GAIN`）、跳跳の声は 1/4（`CRAB_GAIN`）の音量に下げてある（はじめの合成音に対して。パッカンの公式の声は、置き換える前の合成音の RMS にそろえてから下げる）。音声はステレオで、鳴いた瞬間にその機体が画面のどこに映っているかを
 MuJoCo の自由カメラから求め（`v6_common.py` `screen_xy`）、定電力のパンで左右に振る（幅 0.8、`PAN_WIDTH`。画面の端でも片側だけにはならない）。
-帯のチャイムと打鍵音は自己紹介と同じ音量で混ぜる（`SFX_LEVEL`）。設定値は報告 JSON の `settings.duck_voice_gain`（0.3333）・`crab_voice_gain`（0.5）・`voice_pan`。
+帯のチャイムと打鍵音は自己紹介と同じ音量で混ぜる（`SFX_LEVEL`）。設定値は報告 JSON の `settings.duck_voice_gain`（0.1667）・`crab_voice_gain`（0.25）・`voice_pan`。
 左右の位置はカメラを読むだけで台本の乱数を使わないので、音は物理に関係しない（`voice_pan` の docstring）。提出動画では、この音声の下に BGM が一定の音量で重なる。
 
 ### 決め手の値の例
@@ -252,7 +252,7 @@ sim 347.9〜349.9 s の 2 秒（×2 区間なので動画では 1 秒）は、2 
 
 | 版 | ファイル（`out/`） | 支配人 AI | 結末 | 長さ | 手数 |
 |---|---|---|---|---|---|
-| 本編（提出） | `3body_arena_v7_take58.mp4` | PPO v2.2（`ppo2_v22`） | 輪の万歳 | 2:35（155.5 s） | 4 |
+| 本編（提出） | `3body_arena_v7_take61.mp4` | PPO v2.2（`ppo2_v22`） | 輪の万歳 | 2:35（155.5 s） | 4 |
 | 固定ルール版（本編と同じ設定） | `3body_arena_v7_take57.mp4` | 固定ルール | 輪の万歳 | 2:37（157.3 s） | 5 |
 | 以前の 2:47 版 | `3body_arena_v7_take51.mp4` | 固定ルール | 輪の万歳 | 2:47（167.0 s） | 5 |
 | PPO 版 | `3body_arena_v7_take52.mp4` | PPO v2.2（`ppo2_v22`） | 輪の万歳 | 2:45（165.2 s） | 4 |
@@ -260,7 +260,7 @@ sim 347.9〜349.9 s の 2 秒（×2 区間なので動画では 1 秒）は、2 
 | 追走版 | `3body_arena_v7_take54.mp4` | 固定ルール | 追走して三人そろって万歳 | 2:44（163.7 s） | 5 |
 
 本編と PPO 版の違いは書き出しだけで、`state_digest`（aafa49e7a869）、`sim_seconds`、出来事の sim 時刻、支配人の 4 手の `t` と結果は同じである。
-動画時刻は CALL の途中からずれ始め、支配人の引き継ぎ以後は本編が 3.93〜3.94 s、輪のダンス以後は 8.20 s 早い（`analysis/timeline_times.py out/v7_full_report_take58.json --compare out/v7_full_report_take52.json` の shift 列）。
+動画時刻は CALL の途中からずれ始め、支配人の引き継ぎ以後は本編が 3.93〜3.94 s、輪のダンス以後は 8.20 s 早い（`analysis/timeline_times.py out/v7_full_report_take61.json --compare out/v7_full_report_take52.json` の shift 列）。
 全長の差 9.7 s は、この 8.20 s と END の後の書き出しの差 1.5 s による。固定ルール版と以前の 2:47 版も同じ関係で、`state_digest`（678fd3cae2ca）と 5 手の `t` が同じ、
 輪のダンス以後は固定ルール版が 8.17 s 早く、全長の差は 9.7 s である（`take57.json --compare take51.json`）。
 帯・ちょーさんの呼び名・声の音量と左右の振り分けは本編と固定ルール版にだけあり、以前の速度設定の 4 本は帯がなく、吹き出しは「カニさん」、声は下げる前の音量のモノラルで描いた版である。
@@ -297,13 +297,13 @@ PPO 版・Q 表版・追走版の動画時刻は、同じ速度設定の以前�
 描画コマンド（リポジトリルート。`--ending crab`、`--manager rule`、`--finale circle`、`--face-ai mood` は既定値。報告 JSON は引数を記録しないので、設定から再構成した。本編の書き出しの設定は `settings` に残る）：
 
 ```
-python v7_full.py --manager ppo --run ppo2_v22 --tag _take58 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0
+python v7_full.py --manager ppo --run ppo2_v22 --tag _take61 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0
 python v7_full.py --tag _take57 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0
 python v7_full.py --build-speed 4 --no-cuts --tag _take51
 python v7_full.py --build-speed 4 --no-cuts --manager ppo --run ppo2_v22 --tag _take52
 python v7_full.py --build-speed 4 --no-cuts --manager tabq --run tabq2_small --jitter 0.4 --tag _take53
 python v7_full.py --build-speed 4 --no-cuts --finale procession --tag _take54
-python analysis/timeline_times.py out/v7_full_report_take58.json --compare out/v7_full_report_take52.json
+python analysis/timeline_times.py out/v7_full_report_take61.json --compare out/v7_full_report_take52.json
 python analysis/timeline_times.py out/v7_full_report_take57.json --compare out/v7_full_report_take51.json
 python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v7_full_report_take46.json
 ```
@@ -317,12 +317,12 @@ python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v
 ## 6. English event table and YouTube subtitles
 
 The submitted video (2:56.6) is the course's opening card (0:00–0:03), the manager AI's self-introduction (0:03–0:18, with an English line under each sentence),
-the main video `out/3body_arena_v7_take58.mp4` (0:18.1–2:53.6) and the course's end card (2:53.6–2:56.6), joined by `assemble.py`.
-Times below are submission times: main-video time (`out/v7_full_report_take58.json`, `events[].video_t`) plus 18.14 s; sim seconds are `events[].t`.
+the main video `out/3body_arena_v7_take61.mp4` (0:18.1–2:53.6) and the course's end card (2:53.6–2:56.6), joined by `assemble.py`.
+Times below are submission times: main-video time (`out/v7_full_report_take61.json`, `events[].video_t`) plus 18.14 s; sim seconds are `events[].t`.
 In the main video the playback speed is x4 from 0:18.1 to 1:02.2, x2 to 1:38.5, x4 to 1:42.4, x2 to 2:32.9, x4 to 2:37.2 and x1 to 2:53.6; the sim clock and the speed are shown at the bottom right throughout. There are no jump cuts.
 The manager AI in the main video is the learned PPO policy `ppo2_v22`; the same settings with the fixed rule are kept as a comparison render (`out/3body_arena_v7_take57.mp4`).
 Each manager decision is typed into a band at the bottom with the manager's face (Japanese, then the English line from `crab_help.LINES_EN`); the crab is called by its nickname Cho-san.
-The robots' cries (the duck at 1/3, the crab at 1/2 of their earlier level) are panned to where each robot is in the frame. An original marimba piece (`music/marimba_bgm.py`, additive synthesis only) plays at a constant level from 0:03.
+The robots' cries (the duck at 1/6, the crab at 1/4 of their first level) are panned to where each robot is in the frame. An original marimba piece (`music/marimba_bgm.py`, additive synthesis only) plays at a constant level from 0:03.
 "Official" means an unmodified ONNX policy run in inference only; "own" means made in this project.
 The video shows the Microduck 3D model, so the video is CC BY-NC-SA 4.0 (attribution: Pollen Robotics, microduck_rl); the code in this repository is MIT. The opening and end cards are the course's material.
 
@@ -349,7 +349,7 @@ An SRT file for YouTube is made from this table: each row's video time is a cue'
 The opening card (0:00–0:03) has no cue; the self-introduction already carries its own English lines, so its cue can be left out as well.
 A cue is a sequence number, a line `HH:MM:SS,mmm --> HH:MM:SS,mmm`, the text (at most 2 lines) and a blank line, saved as UTF-8.
 No speed conversion is needed, because `video_t` already includes the x4/x2/x1 playback; only the 18.14 s offset of the main video is added.
-`python analysis/timeline_times.py out/v7_full_report_take58.json` prints the main-video times to 0.1 s for finer cues (add 18.14 s).
+`python analysis/timeline_times.py out/v7_full_report_take61.json` prints the main-video times to 0.1 s for finer cues (add 18.14 s).
 In YouTube Studio the file is added under Subtitles, Add language, Upload file, With timing. Example of the first cue of the main video:
 
 ```

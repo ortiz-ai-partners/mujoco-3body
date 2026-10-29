@@ -1,0 +1,79 @@
+[
+ {
+  "id": 0,
+  "policy": "random",
+  "scenario": "toe_seated_ok",
+  "seed": 9100,
+  "steps": 12,
+  "crossed": true,
+  "damaged": false,
+  "samples": 1344,
+  "sim_s": 136.5
+ },
+ {
+  "id": 1,
+  "policy": "random",
+  "scenario": "toe_seated_wrong",
+  "seed": 9100,
+  "steps": 12,
+  "crossed": true,
+  "damaged": false,
+  "samples": 1183,
+  "sim_s": 120.5
+ },
+ {
+  "id": 2,
+  "policy": "random",
+  "scenario": "toe_standing",
+  "seed": 9100,
+  "steps": 25,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2422,
+  "sim_s": 242.5
+ },
+ {
+  "id": 3,
+  "policy": "random",
+  "scenario": "toe_fallen",
+  "seed": 9100,
+  "steps": 29,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2434,
+  "sim_s": 243.7
+ },
+ {
+  "id": 4,
+  "policy": "random",
+  "scenario": "deck_seated",
+  "seed": 9100,
+  "steps": 12,
+  "crossed": true,
+  "damaged": false,
+  "samples": 1463,
+  "sim_s": 148.4
+ },
+ {
+  "id": 5,
+  "policy": "random",
+  "scenario": "deck_fallen",
+  "seed": 9100,
+  "steps": 23,
+  "crossed": true,
+  "damaged": false,
+  "samples": 2259,
+  "sim_s": 228.1
+ },
+ {
+  "id": 6,
+  "policy": "random",
+  "scenario": "ramp_fallen",
+  "seed": 9100,
+  "steps": 29,
+  "crossed": false,
+  "damaged": false,
+  "samples": 2410,
+  "sim_s": 241.1
+ }
+]

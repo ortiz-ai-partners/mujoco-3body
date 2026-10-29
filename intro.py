@@ -33,8 +33,8 @@ DURATION = 15.1
 
 # what the manager AI says (Japanese, English)
 HELLO = ("はじめまして。", "支配人 AI の アイランドマスターです。", "Hello. I'm Island Master, the manager AI.")
-PURPOSE = ("きょうは松尾研の講座の最終課題として、3 体のロボットが", "力を合わせて峠を越えるところを見てもらいます。",
-           "Today, for the Matsuo Lab course's final project: three robots team up to cross a pass.")
+PURPOSE = ("松尾・岩澤研究室の講座の最終課題として、3 体のロボットが", "力を合わせて峠を越えるところを見てもらいます。",
+           "For the Matsuo-Iwasawa Lab course's final project: three robots team up to cross a pass.")
 TEAM = ("きょうの仲間を紹介します。", "Let me introduce today's team.")
 CARDS = [
     ("ブルドーザー", "道をつくる職人。坂も自分で運びます。", "The builder. Carries its own ramps."),
