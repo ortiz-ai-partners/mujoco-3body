@@ -1,10 +1,11 @@
 # アイランドマスター：3 体のロボットが 1 つの MuJoCo ワールドで峠を越える
 
 松尾研 Physical AI 応用1 最終課題の提出物。自作のルール制御で動くブルドーザーが坂 2 枚（勾配 16.3°、峠の高さ 0.44 m）を運んで峠を組み、
-公式ポリシーだけでは登れない Microduck（愛称パッカン）が坂の入口で座り込み、Jumper（愛称 跳跳）が後ろから押し上げて 3 体とも渡り切る。
+公式ポリシーだけでは登れない Microduck（愛称パッカン）が坂の入口で座り込み、Jumper（愛称 跳跳＝ちょうちょう、呼び名「ちょーさん」）が後ろから押し上げて 3 体とも渡り切る。
 失敗したときの次の一手を選ぶ「支配人 AI」と、跳跳の表情を推論する「気分ネット」の 2 つの自作 AI を本番で推論する。
 物理は 1 つの MuJoCo 3.11.0 ワールドで連続し、外力・テレポートは使わない。同一 30 シードの評価では固定ルールの支配人が 29/30、
-PPO が 26/30 を渡り切り（`out/manager_runs/comparison_v4.md`）、提出動画では 3 体とも渡り切った（`out/v7_full_report_take51.json` の `three_crossed`）。
+PPO が 26/30 を渡り切り（`out/manager_runs/comparison_v4.md`）、提出動画の本編では 3 体とも渡り切った（`out/v7_full_report_take57.json` の `three_crossed`）。
+提出動画（2:58.4）は講座の OP カード、支配人 AI の自己紹介（15.1 s）、本編（2:37.3）、講座の ED カードを `assemble.py` でつないだもので、自作のマリンバ曲を BGM に敷く。
 
 ![全体の仕組み](report/system_overview_ortiz.png)
 
@@ -22,8 +23,12 @@ and pushes the seated duck up the ramp.
 Two self-trained networks run inference during the submitted run: a manager policy that picks the next skill for the stuck duck
 (rule / PPO / tabular-Q versions; rule 29/30, PPO 26/30 over 30 shared seeds), and a mood net (53-32-32-5 MLP) that drives the Jumper's face.
 
-Playback speed is shown on screen at all times (bottom right, with the simulation clock): x4 from 0:00 to 0:44 (construction), x2 from 0:44 to 2:29, x1 from 2:29 to the end (2:47).
-There are no jump cuts: every simulated second of the 404 s run is on screen.
+The submitted video (2:58.4) joins the course's opening card (3.0 s), a 15.1 s self-introduction by the manager AI, the 2:37.3 main video (from 0:18.1) and the course's end card (3.0 s).
+In the main video the playback speed is shown at all times (bottom right, with the simulation clock). In submission time: x4 from 0:18.1 to 1:02.2 (construction), x2 to 1:38.5,
+x4 from 1:38.5 to 1:42.4 (the duck calls and the crab walks back), x2 from 1:42.4 to 2:34.8 (the rescue), x4 from 2:34.8 to 2:39.0 (gathering for the circle) and x1 from 2:39.0 to 2:55.4 (the circle dance).
+There are no jump cuts: every simulated second up to the end of the story (sim 401.7 s) is on screen; of the 2.5 s simulated after it, the first 1 s is shown.
+Each manager decision is typed into a band at the bottom of the frame (Japanese, then English); the robots' cries are panned to where each robot is in the frame;
+an original marimba piece synthesised by `music/marimba_bgm.py` (no samples, no existing music) plays at a constant level from the end of the opening card.
 The face overlay and the mood net do not change the physics: headless A/B runs end in the same state hash and the same manager decisions
 (with the mood net, one event message differs in wording only).
 
@@ -32,12 +37,21 @@ Code identifiers keep the English names (`MD` / `duck`, `JP` / `crab`, `BZ`; ski
 
 ## 提出物と注記
 
-- 提出動画（YouTube、URL は提出時に追記）：2:47、固定ルールの支配人、輪の万歳の結末。動画ファイル `out/3body_arena_v7_take51.mp4` と記録 `out/v7_full_report_take51.json` をリポジトリに同梱する。
-- 再生速度：0:00〜0:44 は 4 倍速（sim 0〜176.4 s、施工）、0:44〜2:29 は 2 倍速（sim 176.4〜386.3 s）、2:29〜2:47 は等速（sim 386.3〜404.2 s、万歳のダンス）。
-  画面右下に sim 時計と x4 / x2 / x1 を常時表示する（`v7_full.py` の footer）。ジャンプカット（省略）はなく、シミュレーションの全区間が画面に出る。
-- 比較用の動画 3 本（同じ速度設定、いずれも 3 体渡り切り）：PPO 版 `out/3body_arena_v7_take52.mp4`（2:45、4 手）、Q 表版 `..._take53.mp4`（2:46、8 手）、
-  追走の結末 `..._take54.mp4`（2:44、5 手）。長さは各 report JSON の `video_silent.seconds`。2 倍速＋省略 2 か所で描いた旧版 `..._take46〜49.mp4` も記録として残す（物理は同一、`state_digest` が一致）。
-  比較用 3 本の動画と報告 JSON（`out/v7_full_report_take52〜54.json`）、4 倍速の初版の記録 `out/v7_full_report_take50.json` も同梱する。
+- 提出動画（YouTube、URL は提出時に追記）：2:58.4（178.41 s）、固定ルールの支配人、輪の万歳の結末。講座の OP カード（3.04 s）→ 自己紹介 `out/intro.mp4`（15.1 s、`python intro.py`）→
+  本編 `out/3body_arena_v7_take57.mp4`（157.3 s、提出動画の 0:18.1 から）→ 講座の ED カード（2.97 s）を `assemble.py` でつなぐ（各部の長さは `assemble.py` が印字する `parts[].duration_s`）。
+  本編の動画ファイルと記録 `out/v7_full_report_take57.json` をリポジトリに同梱する。講座のカード 2 枚は講座の素材なので同梱せず、結合済みの提出ファイルも同梱しない。
+- 再生速度（提出動画の時刻＝本編の時刻＋18.14 s）：0:18.1〜1:02.2 は 4 倍速（sim 0〜176.4 s、施工）、1:02.2〜1:38.5 は 2 倍速（sim 176.4〜248.9 s）、
+  1:38.5〜1:42.4 は 4 倍速（sim 248.9〜264.6 s、仲間を呼ぶ・跳跳が戻る）、1:42.4〜2:34.8 は 2 倍速（sim 264.6〜369.4 s、救助）、2:34.8〜2:39.0 は 4 倍速（sim 369.4〜386.3 s、輪へ集まる）、
+  2:39.0〜2:55.4 は等速（sim 386.3 s から、万歳のダンスと END の後の 1 s）。出所は `python analysis/timeline_times.py out/v7_full_report_take57.json` の speed segments。
+  画面右下に sim 時計と x4 / x2 / x1 を常時表示する（`v7_full.py` の footer）。ジャンプカット（省略）はなく、END（sim 401.7 s）までのシミュレーションの全区間が画面に出る
+  （END の後に回す 2.5 s のうち書き出すのは最初の 1 s、`--tail-write 1.0`）。4 倍速の区間は 2 倍速で標本化したフレームを 1 枚おきに書くだけで、物理は以前の 2:47 版と同一（`state_digest` `678fd3cae2ca`）。
+- 画面と音：支配人 AI が手を選ぶたびに、画面下 1/5 の帯に支配人の丸い顔とセリフが 1 秒 15 文字で打ち込まれ（チャイムと打鍵音つき）、日本語が出そろうと英語の行が出る。
+  ロボットの鳴き声はパッカン 1/3・跳跳 1/2 の音量で、鳴いた機体が画面のどこにいるかで左右に振る（ステレオ）。BGM は `music/marimba_bgm.py` が numpy/scipy の加算合成だけで作る自作のマリンバ曲
+  （既存の曲・音源・サンプルは不使用、乱数は seed 固定）で、OP カードの終わりから一定の音量で鳴り、最後の和音が ED カードに響く。いずれも描画と音声だけで、物理は変えない。
+- 比較用の動画（以前の 2:47 版と同じ速度設定＝施工 4 倍速・以後 2 倍速・ダンス等速、いずれも 3 体渡り切り）：PPO 版 `out/3body_arena_v7_take52.mp4`（2:45、4 手）、Q 表版 `..._take53.mp4`（2:46、8 手）、
+  追走の結末 `..._take54.mp4`（2:44、5 手）。長さは各 report JSON の `video_silent.seconds`。本編と物理が同一の以前の 2:47 版 `..._take51.mp4` を比較の基準として残す。
+  2 倍速＋省略 2 か所で描いた旧版 `..._take46〜49.mp4` も記録として残す（物理は同一、`state_digest` が一致）。
+  比較用の動画と報告 JSON（`out/v7_full_report_take51〜54.json`）、4 倍速の初版の記録 `out/v7_full_report_take50.json` も同梱する。
 - レポート PDF：`report/report.pdf`（提出時に追加）。
 - ブルドーザー側のリポジトリ [physical-ai-course-builder](https://github.com/ortiz-ai-partners/physical-ai-course-builder) は同一作者の自作（同じ課題のために作成、MIT）。
 - AI の使用：本番で推論するのは公式 ONNX ポリシー 5 本（Microduck 2 本・Jumper 3 本）、支配人 AI、気分ネット。学習したのは支配人 AI（PPO・表形式 Q）と気分ネット（いずれも CPU）。
@@ -53,7 +67,7 @@ README は全体の地図で、根拠の全文は次の文書にある。動画�
 | [docs/video_guide.md](docs/video_guide.md) | 提出動画の見方：動画時刻・sim 時刻・場面・機体・制御の対応表 |
 | [docs/manager_ai.md](docs/manager_ai.md) | 支配人 AI の設計書：観測 46 次元、6 手、13 種の結果、報酬、3 方式 |
 | [docs/mood_net_and_faces.md](docs/mood_net_and_faces.md) | 気分ネットと表情の規則 17 本、顔と気分ネットが物理を変えないことの検証 |
-| [docs/results.md](docs/results.md) | 同一シード評価の全表、失敗の型、提出動画 4 本の手と時刻 |
+| [docs/results.md](docs/results.md) | 同一シード評価の全表、失敗の型、提出動画の本編と比較用の動画の手と時刻 |
 | [docs/insights.md](docs/insights.md) | 分かったこと・限界・反省の長版（事実→原因→対処） |
 | [docs/physics_integration.md](docs/physics_integration.md) | 技術ノート：3 体の MJCF と公式 ONNX 5 本を 1 つのワールドに統合する要点 |
 | [docs/reproduce.md](docs/reproduce.md) | 再現手順の全文：環境、隣接リポジトリ、全コマンドと照合値 |
@@ -92,27 +106,32 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 
 ## 動画で起きていること（時間軸）
 
-提出動画（2:47）の場面ごとに、動いている機体と制御の出どころを並べる。時刻は `out/v7_full_report_take51.json` の `events[].video_t`・`t` から算出した。
+提出動画（2:58.4）の場面ごとに、動いている機体と制御の出どころを並べる。時刻は提出動画の時刻で、本編の時刻（`out/v7_full_report_take57.json` の `events[].video_t`）に
+講座の OP カードと自己紹介の長さ 18.14 s（3.04＋15.1、`assemble.py` の `parts[].start_s`）を足して算出した。sim 時刻は同じ JSON の `events[].t`。
 
 ![提出動画の構成](report/timeline_ortiz.png)
 
-図：上のかっこが再生速度、帯が場面と主役（色）、星が渡り切り、A〜E が支配人 AI の 5 手、下の帯が跳跳の顔。時刻は下の表と同じ出所。
+図：上のかっこが再生速度、帯が場面と主役（色）、星が渡り切り、A〜E が支配人 AI の 5 手、下の帯が跳跳の顔。出所は `out/v7_full_report_take51.json`。
+この図は以前の 2:47 版（物理は本編と同一、`state_digest` `678fd3cae2ca`）の動画時刻で描いてあり、最終版の時刻は下の表のとおり。
 
 | 動画時刻 | 場面 | 動いているもの | 制御 | 既製／自作 |
 |---|---|---|---|---|
-| 0:00〜0:44（×4） | ブルドーザーが坂 2 枚を保管場所から運び、峠を組む。空荷の往復も省略しない | ブルドーザー | course-builder のルール制御 | 自作、AI 推論なし |
-| 0:44〜0:54（以後 ×2） | ブルドーザーが峠を渡る。パッカンが後を追って坂の足元へ。0:54（sim 196.1 s）に施工完了＝4/4 面を走破 | ブルドーザー、パッカン | ルール制御／`velstand` | 自作／既製 |
-| 0:54〜1:08 | パッカンが 16° の坂に 2 回挑み、入口で足踏みして 1:08（sim 224.6 s）に座り込む。跳跳は横で応援のダンス | パッカン、跳跳 | `velstand`・`alpha_sitstand`／`dance_crab` | 既製 |
-| 1:10〜1:19 | 跳跳が坂を登り、1:15（sim 239.0 s）に天面でジャンプ、1:19（sim 245.9 s）に渡り切る | 跳跳 | `locomotion`・`jump`（前方ジャンプは関節目標の重ね） | 既製＋自作の工夫 |
-| 1:19〜1:28 | パッカンが仲間を呼ぶ。跳跳がコースの東側を回って座席の後ろへ戻る | パッカン、跳跳 | 固定プログラム（台本） | 自作 |
-| 1:28〜2:14 | 支配人 AI の 5 手：1:28.2 座らせる、1:34.2 押し上げ（動画で約 36 秒、sim 71 s）、2:09.8 離れる、2:10.7 立たせる、2:13.5 見送る | 支配人 AI → 跳跳・パッカン | 自作 AI（固定ルール）＋スキル | 自作 |
-| 2:14〜2:21 | パッカンが天面を歩き、下り坂を降りる。跳跳が後ろについて越える。ブルドーザーが向き直る。2:21（sim 369.4 s）にパッカン渡り切り | 全員 | `velstand`／`locomotion`／ルール制御 | 既製・自作 |
-| 2:21〜2:29 | 3 体がゴール前に集まる | 全員 | 固定プログラム | 自作 |
-| 2:29〜2:47（×1） | 輪になって万歳：フォークの上下、屈伸と首振り、ハサミを上げるダンス | 全員 | ルール制御／`velstand`／`dance_crab` | 自作／既製 |
+| 0:00〜0:03 | 講座の OP カード（講座の素材、リポジトリに含まない） | — | — | 講座の素材 |
+| 0:03〜0:18 | 自己紹介：支配人 AI が丸い顔と打ち込みの文字で名乗り、3 体をカードで紹介する（各文の下に英語、打鍵音とチャイム） | 支配人 AI の顔（描画のみ） | `intro.py`（物理を進めない描画と効果音の合成） | 自作 |
+| 0:18〜1:02（×4） | 本編の始まり。ブルドーザーが坂 2 枚を保管場所から運び、峠を組む。空荷の往復も省略しない | ブルドーザー | course-builder のルール制御 | 自作、AI 推論なし |
+| 1:02〜1:12（以後 ×2） | ブルドーザーが峠を渡る。パッカンが後を追って坂の足元へ。1:12（sim 196.1 s）に施工完了＝4/4 面を走破 | ブルドーザー、パッカン | ルール制御／`velstand` | 自作／既製 |
+| 1:12〜1:26 | パッカンが 16° の坂に 2 回挑み、入口で足踏みして 1:26（sim 224.6 s）に座り込む。跳跳は横で応援のダンス | パッカン、跳跳 | `velstand`・`alpha_sitstand`／`dance_crab` | 既製 |
+| 1:28〜1:37 | 跳跳が坂を登り、1:34（sim 239.0 s）に天面でジャンプ、1:37（sim 245.9 s）に渡り切る | 跳跳 | `locomotion`・`jump`（前方ジャンプは関節目標の重ね） | 既製＋自作の工夫 |
+| 1:37〜1:42（1:38.5 から ×4） | パッカンが仲間を呼ぶ。跳跳がコースの東側を回って座席の後ろへ戻る | パッカン、跳跳 | 固定プログラム（台本） | 自作 |
+| 1:42〜2:28（×2） | 支配人 AI の 5 手：1:42.4 座らせる、1:48.4 押し上げ（動画で約 36 秒、sim 71 s）、2:24.0 離れる、2:24.9 立たせる、2:27.7 見送る。手を選ぶたびに画面下の帯に支配人の顔とセリフ（日本語→英語）が出る | 支配人 AI → 跳跳・パッカン | 自作 AI（固定ルール）＋スキル | 自作 |
+| 2:28〜2:35 | パッカンが天面を歩き、下り坂を降りる。跳跳が後ろについて越える。ブルドーザーが向き直る。2:35（sim 369.4 s）にパッカン渡り切り | 全員 | `velstand`／`locomotion`／ルール制御 | 既製・自作 |
+| 2:35〜2:39（×4） | 3 体がゴール前に集まる | 全員 | 固定プログラム | 自作 |
+| 2:39〜2:55（×1） | 輪になって万歳：フォークの上下、屈伸と首振り、ハサミを上げるダンス。END（2:54.4、sim 401.7 s）の 1 s 後に本編が終わる | 全員 | ルール制御／`velstand`／`dance_crab` | 自作／既製 |
+| 2:55〜2:58 | 講座の ED カード（講座の素材）。BGM の最後の和音がここまで響く | — | — | 講座の素材 |
 
 支配人 AI の 5 手は `SEAT` → `PUSH` → `BACK_OFF` → `STANDUP` → `WALK_ON` で全て成功し、転倒 0、コースの部材の移動なし（`manager.decisions`、`course_disturbed`）。
 右上の顔モニター（240×120、`crab_face.py` の `PIP_W` / `PIP_H`）は気分ネットの推論（本番で 5,236 回、`face.mood_ai.inferences`）と「決め手の値」を表示し、表情の切替は 25 回（`face.log` は初期状態を含めて 26 行）。
-表の時刻は秒に丸めた（支配人の 5 手だけ小数 1 桁、`manager.decisions[].video_t`）。全時刻は `python analysis/timeline_times.py out/v7_full_report_take51.json` で出せる。長版は [docs/video_guide.md](docs/video_guide.md)。
+表の時刻は秒に丸めた（支配人の 5 手だけ小数 1 桁、`manager.decisions[].video_t`＋18.14 s）。本編の全時刻は `python analysis/timeline_times.py out/v7_full_report_take57.json` で出せ、18.14 s を足すと提出動画の時刻になる。長版は [docs/video_guide.md](docs/video_guide.md)。
 
 ## AI 1：支配人 AI — 失敗したときの次の一手を選ぶ
 
@@ -183,8 +202,9 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 
 固定ルールとの同一シード 2×2 で、「ルールは渡ったが方策は失敗」を判断の失敗、「両方失敗」をスキルの失敗として分ける（`comparison_v4.md`「失敗の帰属」、`manager2_report.py` が生成）。
 
-提出動画との対応（いずれも 3 体渡り切り・コース破損なし、`out/v7_full_report_take51〜54.json` の `three_crossed`、`course_disturbed`、`manager.decisions`）：
-提出版は固定ルール 5 手（2:47）、PPO 版は 4 手で `BACK_OFF` を省く（2:45）、Q 表版は 8 手で `STANDUP` → `WALK_ON` が止まってから座らせ直す（2:46）、追走版は固定ルール 5 手（2:44）。
+動画との対応（いずれも 3 体渡り切り・コース破損なし、`out/v7_full_report_take57.json` と `take51〜54.json` の `three_crossed`、`course_disturbed`、`manager.decisions`）：
+提出動画の本編は固定ルール 5 手（本編 2:37、以前の 2:47 版と同じ手と sim 時刻）。比較用は以前の 2:47 版と同じ速度設定で、PPO 版は 4 手で `BACK_OFF` を省く（2:45）、
+Q 表版は 8 手で `STANDUP` → `WALK_ON` が止まってから座らせ直す（2:46）、追走版は固定ルール 5 手（2:44）。
 旧コース（継ぎ目 5 cm）の評価と修正の効果は [docs/results.md](docs/results.md)。
 
 ## 工夫点
@@ -196,7 +216,7 @@ digest・支配人の判断・モード変化・渡り切りが一致し、違�
 - 技術力：前方ジャンプを公式 `jump` への関節目標の重ね合わせだけで実現した（外力なし）。
 - 実用性：スキル（固定プログラム）と判断（AI）を分けたので学習は CPU 数時間で済み、固定ルール 1 本でも 29/30 に届く。
 - 実用性：峠の継ぎ目でパッカンがつまずく問題を施工精度（継ぎ目 5 → 1 cm、course-builder commit ea5b4e7）で解決し、環境の不備を学習に押し付けなかった。
-- 表現力：顔モニターに決め手の数値、右下に倍速と sim 時計、判断の瞬間だけ吹き出し。省略なしで全区間を見せる。
+- 表現力：顔モニターに決め手の数値、右下に倍速と sim 時計、判断の瞬間だけ吹き出しと画面下の帯（日本語と英語）。鳴き声は機体の画面上の位置で左右に振る。省略なしで全区間を見せる。
 
 ## 分かったこと・限界・反省
 
@@ -238,25 +258,31 @@ Jumper の公式バンドルは jumper リポジトリの `out/bundle_example/ju
 | 2a | `python v7_full.py --test --no-face --tag _A` | 約 1.5 分（描画なし） | `out/v7_full_report_A.json`（顔なし） |
 | 2b | `python v7_full.py --test --tag _B` | 約 1.5 分（描画なし） | `out/v7_full_report_B.json`（顔と気分ネットあり） |
 | 2c | `python analysis/face_check.py out/v7_full_report_facecheck_A.json out/v7_full_report_facecheck_B.json` | 数秒 | 同梱の組で 8 項目すべて same、ngeom 290→291、終了コード 0 |
-| 3 | `python v7_full.py --tag _take51 --build-speed 4 --no-cuts` | 約 5〜8 分 | 提出版 `out/3body_arena_v7_take51.mp4`＋報告 JSON（5 手、digest `678fd3cae2ca`） |
-| 3b | `python v7_full.py --manager ppo --run ppo2_v22 --tag _take52 --build-speed 4 --no-cuts` | 約 5〜8 分 | PPO 版 `..._take52.mp4`＋報告 JSON（4 手、digest `aafa49e7a869`） |
-| 3c | `python v7_full.py --manager tabq --run tabq2_small --jitter 0.4 --tag _take53 --build-speed 4 --no-cuts` | 約 5〜8 分 | Q 表版 `..._take53.mp4`＋報告 JSON（8 手、digest `f53de6e45af7`） |
-| 3d | `python v7_full.py --finale procession --tag _take54 --build-speed 4 --no-cuts` | 約 5〜8 分 | 追走版 `..._take54.mp4`＋報告 JSON（5 手、digest `be8fb01e8f90`） |
+| 3 | `python v7_full.py --tag _take57 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0` | 約 5〜8 分 | 本編 `out/3body_arena_v7_take57.mp4`（157.3 s、ステレオ音声）＋報告 JSON（5 手、digest `678fd3cae2ca`） |
+| 3a | `python intro.py` | 約 10 秒 | 自己紹介 `out/intro.mp4`（15.1 s、`intro.py` の `DURATION`） |
+| 3b | `python music/marimba_bgm.py` | 約 20 秒 | BGM `out/music/bgm_marimba.wav`（44,100 Hz・ステレオ・175.4 s、同ファイルの `DUR`） |
+| 3c | `python assemble.py --op <講座の OP> --intro out/intro.mp4 --main out/3body_arena_v7_take57.mp4 --ed <講座の ED> --out out/submission.mp4 --bgm out/music/bgm_marimba.wav --bgm-gain -16 --bgm-until end --bgm-fade 0` | 約 30 秒 | 提出動画 `out/submission.mp4`。印字の `total_s` 178.41、`parts[].start_s` 0／3.04／18.14／175.44 |
+| 3d | `python v7_full.py --tag _take51 --build-speed 4 --no-cuts` | 約 5〜8 分 | 以前の 2:47 版 `..._take51.mp4`＋報告 JSON（5 手、digest `678fd3cae2ca`、本編と同一） |
+| 3e | `python v7_full.py --manager ppo --run ppo2_v22 --tag _take52 --build-speed 4 --no-cuts` | 約 5〜8 分 | PPO 版 `..._take52.mp4`＋報告 JSON（4 手、digest `aafa49e7a869`） |
+| 3f | `python v7_full.py --manager tabq --run tabq2_small --jitter 0.4 --tag _take53 --build-speed 4 --no-cuts` | 約 5〜8 分 | Q 表版 `..._take53.mp4`＋報告 JSON（8 手、digest `f53de6e45af7`） |
+| 3g | `python v7_full.py --finale procession --tag _take54 --build-speed 4 --no-cuts` | 約 5〜8 分 | 追走版 `..._take54.mp4`＋報告 JSON（5 手、digest `be8fb01e8f90`） |
 | 4 | `python manager2_train.py eval --run baselines_v4 --policies rule random --episodes 30 --seed0 5000 --out baselines_v4_rerun` | 約 1 h | rule 29/30、random 14/30（`eval_summary.json`） |
 | 5 | `python manager2_report.py --runs baselines_v4 tabq2_small_v4 ppo2_medium2_v4 ppo2_v22_v4 --name comparison_v4` | 数秒 | `out/manager_runs/comparison_v4.md` |
 | 6 | `python analysis/mood_train.py --data mood_data --out mood_net_rerun --epochs 600 --hidden 32 --seed 0` | 1 分以内 | `meta.json`（best_epoch 450、見送り分の 4 分類 0.80） |
 
-報告 JSON は `out/v7_full_report<tag>.json`、digest は `state_digest` の先頭 12 桁、照合値の出所は同梱の `out/v7_full_report_take51〜54.json`。
+報告 JSON は `out/v7_full_report<tag>.json`、digest は `state_digest` の先頭 12 桁、照合値の出所は同梱の `out/v7_full_report_take57.json` と `take51〜54.json`。
+3c の `<講座の OP>`・`<講座の ED>` は講座が配布するカード（同梱しない）で、`assemble.py` は 1280×720・30 fps にそろえ、音のないカードには無音を入れ、BGM を OP カードの終わり（`--bgm-start` の既定）から一定の音量で重ねる。
 4 の出力は `out/manager_runs/baselines_v4_rerun/`、6 の出力は `out/manager_runs/mood_net_rerun/` で、同梱の `baselines_v4/` と `mood_net/` を上書きせずに照合できる。
 6 の学習ループは 3.5 s で、「1 分以内」はスクリプト全体の目安（`out/manager_runs/mood_net/meta.json` の `train_s`）。
 
 2c は同梱の組（表情ログ `face.log` の行が 3 要素だった時期の報告）で終了コード 0 になり、`VERDICT: identical physics path` を印字する。
 現行コードの表情ログは 1 行 5 要素（規則番号と計測値を足した）なので、2a・2b で新しく作った組を渡すと、8 項目の same／DIFFERS と ngeom の行を印字した後、
 表情ログの一覧で止まる（終了コード 1、`VERDICT` 行なし）。新しい組は印字された 8 項目で判定する。`face_check.py` は digest が一致していても出来事が 1 件違えば終了コード 1 を返す。
-4 倍速の提出版と 2 倍速＋省略版の物理同一は `python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v7_full_report_take46.json` の末尾
-`state_digest equal: True` で確かめられる。同じコマンドはヘッドレスの報告どうしにも使える（[docs/reproduce.md](docs/reproduce.md) §4.3）。
+本編と以前の 2:47 版の物理同一は `python analysis/timeline_times.py out/v7_full_report_take57.json --compare out/v7_full_report_take51.json` の末尾
+`state_digest equal: True` で確かめられる（出来事の動画時刻は CALL から −0.4〜−8.2 s ずれ、sim 時刻は同じ）。2:47 版と 2 倍速＋省略版の組は `take51.json --compare take46.json` で同じ行が出る。
+同じコマンドはヘッドレスの報告どうしにも使える（[docs/reproduce.md](docs/reproduce.md) §4.3）。
 
-3〜3d の `--tag` は同梱ファイルの名前で、同じ tag で描くと同梱の mp4 と報告 JSON を上書きする。同梱の版を残して比べるときは `--tag _rerun51` などの別名で描き、上の `--compare` で照合する。
+3・3d〜3g の `--tag` は同梱ファイルの名前で、同じ tag で描くと同梱の mp4 と報告 JSON を上書きする。同梱の版を残して比べるときは `--tag _rerun57` などの別名で描き、上の `--compare` で照合する。
 同じコード・同じ引数の描画は毎回同じ経路をたどる。描画のたびに呼ぶ `mj_forward` も経路の一部で、ヘッドレスの `--test`（sim 385.6 s）は描画版（sim 404.22 s）と経路が異なる（[docs/reproduce.md](docs/reproduce.md) §5.3）。
 `--manager` は支配人の判断から先、`--finale` は結末の経路を変える。`--jitter` は同じ設定のまま描画の経路を変えるための引数で、報告 JSON には記録されない（Q 表版は 0.4）。
 
@@ -267,7 +293,10 @@ Windows 以外では字幕のフォントが既定に退避する。cp932 のコ
 
 | パス | 役割 |
 |---|---|
-| `v7_full.py` | 本番の通し台本：施工→坂の挑戦→跳跳の越境→支配人 AI の救助→万歳を 1 本の連続シミュレーションで回し、動画と report JSON を書く |
+| `v7_full.py` | 本番の通し台本：施工→坂の挑戦→跳跳の越境→支配人 AI の救助→万歳を 1 本の連続シミュレーションで回し、動画（本編）と report JSON を書く |
+| `intro.py` | 提出動画の自己紹介（15.1 s）：支配人 AI の丸い顔、打ち込みの文字、3 体のカード、打鍵音とチャイム。物理は進めない描画のみ |
+| `music/marimba_bgm.py` | 提出動画の BGM：numpy/scipy の加算合成だけで作る自作のマリンバ曲（seed 固定、`out/music/bgm_marimba.wav`） |
+| `assemble.py` | 提出動画の結合：講座の OP カード＋自己紹介＋本編＋講座の ED カードをつなぎ、BGM を一定の音量で重ねる |
 | `v7_policies.py` | 公式 ONNX ポリシーの観測転記（Microduck 61 次元、Jumper locomotion / jump / dance_crab） |
 | `v6_robots.py`、`v6_common.py` | 3 体の結合（`MjSpec.attach`）と共有ヘルパー（字幕、カメラ、動画） |
 | `crab_help.py` | 支配人 AI のスキル 6 手、観測 46 次元、固定ルール、吹き出しの定型文 |
@@ -278,7 +307,7 @@ Windows 以外では字幕のフォントが既定に退避する。cp932 のコ
 | `v6_phase1_build.py`、`v6_phase4_full.py` | 旧名だが現役の依存先（舞台 XML の生成、`ArenaSim`。`v7_full.py` と `manager2_env.py` が import） |
 | `v7_progress_video.py` | 単体実験 `v7_test_collision.py` / `v7_test_head_reach.py` / `v7_test_sitstand.py` の依存先（`official_md_servos` の同一コピーを持つ。本番は `v7_full.py` の自前版） |
 | `policies/microduck/` | 同梱の Microduck 公式 ONNX と `manifest.json` |
-| `out/` | 生成物：report JSON、評価 JSON、学習済み方策、提出動画、舞台 XML |
+| `out/` | 生成物：report JSON、評価 JSON、学習済み方策、提出動画の本編と自己紹介、比較用の動画、舞台 XML（BGM の wav と結合済みの提出ファイルは含めない） |
 | `report/` | 図と最終 PDF |
 | [docs/](docs/) | 読者向け文書（動画の対応表、支配人 AI、気分ネット、結果、考察、再現、物理統合、用語。一覧は「文書の案内」） |
 | [docs/devlog/](docs/devlog/) | 開発記録（原文のまま保存、索引は [docs/devlog/README.md](docs/devlog/README.md)） |
@@ -288,8 +317,9 @@ Windows 以外では字幕のフォントが既定に退避する。cp932 のコ
 
 ## 第三者資産・ライセンス・AI の使用
 
-コードは MIT ライセンス（[LICENSE](LICENSE)）。Microduck の外観（CC BY-NC-SA 4.0 の 3D メッシュ）を含む提出動画（`out/3body_arena_v7_take51.mp4` ほか）と `report/*.png` は
-CC BY-NC-SA 4.0（帰属：Pollen Robotics、`microduck_rl`）に従う。第三者資産の全文一覧は [THIRD_PARTY.md](THIRD_PARTY.md)。
+コードは MIT ライセンス（[LICENSE](LICENSE)）。Microduck の外観（CC BY-NC-SA 4.0 の 3D メッシュ）を含む動画（本編 `out/3body_arena_v7_take57.mp4`、比較用の `..._take51〜54.mp4` ほか）、
+自己紹介 `out/intro.mp4`、`report/*.png` は CC BY-NC-SA 4.0（帰属：Pollen Robotics、`microduck_rl`）に従う。提出動画の前後の OP／ED カードは講座の素材で、本リポジトリのライセンスの対象外である。
+BGM は本作の作者が `music/marimba_bgm.py` で合成した自作の曲で、第三者の曲・音源を含まない。第三者資産の全文一覧は [THIRD_PARTY.md](THIRD_PARTY.md)。
 
 | 資産 | 提供元 | ライセンス | 使い方 |
 |---|---|---|---|
@@ -303,7 +333,8 @@ CC BY-NC-SA 4.0（帰属：Pollen Robotics、`microduck_rl`）に従う。第三
 
 AI の使用：推論は公式 ONNX ポリシー 5 本、支配人 AI、気分ネット。学習は支配人 AI（PPO・表形式 Q）と気分ネット（すべて CPU）。
 開発補助として、コード・文書・図の作成に LLM（Claude）を使った。作品名〈アイランドマスター〉はこの開発補助 AI の名でもあり、動画中の判断は支配人 AI が行う。
-提出動画の救助場面の字幕（`v7_full.py` の `RESCUE` 段の見出し）は、支配人 AI に作品名を添えて「支配人AI〈アイランドマスター〉」と表記している。表記の違いだけで、判断するのは支配人 AI である。
+提出動画の救助場面の字幕（`v7_full.py` の `RESCUE` 段の見出し）は、支配人 AI に作品名を添えて「支配人AI〈アイランドマスター〉」と表記している。
+自己紹介でも支配人 AI が「アイランドマスター」と名乗る（`intro.py` の `HELLO`）。どちらも表記の違いだけで、判断するのは支配人 AI である。
 
 ## 開発記録
 

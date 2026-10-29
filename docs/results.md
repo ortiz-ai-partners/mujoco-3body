@@ -1,6 +1,6 @@
 # 結果：支配人 AI の同一シード評価と提出動画の記録
 
-本文書は、支配人 AI（失敗したときの次の一手を選ぶ自作 AI）の評価結果の全表と、提出動画 4 本で支配人 AI が打った手の時刻をまとめた結果集である。
+本文書は、支配人 AI（失敗したときの次の一手を選ぶ自作 AI）の評価結果の全表と、提出動画の本編と比較用の動画で支配人 AI が打った手の時刻をまとめた結果集である。
 設計は [docs/manager_ai.md](manager_ai.md)、考察は [docs/insights.md](insights.md)、動画の読み方は [docs/video_guide.md](video_guide.md)、用語の対応表は [docs/glossary.md](glossary.md) にある。
 ファイル名に含まれる番号（`out/3body_arena_v7_take51.mp4` など）は固有名としてそのまま引用し、各版の設定と系譜の台帳は [docs/devlog/takes.md](devlog/takes.md) にある。
 
@@ -257,34 +257,39 @@ PPO v2.2 の曲線が平らに見えるのは、開始分布に `ramp_fallen`（
 
 ## 提出動画の手と時刻
 
-### 4 本の対応
+### 本編と比較用の動画の対応
 
-提出動画は施工を 4 倍速で省略なしに描き、以後 2 倍速、ゴールの万歳は等速。画面右下に sim 時計と x4／x2／x1 を常時表示する。
-現在の実装では `--build-speed` は 2 倍速で標本化したフレームを間引いて書き出すだけで、標本周期は変えない（`v7_full.py` の `SPEED` 直上の注記）。
-このため最終状態のダイジェスト（qpos＋qvel の sha256、`state_digest`）は省略の有無と施工の倍速によらず一致し、下の表の「物理」列がその確認である。
+提出動画（2:58.4）は講座の OP カード、自己紹介（15.1 s）、本編、講座の ED カードをつないだもので、本編は提出動画の 0:18.1（18.14 s）から始まる（`docs/video_guide.md` 第 1 節）。
+本編は施工を 4 倍速で省略なしに描き、以後 2 倍速、仲間を呼んで戻る区間と輪へ集まる区間は 4 倍速、ゴールの万歳は等速。画面右下に sim 時計と x4／x2／x1 を常時表示する。
+比較用の動画（以前の 2:47 版を含む 4 本）は、施工 4 倍速・以後 2 倍速・万歳は等速の設定で描いた。
+現在の実装では `--build-speed` と `--speedup` は 2 倍速で標本化したフレームを間引いて書き出すだけで、標本周期は変えない（`v7_full.py` の `SPEED` 直上の注記）。
+このため最終状態のダイジェスト（qpos＋qvel の sha256、`state_digest`）は省略の有無と書き出しの倍速によらず一致し、下の表の「物理」列がその確認である。
 顔と気分ネットの有無でダイジェストと支配人の判断が変わらないことは `analysis/face_check.py` で確かめた（`docs/mood_net_and_faces.md`）。施工 4 倍速の初版は標本周期そのものを変えたため、物理の経路が変わった（表の下）。
 
 | 条件名 | ファイル（`out/`） | 支配人 | 手数 | 長さ | 物理（`state_digest` 先頭 8 桁） |
 |---|---|---|---|---|---|
-| 提出版（固定ルール・輪の万歳） | `3body_arena_v7_take51.mp4` | 固定ルール | 5 | 2:47.0 | `678fd3ca`、省略版 `v7_full_report_take46.json` と同じ |
+| 本編（提出、固定ルール・輪の万歳） | `3body_arena_v7_take57.mp4` | 固定ルール | 5 | 2:37.3 | `678fd3ca`、以前の 2:47 版と同じ |
+| 以前の 2:47 版（固定ルール・輪の万歳） | `3body_arena_v7_take51.mp4` | 固定ルール | 5 | 2:47.0 | `678fd3ca`、省略版 `v7_full_report_take46.json` と同じ |
 | PPO 版 | `3body_arena_v7_take52.mp4` | PPO v2.2（`ppo2_v22`） | 4 | 2:45.2 | `aafa49e7`、省略版 `v7_full_report_take47.json` と同じ |
 | Q 表版 | `3body_arena_v7_take53.mp4` | Q 表（`tabq2_small`） | 8 | 2:46.3 | `f53de6e4`、省略版 `v7_full_report_take48.json` と同じ |
 | 追走版（固定ルール・追走の結末） | `3body_arena_v7_take54.mp4` | 固定ルール | 5 | 2:43.7 | `be8fb01e`、省略版 `v7_full_report_take49.json` と同じ |
 
-4 本とも 3 体が渡り切り（`three_crossed` が bz・crab・duck すべて true）、コースの部品の移動なし（`course_disturbed` が空）、MuJoCo 3.11.0（`mujoco`）。
-長さは各 report JSON の音声なしの `video_silent.seconds`（フレーム数÷30：167.0、165.2、166.3、163.7 s）で、音声付き MP4 の実測は行っていない。
-シミュレーションの全長は `sim_seconds`（404.2、400.6、402.9、397.7 s）で、省略版と同じ値である。
+5 本とも 3 体が渡り切り（`three_crossed` が bz・crab・duck すべて true）、コースの部品の移動なし（`course_disturbed` が空）、MuJoCo 3.11.0（`mujoco`）。
+長さは各 report JSON の音声なしの `video_silent.seconds`（フレーム数÷30：157.3、167.0、165.2、166.3、163.7 s）。本編の音声付き MP4 は ffmpeg の Duration で 2:37.30 だった。
+シミュレーションの全長は `sim_seconds`（404.2、404.2、400.6、402.9、397.7 s）で、省略版と同じ値である。本編は END の後に回す 2.5 s のうち 1 s だけを書き出すので（`settings.tail_write_s`）、
+動画の長さは 2:47 版より 9.7 s 短いが、`sim_seconds` は同じである。
 
 省略版（`out/3body_arena_v7_take46〜49.mp4`、2 倍速＋省略 2 か所、2:44.1／2:42.3／2:43.5／2:40.8）は記録として残す。
 施工 4 倍速の初版（`out/v7_full_report_take50.json`、2:40.2）は描画の標本周期が変わったことで物理の経路が変わり（`state_digest` が `768e78f7` で異なる）、
 同じ 5 手で 3 体渡り切りだが提出には使わない。
 
-出所：`out/v7_full_report_take51.json`〜`take54.json`（`manager.policy`、`manager.decisions`、`state_digest`、`three_crossed`、`course_disturbed`、`video_silent`、`sim_seconds`、`mujoco`）
+出所：`out/v7_full_report_take57.json` と `take51.json`〜`take54.json`（`manager.policy`、`manager.decisions`、`state_digest`、`three_crossed`、`course_disturbed`、`video_silent`、`sim_seconds`、`mujoco`）
 と `out/v7_full_report_take46.json`〜`take49.json` の `state_digest`。
 
 再生成（約 8 分／本。`--ending crab`、`--manager rule`、`--finale circle` は既定値。Q 表版の `--jitter 0.4` は省略版の記録から）：
 
 ```
+python v7_full.py --tag _take57 --build-speed 4 --no-cuts --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0
 python v7_full.py --tag _take51 --build-speed 4 --no-cuts
 python v7_full.py --manager ppo --run ppo2_v22 --tag _take52 --build-speed 4 --no-cuts
 python v7_full.py --manager tabq --run tabq2_small --jitter 0.4 --tag _take53 --build-speed 4 --no-cuts
@@ -295,54 +300,60 @@ python v7_full.py --finale procession --tag _take54 --build-speed 4 --no-cuts
 
 | 条件名 | ×4 | ×2 | ×1 | 全長 |
 |---|---|---|---|---|
-| 提出版 | 0:00〜0:44.1（sim 0〜176.4 s） | 0:44.1〜2:29.1（sim 176.4〜386.3 s） | 2:29.1〜2:47.0（sim 386.3〜404.2 s） | 2:47.0 |
+| 本編（提出） | 0:00〜0:44.1（sim 0〜176.4 s）、1:20.4〜1:24.3（sim 248.9〜264.6 s）、2:16.7〜2:20.9（sim 369.4〜386.3 s） | 0:44.1〜1:20.4（sim 176.4〜248.9 s）、1:24.3〜2:16.7（sim 264.6〜369.4 s） | 2:20.9〜2:37.3（sim 386.3 s〜、END の後は 1 s だけ） | 2:37.3 |
+| 以前の 2:47 版 | 0:00〜0:44.1（sim 0〜176.4 s） | 0:44.1〜2:29.1（sim 176.4〜386.3 s） | 2:29.1〜2:47.0（sim 386.3〜404.2 s） | 2:47.0 |
 | PPO 版 | 0:00〜0:44.1（sim 0〜176.4 s） | 0:44.1〜2:27.3（sim 176.4〜382.7 s） | 2:27.3〜2:45.2（sim 382.7〜400.6 s） | 2:45.2 |
 | Q 表版 | 0:00〜0:44.1（sim 0〜176.4 s） | 0:44.1〜2:28.4（sim 176.4〜385.0 s） | 2:28.4〜2:46.3（sim 385.0〜402.9 s） | 2:46.3 |
 | 追走版 | 0:00〜0:44.1（sim 0〜176.4 s） | 0:44.1〜2:25.8（sim 176.4〜379.8 s） | 2:25.8〜2:43.7（sim 379.8〜397.7 s） | 2:43.7 |
 
-×1 の開始はゴールの万歳が始まる出来事（`events` の「the circle」または「the three cheer」）。×4 の区間は施工の段階 `BUILD`（sim 0〜176.4 s）で 4 本とも同じ。
-×1 の終わりは動画の末尾（`video_silent.seconds`、`sim_seconds`）で、最後の出来事 `stage -> END` はその 2.5 s 前にある
-（提出版 2:44.5／sim 401.7 s、PPO 版 2:42.6／sim 398.1 s、Q 表版 2:43.8／sim 400.4 s、追走版 2:41.2／sim 395.2 s）。末尾の 2.5 s も ×1 で描かれる。
+×1 の開始はゴールの万歳が始まる出来事（`events` の「the circle」または「the three cheer」）。施工の段階 `BUILD`（sim 0〜176.4 s）の ×4 は 5 本とも同じ。
+×1 の終わりは動画の末尾（`video_silent.seconds`）で、最後の出来事 `stage -> END` は比較用の 4 本ではその 2.5 s 前、本編では 1 s 前にある
+（本編 2:36.3／sim 401.7 s、以前の 2:47 版 2:44.5／sim 401.7 s、PPO 版 2:42.6／sim 398.1 s、Q 表版 2:43.8／sim 400.4 s、追走版 2:41.2／sim 395.2 s）。末尾も ×1 で描かれる。
 
 出所：各 report JSON の `events` の `t` と `video_t` から `analysis/timeline_times.py` が区間を推定したもの（同スクリプトは ×1 の区間を最後の出来事までとして出す）。
-再生成：`python analysis/timeline_times.py out/v7_full_report_take51.json`（表情ログも動画時刻で出る）。
+再生成：`python analysis/timeline_times.py out/v7_full_report_take57.json`（表情ログも動画時刻で出る）。
 
-### 提出版の主な出来事（動画時刻｜sim 秒）
+### 本編の主な出来事（提出動画｜本編｜sim 秒）
 
-| 出来事 | 動画時刻 | sim 秒 | 動いているもの | 制御 |
-|---|---|---|---|---|
-| 施工完了、ブルドーザーが 4 面を走破して渡り切り | 0:54.0 | 196.1 | ブルドーザー | 自作ルール制御（course-builder） |
-| パッカンが座り込む（2 回目の挑戦のあと） | 1:08.2 | 224.6 | パッカン | 公式 `velstand`・`alpha_sitstand`（推論） |
-| 跳跳が峠で前方ジャンプ | 1:15.4 | 239.0 | 跳跳 | 公式 `jump`（推論）＋関節目標の重ね合わせ |
-| 跳跳が渡り切り | 1:18.9 | 245.9 | 跳跳 | 公式 `locomotion`（推論） |
-| 支配人 AI が引き継ぐ（1 手目 `SEAT`） | 1:28.2 | 264.6 | 支配人 AI | 自作、固定ルール |
-| `PUSH` 開始 | 1:34.2 | 276.5 | 跳跳 | 公式 `locomotion`（推論）、支配人の手 |
-| `BACK_OFF`、`STANDUP`、`WALK_ON` | 2:09.8、2:10.7、2:13.5 | 347.9、349.6、355.2 | 跳跳、パッカン | 支配人の手 |
-| パッカンが渡り切り、3 体そろう | 2:20.6 | 369.4 | パッカン | 公式 `velstand`（推論） |
-| 輪の万歳が始まる（以後 ×1） | 2:29.1 | 386.3 | 3 体 | 公式 `dance_crab`（推論）ほか |
-| 終了 | 2:44.5 | 401.7 | — | — |
+提出動画の時刻は本編の時刻に 18.14 s（講座の OP カード 3.04 s＋自己紹介 15.1 s）を足した値。
 
-出所：`out/v7_full_report_take51.json` の `events`（`video_t`、`t`）。PPO 版・追走版は施工から引き継ぎまで提出版と同じ時刻である。
+| 出来事 | 提出動画 | 本編 | sim 秒 | 動いているもの | 制御 |
+|---|---|---|---|---|---|
+| 施工完了、ブルドーザーが 4 面を走破して渡り切り | 1:12.1 | 0:54.0 | 196.1 | ブルドーザー | 自作ルール制御（course-builder） |
+| パッカンが座り込む（2 回目の挑戦のあと） | 1:26.4 | 1:08.2 | 224.6 | パッカン | 公式 `velstand`・`alpha_sitstand`（推論） |
+| 跳跳が峠で前方ジャンプ | 1:33.6 | 1:15.4 | 239.0 | 跳跳 | 公式 `jump`（推論）＋関節目標の重ね合わせ |
+| 跳跳が渡り切り | 1:37.0 | 1:18.9 | 245.9 | 跳跳 | 公式 `locomotion`（推論） |
+| 支配人 AI が引き継ぐ（1 手目 `SEAT`） | 1:42.4 | 1:24.3 | 264.6 | 支配人 AI | 自作、固定ルール |
+| `PUSH` 開始 | 1:48.4 | 1:30.2 | 276.5 | 跳跳 | 公式 `locomotion`（推論）、支配人の手 |
+| `BACK_OFF`、`STANDUP`、`WALK_ON` | 2:24.0、2:24.9、2:27.7 | 2:05.9、2:06.8、2:09.6 | 347.9、349.6、355.2 | 跳跳、パッカン | 支配人の手 |
+| パッカンが渡り切り、3 体そろう | 2:34.8 | 2:16.7 | 369.4 | パッカン | 公式 `velstand`（推論） |
+| 輪の万歳が始まる（以後 ×1） | 2:39.0 | 2:20.9 | 386.3 | 3 体 | 公式 `dance_crab`（推論）ほか |
+| 終了 | 2:54.4 | 2:36.3 | 401.7 | — | — |
+
+出所：`out/v7_full_report_take57.json` の `events`（`video_t`、`t`）。sim 秒は以前の 2:47 版（`out/v7_full_report_take51.json`）と全行で同じで、
+2:47 版の動画時刻は跳跳の渡り切りまで本編と同じ、支配人の引き継ぎは 1:28.2、輪の万歳は 2:29.1、終了は 2:44.5 である。
+PPO 版・追走版は施工から引き継ぎまで以前の 2:47 版と同じ時刻である。
 Q 表版は `--jitter 0.4`（跳跳の応援ダンスの開始点を 0.4 s ずらす設定、`v7_full.py` の `CHEER_DANCE_START`）のため、跳跳のジャンプ以降の出来事が sim で 0.1 s 未満ずれる（ジャンプ 1:15.5／sim 239.1 s、渡り切り sim 246.0 s）。
-支配人の引き継ぎは 4 本とも 1:28.2（sim 264.6 s）。
+支配人の引き継ぎは比較用の 4 本とも 1:28.2（sim 264.6 s）。
 渡り切り・万歳・終了は次の表の下に記す。制御の列は `docs/physics_integration.md` §1（構成の全体）の「動かしているもの」に対応する。
 
-再生成：`python analysis/timeline_times.py out/v7_full_report_take51.json`。`--compare out/v7_full_report_take46.json` を足すと、
-省略版との出来事ごとの動画時刻のずれと `state_digest` の一致も出る。
+再生成：`python analysis/timeline_times.py out/v7_full_report_take57.json`。`--compare out/v7_full_report_take51.json` を足すと、
+以前の 2:47 版との出来事ごとの動画時刻のずれと `state_digest` の一致も出る（2:47 版と省略版の組は `take51.json --compare take46.json`）。
 
-### 支配人 AI の手（4 本）
+### 支配人 AI の手（本編と比較用の 3 本）
 
-提出版（固定ルール、`out/v7_full_report_take51.json` の `manager.decisions`）：
+本編（固定ルール、`out/v7_full_report_take57.json` の `manager.decisions`）：
 
-| 手 | 動画時刻 | sim 秒 | 所要 s | 結果 |
-|---|---|---|---|---|
-| 1 `SEAT` | 1:28.2 | 264.6 | 11.9 | `seated` |
-| 2 `PUSH` | 1:34.2 | 276.5 | 71.3 | `pushed_up` |
-| 3 `BACK_OFF` | 2:09.8 | 347.9 | 1.7 | `cleared` |
-| 4 `STANDUP` | 2:10.7 | 349.6 | 5.5 | `standing` |
-| 5 `WALK_ON` | 2:13.5 | 355.2 | 14.2 | `crossed` |
+| 手 | 提出動画 | 本編 | sim 秒 | 所要 s | 結果 |
+|---|---|---|---|---|---|
+| 1 `SEAT` | 1:42.4 | 1:24.3 | 264.6 | 11.9 | `seated` |
+| 2 `PUSH` | 1:48.4 | 1:30.2 | 276.5 | 71.3 | `pushed_up` |
+| 3 `BACK_OFF` | 2:24.0 | 2:05.9 | 347.9 | 1.7 | `cleared` |
+| 4 `STANDUP` | 2:24.9 | 2:06.8 | 349.6 | 5.5 | `standing` |
+| 5 `WALK_ON` | 2:27.7 | 2:09.6 | 355.2 | 14.2 | `crossed` |
 
-5 手すべて成功、転倒 0、パッカンの渡り切り 2:20.6（sim 369.4 s）、万歳 2:29.1（sim 386.3 s）、終了 2:44.5（sim 401.7 s）。押し上げは動画で約 36 秒（2 倍速）。
+5 手すべて成功、転倒 0、パッカンの渡り切り 2:34.8（本編 2:16.7、sim 369.4 s）、万歳 2:39.0（本編 2:20.9、sim 386.3 s）、終了 2:54.4（本編 2:36.3、sim 401.7 s）。押し上げは動画で約 36 秒（2 倍速）。
+手・sim 時刻・所要・結果は以前の 2:47 版と同じで、2:47 版の動画時刻は `SEAT` 1:28.2、`PUSH` 1:34.2、`BACK_OFF` 2:09.8、`STANDUP` 2:10.7、`WALK_ON` 2:13.5。
 
 PPO 版（PPO v2.2、`out/v7_full_report_take52.json`）：
 
@@ -375,15 +386,15 @@ Q 表版（`out/v7_full_report_take53.json`）：
 評価 v4 の `STANDUP` → `nothing` 16 回と同じ型である。120 話の学習では状態ごとの値がまだ安定していないためと考える（出所：`out/manager_runs/tabq2_small/tabq.json`）。
 渡り切り 2:20.7（sim 369.5 s）、万歳 2:28.4（sim 385.0 s）、終了 2:43.8（sim 400.4 s）。
 
-追走版（固定ルール、`out/v7_full_report_take54.json`）：手と時刻は提出版と同じ 5 手（`SEAT` 1:28.2、`PUSH` 1:34.2、`BACK_OFF` 2:09.8、`STANDUP` 2:10.7、`WALK_ON` 2:13.5）。
+追走版（固定ルール、`out/v7_full_report_take54.json`）：手と時刻は以前の 2:47 版と同じ 5 手（`SEAT` 1:28.2、`PUSH` 1:34.2、`BACK_OFF` 2:09.8、`STANDUP` 2:10.7、`WALK_ON` 2:13.5）。
 渡り切り 2:20.6（sim 369.4 s）のあと跳跳がパッカンを追って下り（`v7_full.py` の `--finale procession`）、ゴールで三人の万歳 2:25.8（sim 379.8 s）、終了 2:41.2（sim 395.2 s）。
-ブルドーザーの位置取りは `WALK_ON` の開始（sim 355.2 s）から提出版と分かれ、最終状態のダイジェストも異なる。それでもパッカンの渡り切りまでの支配人の手と時刻は提出版と同じである。
+ブルドーザーの位置取りは `WALK_ON` の開始（sim 355.2 s）から輪の結末の版と分かれ、最終状態のダイジェストも異なる。それでもパッカンの渡り切りまでの支配人の手と sim 時刻は本編と同じである。
 
-気分ネット（跳跳の表情を推論する自作 AI）の本番推論回数は提出版 5,236、PPO 版 5,050、Q 表版 5,239、追走版 5,236（各 report JSON の `face.mood_ai.inferences`）。
-表情ログは `face.log`（提出版 26 行、PPO 版 26 行、Q 表版 27 行、追走版 26 行）で、動画時刻への対応は `analysis/timeline_times.py` が出す。
+気分ネット（跳跳の表情を推論する自作 AI）の本番推論回数は本編 5,236（以前の 2:47 版も同じ）、PPO 版 5,050、Q 表版 5,239、追走版 5,236（各 report JSON の `face.mood_ai.inferences`）。
+表情ログは `face.log`（本編 26 行、PPO 版 26 行、Q 表版 27 行、追走版 26 行）で、動画時刻への対応は `analysis/timeline_times.py` が出す。
 
 出所：各 report JSON の `manager.decisions`（`action`、`t`、`video_t`、`duration_s`、`result`）と `events`。
-再生成（4 本とも同じ形）：`python analysis/timeline_times.py out/v7_full_report_take52.json` のように report JSON を指定する。
+再生成（どの版も同じ形）：`python analysis/timeline_times.py out/v7_full_report_take52.json` のように report JSON を指定する。
 
 ## 付録 A：旧コース（継ぎ目 5 cm）の評価 v3／v3b
 

@@ -163,11 +163,11 @@ Python 本体は 3.10（3.10.6 で確認、PSF License）。上の 10 本が引�
 
 上の第三者資産と転記部分を除くコードは、すべて本プロジェクトで作成した。
 学習済みの支配人 AI（`out/manager_runs/ppo2_v22/ppo_manager.zip`、`out/manager_runs/tabq2_small/tabq.json` ほか）と気分ネット（`out/manager_runs/mood_net/`）も本プロジェクトの成果物である。
-評価の生成物（`out/manager_runs/*.md`、`*.json`）と報告 JSON（`out/v7_full_report_take51.json` など）も含め、MIT で公開する。
-動画の効果音は `v7_full.py` の `Chirps` が合成するもので、第三者の音源は使わない。
+評価の生成物（`out/manager_runs/*.md`、`*.json`）と報告 JSON（`out/v7_full_report_take57.json` など）も含め、MIT で公開する。
+動画の効果音は `v7_full.py` の `Chirps` と `intro.py` が合成するもので、BGM は `music/marimba_bgm.py` が numpy/scipy の加算合成だけで作る自作曲である。第三者の音源・既存の曲・サンプルは使わない。提出動画の最初と最後の講座の OP／ED カード（計 6 s、音声なし）は講座が配布した素材で、本リポジトリには含めない。
 
-動画と静止画も本プロジェクトで作成した。動画は `out/` 以下の `*.mp4` のすべてで、提出版は `out/3body_arena_v7_take51.mp4`、
-PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_arena_v7_take53.mp4`・`out/3body_arena_v7_take54.mp4`。
+動画と静止画も本プロジェクトで作成した。動画は `out/` 以下の `*.mp4` のすべてで、提出動画の本編は `out/3body_arena_v7_take57.mp4`、自己紹介は `out/intro.mp4`、
+本編と物理が同一の以前の 2:47 版は `out/3body_arena_v7_take51.mp4`、PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_arena_v7_take53.mp4`・`out/3body_arena_v7_take54.mp4`。
 静止画は報告書の図（`report/*.png`）、差し替え前の図と元データ（`docs/devlog/figures/`）、表情の確認画像（`out/face_test/`）である。
 これらの多くに Microduck（CC BY-NC-SA 4.0 のメッシュ）と Jumper（Apache-2.0）の外観が映る。
 そのため動画と静止画は一律に、コードの MIT ではなく CC BY-NC-SA 4.0 の条件（帰属・非営利・継承）で扱う。帰属表示は「MJCF モデルと 3D メッシュ」の節のとおり。
@@ -190,7 +190,7 @@ PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_a
 | 支配人 AI | 自作 | 固定ルール版は学習なし、PPO 版・Q 表版は学習 | 46 → 6 手、前の手が終わるたびに 1 回 | 失敗したときの次の一手を選ぶ |
 | 気分ネット | 自作 | 学習 | 53 → 5、救助中に支配人の手を実行している間の毎制御ステップ | 跳跳の表情の元になる 5 つの値を推論する |
 
-支配人 AI の観測は 46 次元（`crab_help.py` の `OBS_DIM`）、手は 6 つ（同 `ACTIONS`）。提出動画は固定ルール版で（`crab_help.rule_action`）、5 手を打った（`out/v7_full_report_take51.json` の `manager.decisions`）。
+支配人 AI の観測は 46 次元（`crab_help.py` の `OBS_DIM`）、手は 6 つ（同 `ACTIONS`）。提出動画は固定ルール版で（`crab_help.rule_action`）、5 手を打った（`out/v7_full_report_take57.json` の `manager.decisions`）。
 気分ネットは 53-32-32-5 の MLP で（`analysis/mood_train.py` の `MoodNet`、`out/manager_runs/mood_net/meta.json` の `n_in`・`hidden`・`n_out`）、提出動画では 5,236 回推論した（同 JSON の `face.mood_ai.inferences`）。
 出力は 4 つの結末の確率と「渡れる」の確率である（`crab_face.MoodAI` の `KEYS`）。ブルドーザーは規則制御で、AI 推論はない。
 

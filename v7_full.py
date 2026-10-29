@@ -50,7 +50,7 @@ import mujoco
 import numpy as np
 
 from v6_common import (HERE, OUT_DIR, VIDEO_FPS, VIDEO_H, VIDEO_W, Captioner, CameraRig, FrameClock,
-                       Video, course_builder, quat_to_yaw)
+                       Video, course_builder, quat_to_yaw, screen_xy)
 from v6_phase4_full import ArenaSim, PHASE_TEXT
 from v6_robots import body_tilt_deg, build_arena, robots_in_contact
 from v7_policies import MD_CONTROL_DT, JumperDance, JumperJump, JumperLocomotion, MicroduckPolicy, set_pd_gains
@@ -221,14 +221,25 @@ class Chirps:
     MASTER_GAIN = 0.45          # requirement: the voices stay quiet
     DUCK_KINDS = {"quack", "worried", "gwaa", "call", "happy", "sigh"}
     DUCK_GAIN = 1.0 / 3.0       # requirement (10/29): the duck's voice at a third of its level (-9.5 dB)
+    CRAB_KINDS = {"clack", "trill"}
+    CRAB_GAIN = 0.5             # requirement (10/29): the crab's voice at half its level (-6 dB)
     SFX = {"blip", "chime"}     # the manager's band: one blip per typed character, a chime when it appears
     SFX_LEVEL = {"blip": 0.16, "chime": 0.27}   # the same final levels as the opening's typing and card chime
 
     def __init__(self):
         self.events = []
 
-    def add(self, video_t, kind, pitch=1.0):
-        self.events.append((float(video_t), kind, float(pitch)))
+    PAN_WIDTH = 0.8             # requirement (10/29): a voice comes from its robot's side of the frame; 0.8 keeps it off the hard edge
+
+    def add(self, video_t, kind, pitch=1.0, pan=0.0):
+        """pan: -1 (left) ... +1 (right), from where the speaking robot is in the frame when it cries."""
+        self.events.append((float(video_t), kind, float(pitch), round(float(pan), 3)))
+
+    @staticmethod
+    def _lr(pan):
+        """Constant-power pan with the centre at unity gain in both channels."""
+        th = (max(-1.0, min(1.0, pan)) + 1.0) * math.pi / 4.0
+        return math.sqrt(2.0) * math.cos(th), math.sqrt(2.0) * math.sin(th)
 
     @staticmethod
     def _tone(f0, f1, dur, sr, amp, vib):
@@ -254,25 +265,28 @@ class Chirps:
                 / 1.85)
 
     def wav(self, path, length_s, sr=22050):
-        out = np.zeros(int((length_s + 1.0) * sr))
+        """Stereo: each cry placed at its pan (events from before panning have none and sit in the centre)."""
+        out = np.zeros((int((length_s + 1.0) * sr), 2))
         sfx = np.zeros_like(out)
-        for k, (t0, kind, pitch) in enumerate(self.events):
+        for k, ev in enumerate(self.events):
+            t0, kind, pitch = ev[:3]
+            lr = np.array(self._lr(ev[3] if len(ev) > 3 else 0.0))
             cursor = int(t0 * sr)
             if kind in self.SFX:                             # mixed after the master gain, at the opening's levels
                 w = self.SFX_LEVEL[kind] * self._sfx(kind, sr, k)
                 n = min(len(w), len(sfx) - cursor)
                 if n > 0:
-                    sfx[cursor:cursor + n] += w[:n]
+                    sfx[cursor:cursor + n] += w[:n, None] * lr
                 continue
-            gain = self.DUCK_GAIN if kind in self.DUCK_KINDS else 1.0
+            gain = (self.DUCK_GAIN if kind in self.DUCK_KINDS else self.CRAB_GAIN if kind in self.CRAB_KINDS else 1.0)
             for f0, f1, dur, vib, amp in self.KINDS[kind]:
                 n = int(dur * sr)
                 if f0 > 0 and cursor + n < len(out):
-                    out[cursor:cursor + n] += gain * self._tone(f0 * pitch, f1 * pitch, dur, sr, amp, vib)
+                    out[cursor:cursor + n] += (gain * self._tone(f0 * pitch, f1 * pitch, dur, sr, amp, vib))[:, None] * lr
                 cursor += n
         out = np.clip(out * self.MASTER_GAIN + sfx, -1, 1)
         with wave.open(str(path), "wb") as w:
-            w.setnchannels(1)
+            w.setnchannels(2)
             w.setsampwidth(2)
             w.setframerate(sr)
             w.writeframes((out * 32767).astype(np.int16).tobytes())
@@ -654,10 +668,18 @@ def main():
         if render:
             clock.speed = SPEED.get(new, 1.0)
 
+    def voice_pan(kind):
+        """Where the crying robot is across the frame (render-only: reads the camera, never the scene rng)."""
+        if not render:
+            return 0.0
+        who = duck.pos(data) if kind in Chirps.DUCK_KINDS else crab.pos(data)
+        x, _, depth = screen_xy(cam.cam, who, model.vis.global_.fovy, VIDEO_W / VIDEO_H)
+        return 0.0 if depth <= 0 else Chirps.PAN_WIDTH * max(-1.0, min(1.0, x))
+
     def quack(kind, pitch=1.0):
         if video is not None and cut_at(data.time) is not None:
             return                                           # a cry inside a jump cut is not heard
-        chirps.add(video_t(), kind, pitch)
+        chirps.add(video_t(), kind, pitch, voice_pan(kind))
 
     def sfx(kind):
         """A sound of the manager's band (never inside a jump cut, like the cries)."""
@@ -1823,7 +1845,8 @@ def main():
                 "write_every": write_every, "tail_write_s": args.tail_write, "cuts": [list(c) for c in cuts],
                 "band": (None if draw_avatar is None else {"cps": BAND_CPS, "hold_s": BAND_HOLD, "in_s": BAND_IN, "out_s": BAND_OUT,
                                                            "height_frac": Captioner.BAND_FRAC}),
-                "duck_voice_gain": round(Chirps.DUCK_GAIN, 4)}
+                "duck_voice_gain": round(Chirps.DUCK_GAIN, 4), "crab_voice_gain": round(Chirps.CRAB_GAIN, 4),
+                "voice_pan": {"width": Chirps.PAN_WIDTH, "law": "constant power, centre at unity", "from": "speaker's x in the frame"}}
     report = {"mujoco": mujoco.__version__, "settings": settings, "sim_seconds": round(float(data.time), 2),
               "state_digest": digest, "ngeom": int(model.ngeom),
               "face": {"on": face is not None, "log": face.log if face is not None else None,

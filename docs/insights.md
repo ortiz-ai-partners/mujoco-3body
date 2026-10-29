@@ -264,7 +264,8 @@ Q 表版は 0.4 である（`docs/video_guide.md` と `docs/reproduce.md` の描
 顔なし／顔あり（`out/v7_full_report_facecheck_A.json`・`_B.json`）はヘッドレスで最終状態の sha256（`state_digest` c083a03c…）が一致し、違いは `ngeom` 290→291 だけ、5 手の判断・64 の出来事・モード遷移も一致した（`analysis/face_check.py`）。
 気分ネット・計測つきの版（`out/v7_full_report_moodcheck_B.json`〜`_E.json`）も同じ `state_digest` で、推論 4,518〜4,523 回を挟んでも物理は変わらない。
 描画版でも、顔なし（`out/v7_full_report_take24.json`）と顔付きの撮り直し（`out/v7_full_report_take30.json`）は sim 404.22 s・5 手・出来事 62 件が一致し、
-提出版（`out/v7_full_report_take46.json`・`out/v7_full_report_take51.json`）の `state_digest` 678fd3ca… は `out/v7_full_report_take30.json` と同一である。
+以前の 2:47 版とその省略版（`out/v7_full_report_take51.json`・`out/v7_full_report_take46.json`）、提出動画の本編（`out/v7_full_report_take57.json`）の `state_digest` 678fd3ca… は `out/v7_full_report_take30.json` と同一である。
+本編で足した支配人の帯、声の音量と左右の振り分けも、カメラと文字を読むだけで力学に関わらず、digest を変えなかった。
 理由は、顔の板が質量・接触・関節を持たず（`contype 0`、`density 0`）、既存 geom の順序も変えないこと、カメラと推論が力学に無関係なことにある。
 
 ### 事実 3：省略（ジャンプカット）の初版で物理が変わった
@@ -275,7 +276,7 @@ Q 表版は 0.4 である（`docs/video_guide.md` と `docs/reproduce.md` の描
 直しは `render_frame(write=False)` で、省略区間でも軌道更新と `mj_forward` を毎フレーム呼び、描画と書き出しだけを省く。
 これで全長版と同じ `state_digest` になった（2 倍速＋省略版 `out/v7_full_report_take46.json` と全長の顔付き版 `out/v7_full_report_take30.json` が一致）。
 
-### 事実 4：施工 4 倍速の初版で経路が変わり、提出版は 2 倍速版と同一
+### 事実 4：施工 4 倍速の初版で経路が変わり、2:47 版と本編は 2 倍速版と同一
 
 フレームの標本化は `FrameClock`（`v6_common.py`）が行い、施工中は `SPEED["BUILD"]` = 2.0 なので sim 2/30 秒ごとに 1 枚を取る（`v7_full.py`）。
 標本のたびに `render_frame()` が `mj_forward` を呼ぶので、標本の間隔は物理の経路の一部である。
@@ -283,15 +284,19 @@ Q 表版は 0.4 である（`docs/video_guide.md` と `docs/reproduce.md` の描
 `out/v7_full_report_take50.json` は `state_digest` 768e78f7…、施工完了 sim 196.12 s（2 倍速版 196.08 s）、支配人の開始 sim 267.0 s（264.56 s）、
 パッカンの渡り切り sim 355.98 s（369.38 s）になった。5 手の並びと 3 体渡り切りは同じで、動画は 2:40（`video_silent.seconds` 160.2 s）。
 
-提出版（`out/3body_arena_v7_take51.mp4`、`out/v7_full_report_take51.json`）は標本の間隔を 2 倍速の版のまま保ち、施工の間は標本 2 枚に 1 枚だけを動画に書く
+以前の 2:47 版（`out/3body_arena_v7_take51.mp4`、`out/v7_full_report_take51.json`）は標本の間隔を 2 倍速の版のまま保ち、施工の間は標本 2 枚に 1 枚だけを動画に書く
 （`v7_full.py` の `build_write_every`、描かない標本は `render_frame(write=False)`）。書かれたフレームの間隔が sim 4/30 秒になるので再生は 4 倍速になる。
 `state_digest` 678fd3ca… は 2 倍速＋省略版 `out/v7_full_report_take46.json` と同一で、支配人の 5 手の sim 時刻（264.6／276.5／347.9／349.6／355.2 s）も同一である。
-動画は 2:47（`video_silent.seconds` 167.0 s）で、速度区間は ×4 が 0:00〜0:44.1（sim 0〜176.4 s）、×2 が 0:44.1〜2:29.1（sim 176.4〜386.3 s）、×1 が 2:29.1 以降（END は 2:44.5、sim 401.7 s）。
+2:47 版の動画は 167.0 s（`video_silent.seconds`）で、速度区間は ×4 が 0:00〜0:44.1（sim 0〜176.4 s）、×2 が 0:44.1〜2:29.1（sim 176.4〜386.3 s）、×1 が 2:29.1 以降（END は 2:44.5、sim 401.7 s）。
 一致の確認は `python analysis/timeline_times.py out/v7_full_report_take51.json --compare out/v7_full_report_take46.json` で、末尾に `state_digest equal: True` が出る。
+
+提出動画の本編（`out/3body_arena_v7_take57.mp4`、`out/v7_full_report_take57.json`）は、同じ間引きを仲間を呼んで戻る段階と輪へ集まる段階にも使い（`--speedup CALL=4 RETURN=4 CELEBRATE=4`）、
+END の後に回す 2.5 s のうち最初の 1 s だけを書く（`--tail-write 1.0`）。動画は 157.3 s に縮んだが、`state_digest`・`sim_seconds` 404.22・支配人の 5 手の sim 時刻は 2:47 版と同一で、
+`python analysis/timeline_times.py out/v7_full_report_take57.json --compare out/v7_full_report_take51.json` の末尾も `state_digest equal: True` になる。
 
 PPO 版・Q 表版・追走版（`out/v7_full_report_take52.json`〜`take54.json`）も、同じ 4 倍設定で 2 倍速＋省略版（`out/v7_full_report_take47.json`〜`take49.json`）と
 `state_digest` が一致した（順に aafa49e7…／f53de6e4…／be8fb01e…）。動画は順に 2:45、2:46、2:44（`video_silent.seconds` 165.2／166.3／163.7 s）。
-PPO 版は SEAT→PUSH→STANDUP→WALK_ON の 4 手、Q 表版は 8 手、追走版は提出版と同じ 5 手である（各 JSON の `manager.decisions`）。
+PPO 版は SEAT→PUSH→STANDUP→WALK_ON の 4 手、Q 表版は 8 手、追走版は本編・2:47 版と同じ 5 手である（各 JSON の `manager.decisions`）。
 
 ### 教訓
 
@@ -308,7 +313,7 @@ PPO 版は SEAT→PUSH→STANDUP→WALK_ON の 4 手、Q 表版は 8 手、追�
 - 立ったパッカンは跳跳が押すと 6 条件すべてで転ぶか登れないが、座ったパッカン（重心 6 cm）は 0.3 m/s で 1.9 m 登り切る。天面の縁で座面が急に水平に戻る瞬間に転倒するが、相手を向いて座ると倒れ込む先がなく転ばない（`docs/devlog/MANAGER_DESIGN.md` §6.2・§6.2b・§7.1）。
 - 跳跳（locomotion）は指令 0.3 m/s で実速 0.28 m/s、jump の高さは 13.6 cm（公式値 14 cm）。公式 jump に股関節ヨーの後方掃き 0.3〜1.2 rad を重ねると前方に 8〜39 cm 跳ぶ
   （数値は `docs/devlog/HANDOVER.md` §0 の観察。仕組みは `v7_policies.py` の `SWEEP_*` で、関節目標の重ね合わせのみ、外力なし）。
-  提出動画では峠で止まった跳跳がこの前方ジャンプで越える（`out/v7_full_report_take51.json` の `events`「JP stuck at the crest; forward jump」sim 239.0 s＝動画 1:15.4）。
+  提出動画では峠で止まった跳跳がこの前方ジャンプで越える（`out/v7_full_report_take57.json` の `events`「JP stuck at the crest; forward jump」sim 239.0 s＝本編 1:15.4、提出動画 1:33.6）。
 - 跳跳は体が峠をまたぐ位置で locomotion が進めなくなる。この性質が、押し上げを天面の縁で終えて天面はパッカンが歩く設計（`crab_help.py` の `PUSH_TO_Y`）と、6 節の「跳跳が継ぎ目を越えて助けに行けない」限界の両方を決めた。
 - dance_crab は素の MuJoCo で 30 s 踊って転倒なし（傾き 7° 以下、横滑りは dt 0.001 で 9 cm、dt 0.005 で 22 cm）。時間刻みは施工中 0.005 s（0.002 s では施工の復路でタイムアウト）、施工完了後は Jumper の契約に合わせて 0.001 s に切り替える。
 - 跳跳が密着したままだとパッカンは起き上がれない。BACK_OFF という手の存在理由であり、2 節の報酬 v2.2 で教えた内容でもある。

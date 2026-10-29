@@ -296,6 +296,23 @@ class CameraRig:
         self.cam.elevation = self.state[5]
 
 
+def screen_xy(cam, p, fovy_deg, aspect):
+    """Where world point p appears in a free camera's image: (x, y) in [-1, 1] across the frame (x: left -1 ... right +1,
+    y: bottom -1 ... top +1), and the depth in front of the camera (m; <= 0 means behind it).  MuJoCo's free camera:
+    forward = (cos el cos az, cos el sin az, sin el), up = (-sin el cos az, -sin el sin az, cos el), eye = lookat -
+    distance * forward, vertical field of view fovy (model.vis.global_.fovy)."""
+    az, el = math.radians(cam.azimuth), math.radians(cam.elevation)
+    fwd = np.array([math.cos(el) * math.cos(az), math.cos(el) * math.sin(az), math.sin(el)])
+    up = np.array([-math.sin(el) * math.cos(az), -math.sin(el) * math.sin(az), math.cos(el)])
+    right = np.cross(fwd, up)
+    d = np.asarray(p, float) - (np.asarray(cam.lookat, float) - cam.distance * fwd)
+    depth = float(d @ fwd)
+    if depth <= 1e-6:
+        return 0.0, 0.0, depth
+    t = math.tan(math.radians(fovy_deg) / 2.0)
+    return float(d @ right) / depth / (t * aspect), float(d @ up) / depth / t, depth
+
+
 # ── Built-stage snapshot (phase A0 of the v6 plan) ──────────────────────
 def body_poses(model, data, names=STAGE_BODIES):
     out = {}

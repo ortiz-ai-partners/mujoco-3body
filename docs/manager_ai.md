@@ -8,7 +8,7 @@
 
 - パッカン（Microduck, Pollen Robotics）：公式 ONNX ポリシー velstand／alpha_sitstand を推論のみで使う。取得先・版・ライセンスは `THIRD_PARTY.md`。コード識別子は `duck`／`MD`。
 - 跳跳（Jumper, KingKong Robotics）：公式 ONNX ポリシー locomotion／jump／dance_crab を推論のみで使う（救助の場面で使うのは locomotion だけ）。取得先・版・ライセンスは `THIRD_PARTY.md`。
-  コード識別子は `crab`／`JP`（定型文では愛称の「ちょーさん」と呼ばれる。take 55 までの動画では「ちょーさん」）。
+  コード識別子は `crab`／`JP`（定型文では愛称の「ちょーさん」と呼ばれる。以前の 2:47 版と比較用の動画の吹き出しでは「カニさん」）。
 - ブルドーザー（BZ、自作 course-builder のルール制御）：救助の場面では東側に駐車して動かない（`manager2_env.py` `BZ_PARK`）。
 
 ## 1. 何をする AI か
@@ -48,6 +48,7 @@
 | ゴールの万歳・ダンス | 固定の台本 | dance_crab ほか（既製、推論） | なし |
 
 吹き出しは支配人 AI が手を選んだ瞬間だけ出す。固定プログラムの場面には出さない。これで「どこが AI の判断か」が画面上で区別できる。
+提出動画の本編では、同じ瞬間に画面下の帯（支配人の帯）にも支配人の丸い顔とセリフが打ち込まれ、日本語が出そろうと英語の行（`crab_help.py` `LINES_EN`）が出る（描画のみ、`docs/video_guide.md` 第 1 節）。
 救助の持ち時間は sim 240 s（`v7_full.py --rescue-max`、学習環境の `max_episode_s` と同じ）。
 
 ## 3. 6 つの手と定型文
@@ -64,6 +65,7 @@
 | `WALK_ON` | パッカンがコース中央線を北へ 0.3 m/s で歩く。天面、下り坂、床まで。跳跳は動かない | 30 s | パッカン、そのまま進んで |
 
 定型文は `LINES` に 8 本ある。上の 6 本に加え、2 回目以降の `PUSH` は「もう一回いこう。ちょーさん、そっと押し上げてあげて」、転んだ相手に `PUSH` を選んだときは「ちょーさん、そっと押してずらしてあげて」になる（`bubble_line`）。
+「ちょーさん」は跳跳（ちょうちょう）の愛称で、英語の行（`LINES_EN`、同じ 8 本）では Cho-san と書く（例：`SEAT` は “Pakkan, sit down facing Cho-san.”）。
 後者は学習方策やランダム方策が選び得る手で、スキルは 1.5 s 待って `nothing` を返す（`skill_push` 冒頭）。固定ルールはこの手を選ばない。
 
 スキル内の主な定数（`crab_help.py`）：押す線と歩く線はコース中央 `LANE_X` = 1.45 m、座席 `SEAT_Y` = −2.13 m（坂の入口 `TOE_Y` = −2.0 の 13 cm 手前）、座席判定 `SEAT_TOL` = 0.12 m。
@@ -317,21 +319,25 @@ PPO v2.2 は `ppo2_medium2` の重みと最適化器を引き継ぎ、報酬 v2.
 
 ## 13. 提出動画での支配人 AI
 
-本編（固定ルール、`out/3body_arena_v7_take51.mp4`、2:47、動画の公開先は `README.md`）の支配人 AI は 5 手で、3 体とも渡り切り、コース部品は動かず、パッカンの転倒は 0 回だった。
-出所は `out/v7_full_report_take51.json` の `manager.decisions`、`three_crossed`、`course_disturbed`（空）、`md_events`（`FALLEN` の記録なし）である。
+本編（固定ルール、`out/3body_arena_v7_take57.mp4`、2:37、提出動画では 0:18.1 から。動画の公開先は `README.md`）の支配人 AI は 5 手で、3 体とも渡り切り、コース部品は動かず、パッカンの転倒は 0 回だった。
+出所は `out/v7_full_report_take57.json` の `manager.decisions`、`three_crossed`、`course_disturbed`（空）、`md_events`（`FALLEN` の記録なし）である。
 
-時刻は動画 m:ss.s（sim 秒）で書く。動画は 0:00〜0:44.1（sim 0〜176.4 s）が 4 倍速、0:44.1〜2:29.1（sim 176.4〜386.3 s）が 2 倍速、2:29.1 以降（sim 386.3 s 以降、輪の万歳）が等速である。
-施工の完了は 2 倍速区間に入った後の 0:54.0（sim 196.1 s）である。区間と時刻は `events` の `t`／`video_t` から `python analysis/timeline_times.py out/v7_full_report_take51.json` が求める。
+時刻は提出動画 m:ss.s（本編 m:ss.s｜sim 秒）で書き、提出動画の時刻は本編の時刻＋18.14 s（講座の OP カードと自己紹介の長さ）である。
+本編は 0:00〜0:44.1（sim 0〜176.4 s）が 4 倍速、0:44.1〜1:20.4（sim 176.4〜248.9 s）が 2 倍速、仲間を呼んで戻る 1:20.4〜1:24.3（sim 248.9〜264.6 s）が 4 倍速、
+救助の 1:24.3〜2:16.7（sim 264.6〜369.4 s）が 2 倍速、輪へ集まる 2:16.7〜2:20.9（sim 369.4〜386.3 s）が 4 倍速、2:20.9 以降（輪の万歳）が等速である。
+施工の完了は 2 倍速区間に入った後の本編 0:54.0（sim 196.1 s）である。区間と時刻は `events` の `t`／`video_t` から `python analysis/timeline_times.py out/v7_full_report_take57.json` が求める。
 
-| 手 | 結果 | 開始（動画｜sim） | 所要（sim） |
+| 手 | 結果 | 開始（提出動画｜本編｜sim） | 所要（sim） |
 |---|---|---|---|
-| `SEAT` | `seated` | 1:28.2（264.6 s） | 11.9 s |
-| `PUSH` | `pushed_up` | 1:34.2（276.5 s） | 71.3 s |
-| `BACK_OFF` | `cleared` | 2:09.8（347.9 s） | 1.7 s |
-| `STANDUP` | `standing` | 2:10.7（349.6 s） | 5.5 s |
-| `WALK_ON` | `crossed` | 2:13.5（355.2 s） | 14.2 s |
+| `SEAT` | `seated` | 1:42.4（1:24.3｜264.6 s） | 11.9 s |
+| `PUSH` | `pushed_up` | 1:48.4（1:30.2｜276.5 s） | 71.3 s |
+| `BACK_OFF` | `cleared` | 2:24.0（2:05.9｜347.9 s） | 1.7 s |
+| `STANDUP` | `standing` | 2:24.9（2:06.8｜349.6 s） | 5.5 s |
+| `WALK_ON` | `crossed` | 2:27.7（2:09.6｜355.2 s） | 14.2 s |
 
-同じ台本で支配人 AI だけを替えた版も描画した（いずれも 3 体渡り切り、コース部品の移動なし、各 JSON の `three_crossed`・`course_disturbed`）。
+手・結果・sim 時刻・所要は、物理が同じ以前の 2:47 版（`out/v7_full_report_take51.json`、`state_digest` 一致）と同じである。
+
+同じ台本で支配人 AI だけを替えた版も、以前の 2:47 版と同じ速度設定で描画した（いずれも 3 体渡り切り、コース部品の移動なし、各 JSON の `three_crossed`・`course_disturbed`）。
 PPO v2.2 版は 4 手 `SEAT`→`PUSH`→`STANDUP`→`WALK_ON` で `BACK_OFF` を省く（`out/v7_full_report_take52.json`）。
 Q 表版は 8 手 `STANDUP`→`WALK_ON`（`stalled`）→`SEAT`→`PUSH`→`BACK_OFF`→`STANDUP`→`STANDUP`（`nothing`）→`WALK_ON` で、歩かせて止まるのを見てから座り直す学習の癖が映る（`out/v7_full_report_take53.json`）。
 追走版は固定ルール 5 手で、結末の演出だけが違う（`out/v7_full_report_take54.json`）。各版の動画時刻は `docs/video_guide.md`。
@@ -359,5 +365,5 @@ Q 表版は 8 手 `STANDUP`→`WALK_ON`（`stalled`）→`SEAT`→`PUSH`→`BACK
 | 比較表と 2×2 | `manager2_report.py`、`out/manager_runs/comparison_v4.md`（旧コースは `comparison_v3b.md`） |
 | 押し上げの鍵実験 | `v7_test_crab_push.py`、`out/v7_crab_push_cross.log` |
 | 本番での支配人 AI の呼び出し | `v7_full.py --manager {rule,ppo,tabq} --run <run> --rescue-max 240` |
-| 提出動画の判断ログ | `out/v7_full_report_take51.json`、`out/v7_full_report_take52.json`、`out/v7_full_report_take53.json`、`out/v7_full_report_take54.json` の `manager.decisions` |
+| 動画の判断ログ | 本編 `out/v7_full_report_take57.json`、比較用 `out/v7_full_report_take51.json`〜`out/v7_full_report_take54.json` の `manager.decisions` |
 | 開発記録（経緯・不採用案・日付つき） | `docs/devlog/MANAGER_DESIGN.md`、`docs/devlog/HANDOVER.md` |
