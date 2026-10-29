@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>説明資料_PAI最終課題_83485</title>
+<style>
+  @page { size: A4; margin: 13mm 15mm 14mm 15mm;
+          @bottom-center { content: counter(page) " / " counter(pages); font: 8pt "BIZ UDPGothic", sans-serif; color: #667; } }
+  :root { --ink: #1d2430; --sub: #556070; --line: #c9d1dc; --accent: #2f8f86; --band: #eef3f6; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "BIZ UDPGothic", "Yu Gothic", "Meiryo", sans-serif; color: var(--ink); font-size: 9.4pt; line-height: 1.62; margin: 0; }
+  h1 { font-size: 21pt; margin: 0 0 1mm; letter-spacing: 0.02em; }
+  h2 { font-size: 12.5pt; margin: 5.5mm 0 1.8mm; padding-bottom: 0.8mm; border-bottom: 1.6px solid var(--accent); break-after: avoid; }
+  h3 { font-size: 10.2pt; margin: 3.2mm 0 1mm; break-after: avoid; }
+  p { margin: 0 0 1.6mm; }
+  ul, ol { margin: 0 0 1.8mm; padding-left: 5.5mm; }
+  li { margin: 0 0 0.6mm; }
+  table { border-collapse: collapse; width: 100%; margin: 1mm 0 2.4mm; font-size: 8.5pt; line-height: 1.45; break-inside: avoid; }
+  th, td { border: 0.6px solid var(--line); padding: 1mm 1.6mm; vertical-align: top; text-align: left; }
+  th { background: var(--band); font-weight: bold; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  code { font-family: "BIZ UDGothic", Consolas, monospace; font-size: 8.2pt; background: #f2f4f7; padding: 0 0.6mm; border-radius: 1px; }
+  pre { font-family: Consolas, "BIZ UDGothic", monospace; font-size: 7.6pt; line-height: 1.4; background: #f4f6f8; border: 0.6px solid var(--line);
+        padding: 1.6mm 2mm; margin: 1mm 0 2mm; white-space: pre; break-inside: avoid; }
+  .sub { font-size: 11.5pt; color: var(--sub); margin: 0 0 2mm; }
+  .meta { font-size: 9pt; color: var(--sub); margin: 0 0 2.5mm; }
+  .links td:first-child { width: 33%; background: var(--band); font-weight: bold; }
+  .note { border: 0.8px solid var(--line); background: #f8fafb; padding: 1.8mm 2.6mm; margin: 2mm 0 2.4mm; font-size: 8.6pt; break-inside: avoid; }
+  .note p { margin: 0 0 0.8mm; }
+  .en { font-size: 8.2pt; color: var(--sub); line-height: 1.5; border-left: 2px solid var(--accent); padding-left: 2.4mm; margin: 2mm 0 1mm; }
+  figure { margin: 1.5mm 0 3mm; break-inside: avoid; text-align: center; }
+  figure img { max-width: 100%; }
+  figcaption { font-size: 8pt; color: var(--sub); margin-top: 1mm; text-align: left; }
+  .stills { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.6mm; margin: 1.5mm 0 1mm; }
+  .stills div { break-inside: avoid; }
+  table.split { break-inside: auto; }
+  table.split tr { break-inside: avoid; }
+  .stills div { font-size: 7.6pt; color: var(--sub); line-height: 1.35; }
+  .stills img { width: 100%; display: block; margin-bottom: 0.6mm; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .tag { display: inline-block; font-size: 7.6pt; color: #fff; background: var(--accent); border-radius: 2px; padding: 0 1.4mm; margin-right: 1mm; }
+  .pb { break-before: page; }
+  figure.right { float: right; width: 44%; margin: 0.5mm 0 2mm 4mm; }
+  h2 { clear: both; }
+  .small { font-size: 8pt; color: var(--sub); }
+</style>
+</head>
+<body>
+
+<h1>アイランドマスター</h1>
+<p class="sub">3 体のロボットが協力して峠を越える ― 失敗したときの次の一手を選ぶ「支配人 AI」と、気持ちを推論する「気分ネット」</p>
+<p class="meta">松尾研 Physical AI 応用1 最終課題 説明資料　｜　omnicampus ID 83485</p>
+
+<table class="links">
+  <tr><td>動画（YouTube、全体公開、2:58）</td><td>{{YOUTUBE}}</td></tr>
+  <tr><td>コード一式（GitHub、public）</td><td>https://github.com/ortiz-ai-partners/mujoco-3body</td></tr>
+  <tr><td>ブルドーザーと施工（自作、別リポジトリ）</td><td>https://github.com/ortiz-ai-partners/physical-ai-course-builder</td></tr>
+</table>
+
+<div class="note">
+  <p><b>倍速の明記</b>：本編の再生速度は画面右下に sim 時計とともに常時表示している（×4：施工・仲間を呼ぶ場面・ゴール前に集まる場面、×2：坂の挑戦と救助、×1：最後の万歳）。最大 4 倍。カット（省略）はなく、物語の終わりまでのシミュレーションの全区間が映る。区間の時刻は §8。</p>
+  <p><b>ツール</b>：MuJoCo 3.11.0。3 体を 1 つのワールドで同時に物理シミュレーションする。外力・瞬間移動は使わない。</p>
+  <p><b>AI の活用</b>：本番で推論するのは、公式の学習済みポリシー（ONNX）5 本と、自作の AI 2 つ（支配人 AI、気分ネット）。自作の 2 つは CPU で学習した。</p>
+</div>
+
+<p class="en">Island Master: three robots cross a pass together in one MuJoCo world. A self-built bulldozer carries two 16° ramps and builds the course;
+the Microduck cannot climb with its official policy and sits down; the Jumper crab pushes it up from behind. A self-trained manager AI picks the next skill whenever
+an action fails, and a small mood net predicts how the running skill will end and drives the crab's face. Physics only: no external forces or teleports; official policies
+are used for inference only, unmodified.</p>
+
+<h2>1. 概要</h2>
+<ol>
+  <li>自作のブルドーザーが坂 2 枚（勾配 16.3°、峠の高さ 0.44 m）を運んで峠を組み、自分で渡り切る。</li>
+  <li>パッカン（Microduck）が後を追うが、公式の歩行ポリシーでは 16° の坂を登れず、2 回挑んで坂の入口に座り込む。</li>
+  <li>跳跳（Jumper、呼び名「ちょーさん」）が横から坂を登り、天面でジャンプして峠を越える。</li>
+  <li>跳跳が戻ると、支配人 AI が次の一手を 5 回選ぶ（座らせる → 押し上げる → 離れる → 立たせる → 進ませる）。跳跳が座ったパッカンを後ろから押し上げ、3 体とも渡り切る。</li>
+  <li>ゴールで輪になって万歳する。</li>
+</ol>
+<p>本番では自作の AI が 2 つ推論している。<b>支配人 AI</b> は、うまくいかなかったときに 6 つの手から次の一手を選ぶ。<b>気分ネット</b> は、走っている手がどう終わりそうかを推論し、跳跳の表情を決める。
+同じ 30 シードでの評価では、3 体の渡り切りは固定ルールの支配人で 29、PPO で 26、表形式 Q で 25、ランダムで 14 だった（各 30 話中）。提出動画の本編でも 3 体とも渡り切り、転倒はなく、コースの部材も動かなかった。</p>
+
+<div class="stills">
+  <div><img src="stills/intro.jpg">0:10 自己紹介。支配人 AI が名乗り、何を見せるかを話す（日本語と英語）</div>
+  <div><img src="stills/build.jpg">0:48 施工（×4）。ブルドーザーが坂を運んで峠を組む</div>
+  <div><img src="stills/jump.jpg">1:34 跳跳が坂を登り、天面でジャンプして越える</div>
+  <div><img src="stills/band.jpg">1:50 支配人 AI の指示。画面下の帯に顔とセリフが打ち込まれる</div>
+  <div><img src="stills/push.jpg">2:04 跳跳が座ったパッカンを押し上げる。右上の顔は「＞＜汗」</div>
+  <div><img src="stills/circle.jpg">2:48 3 体とも渡り切り、輪になって万歳（×1）</div>
+</div>
+<p class="small">時刻は提出動画の時刻。画像はすべて提出動画のフレーム。</p>
+
+<table>
+  <tr><th>加点要素</th><th>この資料で主に対応する所</th></tr>
+  <tr><td>創造性</td><td>§2 課題設定（失敗を前提にした筋書き、助ける役と判断する役の分離）、§5 工夫点</td></tr>
+  <tr><td>技術力</td><td>§4 システム構成（3 体の統合、支配人 AI、気分ネット）、§6 結果（同一シード評価、物理同一の検証）</td></tr>
+  <tr><td>実用性</td><td>§7 考察（動作は既製、判断は AI、根拠は画面に出す構成の応用先と限界）</td></tr>
+  <tr><td>表現力</td><td>§8 動画の構成（自己紹介、指示の帯、表情、倍速表示、自作 BGM、声の左右定位）と動画そのもの</td></tr>
+</table>
+
+<h2>2. 目的と課題設定</h2>
+<p><b>題材</b>：性質の違う 3 体（施工機械、二足の小型ロボット、六脚のカニ型ロボット）を 1 つの MuJoCo ワールドに集め、「道を作って全員で渡る」を協力でやり遂げる。</p>
+<p><b>問い</b>：既製の動作（公式ポリシー）が失敗したとき、次の一手を誰がどう決めるか。本作は、動作をスキル（固定プログラムが公式ポリシーに指令を出す）に任せ、どのスキルを使うかを支配人 AI が決める構成にした。</p>
+<p><b>自分に課した原則</b></p>
+<ul>
+  <li>1 つのワールド：3 体を 1 つの MuJoCo モデルに結合し、同時に物理を回す。</li>
+  <li>物理のみ：各機体は自分のアクチュエータだけで動く。外力・瞬間移動・つり上げは使わない。</li>
+  <li>公式ポリシーは推論のみ：ONNX を改変せず、観測の契約を合わせて渡す。</li>
+  <li>安全：ブルドーザーはパッカンに触れない（フォークで持ち上げる案は機体を傷めるおそれがあるため捨てた）。コースを壊さない。</li>
+  <li>描画は物理に影響しない：顔、字幕、指示の帯、倍速表示を付けても、最終状態が同じことを毎回確かめる。</li>
+</ul>
+<p><b>MuJoCo を選んだ理由</b>：パッカンと跳跳の公式ポリシーはどちらも MuJoCo のモデル（MJCF）と組で配布されていて、自作のブルドーザーも MuJoCo で作っていた。同じ物理の上でなら、公式ポリシーを推論のまま、改変せずに動かせる。</p>
+<p><b>創造性の主張</b>：公式ポリシーが 16° を登れないという事実を隠さず、物語の中心に置いた。そのうえで「助ける役（跳跳）」と「判断する役（支配人 AI）」を分け、失敗からの立て直しそのものを見どころにした。</p>
+
+<h2>3. 何が既製で何が自作か</h2>
+<table class="split">
+  <tr><th style="width:27%">要素</th><th style="width:13%">区分</th><th>内容と出典</th></tr>
+  <tr><td>物理エンジン</td><td>既製</td><td>MuJoCo 3.11.0（Apache-2.0）</td></tr>
+  <tr><td>パッカン（Microduck）</td><td>既製</td><td>Pollen Robotics の MJCF（<code>microduck_rl</code>、Apache-2.0、3D モデルは CC BY-NC-SA 4.0）と公式 ONNX <code>velstand</code>・<code>alpha_sitstand</code>。推論のみ。</td></tr>
+  <tr><td>跳跳（Jumper）</td><td>既製</td><td>KingKong Robotics の MJCF と公式バンドル（Apache-2.0）の ONNX <code>locomotion</code>・<code>jump</code>・<code>dance_crab</code>。推論のみ。</td></tr>
+  <tr><td>ブルドーザーと施工</td><td>自作</td><td><code>physical-ai-course-builder</code>：機体モデル、坂の部材と施工手順、運搬・走行のルール制御（AI 推論なし）。同じ課題のために作成（MIT）。経路計画に <code>rsplan</code>（Built Robotics、MIT）を版固定で同梱。</td></tr>
+  <tr><td>3 体の統合と筋書き</td><td>自作</td><td><code>MjSpec.attach</code> による結合、観測の転記、通し台本、スキル 6 つ、跳跳の前方ジャンプ（公式 <code>jump</code> の関節目標に股関節の掃きを重ねる。外力なし）。</td></tr>
+  <tr><td>支配人 AI・気分ネット</td><td>自作</td><td>学習環境、報酬、PPO と表形式 Q の学習、同一シード評価、気分ネットのデータ収集と学習、表情 11 種と規則 17 本、顔モニター。</td></tr>
+  <tr><td>動画の演出と音</td><td>自作</td><td>自己紹介、指示の帯、字幕、鳴き声と効果音の合成、声の左右定位、BGM（numpy／scipy の加算合成。既存の曲・音源・サンプルは不使用）。</td></tr>
+  <tr><td>講座の OP／ED カード</td><td>講座の素材</td><td>提出動画の最初と最後の計 6 秒。リポジトリには含めない。</td></tr>
+</table>
+
+<h2>4. システム構成</h2>
+<figure><img src="../system_overview_ortiz.png"><figcaption>図 1：全体の仕組み。MuJoCo の 1 つのワールドで 3 体が動き、支配人 AI がスキルを選び、気分ネットと規則が跳跳の表情を決める。顔と字幕は描画だけで、物理には戻らない。</figcaption></figure>
+
+<h3>4.1 1 つのワールドと 3 体</h3>
+<p>3 系統の MJCF を <code>MjSpec.attach</code> で 1 つのモデルに結合した（名前空間 <code>md-</code>／<code>jp-</code>）。時間刻みは施工中 0.005 s、施工後 0.001 s。パッカンのサーボは公式の値（kp 0.55、±0.96 Nm）のままにした。</p>
+<table>
+  <tr><th>機体</th><th>動かしているもの</th><th>区分</th></tr>
+  <tr><td>ブルドーザー</td><td>course-builder のルール制御（運搬・施工・走行）</td><td>自作、AI 推論なし</td></tr>
+  <tr><td>パッカン</td><td><code>velstand</code>（観測 61 次元、50 Hz）、<code>alpha_sitstand</code></td><td>既製、推論のみ</td></tr>
+  <tr><td>跳跳</td><td><code>locomotion</code>（観測 415、200 Hz）、<code>jump</code>（167、200 Hz）、<code>dance_crab</code>（209、50 Hz）</td><td>既製、推論のみ</td></tr>
+</table>
+
+<h3>4.2 支配人 AI ― 失敗したときの次の一手を選ぶ</h3>
+<p>観測は 46 次元（パッカンの姿勢・向き・位置、坂のどこにいるか、跳跳との距離と接触、直前の手とその結果など）。手は 6 つ：待つ（<code>WAIT</code>）、座らせる（<code>SEAT</code>）、押し上げる（<code>PUSH</code>）、離れる（<code>BACK_OFF</code>）、立たせる（<code>STANDUP</code>）、進ませる（<code>WALK_ON</code>）。
+各手は固定プログラムのスキルとして走り、終わると 13 種の結果の 1 つを返す。報酬は渡り切り +10、経過 −0.03/s、天面到達 +3、転倒 −1、無駄な手 −1、時間切れ −5、コース破損 −10 など。開始場面は 7 種（足元で座る・立つ・転倒、天面で転倒など）から抽選した。</p>
+<table>
+  <tr><th>方式</th><th>モデル</th><th>学習</th><th class="n">CPU 時間</th></tr>
+  <tr><td>固定ルール</td><td>条件分岐（実験で分かった知識を書いたもの）</td><td>なし</td><td class="n">―</td></tr>
+  <tr><td>PPO</td><td>Stable-Baselines3 の MLP（64×64）、12 並列</td><td>12,000 決定＋報酬を直して 12,000 決定</td><td class="n">8 h 41 min</td></tr>
+  <tr><td>表形式 Q</td><td>状態キー 7 要素（314 状態）</td><td>120 話</td><td class="n">1 h 59 min</td></tr>
+</table>
+<p><b>鍵になった発見</b>：座ったパッカンが跳跳の方（坂と反対側）を向いていると、押されている間の傾きは 6〜12° にとどまり、坂の縁でも倒れない。坂の上を向いて座ると約 40° 後ろに傾き、縁で転ぶ。
+この向きの条件を <code>SEAT</code> スキルと固定ルールに組み込んだことで、押し上げが成立した。</p>
+
+<h3>4.3 気分ネット ― 跳跳の表情を推論する</h3>
+<figure class="right"><img src="../faces_sheet_ja.png"><figcaption>図 2：跳跳の表情 11 種と、その顔が出る場面。</figcaption></figure>
+<p>入力 53（支配人 AI の観測 46＋いま走っている手 6＋経過時間 1）→ 32 → 32 → 5 の小さな MLP。出力は、走っている手の結末（成功・止まる・転ばせる・空振り）の確率 4 つと、「渡れる」確率 1 つ。
+学習データは学習環境で固定ルール・PPO・ランダムの支配人を走らせた 35 話・47,952 サンプル。話単位で 1/4 を検証用に分け、検証用 10,772 サンプルで 4 分類の正解率 0.80、成功か失敗かの均衡正解率 0.83。学習は CPU で 3.5 秒。
+本番では制御周期 0.02 秒ごとに推論し、提出動画の本編では 5,236 回推論した。</p>
+<p>最初は PPO の価値関数 V(s) を気分として使う案を試したが、押し上げで密着している間の平均が −21〜−22 と低く、天面に着く直前まで「絶望」と読んでしまうため採用しなかった。</p>
+<p>表情は 11 種で、優先順の規則 17 本で決める。規則は気分ネットの確率と、計測値（傾き、パッカンへの接触力、押している時間、進み、転倒）を組み合わせる。画面右上の顔モニターに、表情を決めた値をそのまま表示する。</p>
+
+<h2>5. 工夫点</h2>
+<ul>
+  <li><span class="tag">創造性</span>公式ポリシーが 16° を登れないことを隠さず物語の核にし、座った相手を別のロボットが押し上げる結末を作った。</li>
+  <li><span class="tag">創造性</span>「相手の方を向いて座ると縁で倒れない」という実験の発見を、<code>SEAT</code> スキルの仕様にした。</li>
+  <li><span class="tag">技術力</span>3 系統の MJCF と 5 本の ONNX を 1 つのワールドに統合した。ポリシーごとに切替の周期と観測の契約が違うので、配布元のコードから観測の作り方を転記して合わせた。</li>
+  <li><span class="tag">技術力</span>同じシードで固定ルールと学習方式を比べる 2×2 の表で、「判断の失敗」と「スキルの失敗」を分けて評価した。</li>
+  <li><span class="tag">技術力</span>描画が物理に影響しないことを、最終状態（全関節の位置と速度）の sha256 で毎回検証した。カットの初版と 4 倍速の初版で物理が変わったことを、この検査で見つけて直した。</li>
+  <li><span class="tag">技術力</span>跳跳の前方ジャンプを、公式 <code>jump</code> の関節目標への重ね合わせだけで実現した（外力なし）。</li>
+  <li><span class="tag">実用性</span>スキル（固定プログラム）と判断（AI）を分けたので、学習は CPU で数時間に収まり、固定ルール 1 本でも 29/30 に届く。</li>
+  <li><span class="tag">実用性</span>峠の継ぎ目でパッカンがつまずく問題を、学習ではなく施工の精度（継ぎ目 5 cm → 1 cm）で解決した。</li>
+  <li><span class="tag">表現力</span>支配人 AI が自己紹介で名乗り、何を見せるかを話してから本編に入る。判断の瞬間は画面下の帯に支配人の顔とセリフが打ち込まれ、日本語の後に英語が出る。</li>
+  <li><span class="tag">表現力</span>顔モニターに表情の根拠の数値を出す。倍速と sim 時計を常時表示し、カットなしで全区間を見せる。</li>
+  <li><span class="tag">表現力</span>BGM は自作のマリンバ曲で、場面の切り替わり（施工の完了、渡り切り、万歳の始まり）に合わせて書いた。ロボットの声は、鳴いた機体が画面のどちら側にいるかで左右に振った。</li>
+</ul>
+
+<h2>6. 結果</h2>
+<figure><img src="../results_managers_ortiz.png"><figcaption>図 3：支配人 AI 3 方式とランダムの比較（同じ 30 シード）。左が渡り切り数と天面到達、右が固定ルールとの同一シード 2×2。</figcaption></figure>
+<p>評価は峠の継ぎ目 1 cm の新しいコースで、30 シードを全方式で共有し、方策は決定的に動かした。</p>
+<table>
+  <tr><th>方式</th><th class="n">渡り切り</th><th class="n">天面到達</th><th class="n">無駄な手／話</th><th class="n">転倒／話</th><th class="n">学習（CPU）</th></tr>
+  <tr><td>固定ルール</td><td class="n">29/30</td><td class="n">100%</td><td class="n">0.07</td><td class="n">0.33</td><td class="n">なし</td></tr>
+  <tr><td>PPO（報酬を直した継続学習）</td><td class="n">26/30</td><td class="n">97%</td><td class="n">0.60</td><td class="n">1.03</td><td class="n">8 h 41 min</td></tr>
+  <tr><td>表形式 Q</td><td class="n">25/30</td><td class="n">97%</td><td class="n">5.17</td><td class="n">0.73</td><td class="n">1 h 59 min</td></tr>
+  <tr><td>PPO（継続学習の前）</td><td class="n">23/30</td><td class="n">83%</td><td class="n">0.47</td><td class="n">0.87</td><td class="n">4 h 13 min</td></tr>
+  <tr><td>ランダム</td><td class="n">14/30</td><td class="n">73%</td><td class="n">8.20</td><td class="n">1.53</td><td class="n">なし</td></tr>
+</table>
+<p>コースの破損は全方式で 0 回。固定ルールとの同一シード比較では、PPO の失敗 4 本・表形式 Q の失敗 5 本はどれも「固定ルールなら渡れた」回で、判断の失敗だった。両方とも失敗した回（スキルの失敗）はランダムとの比較の 1 本だけだった。</p>
+<p><b>提出動画の本編</b>：固定ルールの支配人が 5 手を選び、すべて成功した（sim 264.6 s 座らせる、276.5 s 押し上げる、347.9 s 離れる、349.6 s 立たせる、355.2 s 進ませる）。押し上げには sim で 71 秒かかった。
+3 体とも渡り切り、転倒 0、コースの部材の移動なし。表情は 25 回切り替わった。</p>
+
+<h2>7. 考察・実用性・反省</h2>
+<h3>考察</h3>
+<ul>
+  <li><b>固定ルールが学習方式に勝った</b>。手 6・結果 13 の小さな離散問題では、設計者の知識を直接書ける。たとえば失敗した押しの直後、固定ルールは 8/8 で「離れる」を選んだが、継続学習前の PPO は押しで転ばせた直後に「離れる」を 2/7 しか選べなかった。学習方式の価値は、設計者が条件を書き切れない場面に残る。</li>
+  <li><b>報酬設計の不足が型として出た</b>。継続学習前の PPO の失敗 7 本中 5 本は、転んだ相手に「座らせる」を繰り返す型だった（うち 4 本は 20〜24 回）。時間しか引かれない報酬では避ける理由がなかった。転んだ相手への「座らせる」「立たせる」を無駄な手として罰する報酬に直して継続学習すると、評価でこの型は 0 本になった。</li>
+  <li><b>環境の不備は学習方式に厳しく出る</b>。継ぎ目 5 cm の旧コースでは PPO 16/30・固定ルール 23/30 だったが、継ぎ目を 1 cm にすると 26/30・29/30 になった。学習を疑う前に、環境の精度を疑うべきだった。</li>
+</ul>
+<h3>実用性</h3>
+<p>「動作は既製のポリシー、どれを使うかは判断の AI、その根拠は画面に出す」という構成は、複数のロボットが働く現場（搬送や施工）で、人が監督しながら AI に判断を任せる形に向く。スキルを差し替えても判断の層はそのまま使え、学習も CPU 数時間で済む。
+表情や指示の帯のように判断の根拠を見せることは、人が AI の判断を確かめて介入する場面で役に立つ。</p>
+<h3>限界と反省</h3>
+<ul>
+  <li><b>スキルの精度の限界</b>：押し上げは正しい状態で呼んでも新コースの評価で 22/30＝73% にとどまる。固定ルール唯一の失敗は、下り坂側で転んだ相手に打つ手が行動集合にない型だった。公式 <code>velstand</code> は 16° を登れず、歩行指令 0.3 m/s に対して実速は約 0.10 m/s。これは公式ポリシーの設計範囲の外で、本作はそれを前提に物語を組んだ。</li>
+  <li><b>評価環境の不備</b>：評価エピソードのリセットでシミュレーションの内部状態を初期化しておらず、同じシードで結果が変わっていた。初期化を入れて評価をやり直し、修正前の表は開発記録にだけ残した。最初に独立性を確かめるべきだった。</li>
+  <li><b>描画と物理の分離は検証しないと破れる</b>：カットの初版は描画側の計算を飛ばして物理が変わり、4 倍速の初版は描画の標本周期を変えて物理の経路が変わった。2 倍速で標本化したフレームを間引く実装に直し、最終状態の一致で確かめた。</li>
+  <li><b>その他</b>：シミュレーションのみで、コースは 1 種類。支配人 AI の観測は手で設計した。計測より先に表情の目盛り（接触力の基準）を決めて作り直したこと、PPO に多くの時間を使ったことも反省点である。</li>
+</ul>
+
+<h2>8. 動画の構成と再現方法</h2>
+<table>
+  <tr><th style="width:17%">提出動画の時刻</th><th style="width:9%">速度</th><th>内容</th></tr>
+  <tr><td>0:00〜0:03</td><td>―</td><td>講座の OP カード</td></tr>
+  <tr><td>0:03〜0:18</td><td>―</td><td>支配人 AI の自己紹介（名乗り、講座の最終課題として何を見せるか、3 体の紹介、自分の仕事）。BGM はここから始まり、最後まで一定の音量</td></tr>
+  <tr><td>0:18〜1:02</td><td>×4</td><td>施工：ブルドーザーが坂 2 枚を運んで峠を組む（空荷の往復も省略しない）。その間パッカンと跳跳は空き地で遊ぶ</td></tr>
+  <tr><td>1:02〜1:38</td><td>×2</td><td>ブルドーザーが渡る（1:12 施工完了）、パッカンが 2 回挑んで座り込む（1:26）、跳跳が越える（1:37）</td></tr>
+  <tr><td>1:38〜1:42</td><td>×4</td><td>パッカンが仲間を呼び、跳跳がコースの東側を回って戻る</td></tr>
+  <tr><td>1:42〜2:35</td><td>×2</td><td>救助：支配人 AI の 5 手（1:42 座らせる、1:48 押し上げる、2:24 離れる、2:25 立たせる、2:28 進ませる）。2:35 に 3 体とも渡り切る</td></tr>
+  <tr><td>2:35〜2:39</td><td>×4</td><td>3 体がゴール前に集まる</td></tr>
+  <tr><td>2:39〜2:55</td><td>×1</td><td>輪になって万歳（フォークの上下、屈伸と首振り、ハサミを上げるダンス）</td></tr>
+  <tr><td>2:55〜2:58</td><td>―</td><td>講座の ED カード</td></tr>
+</table>
+<p>画面の要素：左上の字幕（場面と各機体の状態）、右上の顔モニター（跳跳の表情、気分ネットの値、決め手の値）、右下の sim 時計と倍速、判断のときだけ画面下の指示の帯。
+音：ロボットの鳴き声と効果音はすべて合成で、パッカンは小さめ、跳跳はその次。鳴いた機体の画面上の位置で左右に振る。</p>
+<p><b>再現</b>：Python 3.10 で <code>pip install -r requirements.txt</code>（mujoco 3.11.0、onnxruntime、stable-baselines3、torch など）。ブルドーザーと Jumper のリポジトリを隣に並べ、次の 4 段で提出動画を作り直せる（講座のカードは別途用意）。</p>
+<pre>python v7_full.py --tag _take57 --build-speed 4 --no-cuts \
+    --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0     # 本編（約 5〜8 分）
+python intro.py                                                                    # 自己紹介
+python music/marimba_bgm.py                                                        # BGM
+python assemble.py --op &lt;OP&gt; --intro out/intro.mp4 --main out/3body_arena_v7_take57.mp4 --ed &lt;ED&gt; \
+    --out out/submission.mp4 --bgm out/music/bgm_marimba.wav --bgm-gain -16 --bgm-until end --bgm-fade 0</pre>
+<p>本編の記録 <code>out/v7_full_report_take57.json</code> に、最終状態の sha256、出来事、支配人の判断、表情の記録が入っている。学習・評価・気分ネットの手順、試した全テイク（失敗したものを含む）の台帳、表情の規則としきい値の一覧は GitHub の README と <code>docs/</code> にある。</p>
+
+<h2>9. AI の使用と第三者資産</h2>
+<ul>
+  <li><b>推論</b>：公式 ONNX ポリシー 5 本（Microduck 2 本、Jumper 3 本）、支配人 AI、気分ネット。<b>学習</b>：支配人 AI（PPO、表形式 Q）と気分ネット。すべて CPU。</li>
+  <li><b>開発補助</b>：設計・コード・文書・図の作成に LLM（Claude）の支援を受けた。作品名〈アイランドマスター〉はこの開発補助 AI の名でもあり、動画の中で判断しているのは支配人 AI である（自己紹介と字幕では支配人 AI が「アイランドマスター」と名乗る）。</li>
+  <li><b>ライセンス</b>：コードは MIT。Microduck の外観（3D メッシュは CC BY-NC-SA 4.0）が映る動画と図は CC BY-NC-SA 4.0 に従う（帰属：Pollen Robotics）。Microduck 公式 ONNX の配布元のライセンス表示は確認中で、リポジトリの THIRD_PARTY.md に扱いを記した。</li>
+  <li>動画・コード・資料に、氏名・所属・メールアドレスは含めていない。</li>
+</ul>
+
+</body>
+</html>

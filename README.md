@@ -52,7 +52,7 @@ Code identifiers keep the English names (`MD` / `duck`, `JP` / `crab`, `BZ`; ski
   追走の結末 `..._take54.mp4`（2:44、5 手）。長さは各 report JSON の `video_silent.seconds`。本編と物理が同一の以前の 2:47 版 `..._take51.mp4` を比較の基準として残す。
   2 倍速＋省略 2 か所で描いた旧版 `..._take46〜49.mp4` も記録として残す（物理は同一、`state_digest` が一致）。
   比較用の動画と報告 JSON（`out/v7_full_report_take51〜54.json`）、4 倍速の初版の記録 `out/v7_full_report_take50.json` も同梱する。
-- レポート PDF：`report/report.pdf`（提出時に追加）。
+- レポート PDF：`report/説明資料_PAI最終課題_83485.pdf`（7 ページ、提出時に追加）。原稿は `report/src/report.html`（図は `report/*.png`、動画のフレームは `report/src/stills/`）で、`python report/build_report.py --youtube <動画の URL>` が Chrome（または Edge）の印刷機能で PDF にする。
 - ブルドーザー側のリポジトリ [physical-ai-course-builder](https://github.com/ortiz-ai-partners/physical-ai-course-builder) は同一作者の自作（同じ課題のために作成、MIT）。
 - AI の使用：本番で推論するのは公式 ONNX ポリシー 5 本（Microduck 2 本・Jumper 3 本）、支配人 AI、気分ネット。学習したのは支配人 AI（PPO・表形式 Q）と気分ネット（いずれも CPU）。
   設計・実装・文書・図の作成には LLM（Claude）の支援を受けた。詳細は「第三者資産・ライセンス・AI の使用」。
