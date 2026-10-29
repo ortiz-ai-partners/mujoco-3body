@@ -6,6 +6,7 @@
 物理は 1 つの MuJoCo 3.11.0 ワールドで連続し、外力・テレポートは使わない。同一 30 シードの評価では固定ルールの支配人が 29/30、
 PPO が 26/30 を渡り切り（`out/manager_runs/comparison_v4.md`）、提出動画の本編では 3 体とも渡り切った（`out/v7_full_report_take57.json` の `three_crossed`）。
 提出動画（2:58.4）は講座の OP カード、支配人 AI の自己紹介（15.1 s）、本編（2:37.3）、講座の ED カードを `assemble.py` でつないだもので、自作のマリンバ曲を BGM に敷く。
+ブルドーザーで坂を運んでコースを組む題材は、子ども向けの体操教室でサーキット（坂・マット・跳び箱などを並べる運動のコース）の設営を手伝うロボットを、将来の応用先に考えたことから始まった。
 
 ![全体の仕組み](report/system_overview_ortiz.png)
 
@@ -19,6 +20,7 @@ A rule-controlled bulldozer (the author's own course builder, `physical-ai-cours
 A Microduck (Pollen Robotics, official ONNX policies `velstand` / `alpha_sitstand`, inference only) cannot climb the ramp and sits down at its foot.
 A Jumper (KingKong Robotics, official ONNX `locomotion` / `jump` / `dance_crab`, inference only) crosses the pass by itself, comes back,
 and pushes the seated duck up the ramp.
+The bulldozer comes from a practical aim: a robot that helps set up the circuits (ramps, mats, vaulting boxes) of children's gymnastics classes.
 
 Two self-trained networks run inference during the submitted run: a manager policy that picks the next skill for the stuck duck
 (rule / PPO / tabular-Q versions; rule 29/30, PPO 26/30 over 30 shared seeds), and a mood net (53-32-32-5 MLP) that drives the Jumper's face.

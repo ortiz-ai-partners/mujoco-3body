@@ -66,7 +66,8 @@
 <p class="en">Island Master: three robots cross a pass together in one MuJoCo world. A self-built bulldozer carries two 16° ramps and builds the course;
 the Microduck cannot climb with its official policy and sits down; the Jumper crab pushes it up from behind. A self-trained manager AI picks the next skill whenever
 an action fails, and a small mood net predicts how the running skill will end and drives the crab's face. Physics only: no external forces or teleports; official policies
-are used for inference only, unmodified.</p>
+are used for inference only, unmodified. The bulldozer comes from a practical aim: a robot that helps set up the circuits (ramps, mats, vaulting boxes)
+of children's gymnastics classes.</p>
 
 <h2>1. 概要</h2>
 <ol>
@@ -90,14 +91,15 @@ are used for inference only, unmodified.</p>
 <p class="small">時刻は提出動画の時刻。画像はすべて提出動画のフレーム。</p>
 
 <table>
-  <tr><th>加点要素</th><th>この資料で主に対応する所</th></tr>
+  <tr><th style="width:14%">加点要素</th><th>この資料で主に対応する所</th></tr>
   <tr><td>創造性</td><td>§2 課題設定（失敗を前提にした筋書き、助ける役と判断する役の分離）、§5 工夫点</td></tr>
   <tr><td>技術力</td><td>§4 システム構成（3 体の統合、支配人 AI、気分ネット）、§6 結果（同一シード評価、物理同一の検証）</td></tr>
-  <tr><td>実用性</td><td>§7 考察（動作は既製、判断は AI、根拠は画面に出す構成の応用先と限界）</td></tr>
+  <tr><td>実用性</td><td>§2 きっかけ（体操教室のサーキット設営）、§7 考察（設営の自動化と、動作は既製・判断は AI・根拠は画面に出す構成の応用先と限界）</td></tr>
   <tr><td>表現力</td><td>§8 動画の構成（自己紹介、指示の帯、表情、倍速表示、自作 BGM、声の左右定位）と動画そのもの</td></tr>
 </table>
 
 <h2>2. 目的と課題設定</h2>
+<p><b>きっかけ</b>：子ども向けの体操教室では、レッスンごとに坂・マット・跳び箱などを並べて、サーキット（運動のコース）を組み替える。この設営を手伝うロボットを将来の応用先に考え、まず坂を運んで据え付けるブルドーザー（course-builder）を作った。組んだコースを性質の違うロボットたちが実際に渡れるかを確かめる場として、本作の 3 体の物語を組み立てた。</p>
 <p><b>題材</b>：性質の違う 3 体（施工機械、二足の小型ロボット、六脚のカニ型ロボット）を 1 つの MuJoCo ワールドに集め、「道を作って全員で渡る」を協力でやり遂げる。</p>
 <p><b>問い</b>：既製の動作（公式ポリシー）が失敗したとき、次の一手を誰がどう決めるか。本作は、動作をスキル（固定プログラムが公式ポリシーに指令を出す）に任せ、どのスキルを使うかを支配人 AI が決める構成にした。</p>
 <p><b>自分に課した原則</b></p>
@@ -194,6 +196,7 @@ are used for inference only, unmodified.</p>
   <li><b>環境の不備は学習方式に厳しく出る</b>。継ぎ目 5 cm の旧コースでは PPO 16/30・固定ルール 23/30 だったが、継ぎ目を 1 cm にすると 26/30・29/30 になった。学習を疑う前に、環境の精度を疑うべきだった。</li>
 </ul>
 <h3>実用性</h3>
+<p>直接の応用先は、体操教室のサーキット設営である。坂やマットを運んで決まった位置と向きに据え付ける作業は、コースの設計データ（部材の種類・位置・向き）から施工手順を作れば、本作のブルドーザーと同じ形で自動化できる。峠の継ぎ目を 5 cm から 1 cm に詰めて小型ロボットがつまずかなくなったように、渡る側がつまずかない精度で据え付けることが要点になる。据え付けたコースを渡る側が通れるかをシミュレーションで先に確かめる流れは、設営後の点検にも使える。</p>
 <p>「動作は既製のポリシー、どれを使うかは判断の AI、その根拠は画面に出す」という構成は、複数のロボットが働く現場（搬送や施工）で、人が監督しながら AI に判断を任せる形に向く。スキルを差し替えても判断の層はそのまま使え、学習も CPU 数時間で済む。
 表情や指示の帯のように判断の根拠を見せることは、人が AI の判断を確かめて介入する場面で役に立つ。</p>
 <h3>限界と反省</h3>
