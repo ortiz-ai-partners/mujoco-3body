@@ -336,13 +336,13 @@ BGM は本作の作者が `music/marimba_bgm.py` で合成した自作の曲で�
 
 | 資産 | 提供元 | ライセンス | 使い方 |
 |---|---|---|---|
-| Microduck 公式 ONNX（`velstand`、`alpha_sitstand`） | Pollen Robotics、HF `pollen-robotics/microduck-policies`（版は `manifest.json`） | 未確認（表の下の注記） | 推論のみ、同梱。`alpha_walking` / `alpha_stand` は同梱するが未使用 |
+| Microduck 公式 ONNX（`velstand`、`alpha_sitstand`） | Pollen Robotics、HF `pollen-robotics/microduck-policies`（版は `manifest.json`） | Apache-2.0（表の下の注記） | 推論のみ、同梱。`alpha_walking` / `alpha_stand` は同梱するが未使用 |
 | `microduck_rl` の MJCF | Pollen Robotics | Apache-2.0（3D モデルは CC BY-NC-SA 4.0） | シーンとして読み込む、同梱せず |
 | Jumper の MJCF と公式バンドル | KingKong Robotics | Apache-2.0 | 推論のみ、観測契約を `obs.rs` から転記、同梱せず |
 | `physical-ai-course-builder` | 本作の作者（自作） | MIT | ブルドーザーの MJCF とルール制御。`rsplan`（Built Robotics、MIT）を版固定で同梱 |
 | MuJoCo、Stable-Baselines3、gymnasium、onnxruntime、PyTorch、imageio、Pillow | 各プロジェクト | 各ライセンス | 物理、学習、推論、描画 |
 
-注記：Microduck 公式 ONNX は配布元（Hugging Face）のライセンス表示を確認できていない。本リポジトリでの同梱は配布元の表示に従い、確認後に追記する。表示が無い場合は同梱を取得手順に置き換える（[THIRD_PARTY.md](THIRD_PARTY.md) と同じ扱い）。
+注記：Microduck 公式 ONNX は、配布元の Hugging Face のモデルページ（`pollen-robotics/microduck-policies`）のライセンス表示は Apache-2.0（README 本文は空）。同梱はその条件に従う（LICENSE の写しと帰属は [THIRD_PARTY.md](THIRD_PARTY.md)）。
 
 AI の使用：推論は公式 ONNX ポリシー 5 本、支配人 AI、気分ネット。学習は支配人 AI（PPO・表形式 Q）と気分ネット（すべて CPU）。
 開発補助：本作のリポジトリの設計・コード・文書は、LLM（Anthropic の Claude、Claude Code）の支援を受けて作成した。ブルドーザー側（course-builder）の開発には、OpenAI の Codex の対話型セッションを使った。図のうち 6 枚（`report/*_ortiz.png`）は、本作で書いた数値入りの依頼文をもとに対話型 AI「GPTAstra」が清書した。

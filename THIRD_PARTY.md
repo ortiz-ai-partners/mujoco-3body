@@ -20,9 +20,9 @@
 
 | 名称 | 出典 | 版 | ライセンス | 本作での使い方 | 同梱 |
 |---|---|---|---|---|---|
-| Microduck 公式 ONNX `velstand`・`alpha_sitstand`（Pollen Robotics） | Hugging Face `pollen-robotics/microduck-policies` | export 2026-10-12・2026-10-01 | 配布元の表示は未確認（下の節） | 既製。推論のみ、改変なし | あり |
-| Microduck 公式 ONNX `alpha_walking`・`alpha_stand` | 同上 | `manifest.json` に学習元の記載なし | 配布元の表示は未確認（下の節） | 既製。未使用 | あり |
-| `policies/microduck/manifest.json` | 同上 | 取得時のまま | 配布元の表示は未確認（下の節） | 既製。版情報の参照のみ、改変なし | あり |
+| Microduck 公式 ONNX `velstand`・`alpha_sitstand`（Pollen Robotics） | Hugging Face `pollen-robotics/microduck-policies` | export 2026-10-12・2026-10-01 | Apache-2.0（配布元の表示、下の節） | 既製。推論のみ、改変なし | あり |
+| Microduck 公式 ONNX `alpha_walking`・`alpha_stand` | 同上 | `manifest.json` に学習元の記載なし | Apache-2.0（配布元の表示、下の節） | 既製。未使用 | あり |
+| `policies/microduck/manifest.json` | 同上 | 取得時のまま | Apache-2.0（配布元の表示、下の節） | 既製。版情報の参照のみ、改変なし | あり |
 | Microduck の MJCF（`microduck_rl`） | https://github.com/pollen-robotics/microduck_rl | commit b02fdea | Apache-2.0 | 既製。MJCF を読み込むのみ、改変なし | なし |
 | Microduck の 3D メッシュ（`assets/*.stl`） | 同上 | 同上 | CC BY-NC-SA 4.0 | 既製。描画のみ（動画と図に映る） | なし |
 | Microduck の観測契約（`scripts/infer_policy.py`） | 同上 | 同上 | Apache-2.0 | 転記。`v7_policies.py` に書き写した | 転記部分のみ |
@@ -57,9 +57,8 @@
 本番の台本と学習環境はこの 2 本を読み込まない（コード中に参照なし）。単体試験 `v7_test_microduck.py` は `--policy` で任意のファイルを選べるが、既定は `velstand.onnx`。
 取得時のセットの整合を保つため削除せず、ここで未使用と明記する。
 
-ライセンス：配布元（Hugging Face `pollen-robotics/microduck-policies`）のライセンス表示は確認できていない。
-`manifest.json` にライセンスの項目はなく、学習コードの `microduck_rl` は Apache-2.0。
-本リポジトリでの同梱は配布元の表示に従い、表示が無い場合は同梱をやめて取得手順に置き換える。
+ライセンス：配布元の Hugging Face のモデルページ（`pollen-robotics/microduck-policies`）のライセンス表示は Apache-2.0（README 本文は空）。
+`manifest.json` にライセンスの項目はなく、学習コードの `microduck_rl` も Apache-2.0。本リポジトリはこの条件で同梱する（推論のみ、改変なし。著作権者は Pollen Robotics）。
 
 ### MJCF モデルと 3D メッシュ（`microduck_rl`）
 

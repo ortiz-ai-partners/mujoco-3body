@@ -131,7 +131,7 @@ MuJoCo の自由カメラから求め（`v6_common.py` `screen_xy`）、定電�
 | 固定プログラム | 戯れ、先回り、回り込み、輪の位置取り、応援の合図 | 自作 | AI 推論なし |
 
 公式ポリシーの版：velstand は microduck_rl commit 3750776・checkpoint 2749（export 2026-10-12）、alpha_sitstand は commit 77ffadf・checkpoint 2250（export 2026-10-01）で、
-出所は `policies/microduck/manifest.json`（`policies[].training`）。この 2 本の ONNX のライセンス表示は配布元で確認できていない（`THIRD_PARTY.md`）。
+出所は `policies/microduck/manifest.json`（`policies[].training`）。この 2 本の ONNX は、配布元の Hugging Face のモデルページで Apache-2.0 と表示されている（`THIRD_PARTY.md`）。
 学習コード microduck_rl は Apache-2.0。跳跳の 3 本は jumper リポジトリが git 追跡で同梱する公式バンドル（Apache-2.0）。ライセンスと取得手順の全文は `THIRD_PARTY.md`。
 公式ポリシーの動き（登坂、ジャンプ、ダンス）は公式の成果であり、本プロジェクトは目標を与えて呼び出す（前方ジャンプの股関節ヨーの関節目標だけを重ねる）。
 
