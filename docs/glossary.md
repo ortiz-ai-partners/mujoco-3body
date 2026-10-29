@@ -16,7 +16,7 @@
 
 コード識別子 `crab` と、愛称「ちょーさん」（英語 Cho-san）は跳跳（Jumper）を指す。跳跳は「ちょうちょう」（Chōchō）と読み、「ちょーさん」はその呼び名である。
 「ちょーさん」は支配人のセリフ（「ちょーさん、そっと押し上げてあげて」、英語の行は `LINES_EN` で “Cho-san, give it a gentle push up.”）と自己紹介のカード（`intro.py` の `CARDS`）で使う。
-以前の 2:47 版と比較用の動画の吹き出しでは「カニさん」と呼んでいた。本文では跳跳と書く。
+以前の速度設定で描いた比較用の 4 本（以前の 2:47 版・PPO 版・Q 表版・追走版）の吹き出しでは「カニさん」と呼んでいた。本文では跳跳と書く。
 `duck` はパッカン。`MD`／`JP`／`BZ` は 3 体の省略形で、観測や報告 JSON のキー（`three_crossed` の `bz`／`crab`／`duck`）にも現れる。
 
 ## 2. コースと場所
@@ -186,7 +186,7 @@
 | sim 時計 | 画面右下の「sim … s」。シミュレーション時刻 | sim clock | `render_frame` の footer |
 | 倍速 | 動画時刻に対するシミュレーション時刻の比（x4／x2／x1）。×4 は 2 倍速で標本化したフレームを 1 枚おきに書くだけで、物理を変えない | playback speed | `SPEED`、`SPEED_DANCE`、`--build-speed`、`--speedup`、報告 JSON の `settings.write_every` |
 | 動画時刻／sim 時刻 | 動画の m:ss と「sim 404 s」。両方を添えて書く。提出動画の時刻は本編の時刻＋18.14 s | video time / sim time | `events` の `video_t`／`t` |
-| 提出動画／本編 | 提出動画は講座の OP カード＋自己紹介＋本編＋講座の ED カードを結合した 2:58.4 の動画。本編はその 0:18.1 からの 1 本の連続シミュレーションの記録（2:37.3） | submitted video / main video | `assemble.py`、`out/3body_arena_v7_take57.mp4` |
+| 提出動画／本編 | 提出動画は講座の OP カード＋自己紹介＋本編＋講座の ED カードを結合した 2:56.6 の動画。本編はその 0:18.1 からの 1 本の連続シミュレーションの記録（2:35.5） | submitted video / main video | `assemble.py`、`out/3body_arena_v7_take58.mp4` |
 | 自己紹介 | 本編の前の 15.1 s。支配人 AI が丸い顔と打ち込みの文字で名乗り、3 体をカードで紹介する。物理は進めない描画のみ | self-introduction | `intro.py`、`out/intro.mp4` |
 | 講座の OP／ED カード | 提出動画の最初と最後に付ける講座の素材（3.04 s／2.97 s）。リポジトリに含まない | the course's opening / end card | `assemble.py --op`／`--ed` |
 | 支配人の帯 | 支配人 AI が手を選ぶたびに画面下 1/5 に出る帯。支配人の丸い顔とセリフを 1 秒 15 文字で打ち込み（チャイムと打鍵音つき）、日本語が出そろうと英語の行を出す。描画のみ | the manager's band | `v7_full.py` `band_frame()`・`BAND_CPS`、`v6_common.Captioner._band`、`crab_help.LINES_EN`、`--no-band`、`settings.band` |
@@ -221,10 +221,11 @@
 
 | 呼び名 | 条件 | 英語 | ファイル・出所 |
 |---|---|---|---|
-| 提出動画 | 講座の OP カード＋自己紹介＋本編＋講座の ED カード、BGM つき、2:58.4 | submitted video | `assemble.py` の出力（講座の素材を含むので同梱しない） |
-| 本編（固定ルール） | 固定ルールの支配人、輪の万歳、施工・仲間を呼んで戻る区間・輪へ集まる区間は 4 倍速、省略なし、END の後は 1 s、支配人の帯つき、2:37 | main video (rule) | `out/3body_arena_v7_take57.mp4`、`out/v7_full_report_take57.json` |
-| 以前の 2:47 版 | 本編と物理が同一（`state_digest` 一致）。施工 4 倍速・以後 2 倍速・省略なし、帯なし、2:47。比較の基準 | earlier 2:47 cut | `out/3body_arena_v7_take51.mp4`、`out/v7_full_report_take51.json` |
-| PPO 版 | PPO v2.2（`--manager ppo --run ppo2_v22`）、以前の 2:47 版と同じ速度設定、2:45 | PPO run | `out/3body_arena_v7_take52.mp4`、`out/v7_full_report_take52.json` |
+| 提出動画 | 講座の OP カード＋自己紹介＋本編＋講座の ED カード、BGM つき、2:56.6 | submitted video | `assemble.py` の出力（講座の素材を含むので同梱しない） |
+| 本編（PPO） | PPO v2.2 の支配人（`--manager ppo --run ppo2_v22`）、4 手、輪の万歳、施工・仲間を呼んで戻る区間・輪へ集まる区間は 4 倍速、省略なし、END の後は 1 s、支配人の帯つき、2:35。PPO 版と物理が同一 | main video (PPO) | `out/3body_arena_v7_take58.mp4`、`out/v7_full_report_take58.json` |
+| 固定ルール版 | 本編と同じ設定で支配人だけを固定ルールにした比較用、5 手、2:37。以前の 2:47 版と物理が同一 | rule comparison (same settings) | `out/3body_arena_v7_take57.mp4`、`out/v7_full_report_take57.json` |
+| 以前の 2:47 版 | 固定ルール版と物理が同一（`state_digest` 一致）。施工 4 倍速・以後 2 倍速・省略なし、帯なし、2:47。比較の基準 | earlier 2:47 cut | `out/3body_arena_v7_take51.mp4`、`out/v7_full_report_take51.json` |
+| PPO 版 | PPO v2.2（`--manager ppo --run ppo2_v22`）、以前の 2:47 版と同じ速度設定、帯なし、2:45。本編と物理が同一 | PPO run | `out/3body_arena_v7_take52.mp4`、`out/v7_full_report_take52.json` |
 | Q 表版 | 表形式 Q（`--manager tabq --run tabq2_small --jitter 0.4`）、2:46 | tabular-Q run | `out/3body_arena_v7_take53.mp4`、`out/v7_full_report_take53.json` |
 | 追走版 | 固定ルール、結末 `--finale procession`、2:44 | procession run | `out/3body_arena_v7_take54.mp4`、`out/v7_full_report_take54.json` |
 | 2 倍速・省略ありの版 | 以前の 2:47 版・PPO 版・Q 表版・追走版と同じ物理で、施工も 2 倍速、空荷走行 2 か所を省略 | 2x render with jump cuts | `out/3body_arena_v7_take46.mp4`〜`out/3body_arena_v7_take49.mp4`（`state_digest` が一致） |
@@ -232,5 +233,5 @@
 | 旧コース（継ぎ目 5 cm） | course-builder の `INSTALLATION_GAP` を 0.05 m から 0.01 m にする前の施工（変更は commit `ea5b4e7`） | old course (5 cm seam) | 旧舞台 `out/v6_stage_built_gap5cm.xml` |
 | 評価 v2（エピソード非独立） | エピソード間で `MjData` を持ち越していた時期の評価 | evaluation v2 | `out/manager_runs/comparison_v2.md` |
 
-長さは各報告 JSON の `video_silent.seconds`（本編 157.3、以前の 2:47 版 167.0、PPO 版 165.2、Q 表版 166.3、追走版 163.7 s）、提出動画の長さは `assemble.py` の印字の `total_s`（178.41 s）。
+長さは各報告 JSON の `video_silent.seconds`（本編 155.5、固定ルール版 157.3、以前の 2:47 版 167.0、PPO 版 165.2、Q 表版 166.3、追走版 163.7 s）、提出動画の長さは `assemble.py` の印字の `total_s`（176.58 s）。
 版ごとの物理同一の確認は `docs/physics_integration.md` の 8 節。

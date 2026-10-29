@@ -16,7 +16,7 @@
   MuJoCo の計測値（接触力、押している時間、進み、転倒、傾き）の両方で、顔モニターに決め手の値を表示する。
 - 顔と気分ネットは描画専用で物理を変えない。顔あり／なしのヘッドレス通しで最終状態の sha256 が一致した
   （`analysis/face_check.py`、`out/v7_full_report_facecheck_A.json`・`out/v7_full_report_facecheck_B.json`）。
-- 提出動画の本編（固定ルール）での推論回数は 5,236 回（`out/v7_full_report_take57.json` `face.mood_ai.inferences`、以前の 2:47 版も同じ）。
+- 提出動画の本編（PPO の支配人）での推論回数は 5,050 回（`out/v7_full_report_take58.json` `face.mood_ai.inferences`、PPO 版も同じ。固定ルール版は 5,236 回）。
 
 ## 位置づけ：2 つ目の AI は何を読み、何に触れないか
 
@@ -145,15 +145,16 @@
 推論値は 0.5 s の時定数で平滑化し（`crab_face.py` MOOD_TAU）、規則が読むのは平滑化後の値である。
 1 s ごとの標本が報告 JSON の `face.mood_ai.series` に残る（[t, p_success, p_stall, p_fall, p_nothing, p_cross]）。
 
-本編（固定ルール、`out/v7_full_report_take57.json`）での推論は 5,236 回。手ごとの p(成功) の中央値は、
-SEAT 0.84（標本 11）、PUSH 0.99（72）、BACK_OFF 0.96（2）、STANDUP 0.99（5）、WALK_ON 0.98（14）で、
-p(渡れる) は救助の開始時 0.08 から終了時 0.79 まで上がった（同 `face.mood_ai.series`）。
+本編（PPO v2.2、`out/v7_full_report_take58.json`）での推論は 5,050 回。手ごとの p(成功) の中央値は、
+SEAT 0.84（標本 11）、PUSH 0.99（72）、STANDUP 1.00（5）、WALK_ON 0.98（13）で、
+p(渡れる) は救助の開始時 0.08 から終了時 0.85 まで上がった（同 `face.mood_ai.series`）。
+固定ルール版（`out/v7_full_report_take57.json`）では BACK_OFF 0.96（2）が加わり、STANDUP 0.99（5）、WALK_ON 0.98（14）、終了時の p(渡れる) は 0.79 である。
 PUSH の標本の最小 0.57 は手が切り替わった直後の 1 標本で、平滑化が前の手の値を引きずったものである。
 
 | 版 | 支配人 | 手数 | 推論回数 | 出所 |
 |---|---|---|---|---|
-| 本編（提出） | 固定ルール | 5 | 5,236 | `out/v7_full_report_take57.json`（以前の 2:47 版 `take51.json` も同じ） |
-| PPO 版 | PPO v2.2 | 4 | 5,050 | `out/v7_full_report_take52.json` |
+| 本編（提出） | PPO v2.2 | 4 | 5,050 | `out/v7_full_report_take58.json`（PPO 版 `take52.json` も同じ） |
+| 固定ルール版 | 固定ルール | 5 | 5,236 | `out/v7_full_report_take57.json`（以前の 2:47 版 `take51.json` も同じ） |
 | Q 表版 | 表形式 Q | 8 | 5,239 | `out/v7_full_report_take53.json` |
 | 追走版 | 固定ルール | 5 | 5,236 | `out/v7_full_report_take54.json` |
 
@@ -294,7 +295,7 @@ flowchart TD
 力の目盛り 10 N は、ヘッドレス通しで測った押している間の接触力（法線成分の合計）の分布から決めた：
 p10／p50／p90／最大 ＝ 0／6.4／10.2／13.5 N、パッカンの重さは約 15 N（開発記録の集計、再計算スクリプトなし；
 `crab_face.py` PUSH_FORCE_REF の注記）。本編の 1 s ごとの標本でも、力が掛かっている 49 標本の中央値 7.5 N、
-最大 17.2 N で同じ桁である（`out/v7_full_report_take57.json` `face.effort_series`、以前の 2:47 版と同じ値）。
+最大 17.2 N で同じ桁である（`out/v7_full_report_take58.json` `face.effort_series`、固定ルール版・以前の 2:47 版と同じ値）。
 
 力の計測には最初「脚のアクチュエータの力の合計」を試したが、歩行 4.9 と押し 5.4 N·m で差が出ず採用しなかった
 （`crab_face.py` docstring）。接触は押している間 0.5 s ごとに途切れるので、1 s 途切れるまでは押し続きと扱う
@@ -303,10 +304,10 @@ p10／p50／p90／最大 ＝ 0／6.4／10.2／13.5 N、パッカンの重さは�
 
 ## 提出動画の表情の時系列
 
-本編（`out/3body_arena_v7_take57.mp4`）の顔の変化 26 行を、提出動画の時刻・本編の時刻・sim 時刻で並べる。
-出所は `out/v7_full_report_take57.json` の `face.log` で、`python analysis/timeline_times.py out/v7_full_report_take57.json`
+本編（`out/3body_arena_v7_take58.mp4`）の顔の変化 26 行を、提出動画の時刻・本編の時刻・sim 時刻で並べる。
+出所は `out/v7_full_report_take58.json` の `face.log` で、`python analysis/timeline_times.py out/v7_full_report_take58.json`
 が本編の時刻（m:ss.s）に変換して出力する。提出動画の時刻は本編の時刻＋18.14 s（講座の OP カードと自己紹介の長さ、`docs/video_guide.md` 第 1 節）。
-本編は施工 ×4（0:00〜0:44.1）、以後 ×2、仲間を呼んで戻る区間（1:20.4〜1:24.3）と輪へ集まる区間（2:16.7〜2:20.9）は ×4、万歳 ×1（2:20.9〜2:37.3）。
+本編は施工 ×4（0:00〜0:44.1）、以後 ×2、仲間を呼んで戻る区間（1:20.4〜1:24.3）と輪へ集まる区間（2:14.8〜2:19.1）は ×4、万歳 ×1（2:19.1〜2:35.5）。
 
 | 提出動画 | 本編 | sim | 表情 | 決め手 | 規則 |
 |---|---|---|---|---|---|
@@ -330,15 +331,17 @@ p10／p50／p90／最大 ＝ 0／6.4／10.2／13.5 N、パッカンの重さは�
 | 2:04.1 | 1:46.0 | 308.0 s | 困り汗 | 進みなし 3 s（接触 23.8 s 目） | 8 |
 | 2:06.0 | 1:47.9 | 311.8 s | ＞＜汗 | 力 0.8 | 9 |
 | 2:24.0 | 2:05.9 | 347.9 s | ほっ | 天面に届いた | 5 |
-| 2:25.9 | 2:07.8 | 351.6 s | にっこり | 立たせる、p(成功) 0.99 | 13 |
-| 2:27.7 | 2:09.6 | 355.2 s | ほっ | 立てた | 5 |
-| 2:28.7 | 2:10.6 | 357.2 s | 真剣 | 見送る、p(成功) 0.98 | 14 |
-| 2:33.9 | 2:15.8 | 367.6 s | にっこり | 見送る、p(成功) 0.99 | 13 |
-| 2:34.8 | 2:16.7 | 369.4 s | キラキラ | 計測：北の床で立位 | 3 |
-| 2:39.1 | 2:20.9 | 386.3 s | にっこり | 祝賀ダンス | 4 |
+| 2:25.0 | 2:06.9 | 349.9 s | にっこり | 立たせる、p(成功) 0.995 | 13 |
+| 2:26.8 | 2:08.7 | 353.4 s | ほっ | 立てた | 5 |
+| 2:27.8 | 2:09.7 | 355.4 s | 真剣 | 見送る、p(成功) 0.97 | 14 |
+| 2:32.0 | 2:13.9 | 363.8 s | にっこり | 見送る、p(成功) 0.99 | 13 |
+| 2:32.9 | 2:14.8 | 365.6 s | キラキラ | 計測：北の床で立位 | 3 |
+| 2:37.2 | 2:19.1 | 382.7 s | にっこり | 祝賀ダンス | 4 |
 
-`face.log` は以前の 2:47 版（`out/v7_full_report_take51.json`）と同じ 26 行で、sim 時刻も同じである。2:47 版の動画時刻は、跳跳の渡り切り（1:18.9）までは本編と同じで、
+`face.log` は以前の速度設定の PPO 版（`out/v7_full_report_take52.json`）と同じ 26 行で、sim 時刻も同じである。PPO 版の動画時刻は、跳跳の渡り切り（1:18.9）までは本編と同じで、
 支配人の引き継ぎ以後は本編より 3.9 s、祝賀ダンスは 8.2 s 遅い（`analysis/timeline_times.py --compare` の shift 列）。
+固定ルール版（`out/v7_full_report_take57.json`）の `face.log` も 26 行で、押し上げの終わり（sim 347.9 s）までは本編と同じ行、
+その後は `BACK_OFF` を挟むぶん、立たせる・見送る・渡り切り・祝賀ダンスの行が sim で 1.8〜3.8 s 遅い。
 
 この経路では 11 種のうち 9 種が出る。ガーンとぐるぐるは転倒がないので出ない（同 `face.log`）。
 困り汗が 2 回出るのは、押し上げの最中に進みが 3 s 以上止まった区間が 2 つ（sim 290.1 s と 308.0 s）あるためで、
@@ -346,7 +349,7 @@ p10／p50／p90／最大 ＝ 0／6.4／10.2／13.5 N、パッカンの重さは�
 
 表の決め手は `face.log` の理由の文と値（`stall_s`、`contact_s`、`effort`、`p_success`）から書いた。
 止まった区間がコースのどこかは `face.log` に記録が無いので述べない。
-PPO 版・Q 表版・追走版の時系列は、同じコマンドに `out/v7_full_report_take52.json`・`out/v7_full_report_take53.json`・
+固定ルール版・PPO 版・Q 表版・追走版の時系列は、同じコマンドに `out/v7_full_report_take57.json`・`out/v7_full_report_take52.json`・`out/v7_full_report_take53.json`・
 `out/v7_full_report_take54.json` を渡すと出る。
 
 ## 顔・気分ネットが物理を変えないことの検証（analysis/face_check.py）
@@ -376,7 +379,8 @@ python analysis/face_check.py out/v7_full_report_facecheck_A.json out/v7_full_re
 | A vs B | 顔なし／顔あり（表情は固定の表） | 8 項目すべて一致、ngeom 290→291（板 1 枚） | `out/v7_full_report_facecheck_A.json`・`out/v7_full_report_facecheck_B.json`、sim 385.6 s、出来事 64、判断 5 |
 | A vs C | 顔なし／気分ネットあり（推論 4,518 回） | ダイジェスト・判断・モード変化・渡り切り一致、出来事は文言 1 件のみ差 | `out/v7_full_report_moodcheck_C.json` `face.mood_ai.inferences` |
 | 以前の 2:47 版 | 省略あり ×2 版と省略なし ×4 版 | ダイジェスト 678fd3cae2caa4e7 が一致、判断 5 手が同じ sim 時刻 | `out/v7_full_report_take46.json`・`out/v7_full_report_take51.json` `state_digest` |
-| 本編（提出） | 以前の 2:47 版と、書き出しの倍速・END 後の尾・帯・声の音量と左右の振り分けを変えた本編 | ダイジェスト 678fd3cae2caa4e7 が一致、判断 5 手と `face.log` が同じ | `out/v7_full_report_take51.json`・`out/v7_full_report_take57.json` `state_digest` |
+| 固定ルール版 | 以前の 2:47 版と、書き出しの倍速・END 後の尾・帯・声の音量と左右の振り分けを変えた固定ルール版 | ダイジェスト 678fd3cae2caa4e7 が一致、判断 5 手と `face.log` が同じ | `out/v7_full_report_take51.json`・`out/v7_full_report_take57.json` `state_digest` |
+| 本編（提出） | 以前の速度設定の PPO 版と、同じ変更を加えた本編 | ダイジェスト aafa49e7a8698eac が一致、判断 4 手と `face.log` が同じ | `out/v7_full_report_take52.json`・`out/v7_full_report_take58.json` `state_digest` |
 
 検証：本書の執筆時に A・B・C の報告 JSON を同じ 8 項目で比較し直し、上の表のとおりであることを確認した。
 A vs C で違う出来事 1 件は文言だけで（「BZ faces south: the circle is complete」が C では
@@ -389,8 +393,8 @@ A vs C で違う出来事 1 件は文言だけで（「BZ faces south: the circl
 
 施工を 4 倍速にした初版も、フレームの標本周期そのものを変えたため forward の回数が変わり、
 ダイジェスト 768e78f7… の別経路になった（5 手・3 体渡り切りは同じ、`out/v7_full_report_take50.json`、`devlog/takes.md`）。
-以前の 2:47 版と本編は標本周期を ×2 のまま変えず、4 倍速の区間は標本 2 枚に 1 枚だけを書き出す間引きにした
-（`v7_full.py` `--build-speed 4`、build_write_every ＝ 4 ÷ SPEED["BUILD"] 2 ＝ 2。本編は `--speedup` で同じ間引きを CALL・RETURN・CELEBRATE にも使う）。
+以前の 2:47 版・PPO 版・本編・固定ルール版は標本周期を ×2 のまま変えず、4 倍速の区間は標本 2 枚に 1 枚だけを書き出す間引きにした
+（`v7_full.py` `--build-speed 4`、build_write_every ＝ 4 ÷ SPEED["BUILD"] 2 ＝ 2。本編と固定ルール版は `--speedup` で同じ間引きを CALL・RETURN・CELEBRATE にも使う）。
 省略あり ×2 版とダイジェストが一致することで直ったことを確かめた。
 
 ## 採用しなかった案：支配人 PPO の批評家 V(s) を気分に使う
@@ -442,9 +446,9 @@ Interaction の行）。公式リポジトリに含まれる表情は dance タ�
 - 事実：Q 表版の 7 手目（無駄な STANDUP、結果 nothing、1.0 s）で p(成功) は 0.24、p(止まる) は 0.73 まで動いたが、
   顔は直前の成功の「ほっ」（規則 5、2 s）のままだった（`out/v7_full_report_take53.json` `face.mood_ai.series` 355.6 s、
   `face.log` 354.96 s）。原因：出来事の規則が確率の規則より上にある優先順の設計で、1 s の手には追いつかない。未解決のまま記す。
-- 事実：学習データは学習環境のリセット配置で集め、本番は通し台本で推論する。配置の分布は違うが、動画 4 本（本編と比較用の 3 本）の押し上げ中の
+- 事実：学習データは学習環境のリセット配置で集め、本番は通し台本で推論する。配置の分布は違うが、動画 4 本（本編・固定ルール版・Q 表版・追走版）の押し上げ中の
   p(成功) の中央値は 0.99（0.988〜0.995）、p(転ばせる) の中央値は 0.006 以下（最大 0.04）で、見送り分の PUSH→pushed_up と
-  同じ傾向だった（「本番推論」節の表の 4 ファイルの `face.mood_ai.series` のうち、`manager.decisions` の PUSH の区間。本編の値は以前の 2:47 版と同じ）。
+  同じ傾向だった（「本番推論」節の表の 4 ファイルの `face.mood_ai.series` のうち、`manager.decisions` の PUSH の区間。本編の値は PPO 版と、固定ルール版の値は以前の 2:47 版と同じ）。
   転ばせる押しはこの 4 本の経路に含まれないので、その場面の推論は見送り分（PUSH→fell の p(転ばせる) 平均 0.92、
   `report.md`）でしか確かめていない。
 - 事実：ガーンとぐるぐるは本編の経路では出ない。原因ではなく仕様で、転倒が起きない経路だからである。
@@ -462,7 +466,7 @@ Interaction の行）。公式リポジトリに含まれる表情は dance タ�
 | `python analysis/face_sheet.py` | 未計測（描画 11 枚） | `report/faces_sheet_ja.png` | 11 種の顔 |
 | `python v7_test_face.py` | 未計測（描画のみ） | `out/face_test/` | 各表情の PNG |
 | A/B/C のコマンド（前節） | 描画なし | `out/v7_full_report_facecheck_A.json`・`out/v7_full_report_facecheck_B.json`・`out/v7_full_report_moodcheck_C.json` | ダイジェスト一致 |
-| `python analysis/timeline_times.py out/v7_full_report_take57.json` | 数秒 | 標準出力 | 表情の時系列（本編の時刻。提出動画は＋18.14 s） |
+| `python analysis/timeline_times.py out/v7_full_report_take58.json` | 数秒 | 標準出力 | 表情の時系列（本編の時刻。提出動画は＋18.14 s） |
 
 データ収集は `--run ppo2_v22` の重み `out/manager_runs/ppo2_v22/ppo_manager.zip` を要する。
 通し台本の顔は `--no-face` で外せ、`--face-ai {mood,critic,table}` で気分ネット／批評家／固定の表を選べる

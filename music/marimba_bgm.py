@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-marimba（最終版 v3）-- 提出動画（講座 OP の後、自己紹介 15.1 s＋本編 take 56 157.3 s＋講座 ED）用 BGM。
+marimba（最終版 v4）-- 提出動画（講座 OP の後、自己紹介 15.1 s＋本編＋講座 ED）用 BGM。
+
+v4：本編を学習済み PPO の支配人（take 58、155.5 s）に替えた。押し上げの後の手が違う（離れるを省く）ので、押し上げ成功〜進ませる・
+渡り切り・万歳・終わりの合図を take 58 の時刻へ写し、天面を歩く G を 14 拍 -> 12 拍に書き直した（テンポは約 118 BPM のまま）。
+環境変数 BGM_MAIN=take57 で固定ルール版（試作 4 まで）の BGM を out/music/bgm_marimba_take57.wav に書く。
 
 v3（10/29 ゆうころの指定）：
   ・曲は OP から自己紹介に切り替わる瞬間に始まる。0.0–15.1 s は自己紹介のための新しい前奏（約 119 BPM、
@@ -16,7 +20,7 @@ v3（10/29 ゆうころの指定）：
 marimba -- 3 体ロボット動画（全長 167.0 s）用 BGM。木琴・マリンバ風の柔らかい打鍵を軸にした完全オリジナル合成。
 
 numpy / scipy だけで合成する（既存の曲・音源・サンプルは不使用、乱数は seed 固定で決定的）。
-引数なしで実行すると、out/music/bgm_marimba.wav（44,100 Hz / stereo / 16 bit / 7,735,140 samples = 175.4 s）を書く。
+引数なしで実行すると、out/music/bgm_marimba.wav（44,100 Hz / stereo / 16 bit、提出版の本編 take 58 に合わせた 173.6 s）を書く。
 環境変数 BGM_DIAG=1 で楽器ごとの区間 RMS も表示する。
 
 調  ：F major（施工〜3 体渡り切り）→ 集合の終わりで D7 を経て、万歳のダンスは G major（一段上げて明るく）
@@ -94,18 +98,31 @@ except Exception:
     pass
 
 SR = 44100
-DUR = 175.4                               # 自己紹介 15.1 + 本編 157.3 + 講座 ED 2.97 を覆う
-N = int(round(DUR * 44100))
 INTRO = 15.1                              # 自己紹介の長さ：本編の 0 s は曲の 15.1 s
+ED = 2.97                                 # 講座の ED カード（最後の和音をここまで響かせる）
+# 本編ごとの長さと、take 51 の動画時刻 -> 本編の動画時刻の対応点（両テイクの出来事の時刻を突き合わせたもの。
+# 押し上げまでは物理も判断も同じで、違うのは 4 倍速の区間と、押し上げの後の手）
+MAINS = {
+    # 固定ルールの支配人（5 手：座らせる・押し上げる・離れる・立たせる・進ませる）、提出動画の試作 3〜4
+    "take57": dict(length=157.3, map=[(0.0, 0.0), (78.9, 78.9), (88.2, 84.27), (140.6, 136.67), (149.1, 140.93),
+                                      (164.5, 156.3), (167.0, 158.8)]),
+    # 学習済み PPO の支配人（4 手：離れるを省く）、提出版
+    "take58": dict(length=155.5, map=[(0.0, 0.0), (78.9, 78.9), (88.2, 84.27), (129.8, 125.9), (133.5, 128.7),
+                                      (140.6, 134.8), (149.1, 139.07), (164.5, 154.43), (167.0, 156.93)]),
+}
+MAIN = os.environ.get("BGM_MAIN", "take58")   # どの本編に合わせるか（環境変数で切り替え）
+DUR = float(np.ceil((INTRO + MAINS[MAIN]["length"] + ED) * 10 - 1e-6) / 10)   # 自己紹介＋本編＋ED を覆う（take 58 は 173.6 s）
+N = int(round(DUR * 44100))
 # take 51 の動画時刻 -> take 56 の動画時刻（両テイクの出来事の時刻を突き合わせた対応点、物理は同じ）
-_MAP51 = [(0.0, 0.0), (78.9, 78.9), (88.2, 84.27), (140.6, 136.67), (149.1, 140.93), (164.5, 156.3), (167.0, 158.8)]
+_MAP51 = MAINS[MAIN]["map"]
 
 
 def W(t51):
     """take 51 の動画時刻 -> この曲の時刻（自己紹介 15.1 s を足す）。E・H 以外の区間では傾き 1（ずらすだけ）。"""
     return INTRO + float(np.interp(t51, [a for a, _ in _MAP51], [b for _, b in _MAP51]))
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "out", "music", "bgm_marimba.wav")   # 提出動画の BGM（assemble.py --bgm に渡す）
+OUT = os.path.join(HERE, "..", "out", "music",                      # 提出動画の BGM（assemble.py --bgm に渡す）
+                   "bgm_marimba.wav" if MAIN == "take58" else f"bgm_marimba_{MAIN}.wav")
 SEED = 20261029
 rng = np.random.default_rng(SEED)        # 作曲側の揺らぎ（タイミング・強さ）
 rng2 = np.random.default_rng(SEED + 7)   # 合成側のノイズ・位相
@@ -653,20 +670,36 @@ def build():
     bas(W(133.25), 'E2', 0.5, dec=0.5)
 
     # ===== G 133.5–140.6 天面を歩いて下る =====
-    tG = TM([(0, 133.5), (14, 140.6)])
-    progG = [(0, 'F'), (4, 'Bb'), (8, 'Gm7'), (12, 'C7')]
-    walkG = ['F2', 'A2', 'C3', 'A2', 'Bb1', 'D2', 'F2', 'D2', 'G2', 'A2', 'Bb2', 'B2', 'C3', 'Bb2']
-    for i, n in enumerate(walkG):
-        bas(tG(i), n, 0.7 + 0.015 * i, dec=0.55)
-    melody(tG, 0, MEL_W, vel=0.82)
-    for i, n in enumerate(['G4', 'A4', 'Bb4', 'C5', 'D5', 'E5', 'F5', 'G5']):
-        mar(tG(12 + 0.25 * i), n, 0.5 + 0.045 * i, pan=0.1, dec=0.5)
-    ostinato(tG, progG, 0, 12, sub=2, pattern=OST8, vel=lambda b: 0.4 + 0.15 * b / 12, pan=-0.28, dec=0.5)
-    shaker(tG, 0, 8, sub=2, vel=0.45)
-    shaker(tG, 8, 14, sub=4, vel=lambda b: 0.45 + 0.25 * (b - 8) / 6)
-    for b, v in ((0, .35), (2, .35), (4, .35), (6, .35), (8, .38), (10, .38), (12, .45), (13, .45), (13.5, .4)):
-        kick(tG(b), v)
-    pads(tG, progG, 0, 14, vel=0.48, att=0.5, rel=0.8)
+    if W(140.6) - W(133.5) > 6.6:           # 固定ルールの本編（7.1 s）：14 拍
+        tG = TM([(0, 133.5), (14, 140.6)])
+        progG = [(0, 'F'), (4, 'Bb'), (8, 'Gm7'), (12, 'C7')]
+        walkG = ['F2', 'A2', 'C3', 'A2', 'Bb1', 'D2', 'F2', 'D2', 'G2', 'A2', 'Bb2', 'B2', 'C3', 'Bb2']
+        for i, n in enumerate(walkG):
+            bas(tG(i), n, 0.7 + 0.015 * i, dec=0.55)
+        melody(tG, 0, MEL_W, vel=0.82)
+        for i, n in enumerate(['G4', 'A4', 'Bb4', 'C5', 'D5', 'E5', 'F5', 'G5']):
+            mar(tG(12 + 0.25 * i), n, 0.5 + 0.045 * i, pan=0.1, dec=0.5)
+        ostinato(tG, progG, 0, 12, sub=2, pattern=OST8, vel=lambda b: 0.4 + 0.15 * b / 12, pan=-0.28, dec=0.5)
+        shaker(tG, 0, 8, sub=2, vel=0.45)
+        shaker(tG, 8, 14, sub=4, vel=lambda b: 0.45 + 0.25 * (b - 8) / 6)
+        for b, v in ((0, .35), (2, .35), (4, .35), (6, .35), (8, .38), (10, .38), (12, .45), (13, .45), (13.5, .4)):
+            kick(tG(b), v)
+        pads(tG, progG, 0, 14, vel=0.48, att=0.5, rel=0.8)
+    else:                                    # PPO の本編（6.1 s）：12 拍にして同じ約 118 BPM を保つ
+        tG = TM([(0, 133.5), (12, 140.6)])
+        progG = [(0, 'F'), (4, 'Bb'), (8, 'Gm7'), (10, 'C7')]
+        walkG = ['F2', 'A2', 'C3', 'A2', 'Bb1', 'D2', 'F2', 'D2', 'G2', 'Bb2', 'C3', 'Bb2']
+        for i, n in enumerate(walkG):
+            bas(tG(i), n, 0.7 + 0.018 * i, dec=0.55)
+        melody(tG, 0, MEL_W[:2] + [[x for x in MEL_W[2] if x[0] < 2]], vel=0.82)
+        for i, n in enumerate(['G4', 'A4', 'Bb4', 'C5', 'D5', 'E5', 'F5', 'G5']):
+            mar(tG(10 + 0.25 * i), n, 0.5 + 0.045 * i, pan=0.1, dec=0.5)
+        ostinato(tG, progG, 0, 10, sub=2, pattern=OST8, vel=lambda b: 0.4 + 0.15 * b / 10, pan=-0.28, dec=0.5)
+        shaker(tG, 0, 6, sub=2, vel=0.45)
+        shaker(tG, 6, 12, sub=4, vel=lambda b: 0.45 + 0.25 * (b - 6) / 6)
+        for b, v in ((0, .35), (2, .35), (4, .35), (6, .38), (8, .38), (10, .45), (11, .45), (11.5, .4)):
+            kick(tG(b), v)
+        pads(tG, progG, 0, 12, vel=0.48, att=0.5, rel=0.8)
 
     # ===== H 3 体渡り切り（最大の山場）-> 集合：v3 では 4 倍速で 4.26 s（take 51 の 8.5 s）。17 拍 -> 8.5 拍（約 120 BPM） =====
     tH = TM([(0, W(140.6)), (8.5, W(149.1))], warp=False)
@@ -977,7 +1010,7 @@ def master_eq(x):
     return x
 
 
-FADE0, FADE1 = 172.0, 175.0          # v3：最後の G（171.4）を講座 ED に響かせてから消す
+FADE0, FADE1 = round(W(164.5) + 0.6, 3), round(DUR - 0.4, 3)   # 最後の G を講座 ED に響かせてから消す（take 57：172.0／175.0）
 
 # 声の「間」：ロボットの声（3body_arena_v7_take51_chirps.wav）の句の時刻表 (始, 終) [s]。
 # 50 ms 窓で -50 dBFS を超える所を、0.3 s 以下の隙間はつないで句にしたもの（take51 から一度だけ書き出して固定）。

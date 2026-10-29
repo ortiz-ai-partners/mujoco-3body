@@ -158,23 +158,25 @@ Python 本体は 3.10（3.10.6 で確認、PSF License）。上の 10 本が引�
 
 字幕の文字は Windows 同梱の日本語フォント（Meiryo、Yu Gothic Medium、MS Gothic のうち最初に見つかったもの、`v6_common._FONTS`）を描画時に読む。
 フォントは再配布しない。見つからない環境では Pillow の既定フォントに切り替わる（`v6_common.Captioner`）。
+報告書の PDF（`report/説明資料_PAI最終課題_83485.pdf`）は、本文に BIZ UDPGothic（Windows 同梱、モリサワが SIL Open Font License 1.1 でも公開）、コマンドの行に Consolas（Windows 同梱）を使い、Chrome の印刷機能が使った文字だけを PDF に埋め込む（`report/build_report.py`）。
 
 ## 本リポジトリで作成したもの
 
 上の第三者資産と転記部分を除くコードは、すべて本プロジェクトで作成した。
 学習済みの支配人 AI（`out/manager_runs/ppo2_v22/ppo_manager.zip`、`out/manager_runs/tabq2_small/tabq.json` ほか）と気分ネット（`out/manager_runs/mood_net/`）も本プロジェクトの成果物である。
-評価の生成物（`out/manager_runs/*.md`、`*.json`）と報告 JSON（`out/v7_full_report_take57.json` など）も含め、MIT で公開する。
+評価の生成物（`out/manager_runs/*.md`、`*.json`）と報告 JSON（`out/v7_full_report_take58.json` など）も含め、MIT で公開する。
 動画の効果音は `v7_full.py` の `Chirps` と `intro.py` が合成するもので、BGM は `music/marimba_bgm.py` が numpy/scipy の加算合成だけで作る自作曲である。第三者の音源・既存の曲・サンプルは使わない。提出動画の最初と最後の講座の OP／ED カード（計 6 s、音声なし）は講座が配布した素材で、本リポジトリには含めない。
 
-動画と静止画も本プロジェクトで作成した。動画は `out/` 以下の `*.mp4` のすべてで、提出動画の本編は `out/3body_arena_v7_take57.mp4`、自己紹介は `out/intro.mp4`、
-本編と物理が同一の以前の 2:47 版は `out/3body_arena_v7_take51.mp4`、PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_arena_v7_take53.mp4`・`out/3body_arena_v7_take54.mp4`。
+動画と静止画も本プロジェクトで作成した。動画は `out/` 以下の `*.mp4` のすべてで、提出動画の本編（PPO の支配人）は `out/3body_arena_v7_take58.mp4`、自己紹介は `out/intro.mp4`、
+本編と同じ設定で支配人を固定ルールにした固定ルール版は `out/3body_arena_v7_take57.mp4`、固定ルール版と物理が同一の以前の 2:47 版は `out/3body_arena_v7_take51.mp4`、
+PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_arena_v7_take53.mp4`・`out/3body_arena_v7_take54.mp4`。
 静止画は報告書の図（`report/*.png`）、差し替え前の図と元データ（`docs/devlog/figures/`）、表情の確認画像（`out/face_test/`）である。
 これらの多くに Microduck（CC BY-NC-SA 4.0 のメッシュ）と Jumper（Apache-2.0）の外観が映る。
 そのため動画と静止画は一律に、コードの MIT ではなく CC BY-NC-SA 4.0 の条件（帰属・非営利・継承）で扱う。帰属表示は「MJCF モデルと 3D メッシュ」の節のとおり。
 
 ## AI の使用
 
-作品名〈アイランドマスター〉は、開発を補助した LLM の呼び名でもある。動画の中で次の一手を選ぶのは常に支配人 AI であり、LLM はシミュレーションの実行時には動かない。
+動画の支配人 AI は自己紹介と字幕で「アイランドマスター」と名乗る。この呼び名は開発を補助した LLM の呼び名から取ったキャラクター名で、動画の中で次の一手を選ぶのは常に支配人 AI であり、LLM はシミュレーションの実行時には動かない。
 
 ### 本番で推論する AI
 
@@ -187,11 +189,11 @@ Python 本体は 3.10（3.10.6 で確認、PSF License）。上の 10 本が引�
 | Jumper `locomotion` | 既製（KingKong Robotics）、推論のみ | 提供元 | 415 → 20、200 Hz | 跳跳の歩行・旋回 |
 | Jumper `jump` | 既製（KingKong Robotics）、推論のみ | 提供元 | 167 → 20、200 Hz | 跳跳のジャンプ（前方成分は本リポジトリ側の関節目標の追加） |
 | Jumper `dance_crab` | 既製（KingKong Robotics）、推論のみ | 提供元 | 209 → 22、50 Hz | 跳跳のダンス |
-| 支配人 AI | 自作 | 固定ルール版は学習なし、PPO 版・Q 表版は学習 | 46 → 6 手、前の手が終わるたびに 1 回 | 失敗したときの次の一手を選ぶ |
+| 支配人 AI | 自作 | 提出動画の PPO 版と Q 表版は学習、固定ルール版は学習なし | 46 → 6 手、前の手が終わるたびに 1 回 | 失敗したときの次の一手を選ぶ |
 | 気分ネット | 自作 | 学習 | 53 → 5、救助中に支配人の手を実行している間の毎制御ステップ | 跳跳の表情の元になる 5 つの値を推論する |
 
-支配人 AI の観測は 46 次元（`crab_help.py` の `OBS_DIM`）、手は 6 つ（同 `ACTIONS`）。提出動画は固定ルール版で（`crab_help.rule_action`）、5 手を打った（`out/v7_full_report_take57.json` の `manager.decisions`）。
-気分ネットは 53-32-32-5 の MLP で（`analysis/mood_train.py` の `MoodNet`、`out/manager_runs/mood_net/meta.json` の `n_in`・`hidden`・`n_out`）、提出動画では 5,236 回推論した（同 JSON の `face.mood_ai.inferences`）。
+支配人 AI の観測は 46 次元（`crab_help.py` の `OBS_DIM`）、手は 6 つ（同 `ACTIONS`）。提出動画は学習済みの PPO 版で（`out/manager_runs/ppo2_v22/ppo_manager.zip`、`manager.policy` は「PPO 方策（ppo2_v22）」）、4 手を打った（`out/v7_full_report_take58.json` の `manager.decisions`）。
+気分ネットは 53-32-32-5 の MLP で（`analysis/mood_train.py` の `MoodNet`、`out/manager_runs/mood_net/meta.json` の `n_in`・`hidden`・`n_out`）、提出動画では 5,050 回推論した（同 JSON の `face.mood_ai.inferences`）。
 出力は 4 つの結末の確率と「渡れる」の確率である（`crab_face.MoodAI` の `KEYS`）。ブルドーザーは規則制御で、AI 推論はない。
 
 顔・字幕・気分ネットは描画専用で物理を変えない。試験走行（`v7_full.py --test`）で 2 つの比較をして確かめた。
@@ -209,7 +211,8 @@ Q 表版は本リポジトリで実装した表形式 Q 学習で（`manager2_ta
 
 気分ネットは PyTorch で、学習環境の 35 話・47,952 サンプルから学習した（`out/manager_runs/mood_net/meta.json` の `n_episodes`・`n_samples`）。
 評価 v4（同じ 30 シード）の渡り切りは固定ルール 29/30、PPO v2.2 26/30、Q 表 25/30（`out/manager_runs/comparison_v4.md`）。
-学習方式は固定ルールに届いておらず、提出動画には固定ルール版を使った。PPO 版と Q 表版は別の動画として公開する。
+学習方式は評価で固定ルールに届いていないが、提出動画では判断する役を学習した AI とするため PPO v2.2 を使った。
+固定ルールは本編と同じ設定の固定ルール版として、Q 表版とともに別の動画で公開する。
 
 ### 開発補助の AI
 
@@ -220,13 +223,13 @@ Q 表版は本リポジトリで実装した表形式 Q 学習で（`manager2_ta
 本作はその計画 JSON を読まず、坂の配置は `slope_assembly.assembly_xml` の定数で決まる。
 
 報告書の図のうち 6 枚（`report/*_ortiz.png`）は、本プロジェクトで書いた数値入りの依頼文をもとに、
-開発補助の LLM とは別の対話型 AI が清書した（AI の名称・版は記録していない）。
+開発補助の LLM とは別の対話型 AI「GPTAstra」が清書した（版は記録していない）。
 `report/faces_sheet_ja.png` は `analysis/face_sheet.py` が描く。
 
 図中の数値と規則は `crab_face.py`、`crab_help.py`、報告 JSON、`out/manager_runs/comparison_v4.md` と照合した（記録は `docs/devlog/face_rules_chart.md`）。
 照合で見つかったずれは `docs/devlog/README.md` の訂正表に記す：全体図は公式ポリシー 5 本のうち 4 本分の次元だけを載せる（訂正表 14）、
 気分ネットの図の「CPU 1 分」は学習ループ（3.5 s、`out/manager_runs/mood_net/meta.json` の `train_s`）でなくスクリプト全体の目安（訂正表 8）。
-タイムライン図と全体図は提出版に合わせて描き直した（訂正表 6、旧図は `docs/devlog/figures/`）。
+タイムライン図は以前の 2:47 版（固定ルールの支配人）の時刻に、全体図は現行の構成に合わせて描き直した（訂正表 6、旧図は `docs/devlog/figures/`）。本編（PPO の支配人）の時刻は `README.md` の表にある。
 
 公式ポリシーが見せる歩行・ジャンプ・ダンスの出来は提供元の成果である。
 本作で作成したのは、3 体の統合、失敗したときの次の一手を選ぶ支配人 AI、表情を推論する気分ネットである。
