@@ -29,25 +29,28 @@ from v6_robots import build_arena
 MD_START = (4.0, 0.6, -math.pi / 2)        # same spawn poses as v7_full.py
 JP_PARK = (4.6, 1.2, math.pi)
 SR = 44100
-DURATION = 13.0
+DURATION = 15.1
 
 # what the manager AI says (Japanese, English)
 HELLO = ("はじめまして。", "支配人 AI の アイランドマスターです。", "Hello. I'm Island Master, the manager AI.")
+PURPOSE = ("きょうは松尾研の講座の最終課題として、3 体のロボットが", "力を合わせて峠を越えるところを見てもらいます。",
+           "Today, for the Matsuo Lab course's final project: three robots team up to cross a pass.")
 TEAM = ("きょうの仲間を紹介します。", "Let me introduce today's team.")
 CARDS = [
     ("ブルドーザー", "道をつくる職人。坂も自分で運びます。", "The builder. Carries its own ramps."),
     ("パッカン", "がんばり屋。でも、坂は少し苦手。", "Tries hard. Not so good on slopes."),
-    ("跳跳", "身軽で、世話好きなカニ。", "A nimble crab who loves to help."),
+    ("跳跳（ちょうちょう）", "身軽で世話好きなカニ。愛称は「ちょーさん」。", "A nimble, helpful crab. We call it Cho-san."),
 ]
 JOB = ("うまくいかないとき、次の一手を考えるのが わたしの仕事です。", "When things go wrong, choosing the next move is my job.")
 
 # timeline (s)
-T_HELLO = (0.3, 3.9)
-T_TEAM = 4.1
-T_CARDS = (4.6, 6.2, 7.8)
-T_JOB = 9.6
-T_FADE = 12.4
-CPS = 13.0                                   # typed characters per second
+T_HELLO = (0.3, 2.1)
+T_PURPOSE = 2.7
+T_TEAM = 7.2
+T_CARDS = (7.6, 8.9, 10.2)
+T_JOB = 11.6
+T_FADE = 14.5
+CPS = 15.0                                   # typed characters per second
 
 BG = (14, 24, 38)
 INK = (240, 244, 250)
@@ -145,17 +148,26 @@ def make_frames(wide, portraits):
         blink = (t % 2.7) < 0.12
         talking = False
 
-        if t < T_TEAM:                                           # 1: hello, big face
+        if t < T_TEAM:                                           # 1: hello and what this is, big face
             line1, line2 = HELLO[0], HELLO[1]
             both, active = typed(line1 + line2, t, T_HELLO[0])
-            talking = active and int(t * 10) % 2 == 0
-            draw_avatar(d, 250, 340, 90, blink, talking)
-            d.text((390, 262), both[:len(line1)], font=f_jp, fill=INK)
-            d.text((390, 318), both[len(line1):], font=fit(line2, 38, VIDEO_W - 390 - 40), fill=INK)
+            p1, p2 = PURPOSE[0], PURPOSE[1]
+            pboth, pactive = typed(p1 + p2, t, T_PURPOSE)
+            talking = (active or pactive) and int(t * 10) % 2 == 0
+            draw_avatar(d, 230, 330, 90, blink, talking)
+            x = 370
+            d.text((x, 168), both[:len(line1)], font=f_jp, fill=INK)
+            d.text((x, 220), both[len(line1):], font=fit(line2, 38, VIDEO_W - x - 40), fill=INK)
             if t > T_HELLO[0] + len(line1 + line2) / CPS:
-                d.text((392, 380), HELLO[2], font=f_en, fill=SUB)
-            key = "hello"
-            cnt = len(both)
+                d.text((x + 2, 276), HELLO[2], font=f_en, fill=SUB)
+            d.text((x, 350), pboth[:len(p1)], font=fit(p1, 30, VIDEO_W - x - 40), fill=INK)
+            d.text((x, 394), pboth[len(p1):], font=fit(p2, 30, VIDEO_W - x - 40), fill=INK)
+            if t > T_PURPOSE + len(p1 + p2) / CPS:
+                d.text((x + 2, 446), PURPOSE[2], font=fit(PURPOSE[2], 20, VIDEO_W - x - 40), fill=SUB)
+            if t < T_PURPOSE:
+                key, cnt = "hello", len(both)
+            else:
+                key, cnt = "purpose", len(pboth)
         else:                                                    # 2: the team, small face top-left
             draw_avatar(d, 86, 84, 44, blink, False)
             jp, active = typed(TEAM[0], t, T_TEAM)
@@ -265,7 +277,7 @@ def main():
     print(f"wrote {final} ({len(frames)} frames, {len(frames) / VIDEO_FPS:.1f} s, ffmpeg rc={res.returncode})")
     still_dir = OUT_DIR / f"intro{args.tag}_stills"
     still_dir.mkdir(exist_ok=True)
-    for t in (2.5, 8.6, 11.8):
+    for t in (6.6, 10.9, 14.0):
         Image.fromarray(frames[int(t * VIDEO_FPS)]).save(still_dir / f"t{t:04.1f}.png")
     return 0 if res.returncode == 0 else 1
 
