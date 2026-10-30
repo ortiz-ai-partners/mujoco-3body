@@ -1,5 +1,5 @@
 {
-  "video": "D:\\IslandMaster\\mujoco_3body\\out\\v6_phase2_md_walk.mp4",
+  "video": "<BASE>\\mujoco_3body\\out\\v6_phase2_md_walk.mp4",
   "frames": 421,
   "bytes": 1421197,
   "md_pose": [

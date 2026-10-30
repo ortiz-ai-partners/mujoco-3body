@@ -134,7 +134,7 @@
       ]
     }
   },
-  "stage_xml": "D:\\IslandMaster\\mujoco_3body\\out\\v6_stage_built.xml",
+  "stage_xml": "<BASE>\\mujoco_3body\\out\\v6_stage_built.xml",
   "stage_xml_settle_drift_m": {
     "up_1": 2.472224284637628e-06,
     "down_1": 2.4722066331236516e-06

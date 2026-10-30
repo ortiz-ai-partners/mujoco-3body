@@ -1,7 +1,7 @@
 ﻿python.exe : [vost#0:0/libx264 @ 000002c8f8fa0e00] Multiple -pix_fmt options specified for stream 0, only the last opti
 on '-pix_fmt yuv420p' will be used.
 At line:1 char:302
-+ ... tch {} } }; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manag ...
++ ... tch {} } }; & "<BASE>\jumper\.venv\Scripts\python.exe" manag ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: ([vost#0:0/libx2...' will be used.:String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError

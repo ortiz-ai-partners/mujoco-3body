@@ -1,6 +1,6 @@
 ﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
 At line:1 char:490
-+ ... iled OK" }; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++ ... iled OK" }; & "<BASE>\jumper\.venv\Scripts\python.exe" v7_fu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -109,7 +109,7 @@ yuv420p' will be used.
   t= 513.04s  [RESCUE] MANAGER result: PUSH -> stalled (duck SIT/toe at (+1.39,-2.06) z=0.06)
   t= 513.06s  [RESCUE] MANAGER #5: PUSH 「もう一回いこう。カニさん、そっと押し上げてあげて」 (duck SIT/toe, crab 2.18 m, touching=False, last=stalled)
   t= 520.0s [RESCUE] BZ done @(+1.55,+3.08) MD(SIT) @(+1.39,-2.06) z=0.060 tilt= 6.0 JP(WALK) @(+2.33,-0.10) z=0.06 wall   337s
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take11.mp4 (7838 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take11.mp4 (7838 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 522.5,
@@ -213,12 +213,12 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take11.mp4 (7838 frames, f
     "duck": false
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take11_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take11_silent.mp4",
     "frames": 7838,
     "bytes": 22626102
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take11.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take11.mp4",
     "ffmpeg_rc": 0,
     "bytes": 23102458
   }

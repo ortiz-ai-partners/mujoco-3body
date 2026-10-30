@@ -4785,13 +4785,13 @@
     ]
   ],
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take50_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take50_silent.mp4",
     "frames": 4806,
     "seconds": 160.2,
     "bytes": 23705206
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take50.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take50.mp4",
     "ffmpeg_rc": 0,
     "bytes": 24188804
   }

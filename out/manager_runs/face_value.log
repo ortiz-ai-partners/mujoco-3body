@@ -177,4 +177,4 @@ ppo  ramp_fallen       seed 7001: not crossed in 40 moves, V start -28.43 end -3
 | rule | toe_seated_ok | 1619 | -15.46 | -23.77 | -22.83 | -1.28 |
 | rule | toe_seated_wrong | 2496 | -16.69 | -27.50 | -22.27 | -2.19 |
 | rule | toe_standing | 1622 | -13.50 | -22.53 | -20.64 | -1.17 |
-wrote D:\IslandMaster\mujoco_3body\out\manager_runs\face_value.md
+wrote <BASE>\mujoco_3body\out\manager_runs\face_value.md

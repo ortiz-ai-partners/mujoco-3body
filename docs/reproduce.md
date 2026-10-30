@@ -132,7 +132,7 @@ Windows で `core.autocrlf=true` のまま clone すると JSON が CRLF 改行�
 照合に使うキーは `sim_seconds`（シミュレーション秒）、`video_silent.seconds`（動画の長さ）、`manager.decisions`（支配人の手）、`state_digest`（最終状態 qpos+qvel の sha256）。
 digest は先頭 12 桁で示す。動画の長さの m:ss は `video_silent.frames` を 30 fps で秒に直して四捨五入した値で、括弧内に `video_silent.seconds` を添える。
 報告 JSON にはコマンド行そのものは記録されないため、コマンドは argparse の定義と報告 JSON の内容（`manager.policy`、`ending`、`cuts`、`face.mood_ai`）から組み立てた。
-報告 JSON の `video.path`・`video_silent.path` は描画した環境の絶対パスで、照合には使わない。
+報告 JSON の `video.path`・`video_silent.path` は描画した環境の絶対パスで、照合には使わない。同梱の報告 JSON とログでは、先頭の作業フォルダを `<BASE>`（`v6_common.py` の `BASE`＝隣接リポジトリを並べた親ディレクトリ）に置き換えてある。
 
 表のコマンドは同梱の生成物を作ったときの引数で、同じ `--tag`・`--run`・`--out`・`--name` で実行すると同梱のファイルを上書きする。
 同梱物と比べるときは別名を付ける（例：`--tag _rerun58`、`--run ppo2_v22_rerun`、`--out baselines_v4_rerun`、`--name mood_data_rerun`）。

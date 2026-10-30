@@ -102,7 +102,7 @@ MuJoCo 3.11.0 | v7 full | dt=0.005 nq=90 nu=41 ngeom=291 face=on mood_ai=mood_ne
   t= 380.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(CHEER) @(+1.59,+2.36) z=0.115 tilt= 1.1 JP(DANCE) @(+2.19,+2.16) z=0.11 wall   261s
   t= 390.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(CHEER) @(+1.60,+2.36) z=0.120 tilt= 2.3 JP(DANCE) @(+2.25,+2.14) z=0.14 wall   276s
   t= 395.22s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take54.mp4 (4911 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take54.mp4 (4911 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 397.72,
@@ -3849,13 +3849,13 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take54.mp4 (4911 frames, f
     "duck": true
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take54_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take54_silent.mp4",
     "frames": 4911,
     "seconds": 163.7,
     "bytes": 23719453
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take54.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take54.mp4",
     "ffmpeg_rc": 0,
     "bytes": 24178524
   }

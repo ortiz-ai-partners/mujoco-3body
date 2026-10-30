@@ -1,6 +1,6 @@
 ﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
 At line:1 char:393
-+ ... Seconds 20; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++ ... Seconds 20; & "<BASE>\jumper\.venv\Scripts\python.exe" v7_fu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError

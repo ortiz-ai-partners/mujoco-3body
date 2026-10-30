@@ -1,6 +1,6 @@
 ﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
 At line:1 char:368
-+ ... joco_3body; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++ ... joco_3body; & "<BASE>\jumper\.venv\Scripts\python.exe" v7_fu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -104,7 +104,7 @@ yuv420p' will be used.
   t= 360.0s [CELEBRATE] BZ done @(+1.55,+3.07) MD(CHEER) @(+1.55,+2.32) z=0.118 tilt= 1.4 JP(DANCE) @(+2.06,+2.21) z=0.12 wall   244s
   t= 370.0s [CELEBRATE] BZ done @(+1.55,+3.07) MD(CHEER) @(+1.55,+2.33) z=0.120 tilt= 2.3 JP(FREEZE) @(+2.08,+2.21) z=0.14 wall   255s
   t= 372.98s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take18.mp4 (5901 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take18.mp4 (5901 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 375.48,
@@ -210,12 +210,12 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take18.mp4 (5901 frames, f
     "duck": true
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take18_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take18_silent.mp4",
     "frames": 5901,
     "bytes": 26829639
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take18.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take18.mp4",
     "ffmpeg_rc": 0,
     "bytes": 27315230
   }

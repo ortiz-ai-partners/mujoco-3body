@@ -1,6 +1,6 @@
 ﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
 At line:1 char:393
-+ ... Seconds 15; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++ ... Seconds 15; & "<BASE>\jumper\.venv\Scripts\python.exe" v7_fu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -111,7 +111,7 @@ yuv420p' will be used.
   t= 382.70s  [CELEBRATE] the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.11 rad, crab 0.01 rad off the centre)
   t= 390.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.72,+2.52) z=0.116 tilt= 4.1 JP(DANCE) @(+2.36,+2.43) z=0.11 wall   340s
   t= 398.10s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take47.mp4 (4869 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take47.mp4 (4869 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 400.6,
@@ -3849,13 +3849,13 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take47.mp4 (4869 frames, f
     "duck": true
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take47_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take47_silent.mp4",
     "frames": 4869,
     "seconds": 162.3,
     "bytes": 22899689
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take47.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take47.mp4",
     "ffmpeg_rc": 0,
     "bytes": 23280459
   }

@@ -134,13 +134,13 @@
       ]
     }
   },
-  "stage_xml": "D:\\IslandMaster\\mujoco_3body\\out\\v6_stage_built.xml",
+  "stage_xml": "<BASE>\\mujoco_3body\\out\\v6_stage_built.xml",
   "stage_xml_settle_drift_m": {
     "up_1": 2.47222760926082e-06,
     "down_1": 2.472208721285919e-06
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\v6_phase1_build.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\v6_phase1_build.mp4",
     "frames": 1553,
     "speed": 4.0,
     "bytes": 7699806

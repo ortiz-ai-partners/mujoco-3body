@@ -1,6 +1,6 @@
 ﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
 At line:1 char:490
-+ ... iled OK" }; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++ ... iled OK" }; & "<BASE>\jumper\.venv\Scripts\python.exe" v7_fu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -124,7 +124,7 @@ yuv420p' will be used.
   t= 480.0s [RESCUE] BZ done @(+1.55,+3.08) MD(TURN) @(+1.46,-2.02) z=0.114 tilt= 1.3 JP(WALK) @(+1.38,-2.36) z=0.11 wall   291s
   t= 488.64s  [RESCUE] RESCUE timeout after 240 s: duck TURN/toe
   t= 488.64s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take13.mp4 (7405 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take13.mp4 (7405 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 491.14,
@@ -312,12 +312,12 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take13.mp4 (7405 frames, f
     "duck": false
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take13_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take13_silent.mp4",
     "frames": 7405,
     "bytes": 25584466
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take13.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take13.mp4",
     "ffmpeg_rc": 0,
     "bytes": 26089645
   }

@@ -33,4 +33,4 @@ random toe_fallen        seed 8100: not crossed in 39 moves, 2430 samples  (1196
 random deck_seated       seed 8100: not crossed in 25 moves, 2477 samples  (1258 s)
 random deck_fallen       seed 8100: not crossed in 25 moves, 2453 samples  (1317 s)
 random ramp_fallen       seed 8100: not crossed in 40 moves, 2010 samples  (1364 s)
-wrote D:\IslandMaster\mujoco_3body\out\manager_runs\mood_data.npz: 47952 samples from 35 episodes; skill ok 0.69, crossed 0.31
+wrote <BASE>\mujoco_3body\out\manager_runs\mood_data.npz: 47952 samples from 35 episodes; skill ok 0.69, crossed 0.31

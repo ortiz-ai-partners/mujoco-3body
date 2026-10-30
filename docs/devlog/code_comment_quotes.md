@@ -60,7 +60,7 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| analysis/after_push_fail.py:19 | RUNS = Path(r"D:\IslandMaster\mujoco_3body\out\manager_runs") | RUNS = Path(__file__).resolve().parents[1] / "out" / "manager_runs" |
+| analysis/after_push_fail.py:19 | RUNS = Path(r"<BASE>\mujoco_3body\out\manager_runs") | RUNS = Path(__file__).resolve().parents[1] / "out" / "manager_runs" |
 
 ### analysis/face_check.py
 
@@ -84,7 +84,7 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| analysis/fallen_value.py:13 | RUNS = Path(r"D:\IslandMaster\mujoco_3body\out\manager_runs") | RUNS = Path(__file__).resolve().parents[1] / "out" / "manager_runs" |
+| analysis/fallen_value.py:13 | RUNS = Path(r"<BASE>\mujoco_3body\out\manager_runs") | RUNS = Path(__file__).resolve().parents[1] / "out" / "manager_runs" |
 
 ### analysis/mood_data.py
 

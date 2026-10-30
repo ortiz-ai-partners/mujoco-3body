@@ -1,6 +1,6 @@
 ﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
 At line:1 char:368
-+ ... joco_3body; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++ ... joco_3body; & "<BASE>\jumper\.venv\Scripts\python.exe" v7_fu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -186,7 +186,7 @@ yuv420p' will be used.
   t= 501.48s  [RESCUE] MANAGER #39: WAIT 「ちょっと待とう」 (duck FALLEN/ramp_down, crab 1.82 m, touching=False, last=waited)
   t= 504.58s  [RESCUE] RESCUE timeout after 240 s: duck FALLEN/ramp_down
   t= 504.58s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take26.mp4 (7644 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take26.mp4 (7644 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 507.08,
@@ -766,12 +766,12 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take26.mp4 (7644 frames, f
     "duck": false
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take26_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take26_silent.mp4",
     "frames": 7644,
     "bytes": 28582742
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take26.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take26.mp4",
     "ffmpeg_rc": 0,
     "bytes": 29088193
   }

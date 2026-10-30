@@ -103,7 +103,7 @@ MuJoCo 3.11.0 | v7 full | dt=0.005 nq=90 nu=41 ngeom=291 face=on mood_ai=mood_ne
   t= 372.74s  [CELEBRATE] the circle: BZ pumps its fork, the duck squats and shakes its head, the crab dances with its claws up (duck 0.11 rad, crab 0.01 rad off the centre)
   t= 380.0s [CELEBRATE] BZ done @(+1.45,+3.35) MD(SIT) @(+0.71,+2.53) z=0.116 tilt= 4.3 JP(DANCE) @(+2.36,+2.44) z=0.11 wall   263s
   t= 388.16s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take50.mp4 (4806 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take50.mp4 (4806 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 390.66,
@@ -3646,13 +3646,13 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take50.mp4 (4806 frames, f
     "duck": true
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take50_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take50_silent.mp4",
     "frames": 4806,
     "seconds": 160.2,
     "bytes": 23705206
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take50.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take50.mp4",
     "ffmpeg_rc": 0,
     "bytes": 24188804
   }

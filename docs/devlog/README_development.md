@@ -58,33 +58,33 @@
 
 ## 動かし方
 
-実行環境は `D:\IslandMaster\jumper\.venv`（Python 3.10、mujoco 3.11.0、onnxruntime 1.23.2、imageio）。隣に `physical-ai-course-builder/`、`jumper/`（公式バンドル `out/bundle_example/jumper/`）、`microduck_rl/` が必要（`v6_common.py` の `BASE` 直下）。
+実行環境は `<BASE>\jumper\.venv`（Python 3.10、mujoco 3.11.0、onnxruntime 1.23.2、imageio）。隣に `physical-ai-course-builder/`、`jumper/`（公式バンドル `out/bundle_example/jumper/`）、`microduck_rl/` が必要（`v6_common.py` の `BASE` 直下）。
 
 ```powershell
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --test --ending crab              # ヘッドレス検証（出来事のログ）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take6   # 描画 → out\3body_arena_v7_take6.mp4（音声付き）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_crab_push.py --seated --crest --face-crab --crab-vx 0.3 --video out\v7_crab_push_cross.mp4   # 押し上げ実験
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_env.py --episodes 2 --policy rule   # 学習環境の煙試験
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py train --envs 12 --steps 12000 --rollout 48 --seed 1 --run ppo2_medium2   # PPO 中規模（約 4 時間）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py eval --run ppo2_medium2 --episodes 30 --policies ppo --seed0 5000       # 30 シード評価
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_train.py train --envs 12 --steps 12000 --seed 3 --run ppo2_v22 --init-from ppo2_medium2 --reward v2.2 --scenario-weights "toe_seated_ok=0.20,toe_seated_wrong=0.15,toe_standing=0.15,toe_fallen=0.10,deck_seated=0.15,deck_fallen=0.05,ramp_fallen=0.20" --crab-toe-weights "behind=0.5,beside=0.2,touching=0.3"   # 継続学習（報酬 v2.2、約 4 時間）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_env.py --episodes 1 --policy rule --scenario ramp_fallen --crab touching --reward v2.2 --video out\manager2_smoke_ramp_fallen_rule.mp4   # 新しい開始場面の煙試験（動画付き）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_tabq.py train --episodes 120 --run tabq2_small                                   # 表形式 Q（約 2 時間）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" manager2_report.py --runs ppo2_small ppo2_medium2 baselines_v2 tabq2_small                # 比較表と 2×2
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager tabq --run tabq2_small --tag _take7                    # 学習済み Q 表が支配人
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager ppo --run ppo2_medium2 --tag _take8                    # 学習済み PPO が支配人
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --finale procession --tag _take9                  # take 9 の結末（跳跳が追走、ゴールで三人の万歳）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take13                                     # 既定：輪の万歳・応援ダンス・事前移動・2 倍速上限（--no-prestage で先回りなし）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --circle --video out\v7_cheer_circle_test1.mp4                            # 輪の万歳の単体テスト
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_bz_drive.py                                                                        # BZ の前進・旋回・フォーク上下の単体テスト
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --video out\v7_cheer_test3.mp4                                           # ゴールの万歳の単体テスト（配置は手置き）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_test_face.py                                                                            # 跳跳の顔の単体テスト（7 表情 → out\face_test\）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --test --no-face --tag _facecheck_A; python v7_full.py --test --tag _facecheck_B; python analysis\face_check.py out\v7_full_report_facecheck_A.json out\v7_full_report_facecheck_B.json   # 顔の有無で物理が同じことの確認
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take30 --no-cuts                           # take 24 の顔付き・全長（既定で顔あり、--no-face で無し）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take38                                     # 提出版：顔モニター一段・気分 AI（--face-ai mood 既定）・押して 5 秒で汗・省略入り（2:50 以内）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" analysis\mood_data.py --seeds 2 --policies rule ppo random --name mood_data             # 気分ネットの学習データ（学習環境、約 25 分）
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" analysis\mood_train.py --data mood_data --out mood_net --epochs 600                      # 気分ネットの学習（1 分）→ out\manager_runs\mood_net\
-& "D:\IslandMaster\jumper\.venv\Scripts\python.exe" analysis\face_value.py --seeds 2 --policies rule ppo --name face_value                   # 批評家 V(s) の下調べ（不採用の記録）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --test --ending crab              # ヘッドレス検証（出来事のログ）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take6   # 描画 → out\3body_arena_v7_take6.mp4（音声付き）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_test_crab_push.py --seated --crest --face-crab --crab-vx 0.3 --video out\v7_crab_push_cross.mp4   # 押し上げ実験
+& "<BASE>\jumper\.venv\Scripts\python.exe" manager2_env.py --episodes 2 --policy rule   # 学習環境の煙試験
+& "<BASE>\jumper\.venv\Scripts\python.exe" manager2_train.py train --envs 12 --steps 12000 --rollout 48 --seed 1 --run ppo2_medium2   # PPO 中規模（約 4 時間）
+& "<BASE>\jumper\.venv\Scripts\python.exe" manager2_train.py eval --run ppo2_medium2 --episodes 30 --policies ppo --seed0 5000       # 30 シード評価
+& "<BASE>\jumper\.venv\Scripts\python.exe" manager2_train.py train --envs 12 --steps 12000 --seed 3 --run ppo2_v22 --init-from ppo2_medium2 --reward v2.2 --scenario-weights "toe_seated_ok=0.20,toe_seated_wrong=0.15,toe_standing=0.15,toe_fallen=0.10,deck_seated=0.15,deck_fallen=0.05,ramp_fallen=0.20" --crab-toe-weights "behind=0.5,beside=0.2,touching=0.3"   # 継続学習（報酬 v2.2、約 4 時間）
+& "<BASE>\jumper\.venv\Scripts\python.exe" manager2_env.py --episodes 1 --policy rule --scenario ramp_fallen --crab touching --reward v2.2 --video out\manager2_smoke_ramp_fallen_rule.mp4   # 新しい開始場面の煙試験（動画付き）
+& "<BASE>\jumper\.venv\Scripts\python.exe" manager2_tabq.py train --episodes 120 --run tabq2_small                                   # 表形式 Q（約 2 時間）
+& "<BASE>\jumper\.venv\Scripts\python.exe" manager2_report.py --runs ppo2_small ppo2_medium2 baselines_v2 tabq2_small                # 比較表と 2×2
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager tabq --run tabq2_small --tag _take7                    # 学習済み Q 表が支配人
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager ppo --run ppo2_medium2 --tag _take8                    # 学習済み PPO が支配人
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --finale procession --tag _take9                  # take 9 の結末（跳跳が追走、ゴールで三人の万歳）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take13                                     # 既定：輪の万歳・応援ダンス・事前移動・2 倍速上限（--no-prestage で先回りなし）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --circle --video out\v7_cheer_circle_test1.mp4                            # 輪の万歳の単体テスト
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_test_bz_drive.py                                                                        # BZ の前進・旋回・フォーク上下の単体テスト
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_test_cheer.py --video out\v7_cheer_test3.mp4                                           # ゴールの万歳の単体テスト（配置は手置き）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_test_face.py                                                                            # 跳跳の顔の単体テスト（7 表情 → out\face_test\）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --test --no-face --tag _facecheck_A; python v7_full.py --test --tag _facecheck_B; python analysis\face_check.py out\v7_full_report_facecheck_A.json out\v7_full_report_facecheck_B.json   # 顔の有無で物理が同じことの確認
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take30 --no-cuts                           # take 24 の顔付き・全長（既定で顔あり、--no-face で無し）
+& "<BASE>\jumper\.venv\Scripts\python.exe" v7_full.py --ending crab --manager rule --tag _take38                                     # 提出版：顔モニター一段・気分 AI（--face-ai mood 既定）・押して 5 秒で汗・省略入り（2:50 以内）
+& "<BASE>\jumper\.venv\Scripts\python.exe" analysis\mood_data.py --seeds 2 --policies rule ppo random --name mood_data             # 気分ネットの学習データ（学習環境、約 25 分）
+& "<BASE>\jumper\.venv\Scripts\python.exe" analysis\mood_train.py --data mood_data --out mood_net --epochs 600                      # 気分ネットの学習（1 分）→ out\manager_runs\mood_net\
+& "<BASE>\jumper\.venv\Scripts\python.exe" analysis\face_value.py --seeds 2 --policies rule ppo --name face_value                   # 批評家 V(s) の下調べ（不採用の記録）
 ```
 
 | ファイル | 内容 |

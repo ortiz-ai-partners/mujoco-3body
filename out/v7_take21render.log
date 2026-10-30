@@ -1,6 +1,6 @@
 ﻿python.exe : WARNING: Attach conflict when attaching 'jumper' to 'arena_v6', policy is 'warning'
 At line:1 char:393
-+ ... Seconds 20; & "D:\IslandMaster\jumper\.venv\Scripts\python.exe" v7_fu ...
++ ... Seconds 20; & "<BASE>\jumper\.venv\Scripts\python.exe" v7_fu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Attach...cy is 'warning':String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -128,7 +128,7 @@ yuv420p' will be used.
   t= 492.68s  [RESCUE] MANAGER #13: BACK_OFF 「カニさん、少し離れて」 (duck SIT/deck, crab 0.25 m, touching=False, last=pushed_up)
   t= 493.46s  [RESCUE] RESCUE timeout after 240 s: duck SIT/deck
   t= 493.46s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take21.mp4 (7477 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take21.mp4 (7477 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 495.96,
@@ -344,12 +344,12 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take21.mp4 (7477 frames, f
     "duck": false
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take21_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take21_silent.mp4",
     "frames": 7477,
     "bytes": 30566553
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take21.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take21.mp4",
     "ffmpeg_rc": 0,
     "bytes": 31071363
   }

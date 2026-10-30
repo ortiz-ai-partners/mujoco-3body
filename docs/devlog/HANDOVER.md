@@ -85,7 +85,7 @@
 
 **方針転換**：v6 Phase 2〜3（`v6_robots.py` の仮想ハーネス／誘導力＝`xfrc_applied` の外力）はゆうころの指摘で却下。以後、各機体は自分のアクチュエータだけで動かし、公式の立ち方・ポリシーを使う。v6 Phase 1 の施工（course-builder そのまま）だけが外力なしで有効。
 
-**実行環境**：`D:\IslandMaster\jumper\.venv\Scripts\python.exe`（Python 3.10.6、mujoco 3.11.0、onnxruntime 1.23.2、imageio、PIL）。`mujoco_3body\.venv` には onnxruntime が無い。
+**実行環境**：`<BASE>\jumper\.venv\Scripts\python.exe`（Python 3.10.6、mujoco 3.11.0、onnxruntime 1.23.2、imageio、PIL）。`mujoco_3body\.venv` には onnxruntime が無い。
 
 | ファイル | 役割 |
 |---|---|
@@ -134,7 +134,7 @@ BZ(ブルドーザー) がコースを作る → MD(パッカン/Microduck) が�
 
 ## 2. ファイル構成
 
-### スクリプト (`D:\IslandMaster\mujoco_3body\`)
+### スクリプト (`<BASE>\mujoco_3body\`)
 
 | ファイル | 役割 |
 |---|---|
@@ -146,7 +146,7 @@ BZ(ブルドーザー) がコースを作る → MD(パッカン/Microduck) が�
 | **`render_3body_v4.py`** | v4 — BZのscene_fork_tracks.xmlをベースarenaに変更 |
 | **`render_3body_v5.py`** | v5 — v4 + 坂道パーツ追加（未完成、BZが詰まる） |
 
-### 動画 (`D:\IslandMaster\mujoco_3body\out\`)
+### 動画 (`<BASE>\mujoco_3body\out\`)
 
 | ファイル | 内容 | 状態 |
 |---|---|---|
@@ -160,14 +160,14 @@ BZ(ブルドーザー) がコースを作る → MD(パッカン/Microduck) が�
 ### Python環境
 
 ```
-D:\IslandMaster\mujoco_3body\.venv\Scripts\python.exe
+<BASE>\mujoco_3body\.venv\Scripts\python.exe
   mujoco==3.11.0, imageio==2.38.0
   Python 3.10系
 ```
 
 実行例:
 ```powershell
-& "D:\IslandMaster\mujoco_3body\.venv\Scripts\python.exe" render_3body_v5.py
+& "<BASE>\mujoco_3body\.venv\Scripts\python.exe" render_3body_v5.py
 ```
 
 ---
@@ -176,9 +176,9 @@ D:\IslandMaster\mujoco_3body\.venv\Scripts\python.exe
 
 | ロボット | XML | 備考 |
 |---|---|---|
-| BZ (ブルドーザー) | `D:\IslandMaster\physical-ai-course-builder\scene_fork_tracks.xml` | フォーク＋キャタピラ版。blocks 4個、ball 1個含む |
-| MD (パッカン) | `D:\IslandMaster\microduck_rl\src\mjlab_microduck\robot\microduck\scene.xml` | STANDキーフレームあり |
-| JP (跳跳) | `D:\IslandMaster\jumper\assets\jumper\jumper.xml` | actuatorなし（実行時に追加が必要） |
+| BZ (ブルドーザー) | `<BASE>\physical-ai-course-builder\scene_fork_tracks.xml` | フォーク＋キャタピラ版。blocks 4個、ball 1個含む |
+| MD (パッカン) | `<BASE>\microduck_rl\src\mjlab_microduck\robot\microduck\scene.xml` | STANDキーフレームあり |
+| JP (跳跳) | `<BASE>\jumper\assets\jumper\jumper.xml` | actuatorなし（実行時に追加が必要） |
 
 ---
 

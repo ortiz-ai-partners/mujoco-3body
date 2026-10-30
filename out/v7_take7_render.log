@@ -142,7 +142,7 @@ all   242s
   t= 410.0s [CELEBRATE] BZ done @(+1.55,+3.07) MD(STAND) @(+1.67,+2.31) z=0.116 tilt= 0.4 JP(DANCE) @(+2.71,+1.55) z=0.
 11 wall   282s
   t= 417.98s  [END] stage -> END
-Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take7.mp4 (6081 frames, ffmpeg rc=0)
+Done: <BASE>\mujoco_3body\out\3body_arena_v7_take7.mp4 (6081 frames, ffmpeg rc=0)
 {
   "mujoco": "3.11.0",
   "sim_seconds": 420.48,
@@ -290,12 +290,12 @@ Done: D:\IslandMaster\mujoco_3body\out\3body_arena_v7_take7.mp4 (6081 frames, ff
     "duck": true
   },
   "video_silent": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take7_silent.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take7_silent.mp4",
     "frames": 6081,
     "bytes": 25215010
   },
   "video": {
-    "path": "D:\\IslandMaster\\mujoco_3body\\out\\3body_arena_v7_take7.mp4",
+    "path": "<BASE>\\mujoco_3body\\out\\3body_arena_v7_take7.mp4",
     "ffmpeg_rc": 0,
     "bytes": 25686093
   }
