@@ -288,6 +288,17 @@ Jumper の公式バンドルは jumper リポジトリの `out/bundle_example/ju
   jumper/                        Jumper の MJCF と公式バンドル out/bundle_example/jumper（KingKong Robotics）
 ```
 
+コードだけを取得する：本リポジトリは本編と比較用の動画（mp4、100 本あまり）を同梱しており、全体で約 1.4 GB ある。動画を除いて取得すると約 70 MB で済む（git 2.50 で、Git Bash と PowerShell で確認）。
+
+```
+git clone --filter=blob:none --no-checkout https://github.com/ortiz-ai-partners/mujoco-3body.git
+cd mujoco-3body
+git sparse-checkout set --no-cone '/*' '!*.mp4'
+git checkout main
+```
+
+動画は GitHub の画面から 1 本ずつダウンロードできる。全部そろえるときは、上の取得の後に `git sparse-checkout disable` を実行する。
+
 | 番号 | コマンド（リポジトリルートで） | 所要時間 | 出力と照合先 |
 |---|---|---|---|
 | 1 | `python v6_phase1_build.py` | 数分 | `out/v6_stage_built.xml`（学習環境と単体実験の舞台） |
