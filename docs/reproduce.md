@@ -1,6 +1,7 @@
 # 再現手順
 
-本文書は、提出動画（本編・自己紹介・BGM・結合）・ヘッドレス検証・支配人 AI の学習と評価・気分ネット・図を手元で作り直す手順をまとめる。
+本文書は、3 体の動き（物理）を作り直して同梱の記録と照合する手順を中心に、ヘッドレス検証・支配人 AI の学習と評価・気分ネット・図・提出動画の仕上げ（自己紹介・BGM・結合）を手元で作り直す手順をまとめる。
+再現の対象は 3 体の動きで、動画の見た目ではない。照合には報告 JSON の `state_digest`・`manager.decisions`・`events`・`three_crossed` を使い、mp4 は通しの副産物として出る（§4）。
 コマンドはすべて本リポジトリのルートで `python …` と打つ（`python` は §1 の仮想環境の Python 3.10）。
 所要時間は作者の環境（Windows 11、CPU のみ、GPU なし）での目安で、数値の出所はファイル名とキー名で併記する。
 3 体の呼び名は、ブルドーザー（BZ、自作 course-builder）、パッカン（Microduck, Pollen Robotics）、跳跳（Jumper, KingKong Robotics）で統一する。
@@ -24,6 +25,7 @@ torch はその環境で `torch.__version__` が `2.14.1+cpu`（CPU 版の配布
 |---|---|---|
 | mujoco | 3.11.0 | 全スクリプト。`MjSpec.attach` で 3 体を結合（`v6_robots.py`）、`mujoco.Renderer` でオフスクリーン描画（`v7_full.py`）。報告 JSON の `mujoco` キーと一致 |
 | numpy | 2.2.6 | 全スクリプト |
+| scipy | 1.15.3 | BGM の合成（`music/marimba_bgm.py` のフィルタと wav の書き出し）。ほかのスクリプトは使わない |
 | onnxruntime | 1.23.2 | `v7_policies.py`：公式 ONNX 5 本（パッカン 2 本、跳跳 3 本）の推論。1 セッション 1 スレッド（`_session`） |
 | torch | 2.14.1（CPU 版） | 気分ネットの学習と推論（`analysis/mood_train.py`、`crab_face.py`）、Stable-Baselines3 の内部 |
 | stable-baselines3 | 2.9.2 | 支配人 AI の PPO（`manager2_train.py`）、学習データ収集で PPO を読む（`analysis/mood_data.py`） |
@@ -120,7 +122,7 @@ Windows で `core.autocrlf=true` のまま clone すると JSON が CRLF 改行�
 | 評価 JSON と比較表 | `out/manager_runs/{baselines_v4,ppo2_v22_v4,ppo2_medium2_v4,tabq2_small_v4}/`、`comparison_v4.md` | 自作 | 同梱 |
 | 施工を含む 3 体の通しの集計 | `out/fullrun_stats/{ppo2_v22,rule}/summary.json`・`summary.md` | 自作（`analysis/fullrun_stats.py` の成果物） | 同梱。回ごとの `run_<seed>.json` は非同梱 |
 | 提出動画の本編と比較用の動画（mp4） | 本編 `out/3body_arena_v7_take61.mp4`、比較用 `out/3body_arena_v7_take57.mp4`（固定ルール版）と `out/3body_arena_v7_take51.mp4`〜`out/3body_arena_v7_take54.mp4`（§4.1） | 自作 | 同梱。それ以前の版の所在は `docs/devlog/takes.md` |
-| 報告 JSON と描画ログ | `out/v7_full_report_take46.json`〜`out/v7_full_report_take61.json`（§4.1・§4.2）、`out/v7_take61render.log`、`out/v7_take57render.log`、`out/v7_take51render.log` | 自作 | 同梱 |
+| 報告 JSON と描画ログ | `out/v7_full_report_take46.json`〜`out/v7_full_report_take58.json` と `out/v7_full_report_take61.json`（§4.1・§4.2。take 59・60 は同梱しない）、`out/v7_take61render.log`、`out/v7_take57render.log`、`out/v7_take51render.log` | 自作 | 同梱 |
 | 自己紹介と BGM | `out/intro.mp4`（`intro.py`）、`out/music/bgm_marimba.wav`（`music/marimba_bgm.py`） | 自作 | 自己紹介の mp4 は同梱。BGM の wav は同梱せず（`.gitignore` の `out/music/`）、スクリプトで作り直す（§4.1） |
 | 講座の OP／ED カードと結合済みの提出ファイル | — | 講座の素材を含む | 非同梱。カードは講座が配布するものを使う（§4.1） |
 
@@ -129,25 +131,27 @@ Windows で `core.autocrlf=true` のまま clone すると JSON が CRLF 改行�
 ## 4. コマンド
 
 表の列は「コマンド｜所要時間の目安｜出力｜照合先の数値」。「報告 JSON」は `out/v7_full_report<tag>.json` を指し、
-照合に使うキーは `sim_seconds`（シミュレーション秒）、`video_silent.seconds`（動画の長さ）、`manager.decisions`（支配人の手）、`state_digest`（最終状態 qpos+qvel の sha256）。
+3 体の動きの照合に使うキーは `state_digest`（最終状態 qpos+qvel の sha256）、`manager.decisions`（支配人の手と sim 時刻）、`events`（出来事の順序と sim 時刻）、`three_crossed`（3 体の渡り切り）、`sim_seconds`（シミュレーション秒）。
+`video_silent.seconds`（動画の長さ）は倍速と書き出しの設定の確かめ用で、動きの照合には使わない。
 digest は先頭 12 桁で示す。動画の長さの m:ss は `video_silent.frames` を 30 fps で秒に直して四捨五入した値で、括弧内に `video_silent.seconds` を添える。
 報告 JSON にはコマンド行そのものは記録されないため、コマンドは argparse の定義と報告 JSON の内容（`manager.policy`、`ending`、`cuts`、`face.mood_ai`）から組み立てた。
 報告 JSON の `video.path`・`video_silent.path` は描画した環境の絶対パスで、照合には使わない。同梱の報告 JSON とログでは、先頭の作業フォルダを `<BASE>`（`v6_common.py` の `BASE`＝隣接リポジトリを並べた親ディレクトリ）に置き換えてある。
 
 表のコマンドは同梱の生成物を作ったときの引数で、同じ `--tag`・`--run`・`--out`・`--name` で実行すると同梱のファイルを上書きする。
-同梱物と比べるときは別名を付ける（例：`--tag _rerun58`、`--run ppo2_v22_rerun`、`--out baselines_v4_rerun`、`--name mood_data_rerun`）。
+同梱物と比べるときは別名を付ける（例：`--tag _rerun61`、`--run ppo2_v22_rerun`、`--out baselines_v4_rerun`、`--name mood_data_rerun`）。
 別名で作った学習済みモデルは、`v7_full.py` の `--run`（支配人）と `--mood-net`（気分ネット）でそのまま指定できる。
 
-### 4.1 提出動画の作成（本編・自己紹介・BGM・結合）と比較用の動画
+### 4.1 本編の通し（3 体の動きの再現）、動画の仕上げ、比較用の動画
 
-提出動画は 4 段で作る：本編を描く（1）、自己紹介を描く（2）、BGM を合成する（3）、講座の OP／ED カードと合わせて結合する（4）。
+再現の中心は段 1（本編の通し）で、その報告 JSON を同梱の `out/v7_full_report_take61.json` と照合する（表の下の「物理の照合」）。描画のたびに呼ぶ `mj_forward` も物理の経路に入るので（§5.3）、照合は描画つきの通しで行う。
+段 2〜4 は提出動画の仕上げで、自己紹介を描き（2）、BGM を合成し（3）、講座の OP／ED カードと合わせて結合する（4）。どれも物理には触れない（§5.4）。
 
 `--ending crab`、`--manager rule`、`--finale circle`、`--face-ai mood`、`--mood-net mood_net` は既定値なので省略できる。
 `--build-speed 4` は施工区間の動画速度を 4 倍にし、`--no-cuts` は既定の省略 2 か所を外す。`--speedup STAGE=4` は他の段階（本編では `CALL`・`RETURN`・`CELEBRATE`）を同じ仕組みで 4 倍にし、
 `--tail-write 1.0` は END の後に回す 2.5 s のうち最初の 1 s だけを書き出す（回す秒数は変えない）。右下に sim 時計と x4／x2／x1 が常に出る。
 `--build-speed` は 2（既定、`SPEED["BUILD"]`）かその整数倍だけを受け付け（`v7_full.py` の `ap.error`）、2 より大きい値は `--no-cuts` と組み合わせる（`--help`）。
 フレームは 2 倍速のまま標本化し、4 倍では 1 枚おきに書く（§5.3）。描画は音声の合成まで含めて 1 本あたり約 5〜8 分
-（`out/v7_take61render.log` は標準出力を保存したログで、wall 列は sim 380 s 時点で 271 s。その後に動画の閉じと音声の合成が続く）。
+（`out/v7_take61render.log` は標準出力を保存したログで、wall 列は sim 380 s 時点で 266 s。その後に動画の閉じと音声の合成が続く）。
 本編の現行コードは、支配人の帯（`--no-band` で外せる）、ちょーさんの呼び名、声の音量（パッカン 1/6、跳跳 1/4）、ステレオの左右の振り分けを含む。設定は報告 JSON の `settings` に残る。
 
 出力は `out/3body_arena_v7<tag>.mp4`（音声付き）と報告 JSON で、§4.2 も同じ。
@@ -159,16 +163,17 @@ digest は先頭 12 桁で示す。動画の長さの m:ss は `video_silent.fra
 | 3 | `python music/marimba_bgm.py` | 約 20 秒 | `out/music/bgm_marimba.wav` | 44,100 Hz・ステレオ・16 bit、7,655,760 サンプル＝173.6 s（同ファイルの `DUR`） |
 | 4 | `python assemble.py --op <講座の OP> --intro out/intro.mp4 --main out/3body_arena_v7_take61.mp4 --ed <講座の ED> --out out/submission.mp4 --bgm out/music/bgm_marimba.wav --bgm-gain -16 --bgm-until end --bgm-fade 0` | 約 30 秒 | `out/submission.mp4`、標準出力に結合の要約（JSON） | `total_s` 176.58（2:56.6）、`parts[].start_s` 0／3.04／18.14／173.61、`duration_s` 3.04／15.1／155.47／2.97、`bgm_gain_db` −16、`bgm_until` end、`duck` false、`ffmpeg_rc` 0 |
 
+物理の照合：段 1 を `--tag _rerun61` で描いたら、`python analysis/timeline_times.py out/v7_full_report_rerun61.json --compare out/v7_full_report_take61.json` で同梱の本編と比べる。
+出来事と支配人の手の表が 2 本並び、末尾が `state_digest equal: True  (aafa49e7a869 / aafa49e7a869)` になれば、3 体の動きが再現できている。
+同梱の記録どうしでは、`take61.json --compare take52.json`（本編と以前の速度設定の PPO 版）の末尾が同じ行になる。出来事の sim 時刻は全行で同じで、動画時刻は CALL の途中から本編が早くなる（支配人の引き継ぎ以後 −3.93〜−3.94 s、輪のダンス以後 −8.20 s）。
+固定ルール版と以前の 2:47 版の組（`take57.json --compare take51.json`）も同じ形で、末尾は `state_digest equal: True  (678fd3cae2ca / 678fd3cae2ca)`、輪のダンス以後のずれは −8.17 s。
+
 段 3 の曲は本編の場面の時刻に拍を合わせてあり（`music/marimba_bgm.py` の `MAINS`）、環境変数 `BGM_MAIN=take57` を付けると固定ルール版の本編に合わせた版を
 `out/music/bgm_marimba_take57.wav`（7,735,140 サンプル＝175.4 s）に書く。
 段 4 の `<講座の OP>`・`<講座の ED>` は講座が配布するカード（3.04 s と 2.97 s、音なし）で、本リポジトリには含まれない。
 `assemble.py` は 4 本を 1280×720・30 fps にそろえ、音のないカードには無音を入れてつなぎ、BGM を OP カードの終わり（`--bgm-start` の既定＝自己紹介の始まり、提出動画の 3.04 s）から
 −16 dB の一定の音量で最後まで重ねる（`--bgm-until end`、終わりのフェードなし `--bgm-fade 0`、声の下で下げる `--duck` は使わない）。曲そのものの最後の和音は ED カードの中で消える。
 自己紹介は本編と同じ MuJoCo モデルから 3 体の姿を描くだけで、物理は進めない（`intro.py` の docstring）。BGM は numpy/scipy の加算合成だけで作り、乱数は seed 固定なので、作り直すとバイト単位で同じ wav になる（別の場所で作り直した `bgm_marimba.wav` と `bgm_marimba_take57.wav` が、`out/music/` の同名のファイルと `cmp` で一致）。自己紹介も決定的で、作り直した `out/intro_silent.mp4` はフレームごとの md5（ffmpeg の `framemd5`）が、音声 `out/intro.wav` はバイト単位で一致した。
-
-物理の照合：`python analysis/timeline_times.py out/v7_full_report_take61.json --compare out/v7_full_report_take52.json` の末尾が
-`state_digest equal: True  (aafa49e7a869 / aafa49e7a869)` になる。出来事の sim 時刻は全行で同じで、動画時刻は CALL の途中から本編が早くなる（支配人の引き継ぎ以後 −3.93〜−3.94 s、輪のダンス以後 −8.20 s）。
-固定ルール版と以前の 2:47 版の組（`take57.json --compare take51.json`）も同じ形で、末尾は `state_digest equal: True  (678fd3cae2ca / 678fd3cae2ca)`、輪のダンス以後のずれは −8.17 s。
 
 比較用の動画（固定ルール版は本編と同じ設定、ほかの 4 本は以前の 2:47 版と同じ速度設定）：
 
@@ -188,8 +193,8 @@ Q 表版は STANDUP→WALK_ON→SEAT→PUSH→BACK_OFF→STANDUP→STANDUP→WAL
 Q 表版の `--jitter 0.4` は応援ダンスの開始位置（`CHEER_DANCE_START`）をずらす引数で、台本と支配人を変えずに経路だけを変える（§5.4）。
 この値は報告 JSON には記録されないので、`--help` の説明どおり、使った値をここに書き残す。
 
-描き直した版が同梱の版と同じ経路かは、§4.8 の `timeline_times.py --compare` で確かめる
-（例：`python analysis/timeline_times.py out/v7_full_report_rerun58.json --compare out/v7_full_report_take61.json` の末尾が `state_digest equal: True`）。
+比較用の版も、別名で描き直したものは §4.8 の `timeline_times.py --compare` で同梱の版と照合する
+（例：`--tag _rerun57` で描いた固定ルール版は `python analysis/timeline_times.py out/v7_full_report_rerun57.json --compare out/v7_full_report_take57.json` の末尾が `state_digest equal: True`）。
 
 ### 4.2 2 倍速・省略 2 か所の版（記録）
 
@@ -338,11 +343,9 @@ torch の乱数は `--seed` で固定するが、別の CPU・別の torch 版�
 
 本編 `out/3body_arena_v7_take61.mp4` は、以前の本編 `out/3body_arena_v7_take58.mp4` と物理が同一（`state_digest` `aafa49e7a869`、支配人の判断・表情の記録も同じ）で、音だけを変えたもの：パッカンの声を Microduck 公式の声（`microduck_voice.py`、性格の種 276）にし、跳跳のジャンプの音を足が離れた瞬間と着地の瞬間に合わせ、パッカンのセリフを増やし（坂へ向かう道中と押し上げの間、乱数を使わない決まった間隔）、2 体の声の音量を半分にした。以前の本編（合成の声）は比較用に残す。
 `report/results_managers.png` は `python analysis/fig_results.py`（評価の記録と通しの集計から描く。BIZ UDPGothic と Chrome か Edge が必要）。
-`report/` の他の図（`system_overview_ortiz.png`、`course_plan_ortiz.png`、`mood_net_pipeline_ortiz.png`、
-`face_rules_chart_ortiz.png`、`timeline_ortiz.png`）は本プロジェクトで作成した説明図で、コードからは生成しない。載せた数値は §4.5・§4.6・§4.8 の出力と照合する。
-`system_overview_ortiz.png` は、清書の後に画像の上で表記を直した（物理のみは通し実行中のことでリセット時は初期配置を書き込むと明記、描画は物理に影響しないと明記、気分ネットの正解率に注記）。
-`timeline_ortiz.png` は以前の 2:47 版（`out/v7_full_report_take51.json`、固定ルールの支配人）の動画時刻で描いた図で、本編（PPO の支配人）とは支配人の手（5 手と 4 手）、CALL 以降の動画時刻、全長が違う（本編の時刻は §4.8 の表）。
-2 倍速＋省略版の時刻で描いた旧図は `docs/devlog/figures/timeline_ortiz_take46.png` に残す。
+`report/system_overview_ortiz.png`（全体の仕組み）は `python report/figure1/render.py`、`report/timeline_ortiz.png`（提出動画の構成）は `python report/figure2/render.py`、`report/mood_net_pipeline_ortiz.png`（気分ネットの流れ）は `python report/figure3/render.py`、`report/face_rules_chart_ortiz.png`（表情の規則）は `python report/figure4/render.py`（いずれも Pillow のみ、書体は `report/fonts/` に同梱の BIZ UDPGothic、数秒）。
+`report/course_plan_ortiz.png`（コースの平面図）は本プロジェクトで作成した説明図で、コードからは生成しない。載せた数値は §4.5・§4.6・§4.8 の出力と照合する。
+以前の 2:47 版の時刻で描いた旧図は `docs/devlog/figures/timeline_ortiz_take51.png`、2 倍速＋省略版の時刻で描いた旧図は `timeline_ortiz_take46.png` に残す。
 
 ### 4.8 時刻表（動画時刻と sim 時刻の対応）
 
@@ -478,8 +481,8 @@ argparse を持つのは `manager_env.py`・`manager_train.py`・`manager_tabq.p
 
 ### 5.1 文字コード
 
-argparse の `--help` は ASCII だけで書いてあり、cp932（日本語 Windows の既定）のコンソールでも文字化けしない
-（argparse を持つ 27 本、`archive/` の 6 本を含む。サブコマンドを合わせた 37 通りの `--help` で非 ASCII のバイト 0、終了コード 0 を確認した）。
+argparse の `--help` は `report/build_report.py` を除いて ASCII だけで書いてあり、cp932（日本語 Windows の既定）のコンソールでも文字化けしない
+（argparse を持つ 32 本、`archive/` の 6 本を含む。サブコマンドを合わせた 42 通りの `--help` で終了コード 0 を確認し、非 ASCII のバイトが出たのは `report/build_report.py`（PDF のファイル名と `--youtube` の既定の文言が日本語）だけだった）。
 一方、進行表示と出来事の印字には日本語（パッカンの状態、支配人の吹き出し）が含まれる。出力をファイルやパイプに送ると、Windows ではロケールのコードページで書かれる。
 英語版 Windows（cp1252）など日本語を表せないコードページでは UnicodeEncodeError で止まり、cp932 で保存したログは UTF-8 で開くと文字化けする。
 環境変数 `PYTHONUTF8=1` または `PYTHONIOENCODING=utf-8` を設定して実行する。報告 JSON などファイルへの書き出しはすべて UTF-8 で行う。
@@ -489,7 +492,7 @@ argparse の `--help` は ASCII だけで書いてあり、cp932（日本語 Win
 字幕・吹き出し・顔モニターの文字は `v6_common.py` の `_FONTS`（Windows のフォントフォルダの meiryo.ttc／YuGothM.ttc／msgothic.ttc）を順に探す。
 見つからないときは Pillow の既定フォントに退避し、日本語は表示できない。他の OS では日本語 TrueType フォントのパスを `_FONTS` に足す。
 フォントは描画だけに使うので、物理と報告 JSON には影響しない。
-`analysis/face_sheet.py` は退避を持たず、`_FONTS` のどれも無いと Pillow のフォント読み込みで止まる（OSError）。
+`analysis/face_sheet.py` は BIZ UDPGothic を先に探し、無ければ `_FONTS` を使う。どちらも無いと Pillow の既定フォントへは退避せず、`StopIteration` で止まる。
 
 ### 5.3 描画時の mj_forward は物理経路の一部
 

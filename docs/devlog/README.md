@@ -14,7 +14,7 @@
   隣のリポジトリ physical-ai-course-builder 側の開発補助 AI（`HANDOVER.md` L110 の申し送り先）。読者向け文書ではこれらを「要件：」「設計判断：」「本プロジェクトで作成」という役割語に置き換えた。
 - 「アイランドマスター」は開発補助 AI（LLM）の呼び名で、動画の支配人 AI が自己紹介と字幕で名乗るキャラクター名はここから取った（作品名ではない）。原文の「アイランドマスター追記」は開発補助 AI による追記の意味で、動画の中で次の一手を選ぶ主体は常に「支配人 AI」である。
 - コミット ID：公開リポジトリ 2 本の履歴の作者アドレスを GitHub の noreply アドレスに置き換えたとき、すべてのコミット ID が変わった（中身・日付・メッセージは同じ）。原文（HANDOVER.md、MANAGER_DESIGN.md）の ID は置き換え前のもので、course-builder の ea5b4e7 は 483dbf9、本リポジトリの e3a40dd は 94e273b、13124be は 3dabe92、1b7c1fe は 69427a9、0a9322f は 4b15858 にあたる。
-- 日付・時刻・take 番号・未決の事項は作業時点のものである。提出動画の本編は take 58（`out/3body_arena_v7_take58.mp4`、PPO の支配人、物理は take 52 と同一）で、同じ設定の固定ルール版 take 57（物理は take 51 と同一）は比較用に残す。原文の多くは take 46 以前や take 51 を「提出版」と呼んでいる（訂正表 6・7）。
+- 日付・時刻・take 番号・未決の事項は作業時点のものである。提出動画の本編は take 61（`out/3body_arena_v7_take61.mp4`、PPO の支配人。take 58 と物理が同一で音だけを変えた版、物理は take 52 とも同一）で、同じ設定の固定ルール版 take 57（物理は take 51 と同一）は比較用に残す。原文の多くは take 46 以前や take 51 を「提出版」と呼んでいる（訂正表 6・7）。
 - 原文中のローカルの絶対パスは、公開にあたり先頭の作業フォルダ（ドライブ名から始まる部分）を `<BASE>`（`v6_common.py` の `BASE`＝隣接リポジトリを並べた親ディレクトリ）に置き換えた。`out/` の報告 JSON とログの中のパスも同じように置き換えた（置き換えたのはその部分だけ）。開発中の仮想環境名、開発中の外部の記録ページへのリンクは公開リポジトリの外を指しており、読者は辿れない。再現はリポジトリ直下で `python …` と相対パスで行う（`docs/reproduce.md`）。
 - 個人の実名・所属・個人メールアドレスは原文にも載せていない（メールアドレスは GitHub の noreply のみ、`report_outline.md` L22）。
 
@@ -23,14 +23,14 @@
 | 文書 | 行数 | 性格 | 読む順の要点 |
 |---|---|---|---|
 | `README_development.md` | 102 | 旧 README の写し。開発中の作業台帳 | 最初に全体像をつかむ。見出しと数値の一部が旧値（訂正表 1・2・3・5） |
-| `takes.md` | — | take 台帳（新規）。take 4〜58 の設定・結果・物理同一の系譜・採否・所在 | 版と take 番号の対応はここで引く。日付と take 番号を本文に書く新規文書 |
+| `takes.md` | — | take 台帳（新規）。take 4〜61 の設定・結果・物理同一の系譜・採否・所在 | 版と take 番号の対応はここで引く。日付と take 番号を本文に書く新規文書 |
 | `HANDOVER.md` | 304 | 次の作業者への引継ぎ文書。終盤 2 日間の決定・実験・take 毎の成否 | 上が新しい逆時刻順：§0b → §0 → §1〜9 |
 | `MANAGER_DESIGN.md` | 579 | 支配人 AI の設計メモ v1〜v1.4。実験の事実と決定を含む原本 | 節番号は 0,1,2,3,6,4,5,4.5,7 の順で並ぶ。採用設計は §7 |
 | `report_outline.md` | 106 | 提出レポート PDF の構成案（案 3） | 読者向け文書の章立ての元 |
 | `face_rules_chart.md` | 120 | 表情 17 規則の Mermaid 図 2 枚としきい値表＋図 7 枚の作成経緯 | 図と表は読者向けに写し済み。経緯は本書「図の経緯」で要約 |
-| `timeline_brief_take51.md` | 42 | タイムライン図を take 51 の時刻で作り直すための依頼文 | 時刻の出所は `out/v7_full_report_take51.json` |
+| `timeline_brief_take51.md` | 54 | タイムライン図を take 51 の時刻で作り直すための依頼文と、全体の仕組みの図の直し 3 か所 | 時刻の出所は `out/v7_full_report_take51.json` |
 | `code_comment_quotes.md` | — | コードの help・docstring・コメントの置換記録。置換前の原文（チャット引用・決定ログの括弧標識・ハンドル名）をファイルごとに転記 | 置換の方針（規則の表）→ 置換しなかったもの → 検証 → ファイルごとの表（直下・`analysis/`・`archive/`） |
-| `figures/` | 2 枚 | 差し替え済みの旧図と元データ | 報告書には載せない |
+| `figures/` | 7 枚 | 差し替え済みの旧図と元データ | 報告書には載せない |
 
 行数は注記 3 行と空行を足した現在のファイルのもの（`timeline_brief_take51.md`、`takes.md`、`code_comment_quotes.md` には注記を足していない）。
 以下の各節で引く行番号も現在のファイルに合わせてある。新規の `takes.md` と `code_comment_quotes.md` は追記で行がずれるため行数を載せず、節名で引く。
@@ -66,12 +66,12 @@
 ### README_development.md
 
 - 構成：原則と 3 体（L5〜12）、筋書き（L14〜26）、支配人 AI のファイル表と比較表（L28〜57）、動かし方（L59〜87、ローカル絶対パスのコマンド 24 本）、ファイル表と take の系譜（L90〜102）。
-- 読むときの注意：L14 の見出し「v5 = take 6」（訂正表 5）、L22 の気分ネットは旧版（訂正表 2）、L34 の「観測 45 次元」（訂正表 1）、L51 の「+4.9k 決定」（訂正表 3）、L86 の「1 分」（訂正表 8）。L100 の take の系譜は作業時点のもので、提出版はその後 take 51、take 57（固定ルール）を経て、最終的に本編 take 58（PPO の支配人）に変わった。
+- 読むときの注意：L14 の見出し「v5 = take 6」（訂正表 5）、L22 の気分ネットは旧版（訂正表 2）、L34 の「観測 45 次元」（訂正表 1）、L51 の「+4.9k 決定」（訂正表 3）、L86 の「1 分」（訂正表 8）。L100 の take の系譜は作業時点のもので、提出版はその後 take 51、take 57（固定ルール）を経て、本編 take 58（PPO の支配人）に変わり、最終的に音だけを作り直した take 61 になった。
 - 条件に注意する数値：L57 の「押し上げスキルは正しい状態で呼んでも 63%」は旧コース・評価 v2 の値（訂正表 15）。
 
 ### takes.md
 
-- 内容：通し台本 `v7_full.py` が描画した全 take（4〜58）の台帳。節は「読み方（列の定義と略号）」「系譜の全体像」「物理同一の系譜（ダイジェストで確認）」「台帳 1：設定と結果」「台帳 2：採否と所在」「失敗版と変種の意味」「ヘッドレス検証の報告」「提出版 take 58 の時間軸」「固定ルール版 take 57（比較用、58 と同じ設定）の時間軸」「take 51（以前の 2:47 版）の時間軸」「以前の 2:47 版と比較用 3 本（take 51〜54）の時間軸の比較」「出所一覧」。
+- 内容：通し台本 `v7_full.py` が描画した take 4〜61 の台帳。節は「読み方（列の定義と略号）」「系譜の全体像」「物理同一の系譜（ダイジェストで確認）」「台帳 1：設定と結果」「台帳 2：採否と所在」「失敗版と変種の意味」「ヘッドレス検証の報告」「提出版 take 61 の時間軸」「固定ルール版 take 57（比較用、58 と同じ設定）の時間軸」「take 51（以前の 2:47 版）の時間軸」「以前の 2:47 版と比較用 3 本（take 51〜54）の時間軸の比較」「出所一覧」。
 - 使い方：読者向け文書の条件名（本編（PPO）、固定ルール版、以前の 2:47 版、PPO 版、Q 表版、追走版、旧コース）がどの take か、その take の物理が他のどの take と同一か（`state_digest` の系譜 A〜D）を引く。
 - 出所：各 take の `out/v7_full_report_take*.json`（`manager.policy`、`manager.decisions`、`three_crossed`、`sim_seconds`、`state_digest`、`cuts`）、MP4 の長さは ffmpeg の実測。
 - 読むときの注意：所在（追跡／未追跡）は執筆時点の `git ls-files out/` による。公開リポジトリの最終構成で変わった場合は台帳の値より `git ls-files` を優先する。
@@ -91,7 +91,7 @@
 
 ### timeline_brief_take51.md
 
-- 内容：take 46 版の図と同じ体裁で時刻だけ差し替える指示。速度のかっこ（×4 0:00〜0:44、×2 0:44〜2:29、×1 2:29〜2:47）、上の帯 9 区間、跳跳の顔の帯 12 区間。
+- 内容：take 46 版の図と同じ体裁で時刻だけ差し替える指示。速度のかっこ（×4 0:00〜0:44、×2 0:44〜2:29、×1 2:29〜2:47）、上の帯 9 区間、跳跳の顔の帯 12 区間。末尾に全体の仕組みの図の直し 3 か所（「支配人 AI〈アイランドマスター〉」→「支配人 AI」、「カニ」→「跳跳」、「CPU で 1 分」→学習 3.5 秒とスクリプト全体約 1 分）。
 - 時刻の出所：`out/v7_full_report_take51.json`。`python analysis/timeline_times.py out/v7_full_report_take51.json` で動画時刻と sim 時刻、表情ログを再出力できる。
 - 読むときの注意：時刻は秒に丸めてある。ピン C は 2:09.8（`manager.decisions[2].video_t` 129.8）、D は 2:10.7（`decisions[3].video_t` 130.7）。
   顔が「にっこり（立たせる、成功 99%）」に変わるのは 2:11.7（`face.log`）で、STANDUP の時刻とは別である。
@@ -99,7 +99,12 @@
 ### figures/
 
 - `timeline_ortiz_v1_dense.png`：タイムライン図の初版（半分の大きさで保存）。帯・カード・表で同じ情報が 3 回出て読みにくかったため、帯 2 本と印だけに絞った `report/timeline_ortiz.png` に差し替えた。
-- `face_rules_chart_ortiz.webp`：`report/face_rules_chart_ortiz.png` の元データ。
+- `face_rules_chart_ortiz.webp`：表情の規則の図の前の版（`face_rules_chart_ortiz_v1.png`）の元データ。
+- `face_rules_chart_ortiz_v1.png`：表情の規則の図の前の版（顔の絵文字入り、規則の番号なし、様子を見る手の「その間」なし）。2026-10-30 に描き直した `report/face_rules_chart_ortiz.png`（`report/figure4/render.py`）に差し替えた。
+- `system_overview_ortiz_v1.png`：全体の仕組みの図の初版（作品名・「カニ」・「CPU 1 分」の表記を直す前）。
+- `timeline_ortiz_take46.png`：2 倍速＋省略版（take 46）の時刻で描いたタイムライン図。
+- `timeline_ortiz_take51.png`：以前の 2:47 版（take 51、固定ルールの 5 手）の時刻で描いたタイムライン図。2026-10-30 に、提出動画（take 61、PPO の 4 手、2:57）の時刻で描き直した `report/timeline_ortiz.png`（`report/figure2/render.py`）に差し替えた。
+- `mood_net_pipeline_ortiz_v1.png`：気分ネットの学習データと流れの図の前の版（「話」の用語、検証用データの正解率だけ、「CPU 1 分」）。2026-10-30 に描き直した `report/mood_net_pipeline_ortiz.png`（`report/figure3/render.py`）に差し替えた。
 
 ### code_comment_quotes.md
 
@@ -122,8 +127,8 @@
 | 3 | ppo2_medium3 は +4.9k（4,869）決定で中断（旧 README L51、設計メモ L385） | 12,108 → 19,644 で +7,536 決定、実時間 10,876 s（約 3 h）。重みは未保存 | `ppo2_medium3/train_curve.json` の先頭・末尾の `step`・`wall_s` |
 | 4 | 停滞の判定が「2 秒窓」と「3 s」で並ぶ（HANDOVER L81、図メモ L56・L79） | 一般の停滞は 2 s 窓で進み 2 cm 未満、押し中は 3 s。対象が違い両方正しい | `crab_face.py` の `STALL_V`・`STALL_S`・`PUSH_STALL_S` |
 | 5 | 見出し「筋書き（v5 = take 6）」（旧 README L14） | 本文は take 46 の筋書き（支配人 5 手、輪の万歳）。見出しだけ更新漏れ | 旧 README L16、`take46.json` の `manager.decisions`（5 手） |
-| 6 | `report/timeline_ortiz.png` の時刻は take 46 版（図メモ L106。take 51 版に描き直し済み、旧図は `figures/timeline_ortiz_take46.png`） | take 51 は物理同一（sha256・5 手の sim 時刻）、施工 ×4・省略なしで以後の動画は約 +2.86 s（5 手は 2.8〜2.9 s） | 両 JSON `state_digest`・`decisions[].video_t`・`cuts`、依頼文 L42 |
-| 7 | 提出版は 2:44、省略 2 か所 sim 22→54 s・110→172 s（HANDOVER §0b、旧 README L24、構成案） | take 46 の仕様。提出版 take 51 は施工 ×4・省略なしで 2:47（167.0 s） | `take51.json` の `cuts`（空）・`video_silent.seconds` |
+| 6 | `report/timeline_ortiz.png` の時刻は take 46 版（図メモ L106。take 51 版を経て提出動画 take 61 の時刻で描き直し済み、旧図は `figures/timeline_ortiz_take46.png`・`figures/timeline_ortiz_take51.png`） | take 51 は物理同一（sha256・5 手の sim 時刻）、施工 ×4・省略なしで以後の動画は約 +2.86 s（5 手は 2.8〜2.9 s） | 両 JSON `state_digest`・`decisions[].video_t`・`cuts`、依頼文 L42 |
+| 7 | 提出版は 2:44、省略 2 か所 sim 22→54 s・110→172 s（HANDOVER §0b、旧 README L24、構成案） | take 46 の仕様。次の提出候補 take 51 は施工 ×4・省略なしで 2:47（167.0 s）。現在の提出版は take 61（本編 155.5 s、提出動画 2:56.6） | `take51.json` の `cuts`（空）・`video_silent.seconds` |
 | 8 | 気分ネットの学習「CPU 1 分」（図メモ L102、旧 README L86） | 学習ループは 3.5 s。「1 分」はデータ読み込みを含むスクリプト全体の目安 | `mood_net/meta.json` の `train_s` |
 | 9 | 「§7.16b の設計表どおり」（設計メモ L573） | §7.16b は存在しない。§7.16 の表情表を指す | 設計メモの見出し一覧 |
 | 10 | 評価 v2：固定ルール 25、Q 表 23、PPO 中 19、PPO 小 0、ランダム 9（/30）（HANDOVER L34、設計メモ §7.6） | 話が独立していない版。最終は評価 v4：29／26／25／23／14（固定ルール／PPO v2.2／Q 表／PPO 中／ランダム） | `comparison_v2.md`・`comparison_v4.md` |
@@ -137,8 +142,9 @@
 ## take 番号と版の対応
 
 take 番号は通し描画の連番で、`out/v7_full_report_take*.json`（出来事・判断・表情ログ・最終状態の sha256）が各 take の一次記録である。
-提出動画の本編は PPO v2.2・輪の万歳の take 58 で、同じ設定（施工・呼ぶ・戻る・集合 ×4、END の後 1 s、`--speedup CALL=4 RETURN=4 CELEBRATE=4 --tail-write 1.0`）の固定ルール版 take 57 を比較用に描画した。
-take 58 は 4 手・2:35（155.5 s）で物理は take 52・47 と同一、take 57 は 5 手・2:37（157.3 s）で物理は take 51・46 と同一である。
+提出動画の本編は PPO v2.2・輪の万歳の take 61 で、同じ設定（施工・呼ぶ・戻る・集合 ×4、END の後 1 s、`--speedup CALL=4 RETURN=4 CELEBRATE=4 --tail-write 1.0`）の固定ルール版 take 57 を比較用に描画した。
+take 61 は 4 手・2:35（155.5 s）で物理は take 58・52・47 と同一、take 57 は 5 手・2:37（157.3 s）で物理は take 51・46 と同一である。
+take 58 の後は音だけを作り直した：take 59 はパッカンの声を Microduck 公式の声（`microduck_voice.py`）にした版、take 61 はさらに性格の種を 276 にし、パッカンのセリフを増やし、2 体の声の音量を半分にした版で、どちらも `state_digest` が take 58 と同じ `aafa49e7a869`（`out/v7_full_report_take59.json` は同梱しない）。take 60 はセリフの差し込みの誤りで物理が変わったため使っていない（同梱しない）。
 以前の速度設定（施工 ×4、省略なし）の 4 本と、同じ物理の記録版（×2、省略 2 か所）の対応は次のとおり（出所：各 report JSON の `manager.policy`、`state_digest`、`manager.decisions`、`video_silent.seconds`）。
 全 take の台帳は `takes.md` にある。
 
@@ -162,13 +168,13 @@ Microduck の外観が映る図と提出動画は、コードの MIT と分け�
 
 | 図 | ファイル（`report/`） | 生成元 | 照合した内容と出所 |
 |---|---|---|---|
-| 全体の仕組み（2 つの AI と 3 体） | `system_overview_ortiz.png` | 依頼文から作図 | 観測 46、6 手、3 方式の規模、気分ネット 53-32-32-5、公式ポリシー 5 本（次元は 4 本分。face_rules_chart.md L90 は `alpha_sitstand` を欠く、訂正表 14）。図中の「CPU で 1 分」は訂正表 8。作品名・「カニ」・「CPU 1 分」の表記を直した版に差し替え、旧版は `figures/system_overview_ortiz_v1.png` |
-| 表情の決め方（17 規則） | `face_rules_chart_ortiz.png` | face_rules_chart.md の判定図を顔アイコン付きで清書。元 `.webp` は `figures/` | 条件と順序が `crab_face.py` の 17 規則と一致（face_rules_chart.md L84） |
-| 支配人 AI の比較（30 シード、2×2） | `results_managers_ortiz.png` | 作図 | 評価 v4 の渡り切り・天面到達・2×2・手数・転倒（`out/manager_runs/comparison_v4.md`） |
+| 全体の仕組み（2 つの AI と 3 体） | `system_overview_ortiz.png` | 依頼文から作図 | 観測 46、6 手、3 方式の規模、気分ネット 53-32-32-5、公式ポリシー 5 本（次元は 4 本分。face_rules_chart.md L90 は `alpha_sitstand` を欠く、訂正表 14）。初版の図中の「CPU で 1 分」は訂正表 8（いまの図は学習 3.5 秒とスクリプト全体約 1 分を書き分けている）。作品名・「カニ」・「CPU 1 分」の表記を直した版に差し替え、旧版は `figures/system_overview_ortiz_v1.png`。2026-10-30 に BIZ UDPGothic で描き直した（描画のコード `report/figure1/render.py`、気分ネットのエポックの表記を「600 エポック中 450 エポック目を採用」に直した） |
+| 表情の決め方（17 規則） | `face_rules_chart_ortiz.png` | face_rules_chart.md の判定図を清書。2026-10-30 に BIZ UDPGothic で描き直した（描画のコード `report/figure4/render.py`。絵文字をやめ、顔の箱に規則の番号 1〜17、様子を見る手に「その間 → まる目」、押していない → 直前の押しの判定を真下でつないだ）。前の版は `figures/face_rules_chart_ortiz_v1.png`（元 `.webp` も `figures/`） | 条件と順序が `crab_face.py` の 17 規則と一致（face_rules_chart.md L84） |
+| 支配人 AI の比較（30 シード、2×2） | `results_managers.png` | `analysis/fig_results.py` が生成（作図の前の版 `results_managers_ortiz.png` は差し替えて削除、git の履歴にだけ残る） | 評価 v4 の救助タスクの成功数・天面到達・2×2（`out/manager_runs/comparison_v4.md`）と、施工を含む通しの成功数（`out/fullrun_stats/*/summary.json`） |
 | コースと 3 体の動線（平面図） | `course_plan_ortiz.png` | 作図 | 座標が `crab_help.py`・`v7_full.py`・`../physical-ai-course-builder/scene_fork_tracks.xml` と一致（face_rules_chart.md L98） |
-| 気分ネットの学習データと流れ | `mood_net_pipeline_ortiz.png` | 作図 | 35 話・47,952 サンプル・450 エポック・0.80／0.83（`mood_net/meta.json`・`report.md`）。「CPU 1 分」は訂正表 8 |
+| 気分ネットの学習データと流れ | `mood_net_pipeline_ortiz.png` | 作図 | 35 試行・47,952 サンプル・600 エポック中 450 エポック目を採用・検証用データ 0.80／0.83（`mood_net/meta.json`・`report.md`）、独立テスト 0.76／0.85／0.62（`mood_net/test_report.md`）。2026-10-30 に BIZ UDPGothic で描き直した（描画のコード `report/figure3/render.py`、「話」を「試行」に、学習 3.5 秒とスクリプト全体約 1 分を書き分け、訂正表 8）。前の版は `figures/mood_net_pipeline_ortiz_v1.png` |
 | 表情 11 種の一覧 | `faces_sheet_ja.png` | `analysis/face_sheet.py` が生成 | `crab_face.py` の描画そのもの |
-| 動画の構成タイムライン | `timeline_ortiz.png` | 作図。初版 `figures/timeline_ortiz_v1_dense.png` を帯 2 本と印だけに絞って作り直し | take 51 の `video_t` と表情ログ（`timeline_brief_take51.md` の依頼で描き直し、時刻・速度区間・5 手・顔の 12 区間が一致）。本編 take 58（4 手）の時刻とは一致しない。旧図は `figures/timeline_ortiz_take46.png` |
+| 動画の構成タイムライン | `timeline_ortiz.png` | 作図。初版 `figures/timeline_ortiz_v1_dense.png` を帯 2 本と印だけに絞って作り直し | 提出動画（take 61、PPO の 4 手、2:57）の時刻と表情ログ。2026-10-30 に BIZ UDPGothic で描き直した（描画のコード `report/figure2/render.py`、速度区間 6・場面 11・4 手・顔の 9 区間）。take 51 の時刻で描いた前の版は `figures/timeline_ortiz_take51.png`、take 46 版は `figures/timeline_ortiz_take46.png` |
 
 ## 結果表の原本（`out/manager_runs/`）
 

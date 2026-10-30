@@ -287,7 +287,7 @@ course-builder は空荷の走行中に車体が何かに触れると施工を�
 
 END はヘッドレス sim 385.6 s、描画版 sim 401.7 s である。支配人の 5 手の種類と順序（SEAT→PUSH→BACK_OFF→STANDUP→WALK_ON）は同じだが、出来事は一致しない。
 ヘッドレス版はパッカンが渡り切った直後（sim 354.9 s）の sim 355.2 s に転倒し（傾き 84°）、2.2 s で自力で起き上がる。描画版にはこの転倒がない。
-`events` はヘッドレス 64 件、描画版 62 件である（`out/v7_full_report_facecheck_A.json` と以前の 2:47 版の `_take51.json` の `events`・`manager.decisions`、本ノート執筆時に数字を除いて行ごとに照合。固定ルール版 `_take57.json` も同じ 62 件。PPO の本編 `_take61.json` は `BACK_OFF` の 2 行がなく 60 件）。
+`events` はヘッドレス 64 件、描画版 62 件である（`out/v7_full_report_facecheck_A.json` と以前の 2:47 版の `_take51.json` の `events`・`manager.decisions`、本ノート執筆時に数字を除いて行ごとに照合。固定ルール版 `_take57.json` も同じ 62 件。PPO の本編 `_take61.json` は `BACK_OFF` の 2 行がなく、跳跳のジャンプの踏み切りと着地の 2 行が加わって 62 件（take 58 は 60 件））。
 描画版の報告の `sim_seconds` 404.22 は、END の後に回す 2.5 s を含む（`v7_full.main()` の末尾。本編と固定ルール版はそのうち最初の 1 s だけを書き出す、`--tail-write 1.0`）。
 
 一方、描画版同士はコードとフレームの時刻が同じなら決定的で、カメラの向きは物理に影響しない

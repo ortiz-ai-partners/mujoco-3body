@@ -1,7 +1,7 @@
 # take 台帳 — 通し動画（`v7_full.py`）の全テイク
 
-本文書は開発記録（`docs/devlog/`）の一部で、通し台本 `v7_full.py` が描画した全テイク（take 4〜58）の設定・結果・物理の系譜・採否・所在を 1 か所に集めた台帳である。
-方針：日付と take 番号はこの文書と devlog の原文にだけ置く。README と `docs/` の本文では版を条件名で呼ぶ（提出動画、本編（take 58）、固定ルール版（take 57）、以前の 2:47 版（take 51）、PPO 版（take 52）、Q 表版、追走版、旧コース（継ぎ目 5 cm）、評価 v4 など）。
+本文書は開発記録（`docs/devlog/`）の一部で、通し台本 `v7_full.py` が描画した全テイク（take 4〜61）の設定・結果・物理の系譜・採否・所在を 1 か所に集めた台帳である。
+方針：日付と take 番号はこの文書と devlog の原文にだけ置く。README と `docs/` の本文では版を条件名で呼ぶ（提出動画、本編（take 61）、固定ルール版（take 57）、以前の 2:47 版（take 51）、PPO 版（take 52）、Q 表版、追走版、旧コース（継ぎ目 5 cm）、評価 v4 など）。
 例外はファイル名で、`out/3body_arena_v7_take51.mp4` や `out/v7_full_report_take46.json` は固有名としてそのまま引用し、改名しない。
 数値の出所は各 take の報告 `out/v7_full_report_take*.json`（キー名を併記）、MP4 の長さは ffmpeg の実測、所在は `git ls-files out/` の結果である。執筆時点は 2026-10-29（日付の年はすべて 2026）。
 
@@ -18,27 +18,27 @@
   - jitter：`--jitter` の秒数（応援ダンスの開始位置をずらして物理経路だけを変えるダイヤル、既定 0）。JSON に記録されないため devlog の記述（`HANDOVER.md` §0b）から転記した。
 - 長さ：音声付き MP4 の実測（m:ss.s、ffmpeg の Duration）。音声なしの `video_silent.seconds` とは 0.1 s 以内で一致する。
   take 50〜54 は MP4 の `mvhd` の長さ（160.20／166.97／165.17／166.33／163.70 s）と `video_silent.seconds` が 0.1 s 以内で一致することを確認した。
-  take 55〜57 は ffmpeg の Duration がいずれも 2:37.30 で、`video_silent.seconds` 157.3（4,719 フレーム）と一致する。take 58 は 2:35.47 で、155.5（4,664 フレーム）と一致する。
+  take 55〜57 は ffmpeg の Duration がいずれも 2:37.30 で、`video_silent.seconds` 157.3（4,719 フレーム）と一致する。take 58・59・61 は 2:35.47 で、155.5（4,664 フレーム）と一致する（take 60 は 3:25.27、205.3 s）。
 - 手数：`manager.decisions` の件数。3 体：`three_crossed` の true の数／3。
   take 4（ヘッドレス報告 `out/v7_full_report.json`）と take 5 の報告にはこのキーが無く、`events` から数えた（BZ と跳跳は渡り、パッカンはフォークで倒されて渡らない）。
 - digest：`state_digest`（最終状態 qpos＋qvel の sha256）の先頭 8 桁。take 30 以降の報告にだけ記録される。take 29 以前の同一性は `sim_seconds`・`events` の件数と時刻・`manager.decisions` の一致で判定した。
 - 所在：MP4 と report JSON の git 追跡状態（追跡／未追跡）。執筆時点の `git ls-files out/` による。公開リポジトリの最終構成（旧 MP4 の Release 移動など）で変わった場合はこの列を更新する。
   未追跡には 2 種類ある：`.gitignore` の対象（`*_cutbug*`・`*_longnotice*`・`*_widebox*`・`*_silent.mp4`）と、`git add` されていないだけのもの（`git status` で `??`）。
-  後者は失敗 take 11〜13・15・17・19・21・26 と、成功だが候補にしなかった take 29 の MP4、take 50・55・56 の MP4、take 58 の MP4・JSON・描画ログ、`take6test`・`take8test` の JSON である
-  （take 51〜54・57 の MP4 と take 50〜57 の JSON・描画ログは、この追記の時点で追跡に入っている）。
+  後者は失敗 take 11〜13・15・17・19・21・26 と、成功だが候補にしなかった take 29 の MP4、take 50・55・56 の MP4、take 59・60 の MP4・JSON・描画ログ、`take6test`・`take8test` の JSON である
+  （take 51〜54・57・58・61 の MP4 と take 50〜58・61 の JSON・描画ログは、この追記の時点で追跡に入っている）。
 
 ## 系譜の全体像（結末・コース・顔・速度の変遷）
 
 - 結末：押し倒し（take 4・5、`--ending push`）→ 持ち上げ（`--ending lift`、ヘッドレス試行のみで描画 take なし、BZ の寄せ残差 5〜12 cm が窓 ±1.5 cm に届かず未完）→ 押し上げ（take 6 以降、`--ending crab`）。
   BZ がパッカンを扱う結末は安全上の要件（首を持ち上げると破損の恐れ）で封印し、以後の手助けは跳跳が担う（`MANAGER_DESIGN.md` §6、`HANDOVER.md` §0b 冒頭）。
 - 終幕：around（take 6〜8）→ procession（take 9・10・12・18・19・25・33、BZ も向き直る版は 37・41・45・49・54）→ circle（take 11 以降の既定）。
-- 支配人：固定ルール（take 6 から）、学習済み Q 表（take 7 から）、PPO 中（take 8 のみ、描画版は失敗）、PPO v2.2（take 22 から。提出版の本編 take 58 もこれ）。
+- 支配人：固定ルール（take 6 から）、学習済み Q 表（take 7 から）、PPO 中（take 8 のみ、描画版は失敗）、PPO v2.2（take 22 から。提出版の本編 take 61 と、その元の take 58 もこれ）。
 - 固定ルールの修正：take 13 の失敗（座り直しの位置 y −2.01 が座席 −2.13 から 12 cm で `crab_help.py` の `SEAT_TOL` 0.12 m の境界にあり、`at_seat` が偽のまま SEAT を 7 回要求）から PUSH 条件に `near_lip` を追加（`MANAGER_DESIGN.md` §7.9）。
 - コース：v1＝継ぎ目 5 cm（take 4〜23）→ v2＝継ぎ目 1 cm（take 24 以降、course-builder の `INSTALLATION_GAP` 0.05→0.01、`MANAGER_DESIGN.md` §7.14）。
-- 顔：なし（take 29 まで）→ 表（30〜37、30〜33 は左下 320×160、34〜37 は右上 240×120 で字幕の下、押して 5 秒で汗）→ 気分 v1（38〜41、モニター一段）→ 組み立て（42〜45）→ 決め手（46〜54）。
+- 顔：なし（take 29 まで）→ 表（30〜37、30〜33 は左下 320×160、34〜37 は右上 240×120 で字幕の下、押して 5 秒で汗）→ 気分 v1（38〜41、モニター一段）→ 組み立て（42〜45）→ 決め手（46〜61）。
 - 速度・省略：施工 ×4（take 5〜10、take 4 は描画の報告がなく不明）→ 全区間 ×2 以下（11〜33、長さ 3:16.7〜4:21.3）→ ×2＋省略 2（34〜49、成功版は 2:40.8〜2:44.1）→ 施工 ×4・省略なし（50〜54、2:40.2〜2:47.0）
-  → 呼ぶ・戻る・集合も ×4、END 後の尾 1 s（55〜58、`--speedup CALL=4 RETURN=4 CELEBRATE=4 --tail-write 1.0`、固定ルールの 55〜57 は 2:37.3、PPO の 58 は 2:35.5）。
-- 画面と音（55 以降）：支配人の帯（56 から、`--no-band` で外せる）、呼び名「カニさん」→「ちょーさん」（56 から）、パッカンの声 1/3（56 から）、跳跳の声 1/2 とステレオの左右振り分け（57 から）。
+  → 呼ぶ・戻る・集合も ×4、END 後の尾 1 s（55〜61、`--speedup CALL=4 RETURN=4 CELEBRATE=4 --tail-write 1.0`、固定ルールの 55〜57 は 2:37.3、PPO の 58・59・61 は 2:35.5）。
+- 画面と音（55 以降）：支配人の帯（56 から、`--no-band` で外せる）、呼び名「カニさん」→「ちょーさん」（56 から）、パッカンの声 1/3（56 から）、跳跳の声 1/2 とステレオの左右振り分け（57 から）、パッカンの声を Microduck 公式の声に替え、跳跳のジャンプの音を踏み切りと着地の瞬間に合わせる（59 から）、声の性格の種 276・パッカンのセリフの追加・2 体の声の音量を半分（61）。
   省略の初版（`*_cutbug`）は物理を変えたため失敗版として残し、2 回目で全長版と物理が一致した（`HANDOVER.md` §0b「ジャンプカットの罠」）。
 - 評価：v2（10-28、エピソード非独立、`out/manager_runs/comparison_v2.md`）→ v3（10-28、`mj_resetData` で独立、旧コース、`comparison_v3.md`・`comparison_v3b.md`）→ v4（10-28、新コース・30 シード同一、`comparison_v4.md`）。
   v4 の結果は固定ルール 29/30、PPO v2.2 26/30、Q 表 25/30、PPO 中 23/30、ランダム 14/30（`comparison_v4.md`）。
@@ -51,11 +51,12 @@
 違いは書き出し（`video_t`）と画面・音（吹き出しの文言、`chirps`）だけである（`python analysis/timeline_times.py out/v7_full_report_take57.json --compare out/v7_full_report_take51.json`）。
 58＝52 も同じで、64 桁全体、`events` の sim 時刻（60 件）、`manager.decisions` の `t`・`result`・`duration_s`、`face`（`log`・`effort_series`・`mood_ai`）が一致する
 （`python analysis/timeline_times.py out/v7_full_report_take58.json --compare out/v7_full_report_take52.json`）。
+59・61 も 58 と 64 桁全体が一致し、`events` は跳跳のジャンプの踏み切りと着地の 2 行（sim 239.46・239.76 s）が加わって 62 件になる（音を合わせるための記録で、物理は同じ）。
 
 | 系譜 | 条件 | digest | take | 根拠 |
 |---|---|---|---|---|
 | A | rule・circle・コース v2 | 678fd3ca | 24＝30＝34＝38＝42＝46＝51＝55＝56＝57（34_longnotice・46_widebox も同一） | 30 以降は digest 一致。24＝30 は 62 出来事・5 手・sim 404.22 s の一致（`MANAGER_DESIGN.md` §7.16、`analysis/face_check.py`） |
-| B | PPO・circle・コース v2 | aafa49e7 | 27＝31＝35＝39＝43＝47＝52＝58（35_longnotice・47_widebox も同一） | 同上。27＝31 は 60 出来事・4 手・sim 400.6 s の一致 |
+| B | PPO・circle・コース v2 | aafa49e7 | 27＝31＝35＝39＝43＝47＝52＝58＝59＝61（35_longnotice・47_widebox も同一） | 同上。27＝31 は 60 出来事・4 手・sim 400.6 s の一致 |
 | C | Q・circle・jitter 0.4・コース v2 | f53de6e4 | 28＝32＝36＝40＝44＝48＝53（36_longnotice も同一） | 同上。28＝32 は 8 手・sim 402.9 s の一致（`HANDOVER.md` §0b） |
 | D | rule・procession（BZ が向き直る）・コース v2 | be8fb01e | 37＝41＝45＝49＝54 | digest 一致。sim 397.72 s |
 | E | rule・procession（旧、BZ は後ろ向き）・コース v2 | 7a17ebf0 | 25＝33 | 33 の digest。25 は 57 出来事・5 手・sim 398.52 s の一致 |
@@ -165,15 +166,19 @@ take 5 の速度は `out/v7_full_report_take5.json` の `events[].t` と `video_
 | 55 | 10-29 | rule・circle・決め手・短縮版（呼ぶ〜戻る・輪への集合を ×4、END 後の書き出し 2.5→1 s）。帯なし、吹き出しは「カニさん」、声は元の音量（モノラル） | 2:37.3 | 5・3/3 | 678fd3ca |
 | 56 | 10-29 | 55＋支配人の帯（1 秒 15 文字、チャイムと打鍵音、英語の行 `LINES_EN`）、パッカンの声 1/3、呼び名「ちょーさん」（`LINES`） | 2:37.3 | 5・3/3 | 678fd3ca |
 | 57 | 10-29 | 56＋跳跳の声 1/2、鳴いた機体の画面上の位置でステレオの左右に振る（定電力、幅 0.8） | 2:37.3 | 5・3/3 | 678fd3ca |
-| 58 | 10-29 | PPO・circle・決め手。57 と同じ設定で支配人だけを PPO v2.2 にした最終版（`--manager ppo --run ppo2_v22`） | 2:35.5 | 4・3/3 | aafa49e7 |
+| 58 | 10-29 | PPO・circle・決め手。57 と同じ設定で支配人だけを PPO v2.2 にした版（`--manager ppo --run ppo2_v22`） | 2:35.5 | 4・3/3 | aafa49e7 |
+| 59 | 10-29 | 58＋パッカンの声を Microduck 公式の声に（`microduck_voice.py`、性格の種 56）、跳跳のジャンプの音を踏み切りと着地の瞬間に合わせる | 2:35.5 | 4・3/3 | aafa49e7 |
+| 60 | 10-29 | 59＋声の性格の種 276、パッカンのセリフの追加、2 体の声の音量を半分。セリフの差し込みの誤りで物理が変わった | 3:25.3 | 6,951・2/3 | 3c83c483 |
+| 61 | 10-29 | 60 の差し込みを直した版（59＋声の性格の種 276、パッカンのセリフの追加、パッカン 1/6・跳跳 1/4 の音量） | 2:35.5 | 4・3/3 | aafa49e7 |
 
-設定の出所は各報告 JSON の `settings`（55 から記録される）：`write_every`（`BUILD`・`CALL`・`RETURN`・`CELEBRATE` が 2）と `tail_write_s` 1.0 は 4 本共通、
+設定の出所は各報告 JSON の `settings`（55 から記録される）：`write_every`（`BUILD`・`CALL`・`RETURN`・`CELEBRATE` が 2）と `tail_write_s` 1.0 は 55〜61 で共通、
 `band`（`cps` 15、`hold_s` 2.5）と `duck_voice_gain` 0.3333 は 56 から、`crab_voice_gain` 0.5 と `voice_pan`（`width` 0.8）は 57 から。58 は 57 と `manager`（ppo）・`run`（ppo2_v22）だけが違う。
-音声は 55・56 がモノラル、57・58 がステレオ（ffmpeg の stream 表示）。`chirps` は 55 が 82 件、56・57 が 155 件（帯のチャイム 5・打鍵音 68 を含む）、58 が 143 件（チャイム 4・打鍵音 57）。
+音声は 55・56 がモノラル、57〜61 がステレオ（ffmpeg の stream 表示）。`chirps` は 55 が 82 件、56・57 が 155 件（帯のチャイム 5・打鍵音 68 を含む）、58 が 143 件（チャイム 4・打鍵音 57）、59 が 146 件、61 が 159 件（パッカンのセリフの追加分）。
+59 から `duck_voice`（公式の声、`seed` は 59 が 56、60・61 が 276）、60・61 は `duck_voice_gain` 0.1667・`crab_voice_gain` 0.25。60 の手数 6,951 は WALK_ON の繰り返しで、パッカンは渡らず sim 507.1 s で終わった。
 
 ## 台帳 2：採否と所在
 
-採否の区分：提出版＝本編 take 58（提出動画の 0:18.1 から、`assemble.py` で講座の OP／ED カードと自己紹介をつなぐ）、比較用＝58 と同じ設定の固定ルール版 57 と、施工 ×4・省略なしで描いた 51〜54（51 は以前の 2:47 版で 57 と、52 は 58 と物理が同一）、
+採否の区分：提出版＝本編 take 61（提出動画の 0:18.1 から、`assemble.py` で講座の OP／ED カードと自己紹介をつなぐ）、比較用＝58・61 と同じ速度設定の固定ルール版 57 と、施工 ×4・省略なしで描いた 51〜54（51 は以前の 2:47 版で 57 と、52 は 58・61 と物理が同一）、
 候補＝その時点の提出候補（後の版に置き換えた）、記録＝成功したが置き換えた版、失敗＝目的を達しなかった版、不採用＝物理は正しいが表示や結末の要件で捨てた版。
 失敗は 事実→原因→対処 の順に書く。所在は MP4／report JSON の順。
 
@@ -240,18 +245,21 @@ take 5 の速度は `out/v7_full_report_take5.json` の `events[].t` と `video_
 | 54 | 比較用（追走版） | 49 と digest 一致。5 手は 51 と同じ順・同じ sim 時刻、終幕だけが追走（ゴールで三人の万歳）、2:43.7 | 追跡 | 追跡 |
 
 take 50〜54 の描画ログ（`out/v7_take50render.log`〜`v7_take54render.log`）も追跡に入っている（この追記の時点の `git ls-files out/`）。当初の執筆時点では 50〜54 はすべて `git add` 前だった。
-take 51 の圧縮複製（同じ内容の小さい MP4、4.4 MB）は `.gitignore` の `*.notion.mp4` の対象。`HANDOVER.md` §0b のテイク毎の記録は take 49 で終わり、50〜58 の一次記録は report JSON・描画ログ・この台帳である。
+take 51 の圧縮複製（同じ内容の小さい MP4、4.4 MB）は `.gitignore` の `*.notion.mp4` の対象。`HANDOVER.md` §0b のテイク毎の記録は take 49 で終わり、50〜61 の一次記録は report JSON・描画ログ・この台帳である。
 
-### take 55〜58（コース v2、施工・呼ぶ・戻る・集合 ×4、尾 1 s）
+### take 55〜61（コース v2、施工・呼ぶ・戻る・集合 ×4、尾 1 s）
 
 | take | 採否 | 理由（要点） | MP4 | JSON |
 |---|---|---|---|---|
 | 55 | 記録（短縮版） | 自己紹介と講座のカードを足しても 3 分に収まる長さにするため、`--speedup` で CALL・RETURN・CELEBRATE（輪のダンスの前まで）を ×4、`--tail-write 1.0` で END 後の書き出しを 1 s にした。51 と digest・62 出来事の sim 時刻と文言・5 手がすべて一致、157.3 s。56 に置き換え | 未追跡 | 追跡 |
 | 56 | 記録 | 55＋支配人の帯、パッカンの声 1/3、呼び名「ちょーさん」。digest は 55 と同一（帯は描画のみ、`intro.draw_avatar` を借りるだけで台本の乱数を使わない）。出来事は MANAGER #1〜#3 の 3 行で吹き出しの「カニさん」が「ちょーさん」に変わるだけ。57 に置き換え | 未追跡 | 追跡 |
 | 57 | 比較用（固定ルール版、58 と同じ設定） | 56＋跳跳の声 1/2、鳴き声のステレオの左右振り分け（`v6_common.screen_xy` で画面上の位置を求める、描画側のみ）。digest・出来事・判断・`face` は 56 と同一。これを本編にした試作の結合は 178.41 s。提出動画の支配人を学習した AI にするため本編は 58 に置き換え、57 は評価で最良の固定ルールを同じ設定で示す比較として残す | 追跡 | 追跡 |
-| 58 | 提出版（本編） | 57 と同じ設定で支配人を PPO v2.2 にした版。4 手（SEAT→PUSH→STANDUP→WALK_ON、押し上げ後の BACK_OFF を省く）、すべて成功、転倒 0。digest・出来事の sim 時刻・判断・`face` は 52 と同一、155.5 s。提出動画は `assemble.py` で講座の OP（3.04 s）＋自己紹介 `out/intro.mp4`（15.1 s）＋本編＋講座の ED（2.97 s）＝176.58 s、BGM `music/marimba_bgm.py`（−16 dB、一定、58 の時刻に合わせた既定の版） | 追跡 | 追跡 |
+| 58 | 記録（提出版の元） | 57 と同じ設定で支配人を PPO v2.2 にした版。4 手（SEAT→PUSH→STANDUP→WALK_ON、押し上げ後の BACK_OFF を省く）、すべて成功、転倒 0。digest・出来事の sim 時刻・判断・`face` は 52 と同一、155.5 s。音だけを作り直した 61 に置き換え（物理と時刻は同じ） | 追跡 | 追跡 |
+| 59 | 記録 | 58＋パッカンの声を Microduck 公式の声に（性格の種 56）、跳跳のジャンプの音を踏み切りと着地の瞬間に合わせた。digest・判断・`face` は 58 と同一。61 に置き換え | 未追跡 | 未追跡 |
+| 60 | 失敗 | 事実：パッカンのセリフの差し込みを例外処理の途中に入れ、後続の行が条件の中に入って物理が変わった（digest 3c83c483、パッカンが渡らず sim 507.1 s）。原因：音だけの変更のつもりで、描画の前に `--test` で digest を確かめなかった。対処：差し込みの位置を直し（61）、物理に触れない変更でも描画の前に `--test` で digest を確かめる | 未追跡 | 未追跡 |
+| 61 | 提出版（本編） | 59＋声の性格の種 276、パッカンのセリフの追加（坂へ向かう道中と押し上げの間、乱数を使わない決まった間隔）、2 体の声の音量を半分（パッカン 1/6・跳跳 1/4）。digest・出来事の sim 時刻・判断・`face` は 58・59 と同一、155.5 s。提出動画は `assemble.py` で講座の OP（3.04 s）＋自己紹介 `out/intro.mp4`（15.1 s）＋本編＋講座の ED（2.97 s）＝176.58 s、BGM `music/marimba_bgm.py`（−16 dB、一定、58 の時刻に合わせた既定の版で、61 も時刻は同じ） | 追跡 | 追跡 |
 
-所在は追記の時点の `git ls-files out/` と `git status --short`。描画ログ `out/v7_take55render.log`〜`v7_take58render.log` は追跡。
+所在は追記の時点の `git ls-files out/` と `git status --short`。描画ログ `out/v7_take55render.log`〜`v7_take58render.log` と `v7_take61render.log` は追跡（59・60 は未追跡）。
 施工 ×4 の 2 方式の違いは `v7_full.py` の `--build-speed` の help と `SPEED` 直上のコメント、および `build_write_every` の分岐（`render_frame(write=False)` で標本は取り書き出しだけ省く）にある。
 
 追跡 MP4 のうち take 8 以外には同じ内容の圧縮複製（小さい MP4）が並ぶ（take 4 の複製は take 番号のない旧名 `3body_arena_v7` の側にある）。
@@ -287,9 +295,9 @@ take 51 の圧縮複製（同じ内容の小さい MP4、4.4 MB）は `.gitignor
 | `moodcheck_B`〜`moodcheck_E` | 10-28 | rule | 5・3/3 | 省略あり、顔 表／気分ネットの各版。すべて digest c083a03c＝省略と気分ネットは物理を変えない |
 | `test14`〜`test21` | 10-27 | — | — | take 5 前後の旧筋書き（持ち上げ結末の試行を含む）。`HANDOVER.md` §0 の #14〜#21 |
 
-## 提出版 take 58 の時間軸（提出動画｜本編｜sim 秒）
+## 提出版 take 61 の時間軸（物理と時刻は take 58 と同一）（提出動画｜本編｜sim 秒）
 
-速度区間（`python analysis/timeline_times.py out/v7_full_report_take58.json` の出力、本編の時刻）：×4 0:00〜0:44.1、×2 0:44.1〜1:20.4、×4 1:20.4〜1:24.3、×2 1:24.3〜2:14.8、
+速度区間（`python analysis/timeline_times.py out/v7_full_report_take61.json` の出力、take 58 でも同じ。本編の時刻）：×4 0:00〜0:44.1、×2 0:44.1〜1:20.4、×4 1:20.4〜1:24.3、×2 1:24.3〜2:14.8、
 ×4 2:14.8〜2:19.1、×1 2:19.1〜2:34.4（最後の出来事）。MP4 は 2:35.5。提出動画の時刻は本編＋18.14 s（講座の OP 3.04 s＋自己紹介 15.1 s、`assemble.py` の `parts[].start_s`）。
 take 52 との違いは CALL の途中から（`--compare` の shift：跳跳が戻り始める出来事 −0.40 s、RETURN −1.27 s、RESCUE 以後 −3.93〜−3.94 s、輪のダンス以後 −8.20 s）。
 take 57 とは 2 手目 PUSH の結果（sim 347.86 s）まで出来事の sim 時刻と動画時刻が同じで、その後は BACK_OFF がないぶん早く進む。
@@ -312,8 +320,8 @@ take 57 とは 2 手目 PUSH の結果（sim 347.86 s）まで出来事の sim �
 
 4 手の結果は seated／pushed_up／standing／crossed、所要は 11.9／71.3／5.5／12.2 s（`manager.decisions[].result`・`duration_s`）、転倒 0、コース破損なし（`course_disturbed` が空）。
 STANDUP を選んだときの跳跳は 0.25 m 後ろで非接触（`crab_dist`、`touching`）。気分ネットの推論は 5,050 回、表情ログは 26 行で、いずれも 52 と同一。
-出来事は 60 件で、57 の 62 件から BACK_OFF の決定と結果の 2 行が抜け、引き継ぎの行の支配人名が「PPO 方策（ppo2_v22）」、STANDUP の行の直前の結果が pushed_up になる（数字を除いた文言の比較）。
-BGM は `music/marimba_bgm.py` の既定（`BGM_MAIN` なし）で 58 の時刻に合わせた版（173.6 s。天面を歩く区間を 14 拍から 12 拍に書き直した）。`BGM_MAIN=take57` で 57 用の版（175.4 s）を書く。
+出来事は 58 で 60 件（61 は跳跳のジャンプの踏み切りと着地の 2 行が加わり 62 件）で、57 の 62 件から BACK_OFF の決定と結果の 2 行が抜け、引き継ぎの行の支配人名が「PPO 方策（ppo2_v22）」、STANDUP の行の直前の結果が pushed_up になる（数字を除いた文言の比較）。
+BGM は `music/marimba_bgm.py` の既定（`BGM_MAIN` なし）で 58（＝61）の時刻に合わせた版（173.6 s。天面を歩く区間を 14 拍から 12 拍に書き直した）。`BGM_MAIN=take57` で 57 用の版（175.4 s）を書く。
 
 ## 固定ルール版 take 57（比較用、58 と同じ設定）の時間軸（試作の提出動画｜本編｜sim 秒）
 
@@ -393,7 +401,7 @@ take 50 の BACK_OFF は押し上げ直後に跳跳が接触したまま（`touc
 
 - 各 take の報告：`out/v7_full_report_take*.json`（`manager.policy`、`manager.decisions`、`three_crossed`、`sim_seconds`、`state_digest`、`cuts`、`face`、`events`、`video_silent`）。
 - MP4 の長さと更新時刻：`out/3body_arena_v7_take*.mp4` を ffmpeg（imageio-ffmpeg 同梱）の `-i` で計測。take 50〜54 は MP4 の `mvhd` ボックスの長さで確認。
-- take 55〜58 の描画ログ：`out/v7_take55render.log`〜`out/v7_take58render.log`。設定は報告 JSON の `settings`。提出動画の結合は `assemble.py` の標準出力（`parts`、`total_s`）。
+- take 55〜61 の描画ログ：`out/v7_take55render.log`〜`out/v7_take58render.log`、`out/v7_take61render.log`（59・60 は同梱しない）。設定は報告 JSON の `settings`。提出動画の結合は `assemble.py` の標準出力（`parts`、`total_s`）。
 - 設定の経緯：`docs/devlog/HANDOVER.md` §0b（take 6〜49 のテイク毎の記録、ジャンプカットの罠）、`docs/devlog/MANAGER_DESIGN.md` §0・§6・§7.4〜7.18、`docs/devlog/README_development.md`（旧 README、`out/` の行）。
 - 施工 ×4 の 2 方式：`v7_full.py` の `--build-speed` の help と `SPEED` 付近のコメント、`build_write_every` の分岐。help は `docs/devlog/HANDOVER.md` §0b（ジャンプカットの罠）を参照する。
 - take 50〜54 の描画ログ：`out/v7_take50render.log`〜`out/v7_take54render.log`（起動行に `face=on mood_ai=mood_net`、出来事の sim 時刻）。

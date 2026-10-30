@@ -4,6 +4,8 @@
 # see docs/reproduce.md for what each is for.
 mujoco==3.11.0
 numpy==2.2.6
+# scipy is used only by music/marimba_bgm.py (the BGM synthesis).
+scipy==1.15.3
 onnxruntime==1.23.2
 # torch: the CPU build is enough (training and inference both run on the CPU).
 # The environment had 2.14.1+cpu. Install it first from the CPU index, then this file:

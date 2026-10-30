@@ -12,7 +12,7 @@
 
 - 「同梱」は本リポジトリに実体ファイルを含むかを指す。同梱しない資産は隣接リポジトリとして親ディレクトリに並べて読む（配置は `docs/reproduce.md`）。
 - 使い方の列の先頭に区分を付ける。既製＝第三者が配布したものをそのまま使う、自作＝本プロジェクトで作成、転記＝第三者のコードの一部を本リポジトリのコードに書き写した。
-- commit は各隣接リポジトリで `git log -1` が示す値。本作が読むコードとシーン（MJCF・メッシュ・ONNX・契約 JSON・import するモジュール）に未 commit の変更はない（`git status` で確認）。
+- commit は本作が動作を確かめた各隣接リポジトリの版で、microduck_rl と jumper は `git log -1` の値と同じ。course-builder にはその後、文書とコメントだけを直した commit（`d3c199d` まで、コードの動作は同じ）がある。本作が読むコードとシーン（MJCF・メッシュ・ONNX・契約 JSON・import するモジュール）に未 commit の変更はない（`git status` で確認）。
 - 出所として引く隣接リポジトリの文書（README など）も、上の commit の版を指す。
 - Apache-2.0 の本文は http://www.apache.org/licenses/LICENSE-2.0 にある（各隣接リポジトリの `LICENSE` も同じ本文）。
 
@@ -32,7 +32,7 @@
 | Jumper の観測契約と定数（`obs.rs`・`trajectory.rs`・`constants.py`） | 同上 | 同上 | Apache-2.0 | 転記。`v7_policies.py`・`v6_robots.py` に書き写した | 転記部分のみ |
 | physical-ai-course-builder（ブルドーザー） | https://github.com/ortiz-ai-partners/physical-ai-course-builder | commit 483dbf9 | MIT | 自作（同じ作者の別リポジトリ）。import して使う | なし |
 | rsplan（course-builder が同梱） | https://github.com/builtrobotics/rsplan | commit 47b3ab5 | MIT | 既製。本作の実行経路からは呼ばれない | なし |
-| Python パッケージ 10 本と Python 本体 | 下の「Python パッケージ」 | `requirements.txt` | 各ライセンス | 既製。pip で導入 | なし |
+| Python パッケージ 11 本と Python 本体 | 下の「Python パッケージ」 | `requirements.txt` | 各ライセンス | 既製。pip で導入 | なし |
 
 ## Microduck（Pollen Robotics）
 
@@ -40,7 +40,7 @@
 
 出典は Hugging Face の `pollen-robotics/microduck-policies`（https://huggingface.co/pollen-robotics/microduck-policies ）。
 `velstand.onnx` がこの Hub の公式セットの版 v8 に当たることは `../microduck_rl/docs/velstand_policy.md` に記載がある。
-同梱は ONNX 4 本と `manifest.json` の 5 ファイル。`manifest.json` は公式セット 10 本を列挙する第三者ファイルで、改変せずに置く（同梱しない 6 本の記述もそのまま残る）。
+同梱は ONNX 4 本と `manifest.json` の 5 ファイルに、Apache-2.0 の本文の写し `LICENSE` と帰属の表示 `NOTICE.md` を加えた 7 ファイル。`manifest.json` は公式セット 10 本を列挙する第三者ファイルで、改変せずに置く（同梱しない 6 本の記述もそのまま残る）。
 
 | ファイル | 本作 | 学習元（`manifest.json` の `policies[].training`） | SHA-256（先頭 16 桁） |
 |---|---|---|---|
@@ -49,6 +49,8 @@
 | `alpha_walking.onnx` | 未使用 | 記載なし | `e36332d383997d51` |
 | `alpha_stand.onnx` | 未使用 | 記載なし | `1569268713e40dee` |
 | `manifest.json` | 版情報の参照のみ | — | `8ca3664ad87b852d` |
+| `LICENSE` | Apache-2.0 の本文の写し（本作が添えた） | — | `48a029ca4cffafe3` |
+| `NOTICE.md` | 帰属と取得元の表示（本作が書いた） | — | `a52ae548a2b4aa5b` |
 
 全桁は `sha256sum policies/microduck/*` で確かめられる。ONNX 4 本はいずれも入力 61 次元・出力 14 次元で（ONNX のグラフ、`manifest.json` の `obs_len`・`action_len`）、制御は 50 Hz（同 `robot.control_hz`）。
 使用する 2 本は `v7_full.py` の `Duck.__init__` が開く（`POLICY_DIR`）。歩行・起立・座り込みの出来は提供元のポリシーの成果であり、本作はそれに指令を与えて呼び分ける。
@@ -149,13 +151,14 @@ rsplan を読み込むのは course-builder の `rs_course.py`（とその検証
 | torch（CPU 版） | 2.14.1 | BSD-3-Clause（注 1） | https://github.com/pytorch/pytorch | 気分ネットの学習と推論（`analysis/mood_train.py`、`crab_face.MoodAI`）、SB3 の基盤 |
 | gymnasium | 1.0.0 | MIT | https://github.com/Farama-Foundation/Gymnasium | 学習環境の API（`manager2_env.py`） |
 | numpy | 2.2.6 | BSD-3-Clause | https://github.com/numpy/numpy | 数値計算 |
+| scipy | 1.15.3 | BSD-3-Clause | https://github.com/scipy/scipy | BGM の合成（`music/marimba_bgm.py` のフィルタと wav の書き出し） |
 | imageio | 2.38.0 | BSD-2-Clause | https://github.com/imageio/imageio | 動画フレームの書き出し（`v6_common.Video`、libx264） |
 | imageio-ffmpeg | 0.6.0 | BSD-2-Clause（注 2） | https://github.com/imageio/imageio-ffmpeg | ffmpeg 実行ファイルの提供。音声の合成も同じ ffmpeg を別プロセスで呼ぶ（`v7_full.py`） |
 | Pillow | 12.3.0 | MIT-CMU | https://github.com/python-pillow/Pillow | 字幕・顔モニター・表情の描画（`v6_common.Captioner`、`crab_face.py`） |
 | glfw | 2.10.2 | MIT（注 3） | https://github.com/FlorianRhiem/pyGLFW | course-builder の `app.py` が import する。本作は窓を開かない |
 
 版は `requirements.txt` と同じで、開発環境の pip のメタデータで確かめた。ライセンス名は各パッケージの配布メタデータ（`License-Expression`、`License`、classifier）から取った。
-Python 本体は 3.10（3.10.6 で確認、PSF License）。上の 10 本が引き込む依存（cloudpickle など）は各配布物のライセンスに従う。いずれも pip で導入し、本リポジトリには同梱しない。
+Python 本体は 3.10（3.10.6 で確認、PSF License）。上の 11 本が引き込む依存（cloudpickle など）は各配布物のライセンスに従う。いずれも pip で導入し、本リポジトリには同梱しない。
 
 - 注 1：PyTorch 本体の `LICENSE` は BSD-3-Clause 形式。配布物は第三者部分を含み、配布メタデータの `License-Expression` は Apache-2.0・BSD-2-Clause・MIT などを並べた複合表記である。
 - 注 2：imageio-ffmpeg が同梱する ffmpeg 7.1 の実行ファイルは `--enable-gpl --enable-version3` の構成で、FFmpeg の GPL-3.0 の条件に従う。本作はこれを別プロセスとして呼ぶだけで、リンクも再配布もしない。
@@ -164,6 +167,7 @@ Python 本体は 3.10（3.10.6 で確認、PSF License）。上の 10 本が引�
 字幕の文字は Windows 同梱の日本語フォント（Meiryo、Yu Gothic Medium、MS Gothic のうち最初に見つかったもの、`v6_common._FONTS`）を描画時に読む。
 フォントは再配布しない。見つからない環境では Pillow の既定フォントに切り替わる（`v6_common.Captioner`）。
 報告書の PDF（`report/説明資料_PAI最終課題_83485.pdf`）は、本文に BIZ UDPGothic（Windows 同梱、モリサワが SIL Open Font License 1.1 でも公開）、コマンドの行に Consolas（Windows 同梱）を使い、Chrome の印刷機能が使った文字だけを PDF に埋め込む（`report/build_report.py`）。
+`report/fonts/` には、描画のコードで描く図（`report/figure1/`〜`report/figure4/`）のための BIZ UDPGothic の TTF（Regular・Bold）と、その SIL Open Font License 1.1 の本文 `OFL.txt` を同梱する。3 つとも Google Fonts の配布物（https://github.com/google/fonts/tree/main/ofl/bizudpgothic ）と sha256 が一致し、改変していない（Copyright 2022 The BIZ UDGothic Project Authors）。
 
 ## 本リポジトリで作成したもの
 
@@ -194,7 +198,7 @@ PPO 版・Q 表版・追走版は `out/3body_arena_v7_take52.mp4`・`out/3body_a
 | Jumper `locomotion` | 既製（KingKong Robotics）、推論のみ | 提供元 | 415 → 20、200 Hz | 跳跳の歩行・旋回 |
 | Jumper `jump` | 既製（KingKong Robotics）、推論のみ | 提供元 | 167 → 20、200 Hz | 跳跳のジャンプ（前方成分は本リポジトリ側の関節目標の追加） |
 | Jumper `dance_crab` | 既製（KingKong Robotics）、推論のみ | 提供元 | 209 → 22、50 Hz | 跳跳のダンス |
-| 支配人 AI | 自作 | 提出動画の PPO 版と Q 表版は学習、固定ルール版は学習なし | 46 → 6 手、前の手が終わるたびに 1 回 | 失敗したときの次の一手を選ぶ |
+| 支配人 AI | 自作 | PPO と表形式 Q は学習、固定ルールは学習なし（提出動画の本編は PPO、固定ルールは比較用の動画） | 46 → 6 手、前の手が終わるたびに 1 回 | 失敗したときの次の一手を選ぶ |
 | 気分ネット | 自作 | 学習 | 53 → 5、救助中に支配人の手を実行している間の毎制御ステップ | 跳跳の表情の元になる 5 つの値を推論する |
 
 支配人 AI の観測は 46 次元（`crab_help.py` の `OBS_DIM`）、手は 6 つ（同 `ACTIONS`）。提出動画は学習済みの PPO 版で（`out/manager_runs/ppo2_v22/ppo_manager.zip`、`manager.policy` は「PPO 方策（ppo2_v22）」）、4 手を打った（`out/v7_full_report_take61.json` の `manager.decisions`）。
@@ -229,12 +233,13 @@ Q 表版は本リポジトリで実装した表形式 Q 学習で（`manager2_ta
 
 報告書の図のうち 5 枚（`report/*_ortiz.png`）は、本プロジェクトで書いた数値入りの依頼文をもとに、
 開発補助の LLM とは別の対話型 AI「GPTAstra」が清書した（版は記録していない）。
+そのうち `report/course_plan_ortiz.png` を除く 4 枚（全体の仕組み、提出動画の構成、気分ネットの流れ、表情の規則）は、GPTAstra が書いた描画のコード（`report/figure1/`〜`report/figure4/` の `render.py`、Pillow）で描く。本作で直したのは、全体図の気分ネットのエポックの 1 行（600 エポック中 450 エポック目を採用）、表情の規則の図の「はい（成功の確率が…）」のラベルの位置（矢印のすぐ上へ）と、各コードの書体の置き場所（`report/fonts/`）・出力先（`report/`）。
 `report/faces_sheet_ja.png` は `analysis/face_sheet.py`、`report/results_managers.png` は `analysis/fig_results.py` が描く（どちらも BIZ UDPGothic）。
 
 図中の数値と規則は `crab_face.py`、`crab_help.py`、報告 JSON、`out/manager_runs/comparison_v4.md` と照合した（記録は `docs/devlog/face_rules_chart.md`）。
 照合で見つかったずれは `docs/devlog/README.md` の訂正表に記す：全体図は公式ポリシー 5 本のうち 4 本分の次元だけを載せる（訂正表 14）、
-気分ネットの図の「CPU 1 分」は学習ループ（3.5 s、`out/manager_runs/mood_net/meta.json` の `train_s`）でなくスクリプト全体の目安（訂正表 8）。
-タイムライン図は以前の 2:47 版（固定ルールの支配人）の時刻に、全体図は現行の構成に合わせて描き直した（訂正表 6、旧図は `docs/devlog/figures/`）。本編（PPO の支配人）の時刻は `README.md` の表にある。
+気分ネットの図は、学習ループ（3.5 s、`out/manager_runs/mood_net/meta.json` の `train_s`）とスクリプト全体（約 1 分）を書き分けた版に描き直した（訂正表 8）。
+タイムライン図は提出動画（PPO の支配人、2:57）の時刻に、全体図は現行の構成に合わせて描き直した（訂正表 6、旧図は `docs/devlog/figures/`）。
 
 公式ポリシーが見せる歩行・ジャンプ・ダンスの出来は提供元の成果である。
 本作で作成したのは、3 体の統合、失敗したときの次の一手を選ぶ支配人 AI、表情を推論する気分ネットである。

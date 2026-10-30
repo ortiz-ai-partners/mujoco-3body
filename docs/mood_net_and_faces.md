@@ -38,9 +38,8 @@
 
 ![気分ネットの学習データと学習の流れ](../report/mood_net_pipeline_ortiz.png)
 
-図：データ収集→記録→学習→本番の 4 段と、見送り分のスキル別推論の平均。報告書の図（本プロジェクトで作成、
-数値は `out/manager_runs/mood_net/meta.json`・`report.md` で照合）。図中の「CPU での学習時間 約 1 分」は
-スクリプト全体の目安で、学習ループ自体は 3.5 s（meta.json train_s）。
+図：データ収集→記録→学習→本番の 4 段と、見送り分（検証用データ）でのスキル別推論の平均。正解率は見送り分（独立ではない）と独立テストに分けて載せる。
+数値は `out/manager_runs/mood_net/meta.json`・`report.md`・`test_report.md` で照合し、図は `python report/figure3/render.py` で描く（本プロジェクトで作成）。
 
 ## データ収集（analysis/mood_data.py）
 
@@ -268,7 +267,7 @@ flowchart TD
   R6 -- その他（戯れ・待機・移動） --> F17[まる目]
 ```
 
-同じ判定を顔のアイコン付きで清書した図が `../report/face_rules_chart_ortiz.png`（報告書の図、本プロジェクトで作成、
+同じ判定を清書した図が `../report/face_rules_chart_ortiz.png`（本プロジェクトで作成、`python report/figure4/render.py` で描く。顔の箱の右下の数字は下の表の番号で、
 条件と順番は `crab_face.py` の 17 規則と照合済み）である。
 
 | 番号 | 条件 | 表情 |

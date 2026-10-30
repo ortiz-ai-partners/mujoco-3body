@@ -175,7 +175,7 @@
   <tr><td>固定ルール</td><td class="n">16/30</td><td class="n">12</td><td class="n">1</td><td class="n">1</td></tr>
 </table>
 <p>施工で止まった 12 回は両方式で同じシードで、支配人が動く前に決まっている。ブルドーザーが右回りに 1° 以上ずれて始めた 10 回は、すべて施工で止まった。施工が終わりコースも動かなかった 17 回では、救助の成功は PPO 13、固定ルール 16 で、救助タスクの評価と同じ順になった。PPO の救助の失敗 4 回のうち 3 回は、押し上げが止まった後に「離れる」を選び続けて時間切れになった。</p>
-<p><b>提出動画の本編</b>：PPO の支配人が 4 手を選び、すべて成功した。固定ルールは押し上げの後に「離れる」を挟むが、PPO は押し上げが天面で終わった直後に「立たせる」を選び、1 手少なく渡り切った。転倒 0、コースの部材の移動なし。固定ルールの支配人を使った本編（5 手）も、比較用にリポジトリに置いた。</p>
+<p><b>提出動画の本編</b>：PPO の支配人が 4 手を選び、すべて成功した。固定ルールは押し上げの後に「離れる」を挟むが、PPO は押し上げが天面で終わった直後に「立たせる」を選び、1 手少なく渡り切った。転倒 0、コースの部材の移動なし。支配人だけを固定ルールに替えた比較用の動画（5 手）も、リポジトリに置いた。</p>
 
 <h2>6. 考察・実用性・反省</h2>
 <h3>考察</h3>
@@ -235,22 +235,20 @@
 <p><b>画面</b>：左上の字幕（場面と各機体の状態）、右上の顔モニター（跳跳の表情、気分ネットの値、決め手の値）、右下の sim 時計と倍速、判断のときだけ画面下の指示の帯。
 <b>音</b>：パッカンの声は Microduck 公式の声の合成器の移植、跳跳の声と効果音は自作の合成。鳴いた機体の画面上の位置で左右に振る。跳跳のジャンプでは、足が地面を離れた瞬間と着地の瞬間を接触から検出して音を鳴らす。</p>
 <div style="break-inside: avoid">
-<p><b>再現</b>：Python 3.10 で <code>pip install -r requirements.txt</code>（mujoco 3.11.0、onnxruntime、stable-baselines3、torch など）。ブルドーザーと Jumper のリポジトリを隣に並べ、次の 4 段で提出動画を作り直せる（講座のカードは別途用意）。</p>
-<pre>python v7_full.py --manager ppo --run ppo2_v22 --tag _take61 --build-speed 4 --no-cuts \
-    --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0     # 本編（約 5〜8 分）
-python intro.py                                                                    # 自己紹介
-python music/marimba_bgm.py                                                        # BGM
-python assemble.py --op &lt;OP&gt; --intro out/intro.mp4 --main out/3body_arena_v7_take61.mp4 --ed &lt;ED&gt; \
-    --out out/submission.mp4 --bgm out/music/bgm_marimba.wav --bgm-gain -16 --bgm-until end --bgm-fade 0</pre>
+<p><b>再現</b>：作り直して確かめる対象は、動画ではなく 3 体の動き（物理）である。Python 3.10 で <code>pip install -r requirements.txt</code>（mujoco 3.11.0、onnxruntime、stable-baselines3、torch など）。ブルドーザーと Jumper のリポジトリを隣に並べ、本編の通しを回して、記録を同梱の <code>out/v7_full_report_take61.json</code> と照合する。描画のたびに呼ぶ <code>mj_forward</code> も物理の経路に入るため、照合は描画つきの通しで行う。</p>
+<pre>python v7_full.py --manager ppo --run ppo2_v22 --tag _rerun61 --build-speed 4 --no-cuts \
+    --speedup CALL=4 --speedup RETURN=4 --speedup CELEBRATE=4 --tail-write 1.0     # 本編の通し（約 5〜8 分）
+python analysis/timeline_times.py out/v7_full_report_rerun61.json \
+    --compare out/v7_full_report_take61.json                                       # 末尾に state_digest equal: True</pre>
 </div>
-<p>本編の記録 <code>out/v7_full_report_take61.json</code> に、最終状態の sha256、出来事、支配人の判断と時刻、表情を記録した。学習・評価・気分ネットの手順、全テイクの台帳（失敗を含む）、表情の規則としきい値は GitHub の README と <code>docs/</code> にある。</p>
+<p>照合するのは、最終状態（qpos・qvel）の sha256、出来事と支配人の手の順序と sim 時刻、3 体の渡り切り。自己紹介・BGM・結合（<code>intro.py</code>、<code>music/marimba_bgm.py</code>、<code>assemble.py</code>）は動画の仕上げで、物理には触れない。学習・評価・気分ネットの手順、全テイクの台帳（失敗を含む）、表情の規則としきい値は GitHub の README と <code>docs/</code> にある。</p>
 </div>
 
 <h2>付録 C　AI の使用と第三者資産</h2>
 <div class="app">
 <ul>
   <li><b>推論</b>：公式 ONNX ポリシー 5 本（Microduck 2 本、Jumper 3 本）、支配人 AI、気分ネット。<b>学習</b>：支配人 AI（PPO、表形式 Q）と気分ネット。すべて CPU。</li>
-  <li><b>開発補助</b>：本作のリポジトリの設計・コード・文書は LLM（Anthropic の Claude、Claude Code）の、ブルドーザー側（course-builder）は OpenAI の Codex の対話型セッションの支援を受けて作成した。図 1（全体の仕組み）は、本作で書いた数値入りの依頼文をもとに対話型 AI「GPTAstra」が清書し、後から画像の上で表記を直した。図 2・図 3 はリポジトリのスクリプトで描いた。いずれも開発の補助で、シミュレーションの実行時には動かない。動画の支配人 AI が名乗る「アイランドマスター」は開発補助の LLM の呼び名から取ったキャラクター名で、次の一手を選ぶのは支配人 AI である。</li>
+  <li><b>開発補助</b>：本作のリポジトリの設計・コード・文書は LLM（Anthropic の Claude、Claude Code）の、ブルドーザー側（course-builder）は OpenAI の Codex の対話型セッションの支援を受けて作成した。図 1（全体の仕組み）は、本作で書いた数値入りの依頼文をもとに対話型 AI「GPTAstra」が描画のコード（<code>report/figure1/render.py</code>）を書き、1 行を本作で直して描いた。図 2・図 3 はリポジトリのスクリプトで描いた。いずれも開発の補助で、シミュレーションの実行時には動かない。動画の支配人 AI が名乗る「アイランドマスター」は開発補助の LLM の呼び名から取ったキャラクター名で、次の一手を選ぶのは支配人 AI である。</li>
   <li><b>ライセンス</b>：コードは MIT。Microduck の外観（3D メッシュは CC BY-NC-SA 4.0）が映る動画と図は CC BY-NC-SA 4.0 に従う（帰属：Pollen Robotics）。Microduck 公式 ONNX は配布元（Hugging Face）の表示で Apache-2.0。パッカンの声の合成器（<code>microduck_voice.py</code>）は公式ランタイムの <code>sounds</code>（Apache-2.0）の移植。第三者資産の一覧はリポジトリの <code>THIRD_PARTY.md</code> にある。</li>
   <li>動画・コード・資料に、氏名・所属・メールアドレスは含めていない。</li>
 </ul>

@@ -19,8 +19,7 @@ python analysis/timeline_times.py out/v7_full_report_take61.json
 
 ![提出動画の構成](../report/timeline_ortiz.png)
 
-図：上のかっこが再生速度、帯が場面と主役（色）、星が渡り切り、A〜E が固定ルールの支配人の 5 手、下の帯が跳跳の顔。出所は `out/v7_full_report_take51.json`。
-この図は以前の 2:47 版（固定ルールの支配人、`state_digest` `678fd3cae2ca`）の動画時刻で描いてあり、本編（PPO の支配人、4 手）の時刻と手は本書の表のとおり（違いは第 5 節）。
+図：上のかっこが再生速度、帯が場面と主役（色）、星が渡り切り、A〜D が支配人 AI（PPO）の 4 手、下の帯が跳跳の顔。横軸は提出動画の時刻に比例する。出所は `out/v7_full_report_take61.json`（図は `python report/figure2/render.py` で描く。時刻の対応は本書の表）。
 
 ## 1. 画面の読み方
 
@@ -170,7 +169,7 @@ MuJoCo の自由カメラから求め（`v6_common.py` `screen_xy`）、定電�
 | 2:52.6 | 2:34.4 | 398.1 | END。その後の 1 s を書き出して、本編は 2:35.5（提出動画 2:53.6）で終わる | — | — | — |
 | 2:53.6〜2:56.6 | — | — | 講座の ED カード。BGM の最後の和音が響いて消える | — | — | 講座の素材 |
 
-出所：`events` の全 60 行（本表は要約）。提出動画の列は本編の `video_t` に 18.14 s を足して丸めた値。座標は world 座標で、y は南から北へ正、コースの中心線は x=1.45（`crab_help.py` `LANE_X`）。
+出所：`events` の全 62 行（本表は要約）。提出動画の列は本編の `video_t` に 18.14 s を足して丸めた値。座標は world 座標で、y は南から北へ正、コースの中心線は x=1.45（`crab_help.py` `LANE_X`）。
 施工の工程名（UP, TO_DOWN, CROSS など）は course-builder の `SlopeAssembly.phase` で、字幕には日本語で出る（`v6_phase4_full.py` `PHASE_TEXT`）。
 支配人 AI の手の名前（SEAT など）は `crab_help.py` `ACTIONS`、結果の名前（seated など）は `RESULT_SLOTS` のとおり。
 
@@ -263,7 +262,7 @@ sim 347.9〜349.9 s の 2 秒（×2 区間なので動画では 1 秒）は、2 
 動画時刻は CALL の途中からずれ始め、支配人の引き継ぎ以後は本編が 3.93〜3.94 s、輪のダンス以後は 8.20 s 早い（`analysis/timeline_times.py out/v7_full_report_take61.json --compare out/v7_full_report_take52.json` の shift 列）。
 全長の差 9.7 s は、この 8.20 s と END の後の書き出しの差 1.5 s による。固定ルール版と以前の 2:47 版も同じ関係で、`state_digest`（678fd3cae2ca）と 5 手の `t` が同じ、
 輪のダンス以後は固定ルール版が 8.17 s 早く、全長の差は 9.7 s である（`take57.json --compare take51.json`）。
-帯・ちょーさんの呼び名・声の音量と左右の振り分けは本編と固定ルール版にだけあり、以前の速度設定の 4 本は帯がなく、吹き出しは「カニさん」、声は下げる前の音量のモノラルで描いた版である。
+帯・ちょーさんの呼び名・声の左右の振り分けは本編と固定ルール版にだけあり（声は、本編が Microduck 公式の声でパッカン 1/6・跳跳 1/4、固定ルール版が合成の声でパッカン 1/3・跳跳 1/2）、以前の速度設定の 4 本は帯がなく、吹き出しは「カニさん」、声は下げる前の音量のモノラルで描いた版である。
 
 固定ルール版（`out/v7_full_report_take57.json`）は SEAT → PUSH → BACK_OFF → STANDUP → WALK_ON の 5 手で、押し上げ直後に跳跳をパッカンから 0.6 m 離れるまで下がらせてから立たせた
 （距離 0.25→0.64 m、`crab_help.py` `skill_back_off` の `clearance`）。その動画時刻は BACK_OFF 2:05.9、STANDUP 2:06.8、WALK_ON 2:09.6、
@@ -277,7 +276,7 @@ Q 表版（`out/v7_full_report_take53.json`）は STANDUP → WALK_ON（`stalled
 立位の相手への 2 度目の STANDUP（結果 `nothing`、1.0 s）は判断の誤りであり、評価 v4 では結果が `nothing` の手を「無駄な手」として 1 話あたりで数える
 （`manager2_report.py` の `wasted_per_episode`、`out/manager_runs/comparison_v4.md` の列で Q 表 5.17、固定ルール 0.07）。
 
-`--jitter 0.4` は跳跳の応援ダンスを収録の 0.4 s 先から始める引数（`CHEER_DANCE_START` に加算）で、目的は物理の経路を変えることだけである。報告 JSON には記録されないので、使った値は描画コマンドに残す（argparse の help の指示）。
+`--jitter 0.4` は跳跳の応援ダンスを収録の 0.4 s 先から始める引数（`CHEER_DANCE_START` に加算）で、目的は物理の経路を変えることだけである。以前の速度設定の 4 本の報告 JSON には記録されない（本編と固定ルール版からは `settings.jitter` に残る）ので、使った値は描画コマンドに残す（argparse の help の指示）。
 jitter 0 の経路（`out/v7_full_report_take26.json`）では、7 手目 WALK_ON の途中でパッカンが下り坂で転び（sim 358.3 s）、起き上がれないまま救助の上限 240 s（`--rescue-max`）で打ち切られた。
 その間 Q 表は BACK_OFF（結果 `nothing`）と WAIT を 31 回選び、パッカンは渡れなかった（39 手、`three_crossed.duck` が false）。
 転倒と起き上がれなかったことは歩行スキル（公式 velstand）の下り坂での精度の不足、転んだ相手を助ける手が 6 手にないことは設計の不足である（固定ルールもこの状態では WAIT を選ぶ、`rule_action`）。
