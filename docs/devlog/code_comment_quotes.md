@@ -10,7 +10,7 @@
 
 | 規則 | 原文の型 | 置換後 |
 |---|---|---|
-| 1 | ハンドル名つきの指示（「ゆうころ 10/28 昼: 『…』」型） | 「requirement:」「design decision:」で始まる仕様文（何をするか・既定値） |
+| 1 | ハンドル名つきの指示（「ユーザー 10/28 昼: 『…』」型） | 「requirement:」「design decision:」で始まる仕様文（何をするか・既定値） |
 | 2 | 日付・時間帯（10/27、10/28 noon、01:40 など） | 削除。必要なら「debug run」「smoke test」「earlier render」と場面だけ残す |
 | 3 | take 番号（take 5、takes 9-33 など） | 条件名（「the push ending」「the first form of the procession finale」「an earlier render」） |
 | 4 | 開発環境の呼び方（`<jumper venv python>`） | `python`（リポジトリルートで実行、archive/ は `python archive/…`） |
@@ -43,7 +43,7 @@
 - 同じことを構文木でも確かめた：変更前（index）と変更後の各ファイルを `ast` で読み、docstring と `help=` の値を除いて比べると、
   差が出るのは `RUNS` の 2 ファイル、archive/ の `sys.path`・`BASE`・`OUT_DIR` の行、`v7_full.py` の `--build-speed` の行だけだった。
 - 表の全行について、「原文」が diff の削除行と、「置換後」が追加行と 1 文字ずつ一致することをスクリプトで照合した（行頭の空白は除く）。
-- 残存チェック：`grep` で「ゆうころ」「島」「オルティス」「ファーブル」「ヴェルティ」「おるてぃーず」「Notion」「D:\\」「HANDOVER.md（docs/devlog/ 以外）」「<jumper venv python>」、
+- 残存チェック：`grep` で「ユーザー」「島」「オルティス」「ファーブル」「ヴェルティ」「おるてぃーず」「Notion」「D:\\」「HANDOVER.md（docs/devlog/ 以外）」「<jumper venv python>」、
   日付（10/27 など）・時間帯（noon、morning など）・take 番号（ファイル名の中を除く）が `*.py`・`analysis/*.py`・`archive/*.py` に残っていないことを確認した。
 
 ## 表の読み方
@@ -72,13 +72,13 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| analysis/face_sheet.py:1-2 | """The 11 faces as they appear in the video, with their names and the situations that bring them out (report figure 6,<br>ゆうころ 10/28 夜).  Renders each expression through the face camera at twice the monitor's size and lays them out in | """The 11 faces as they appear in the video, with their names and the situations that bring them out (report<br>figure 6).  Renders each expression through the face camera at twice the monitor's size and lays them out in |
+| analysis/face_sheet.py:1-2 | """The 11 faces as they appear in the video, with their names and the situations that bring them out (report figure 6,<br>ユーザー 10/28 夜).  Renders each expression through the face camera at twice the monitor's size and lays them out in | """The 11 faces as they appear in the video, with their names and the situations that bring them out (report<br>figure 6).  Renders each expression through the face camera at twice the monitor's size and lays them out in |
 
 ### analysis/face_value.py
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| analysis/face_value.py:1 | """Is the PPO v2.2 critic's V(s) a usable mood for the crab?  (crab_face.MoodAI, ゆうころ 10/28 夜) | """Is the PPO v2.2 critic's V(s) a usable mood for the crab?  (crab_face.MoodAI; the first design, not adopted) |
+| analysis/face_value.py:1 | """Is the PPO v2.2 critic's V(s) a usable mood for the crab?  (crab_face.MoodAI, ユーザー 10/28 夜) | """Is the PPO v2.2 critic's V(s) a usable mood for the crab?  (crab_face.MoodAI; the first design, not adopted) |
 
 ### analysis/fallen_value.py
 
@@ -90,31 +90,31 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| analysis/mood_data.py:1 | """Training data for the crab's mood net (crab_face.MoodAI, ゆうころ 10/28 夜「本物の推論で 2 つの AI」). | """Training data for the crab's mood net (crab_face.MoodAI; requirement: two AIs doing real inference in the video). |
+| analysis/mood_data.py:1 | """Training data for the crab's mood net (crab_face.MoodAI, ユーザー 10/28 夜「本物の推論で 2 つの AI」). | """Training data for the crab's mood net (crab_face.MoodAI; requirement: two AIs doing real inference in the video). |
 
 ### analysis/mood_train.py
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| analysis/mood_train.py:2-3 | end - p_success / p_stall / p_fall / p_nothing - and whether the duck gets across (crab_face.MoodAI; ゆうころ<br>10/28 夜「本物の推論で 2 つの AI」「複数の確率と計測値から表情を組み立てる」). | end - p_success / p_stall / p_fall / p_nothing - and whether the duck gets across (crab_face.MoodAI; requirement:<br>two AIs doing real inference in the video, the face composed from several probabilities and measured values). |
+| analysis/mood_train.py:2-3 | end - p_success / p_stall / p_fall / p_nothing - and whether the duck gets across (crab_face.MoodAI; ユーザー<br>10/28 夜「本物の推論で 2 つの AI」「複数の確率と計測値から表情を組み立てる」). | end - p_success / p_stall / p_fall / p_nothing - and whether the duck gets across (crab_face.MoodAI; requirement:<br>two AIs doing real inference in the video, the face composed from several probabilities and measured values). |
 
 ### crab_face.py
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| crab_face.py:3-7 | ゆうころ 10/28 夕〜夜:「カニの表情を AI 管理できたりする？」→ a table keyed by the manager's action (takes 30-37)<br>→「本物の推論で 2 つの AI を走らせるように」→ a mood net beside the manager (takes 38-41)<br>→「複数の確率と計測値から表情を組み立てるものを精密に設計したい」→ this version (take 42-): the face is composed from<br>the mood net's four outcome probabilities and the crossing estimate, and from measured effort, contact, progress<br>and events, by the priority rules below.  The monitor shows the values that decide the face. | Design history: the first version chose the face from a table keyed by the manager's action; the second ran a mood<br>net beside the manager (requirement: two AIs doing real inference in the video); this version (requirement: compose<br>the expression precisely from several probabilities and measured values) builds the face from the mood net's four<br>outcome probabilities and the crossing estimate, and from measured effort, contact, progress and events, by the<br>priority rules below.  The monitor shows the values that decide the face. |
+| crab_face.py:3-7 | ユーザー 10/28 夕〜夜:「カニの表情を AI 管理できたりする？」→ a table keyed by the manager's action (takes 30-37)<br>→「本物の推論で 2 つの AI を走らせるように」→ a mood net beside the manager (takes 38-41)<br>→「複数の確率と計測値から表情を組み立てるものを精密に設計したい」→ this version (take 42-): the face is composed from<br>the mood net's four outcome probabilities and the crossing estimate, and from measured effort, contact, progress<br>and events, by the priority rules below.  The monitor shows the values that decide the face. | Design history: the first version chose the face from a table keyed by the manager's action; the second ran a mood<br>net beside the manager (requirement: two AIs doing real inference in the video); this version (requirement: compose<br>the expression precisely from several probabilities and measured values) builds the face from the mood net's four<br>outcome probabilities and the crossing estimate, and from measured effort, contact, progress and events, by the<br>priority rules below.  The monitor shows the values that decide the face. |
 | crab_face.py:9 | What is official and what is ours | What is official and what this project adds |
 | crab_face.py:13-15 | * This module is the island's.  The screen derives from jumper/out/face_tools/face_display.py (10/11, the lesson<br>videos); the pictures are drawn with PIL; the sparkle borrows the official animation's four-pointed star. | * This module is the project's own work.  The screen derives from an earlier face-display tool by the same author<br>(made for lesson videos, not distributed); the pictures are drawn with PIL; the sparkle borrows the official<br>animation's four-pointed star. |
-| crab_face.py:81 | HOLD = 0.5                          # s a face stays at least (ゆうころ: 0.5 秒以上保つ) | HOLD = 0.5                          # s a face stays at least (requirement: a face is held at least 0.5 s) |
-| crab_face.py:89 | PUSH_SWEAT_S = 5.0                  # s of pushing in contact after which the face sweats (ゆうころ) | PUSH_SWEAT_S = 5.0                  # s of pushing in contact after which the face sweats (requirement) |
+| crab_face.py:81 | HOLD = 0.5                          # s a face stays at least (ユーザー: 0.5 秒以上保つ) | HOLD = 0.5                          # s a face stays at least (requirement: a face is held at least 0.5 s) |
+| crab_face.py:89 | PUSH_SWEAT_S = 5.0                  # s of pushing in contact after which the face sweats (ユーザー) | PUSH_SWEAT_S = 5.0                  # s of pushing in contact after which the face sweats (requirement) |
 | crab_face.py:91 | # see HANDOVER; the duck weighs about 15 N) | # see docs/devlog/HANDOVER.md; the duck weighs about 15 N) |
-| crab_face.py:444 | fourth item is what the monitor's top line shows (ゆうころ: every change of face names the values behind it).""" | fourth item is what the monitor's top line shows (requirement: every change of face names the values behind it).""" |
+| crab_face.py:444 | fourth item is what the monitor's top line shows (ユーザー: every change of face names the values behind it).""" | fourth item is what the monitor's top line shows (requirement: every change of face names the values behind it).""" |
 
 ### crab_help.py
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| crab_help.py:4-5 | ゆうころ (2026-10-28): the bulldozer must not handle the duck (lifting by the neck could break it);<br>the crab helps instead - "a beautiful friendship".  Experiment v7_test_crab_push.py (same night): | Requirement: the bulldozer must not handle the duck (lifting it by the neck could break it); the<br>crab helps instead.  Experiment v7_test_crab_push.py: |
+| crab_help.py:4-5 | ユーザー (2026-10-28): the bulldozer must not handle the duck (lifting by the neck could break it);<br>the crab helps instead - "a beautiful friendship".  Experiment v7_test_crab_push.py (same night): | Requirement: the bulldozer must not handle the duck (lifting it by the neck could break it); the<br>crab helps instead.  Experiment v7_test_crab_push.py: |
 | crab_help.py:42 | # the west side and dropped 0.44 m (headless take-6 test, 10/28) | # the west side and dropped 0.44 m (headless test of an early render) |
 | crab_help.py:48 | # before it, the duck toppled at the lip in 20/20 pushes on 10/28 (its seated | # before it, the duck toppled at the lip in 20/20 pushes (its seated |
 | crab_help.py:52 | # the two deck pieces (4 cm gap at y +0.02..+0.06) was tried on 10/28: the crab | # the two deck pieces (4 cm gap at y +0.02..+0.06) was tried: the crab |
@@ -127,7 +127,7 @@
 | crab_help.py:363 | # (experiment 10/28, off by default: a stop-and-re-approach at the lip did not save a push that had | # (experiment, off by default: a stop-and-re-approach at the lip did not save a push that had |
 | crab_help.py:379 | # toppled the seated duck on the landing in another, 10/28; the push ends at the landing's edge) | # toppled the seated duck on the landing in another; the push ends at the landing's edge) |
 | crab_help.py:382 | # pieces stand 4 cm apart there (raycast 10/28: floor at y +0.02..+0.06) and a walking duck's foot | # pieces stand 4 cm apart there (raycast: floor at y +0.02..+0.06) and a walking duck's foot |
-| crab_help.py:412 | """NOT IN USE - an experiment of 10/28 noon (ゆうころ「固定ルール、カニを近くに伴走させようか」), kept as a record. | """NOT IN USE - an experiment (idea: the crab escorts the duck closely and nudges it when it falls), kept as a record. |
+| crab_help.py:412 | """NOT IN USE - an experiment of 10/28 noon (ユーザー「固定ルール、カニを近くに伴走させようか」), kept as a record. | """NOT IN USE - an experiment (idea: the crab escorts the duck closely and nudges it when it falls), kept as a record. |
 | crab_help.py:554-555 | """45 floats.  `book` carries the bookkeeping: last_result, last_action, pushes, t0_episode, course_damage,<br>course_tolerance.""" | """46 floats (OBS_DIM = 3 + 2 + 4 + 2 + 6 stages + 7 + 13 results + 6 actions + 3).  `book` carries the<br>bookkeeping: last_result, last_action, pushes, t0_episode, course_damage, course_tolerance.""" |
 | crab_help.py:621-622 | RULE_NEAR_LIP = True               # the 10/28 noon addition to the rule (take 13); False reproduces the morning's rule<br># (baselines_v2) for a like-for-like check of the evaluation environment | RULE_NEAR_LIP = True               # a later addition to the rule (push a duck seated anywhere up to the lip); False<br># reproduces the earlier rule (baselines_v2) for a like-for-like check of the environment |
 
@@ -135,7 +135,7 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| manager2_env.py:4 | ゆうころ (2026-10-27/28): the manager AI ("Island Master") decides what to do next when things do not | Requirement: the manager AI decides what to do next when things do not |
+| manager2_env.py:4 | ユーザー (2026-10-27/28): the manager AI ("Island Master") decides what to do next when things do not | Requirement: the manager AI decides what to do next when things do not |
 | manager2_env.py:46 | # (10/28 01:40: "wasted" now also covers a skill that ends stalled / slipped - reward v2.1; ppo2_small and | # (reward v2.1: "wasted" also covers a skill that ends stalled / slipped; ppo2_small and |
 | manager2_env.py:48 | # reward v2.2 (10/28 08:30, after take 8 and the ppo2_medium2 evaluation): a SEAT / STANDUP that ends "still_down" | # reward v2.2 (after the ppo2_medium2 evaluation): a SEAT / STANDUP that ends "still_down" |
 | manager2_env.py:51-53 | #  so PPO never learned to make room first (BACK_OFF after a fall 3/10 in the eval, flat through 4.9k decisions of<br>#  continued training).  Training-only: the shared-seed evaluations keep v2.1 so their returns stay comparable. | #  so PPO never learned to make room first (BACK_OFF after a fall 3/10 in the eval; still 13/52 at the 4.9k-decision<br>#  check of the continued training ppo2_medium3, docs/devlog/MANAGER_DESIGN.md section 7.7, stopped at +7.5k).<br>#  Training-only: the shared-seed evaluations keep v2.1 so their returns stay comparable. |
@@ -170,7 +170,7 @@
 | file:行 | 原文 | 置換後 |
 |---|---|---|
 | v6_common.py:3-5 | v1-v5 tried the whole scenario in one script; v6 follows HANDOVER.md section 8<br>and builds the video in phases that each export their own MP4. | v1-v5 tried the whole scenario in one script; v6 follows docs/devlog/HANDOVER.md section 8<br>and builds the video in phases that each export their own MP4.  v7_full.py (the submitted<br>story) and the learning environment import the helpers from here. |
-| v6_common.py:91 | same row as the caption box (ゆうころ 10/28 夜: 「一番上の文字情報の枠と同じ列に、二段じゃなく一段で」).  The | same row as the caption box (requirement: one row together with the caption box, not a second row).  The |
+| v6_common.py:91 | same row as the caption box (ユーザー 10/28 夜: 「一番上の文字情報の枠と同じ列に、二段じゃなく一段で」).  The | same row as the caption box (requirement: one row together with the caption box, not a second row).  The |
 | v6_common.py:261 | # ── Built-stage snapshot (Notion phase A0) ─────────────────────────────── | # ── Built-stage snapshot (phase A0 of the v6 plan) ────────────────────── |
 
 ### v6_phase4_full.py
@@ -178,7 +178,7 @@
 | file:行 | 原文 | 置換後 |
 |---|---|---|
 | v6_phase4_full.py:3-5 | （追加のみ、原文なし） | Note: this is the v6 version with demo aids (external forces).  The submitted story is v7_full.py,<br>which imports only ArenaSim and PHASE_TEXT from here and uses no external force.<br>（空行） |
-| v6_phase4_full.py:7 | MD wanders in the free area beyond the course (ゆうころ: 「作っている最中もうろちょろ」). | MD wanders in the free area beyond the course (requirement: it wanders while the course is built). |
+| v6_phase4_full.py:7 | MD wanders in the free area beyond the course (ユーザー: 「作っている最中もうろちょろ」). | MD wanders in the free area beyond the course (requirement: it wanders while the course is built). |
 | v6_phase4_full.py:9 | quacking (「がーがー言いながら後をついていって」). | quacking (requirement: it follows BZ while quacking). |
 
 ### v6_robots.py
@@ -192,50 +192,50 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| v7_full.py:8 | Stages (ゆうころ 10/27 夜の筋書き) | Stages (the story, in order) |
+| v7_full.py:8 | Stages (ユーザー 10/27 夜の筋書き) | Stages (the story, in order) |
 | v7_full.py:16-27 | LIFT       BZ drives back around the course with JP trailing it, and JP goes round to the duck's<br>south side and cheers it with the official dance policy while BZ works the fork:<br>--ending push  (take 5) from the duck's side, fork at 6 cm: tips the seated duck over,<br>velstand gets it back on its feet by itself. | RETURN     (--ending crab, the default) JP comes back round the east side of the course to the lane<br>behind the seated duck.  BZ never touches the duck.<br>RESCUE     the manager AI (--manager rule / ppo / tabq) picks the next skill from crab_help.py -<br>WAIT / SEAT / PUSH / BACK_OFF / STANDUP / WALK_ON - until the duck stands on the floor<br>north of the course; the mood net (--face-ai mood) drives JP's face monitor.<br>CELEBRATE  the three gather at the goal (--finale circle: a circle facing the centre, BZ pumps its<br>fork, MD squats and shakes its head, JP dances and holds its claws up).<br>LIFT       (--ending push / lift only: early endings, kept as options) BZ drives back around the<br>course with JP trailing it, and JP goes round to the duck's south side and cheers it with<br>the official dance policy while BZ works the fork:<br>--ending push  from the duck's side, fork at 6 cm: tips the seated duck over, velstand<br>gets it back on its feet by itself. |
 | v7_full.py:30-31 | with both tines under its hips - a 2 cm window (see HANDOVER.md), so<br>whether it lifts, shoves or misses is decided by the physics of the take. | with both tines under its hips - a 2 cm window (see docs/devlog/HANDOVER.md),<br>so whether it lifts, shoves or misses is decided by the physics of the render. |
 | v7_full.py:33-35 | &lt;jumper venv python&gt; v7_full.py --test            # no render<br>&lt;jumper venv python&gt; v7_full.py --preview DIR     # stills<br>&lt;jumper venv python&gt; v7_full.py                   # -&gt; out/3body_arena_v7.mp4 (+ chirps) | python v7_full.py --test            # no render<br>python v7_full.py --preview DIR     # stills<br>python v7_full.py                   # -&gt; out/3body_arena_v7.mp4 (+ chirps) |
-| v7_full.py:78-81 | # video speed per stage.  ゆうころ 10/28 昼: the submission rules allow up to 2x (3x would need the organisers' OK), so<br># nothing above 2x any more (takes 6-10 ran the construction at 4x); the celebration's dance itself plays at 1x | # video speed per stage.  Requirement: the submission rules cap the playback speed (2x when the story was planned,<br># later raised to 8x), so the story from the ramp attempt on plays at 2x and the celebration's dance at 1x.  The<br># construction alone can be shown faster with --build-speed (a multiple of 2, together with --no-cuts; the submitted<br># video uses 4): frames are still sampled at 2x and only every n-th one is written, so the physics path is unchanged |
-| v7_full.py:90-91 | # ── the goal celebration (ゆうころ 10/28 朝: 「坂を降り始めたらカニも後を追いかけて、ゴールで BZ もアームを上げて、<br>#    パッカンもパタパタして、カニも腕を上げるダンス」) ── | # ── the goal celebration (requirement: once the duck starts down the far ramp the crab follows it, and at the goal<br>#    BZ raises its fork, the duck flaps and the crab dances with its arms up) ── |
-| v7_full.py:100 | # ── jump cuts (ゆうころ 10/28 夕: the submission must be 1-3 min including titles, at most 2x; the story is 3:30 at 2x, | # ── jump cuts (requirement when they were made: 1-3 min including titles, at most 2x; the story is 3:30 at 2x, |
+| v7_full.py:78-81 | # video speed per stage.  ユーザー 10/28 昼: the submission rules allow up to 2x (3x would need the organisers' OK), so<br># nothing above 2x any more (takes 6-10 ran the construction at 4x); the celebration's dance itself plays at 1x | # video speed per stage.  Requirement: the submission rules cap the playback speed (2x when the story was planned,<br># later raised to 8x), so the story from the ramp attempt on plays at 2x and the celebration's dance at 1x.  The<br># construction alone can be shown faster with --build-speed (a multiple of 2, together with --no-cuts; the submitted<br># video uses 4): frames are still sampled at 2x and only every n-th one is written, so the physics path is unchanged |
+| v7_full.py:90-91 | # ── the goal celebration (ユーザー 10/28 朝: 「坂を降り始めたらカニも後を追いかけて、ゴールで BZ もアームを上げて、<br>#    パッカンもパタパタして、カニも腕を上げるダンス」) ── | # ── the goal celebration (requirement: once the duck starts down the far ramp the crab follows it, and at the goal<br>#    BZ raises its fork, the duck flaps and the crab dances with its arms up) ── |
+| v7_full.py:100 | # ── jump cuts (ユーザー 10/28 夕: the submission must be 1-3 min including titles, at most 2x; the story is 3:30 at 2x, | # ── jump cuts (requirement when they were made: 1-3 min including titles, at most 2x; the story is 3:30 at 2x, |
 | v7_full.py:103 | #    sim clock jumps.  Default on; --no-cuts for the full record, --cut START:END:LABEL for others) ── | #    sim clock jumps.  Default on; --no-cuts for the full record (used by the submitted video), --cut for others) ── |
-| v7_full.py:107-110 | # ── the circle (ゆうころ 10/28 昼: 「みんなで顔を合わせようか、円になって中央を向き、ブルドーザーはアームを上下、アヒルは<br>#    手がなかったので屈伸しながら首を振る」) ──<br># ── the crab cheers the duck's ramp attempts (ゆうころ 10/28 昼: 「カニ、ぱっかんがチャレンジしているとき万歳で踊って応援してほしい」) ── | # ── the circle (requirement: the three face each other in a circle round a centre; BZ pumps its fork up and down,<br>#    the duck, having no arms, squats while shaking its head, the crab dances) ──<br># ── the crab cheers the duck's ramp attempts (requirement: while the duck tries the ramp, the crab dances with its<br>#    claws up to cheer it on) ── |
-| v7_full.py:160-162 | pump_floor: the lowest the fork goes while pumping.  0.2 m when BZ's back is to the others (takes 9-33); 0.38 m<br>once BZ has turned round to face them (take 37-, ゆうころ 10/28 夕): the duck then stands under the raised tines,<br>0.9 m in front, and its head is 0.23 m high.""" | pump_floor: the lowest the fork goes while pumping.  0.2 m when BZ's back is to the others (the first form of the<br>procession finale); 0.38 m once BZ has turned round to face them (design decision: BZ faces the others at the<br>goal): the duck then stands under the raised tines, 0.9 m in front, and its head is 0.23 m high.""" |
-| v7_full.py:221 | MASTER_GAIN = 0.45          # ゆうころ: 音は小さめで | MASTER_GAIN = 0.45          # requirement: the voices stay quiet |
+| v7_full.py:107-110 | # ── the circle (ユーザー 10/28 昼: 「みんなで顔を合わせようか、円になって中央を向き、ブルドーザーはアームを上下、アヒルは<br>#    手がなかったので屈伸しながら首を振る」) ──<br># ── the crab cheers the duck's ramp attempts (ユーザー 10/28 昼: 「カニ、ぱっかんがチャレンジしているとき万歳で踊って応援してほしい」) ── | # ── the circle (requirement: the three face each other in a circle round a centre; BZ pumps its fork up and down,<br>#    the duck, having no arms, squats while shaking its head, the crab dances) ──<br># ── the crab cheers the duck's ramp attempts (requirement: while the duck tries the ramp, the crab dances with its<br>#    claws up to cheer it on) ── |
+| v7_full.py:160-162 | pump_floor: the lowest the fork goes while pumping.  0.2 m when BZ's back is to the others (takes 9-33); 0.38 m<br>once BZ has turned round to face them (take 37-, ユーザー 10/28 夕): the duck then stands under the raised tines,<br>0.9 m in front, and its head is 0.23 m high.""" | pump_floor: the lowest the fork goes while pumping.  0.2 m when BZ's back is to the others (the first form of the<br>procession finale); 0.38 m once BZ has turned round to face them (design decision: BZ faces the others at the<br>goal): the duck then stands under the raised tines, 0.9 m in front, and its head is 0.23 m high.""" |
+| v7_full.py:221 | MASTER_GAIN = 0.45          # ユーザー: 音は小さめで | MASTER_GAIN = 0.45          # requirement: the voices stay quiet |
 | v7_full.py:429 | ap.add_argument("--tag", default="", help="suffix for the output names, e.g. _take5 (keeps earlier takes)") | ap.add_argument("--tag", default="", help="suffix for the output names, e.g. _take51 (earlier outputs are kept)") |
-| v7_full.py:431-435 | help="push: take 5 - BZ comes at the seated duck's side, the fork tips it over, it gets up by itself; "<br>"lift: the duck turns its back and BZ docks behind it to scoop it up (a 2 cm window - see HANDOVER); "<br>"crab (take 6, ゆうころ 10/28: BZ must not handle the duck): the crab comes back and the manager AI "<br>"chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk") | help="crab (default; requirement: BZ must not handle the duck): the crab comes back and the manager AI "<br>"chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk; "<br>"push (early ending, kept): BZ comes at the seated duck's side, the fork tips it over, it gets up "<br>"by itself; lift (early ending, kept): the duck turns its back and BZ docks behind it to scoop it "<br>"up (a 2 cm window, see docs/devlog/HANDOVER.md)") |
-| v7_full.py:441 | help="circle (ゆうころ 10/28 昼, take 11-): the crab follows the duck down, BZ drives up and turns round, the three " | help="circle (default): the crab follows the duck down, BZ drives up and turns round, the three " |
+| v7_full.py:431-435 | help="push: take 5 - BZ comes at the seated duck's side, the fork tips it over, it gets up by itself; "<br>"lift: the duck turns its back and BZ docks behind it to scoop it up (a 2 cm window - see HANDOVER); "<br>"crab (take 6, ユーザー 10/28: BZ must not handle the duck): the crab comes back and the manager AI "<br>"chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk") | help="crab (default; requirement: BZ must not handle the duck): the crab comes back and the manager AI "<br>"chooses the skills (crab_help.py) that get the duck across - seat, push, back off, stand, walk; "<br>"push (early ending, kept): BZ comes at the seated duck's side, the fork tips it over, it gets up "<br>"by itself; lift (early ending, kept): the duck turns its back and BZ docks behind it to scoop it "<br>"up (a 2 cm window, see docs/devlog/HANDOVER.md)") |
+| v7_full.py:441 | help="circle (ユーザー 10/28 昼, take 11-): the crab follows the duck down, BZ drives up and turns round, the three " | help="circle (default): the crab follows the duck down, BZ drives up and turns round, the three " |
 | v7_full.py:443-444 | "procession (take 9/10): the crab follows the duck down and the three cheer where the duck stopped; "<br>"around (take 6/7): the crab backs down the up-ramp and walks round the course to the duck") | "procession: the crab follows the duck down and the three cheer where the duck stopped; "<br>"around: the crab backs down the up-ramp and walks round the course to the duck") |
 | v7_full.py:446-449 | help="seconds added to where the crab's cheer dance starts in its recording (CHEER_DANCE_START). The only "<br>"purpose is to change the physics path of a rendered take: the rendered physics is deterministic "<br>"for given code, so a learned manager that fails on one path (take 17: the Q table re-seats "<br>"instead of backing off after a stalled push) can be tried on another. Say which jitter a take used") | help="seconds added to where the crab's cheer dance starts in its recording (CHEER_DANCE_START), default 0. "<br>"The only purpose is to change the physics path of a render: the physics is deterministic for given "<br>"code, so a learned manager that fails on one path can be tried on another. Record the jitter a "<br>"render used") |
-| v7_full.py:451 | help="switch off the pre-positioning (ゆうころ 10/28 昼): by default an idle robot already walks to where its " | help="switch off the pre-positioning: by default an idle robot already walks to where its " |
-| v7_full.py:456-459 | help="no face on the crab's display panel.  By default (ゆうころ 10/28 夕) the crab's expression is chosen from "<br>"the manager's action and its result (crab_face.py's table) and shown in the face monitor, an inset at "<br>"the bottom-left.  Render-only: the physics path is the same with and without it "<br>"(--test, out/v7_full_report_facecheck_{A,B}.json)") | help="no face on the crab's display panel.  By default the crab's expression is composed by crab_face.py "<br>"from the mood net's inference and measured values (--face-ai) and shown in the face monitor, an "<br>"inset beside the caption.  Render-only: the physics path is the same with and without it "<br>"(--test, out/v7_full_report_facecheck_{A,B}.json, analysis/face_check.py)") |
-| v7_full.py:461-464 | help="mood (ゆうころ 10/28 夜, take 38-): a second AI beside the manager - the mood net, out/manager_runs/mood_net - "<br>"infers every control step of the rescue whether the running move will end well, and its mood "<br>"(confident / neutral / worried) colours the crab's face; critic: the PPO v2.2 critic's V(s) instead "<br>"(the first attempt, a record); table: the expression table alone (takes 30-37)") | help="mood (default): a second AI beside the manager - the mood net, out/manager_runs/mood_net - "<br>"infers every control step of the rescue how the running move will end, and its outputs "<br>"together with measured values choose the crab's face; critic: the PPO v2.2 critic's V(s) instead "<br>"(the first design, kept as a record); table: the expression table alone (the earliest version)") |
-| v7_full.py:651 | (The procession's BZ kept its back to the others in takes 9-33: ゆうころ 10/28 夕「後ろ向いてるよ」.)""" | (Design decision: in its first form the procession finale left BZ with its back to the others; it now turns.)""" |
+| v7_full.py:451 | help="switch off the pre-positioning (ユーザー 10/28 昼): by default an idle robot already walks to where its " | help="switch off the pre-positioning: by default an idle robot already walks to where its " |
+| v7_full.py:456-459 | help="no face on the crab's display panel.  By default (ユーザー 10/28 夕) the crab's expression is chosen from "<br>"the manager's action and its result (crab_face.py's table) and shown in the face monitor, an inset at "<br>"the bottom-left.  Render-only: the physics path is the same with and without it "<br>"(--test, out/v7_full_report_facecheck_{A,B}.json)") | help="no face on the crab's display panel.  By default the crab's expression is composed by crab_face.py "<br>"from the mood net's inference and measured values (--face-ai) and shown in the face monitor, an "<br>"inset beside the caption.  Render-only: the physics path is the same with and without it "<br>"(--test, out/v7_full_report_facecheck_{A,B}.json, analysis/face_check.py)") |
+| v7_full.py:461-464 | help="mood (ユーザー 10/28 夜, take 38-): a second AI beside the manager - the mood net, out/manager_runs/mood_net - "<br>"infers every control step of the rescue whether the running move will end well, and its mood "<br>"(confident / neutral / worried) colours the crab's face; critic: the PPO v2.2 critic's V(s) instead "<br>"(the first attempt, a record); table: the expression table alone (takes 30-37)") | help="mood (default): a second AI beside the manager - the mood net, out/manager_runs/mood_net - "<br>"infers every control step of the rescue how the running move will end, and its outputs "<br>"together with measured values choose the crab's face; critic: the PPO v2.2 critic's V(s) instead "<br>"(the first design, kept as a record); table: the expression table alone (the earliest version)") |
+| v7_full.py:651 | (The procession's BZ kept its back to the others in takes 9-33: ユーザー 10/28 夕「後ろ向いてるよ」.)""" | (Design decision: in its first form the procession finale left BZ with its back to the others; it now turns.)""" |
 | v7_full.py:774 | version skipped them and the construction took 4 s longer: the story then failed, take 34 first attempt).""" | version skipped them and the construction took 4 s longer: the story then failed).""" |
 | v7_full.py:811 | # right, both in profile facing the centre (take 14's view from the east put the duck far behind the fork) | # right, both in profile facing the centre (a view from the east put the duck far behind the fork) |
 | v7_full.py:831 | else:                                                       # take 5's shot, from the south-east | else:                                                       # the push ending's shot, from the south-east |
 | v7_full.py:983 | # only once the duck has passed on its way to the ramp (take 13: their paths crossed, the duck fell twice) | # only once the duck has passed on its way to the ramp (in an earlier render their paths crossed and the duck fell twice) |
-| v7_full.py:1015 | # pre-positioning (ゆうころ 10/28 昼): once the duck gives up, the crab walks to the foot of its lane and | # pre-positioning (design decision, see --no-prestage): once the duck gives up, the crab walks to the foot of its lane and |
+| v7_full.py:1015 | # pre-positioning (ユーザー 10/28 昼): once the duck gives up, the crab walks to the foot of its lane and | # pre-positioning (design decision, see --no-prestage): once the duck gives up, the crab walks to the foot of its lane and |
 | v7_full.py:1098 | # (x 1.50) once over the crest - takes 11/12 (10/28 noon) drifted to x 1.90 on the landing after the jump | # (x 1.50) once over the crest - earlier renders drifted to x 1.90 on the landing after the jump |
 | v7_full.py:1114 | # (take 11: the straight way back from (2.33, -0.10) pressed it against the deck's side for 60 s) | # (in an earlier render the straight way back from (2.33, -0.10) pressed it against the deck's side for 60 s) |
-| v7_full.py:1125 | climb["jumps"] = 1                                # the one showcase jump at the crest (ゆうころ) | climb["jumps"] = 1                                # the one showcase jump at the crest (requirement: one jump, shown) |
-| v7_full.py:1181 | # pre-positioning (ゆうころ 10/28 昼): the crab starts back while the duck is still calling, and its route | # pre-positioning (design decision, see --no-prestage): the crab starts back while the duck is still calling, and its route |
+| v7_full.py:1125 | climb["jumps"] = 1                                # the one showcase jump at the crest (ユーザー) | climb["jumps"] = 1                                # the one showcase jump at the crest (requirement: one jump, shown) |
+| v7_full.py:1181 | # pre-positioning (ユーザー 10/28 昼): the crab starts back while the duck is still calling, and its route | # pre-positioning (design decision, see --no-prestage): the crab starts back while the duck is still calling, and its route |
 | v7_full.py:1425 | # behind it: v7_test_fork.py lifts the seated duck cleanly only with both tines under its hips | # behind it: archive/v7_test_fork.py lifts the seated duck cleanly only with both tines under its hips |
-| v7_full.py:1427-1428 | # hooks it at best and the set-down tips it.  ゆうころ 10/27: being lifted is the heart-warming ending. | # hooks it at best and the set-down tips it.  Design history: the lift was the first intended ending; it is<br># kept as an option but not used, because BZ must not handle the duck (--ending crab is the default). |
+| v7_full.py:1427-1428 | # hooks it at best and the set-down tips it.  ユーザー 10/27: being lifted is the heart-warming ending. | # hooks it at best and the set-down tips it.  Design history: the lift was the first intended ending; it is<br># kept as an option but not used, because BZ must not handle the duck (--ending crab is the default). |
 | v7_full.py:1476 | else:                                                   # "push" (take 5): at the seated duck's right side, from the east | else:                                                   # "push" ending: at the seated duck's right side, from the east |
-| v7_full.py:1483 | # the crab comes back with BZ and cheers the duck with a dance (ゆうころ 10/27 深夜): | # the crab comes back with BZ and cheers the duck with a dance (lift / push endings): |
+| v7_full.py:1483 | # the crab comes back with BZ and cheers the duck with a dance (ユーザー 10/27 深夜): | # the crab comes back with BZ and cheers the duck with a dance (lift / push endings): |
 | v7_full.py:1549-1550 | # "push" ending (take 5): fork held ~6 cm up while sliding in from the side.  At floor level the<br># tines shove the seated duck along (v7_test_fork.py: pushed 0.3 m, no tip); at 6 cm they catch it | # "push" ending: fork held ~6 cm up while sliding in from the side.  At floor level the<br># tines shove the seated duck along (archive/v7_test_fork.py: pushed 0.3 m, no tip); at 6 cm they catch it |
 | v7_full.py:1560 | # v7_test_fork.py from straight behind: both tines slide under the hips and lift the duck when | # archive/v7_test_fork.py from straight behind: both tines slide under the hips and lift the duck when |
 | v7_full.py:1592 | sim.command(0.0, 0.0, 0.6 if gentle else 1.0)           # lift: gently to 0.30 m; push: to the top (take 5) | sim.command(0.0, 0.0, 0.6 if gentle else 1.0)           # lift: gently to 0.30 m; push: to the top |
 | v7_full.py:1619 | sim.command(-0.25, 0.0, 0.0)                        # take 5 | sim.command(-0.25, 0.0, 0.0)                        # push ending |
-| v7_full.py:1646 | # the course must survive the rescue (ゆうころ): report any part nudged beyond course-builder's 4 cm | # the course must survive the rescue (requirement): report any part nudged beyond course-builder's 4 cm |
+| v7_full.py:1646 | # the course must survive the rescue (ユーザー): report any part nudged beyond course-builder's 4 cm | # the course must survive the rescue (requirement): report any part nudged beyond course-builder's 4 cm |
 
 ### v7_policies.py
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| v7_policies.py:273 | # Forward jump (ゆうころ 10/27): sweep every foot backward with the hip yaw J0 while | # Forward jump (this project's addition to the official jump): sweep every foot backward with the hip yaw J0 while |
+| v7_policies.py:273 | # Forward jump (ユーザー 10/27): sweep every foot backward with the hip yaw J0 while | # Forward jump (this project's addition to the official jump): sweep every foot backward with the hip yaw J0 while |
 
 ### v7_progress_video.py
 
@@ -254,9 +254,9 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| v7_test_cheer.py:1 | """Goal celebration test (ゆうころ 10/28 朝): the three at the goal after the crossing - BZ's fork up, the duck | """Goal celebration test: the three at the goal after the crossing - BZ's fork up, the duck |
+| v7_test_cheer.py:1 | """Goal celebration test (ユーザー 10/28 朝): the three at the goal after the crossing - BZ's fork up, the duck | """Goal celebration test: the three at the goal after the crossing - BZ's fork up, the duck |
 | v7_test_cheer.py:5-6 | &lt;jumper venv python&gt; v7_test_cheer.py --video out\\v7_cheer_test.mp4     # the 13 s celebration, recorded<br>&lt;jumper venv python&gt; v7_test_cheer.py --dance-only --seconds 16         # the dance alone: claw heights, arm pose at the top | python v7_test_cheer.py --video out/v7_cheer_test.mp4     # the 13 s celebration, recorded<br>python v7_test_cheer.py --dance-only --seconds 16         # the dance alone: claw heights, arm pose at the top |
-| v7_test_cheer.py:28 | ap.add_argument("--circle", action="store_true", help="the circle celebration (ゆうころ 10/28 昼): BZ pumps the fork, the duck squats") | ap.add_argument("--circle", action="store_true", help="the circle celebration: BZ pumps the fork, the duck squats, the crab dances") |
+| v7_test_cheer.py:28 | ap.add_argument("--circle", action="store_true", help="the circle celebration (ユーザー 10/28 昼): BZ pumps the fork, the duck squats") | ap.add_argument("--circle", action="store_true", help="the circle celebration: BZ pumps the fork, the duck squats, the crab dances") |
 | v7_test_cheer.py:41 | # where take 6 left them: BZ parked north of the course facing north, the duck on the floor just past the far | # the positions after a crossing: BZ parked north of the course facing north, the duck on the floor just past the far |
 
 ### v7_test_collision.py
@@ -269,9 +269,9 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| v7_test_crab_push.py:1-2 | """Can the crab push the duck up the 16-degree ramp?  (ゆうころ 10/28: the crab helps instead of the bulldozer -<br>"a beautiful friendship"; the bulldozer must not handle the duck, lifting by the neck could break it.) | """Can the crab push the duck up the 16-degree ramp?  (Requirement: the bulldozer must not handle the duck -<br>lifting it by the neck could break it - so the crab helps instead.) |
+| v7_test_crab_push.py:1-2 | """Can the crab push the duck up the 16-degree ramp?  (ユーザー 10/28: the crab helps instead of the bulldozer -<br>"a beautiful friendship"; the bulldozer must not handle the duck, lifting by the neck could break it.) | """Can the crab push the duck up the 16-degree ramp?  (Requirement: the bulldozer must not handle the duck -<br>lifting it by the neck could break it - so the crab helps instead.) |
 | v7_test_crab_push.py:4 | &lt;jumper venv python&gt; v7_test_crab_push.py [--crab-vx 0.3 0.5] [--seconds 60] [--video out/v7_crab_push.mp4] | python v7_test_crab_push.py [--crab-vx 0.3 0.5] [--seconds 60] [--video out/v7_crab_push.mp4] |
-| v7_test_crab_push.py:81 | if seated:                                            # ゆうころ: the seated duck is pushed (low centre of mass) | if seated:                                            # design decision: the seated duck is pushed (low centre of mass) |
+| v7_test_crab_push.py:81 | if seated:                                            # ユーザー: the seated duck is pushed (low centre of mass) | if seated:                                            # design decision: the seated duck is pushed (low centre of mass) |
 | v7_test_crab_push.py:193 | # there let it topple (run 10/28 01:xx, fell at y -0.82); keep the push steady until the landing | # there let it topple (one run fell at y -0.82); keep the push steady until the landing |
 
 ### v7_test_crest.py
@@ -333,7 +333,7 @@
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| v7_test_nudge.py:1-3 | """The nudge (PUSH on a fallen duck, ゆうころ 10/28 昼): the duck lying across the landing's seam, the crab 0.6 m behind.<br>Does velstand get it up on its own in 4 s?  If not, does the nudge move it, and does velstand get it up afterwards?<br>Built stage; the robots are placed by teleport (test only). | """The nudge (PUSH on a fallen duck; an experiment, not adopted): the duck lying across the landing's seam, the crab<br>0.6 m behind.  Does velstand get it up on its own in 4 s?  If not, does the nudge move it, and does velstand get it<br>up afterwards?  Built stage; the robots are placed by teleport (test only). |
+| v7_test_nudge.py:1-3 | """The nudge (PUSH on a fallen duck, ユーザー 10/28 昼): the duck lying across the landing's seam, the crab 0.6 m behind.<br>Does velstand get it up on its own in 4 s?  If not, does the nudge move it, and does velstand get it up afterwards?<br>Built stage; the robots are placed by teleport (test only). | """The nudge (PUSH on a fallen duck; an experiment, not adopted): the duck lying across the landing's seam, the crab<br>0.6 m behind.  Does velstand get it up on its own in 4 s?  If not, does the nudge move it, and does velstand get it<br>up afterwards?  Built stage; the robots are placed by teleport (test only). |
 | v7_test_nudge.py:5 | &lt;jumper venv python&gt; v7_test_nudge.py [--video out\\v7_nudge_test.mp4] | python v7_test_nudge.py [--video out/v7_nudge_test.mp4] |
 
 ### v7_test_sitstand.py
@@ -350,22 +350,22 @@ archive/ のスクリプトは import されない履歴であり、本文の規
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| archive/manager_env.py:3 | ゆうころ (2026-10-27): put a manager AI ("Island Master") that decides what to do next when the | Requirement: put a manager AI that decides what to do next when the |
+| archive/manager_env.py:3 | ユーザー (2026-10-27): put a manager AI ("Island Master") that decides what to do next when the | Requirement: put a manager AI that decides what to do next when the |
 | archive/manager_env.py:22 | 3 PUSH_SIDE  "別の方法にしよう — BZ、横から起こしてあげて"    take-5 method: at the duck's side, fork at | 3 PUSH_SIDE  "別の方法にしよう — BZ、横から起こしてあげて"    the push ending's method: at the duck's side, fork at |
 | archive/manager_env.py:28 | Observation: 32 floats from the simulator (duck/BZ/crab pose and status, BZ's alignment to the | Observation: 35 floats (OBS_DIM = 16 + 3 + 8 results + 6 actions + 2) from the simulator (duck/BZ/crab pose and status, BZ's alignment to the |
 | archive/manager_env.py:31 | Calibration facts (v7_test_fork.py and the offset sweep of 10/27): both tines go under the seated | Calibration facts (v7_test_fork.py and its offset sweep): both tines go under the seated |
 | archive/manager_env.py:63 | # west = back to the east.  At -2.10 (10 cm from the edge, as in take 5) BZ's | # west = back to the east.  At -2.10 (10 cm from the edge, as in the push ending) BZ's |
-| archive/manager_env.py:84 | # Reward (per decision).  The job is recovery; the lift is the outcome ゆうころ prefers, so it carries a | # Reward (per decision).  The job is recovery; the lift is the preferred outcome (requirement), so it carries a |
-| archive/manager_env.py:86 | # The course is the whole point of the scene (ゆうころ: コースを壊さないようにしなきゃ): a slope part or block | # The course is the whole point of the scene (requirement: the course must not be damaged): a slope part or block |
+| archive/manager_env.py:84 | # Reward (per decision).  The job is recovery; the lift is the outcome ユーザー prefers, so it carries a | # Reward (per decision).  The job is recovery; the lift is the preferred outcome (requirement), so it carries a |
+| archive/manager_env.py:86 | # The course is the whole point of the scene (ユーザー: コースを壊さないようにしなきゃ): a slope part or block | # The course is the whole point of the scene (requirement: the course must not be damaged): a slope part or block |
 | archive/manager_env.py:289 | # course-builder's block_2 sits at (4, -3): a BZ written on top of it explodes (debug 10/27).  Redraw. | # course-builder's block_2 sits at (4, -3): a BZ written on top of it explodes (debug run).  Redraw. |
-| archive/manager_env.py:328 | """Safety stop (ゆうころ: コースを壊さない): True when the tine tips are inside, or about to enter, the | """Safety stop (requirement: the course must not be damaged): True when the tine tips are inside, or about to enter, the |
-| archive/manager_env.py:339-340 | """ゆうころ: おろすときは下までおろさない、足がついたら止める - any duck foot touching the floor.""" | """Requirement: when setting the duck down, stop as soon as its feet touch the floor instead of lowering<br>the fork all the way - any duck foot touching the floor.""" |
-| archive/manager_env.py:501 | # lower only until the duck's feet touch the floor (ゆうころ): set all the way down, the duck sits on | # lower only until the duck's feet touch the floor (requirement): set all the way down, the duck sits on |
+| archive/manager_env.py:328 | """Safety stop (ユーザー: コースを壊さない): True when the tine tips are inside, or about to enter, the | """Safety stop (requirement: the course must not be damaged): True when the tine tips are inside, or about to enter, the |
+| archive/manager_env.py:339-340 | """ユーザー: おろすときは下までおろさない、足がついたら止める - any duck foot touching the floor.""" | """Requirement: when setting the duck down, stop as soon as its feet touch the floor instead of lowering<br>the fork all the way - any duck foot touching the floor.""" |
+| archive/manager_env.py:501 | # lower only until the duck's feet touch the floor (ユーザー): set all the way down, the duck sits on | # lower only until the duck's feet touch the floor (requirement): set all the way down, the duck sits on |
 | archive/manager_env.py:511 | # topple it onto the fork (smoke 10/27: 1.3 m, then stuck).  So the duck stands first: its feet | # topple it onto the fork (smoke test: 1.3 m, then stuck).  So the duck stands first: its feet |
 | archive/manager_env.py:522 | # standing with a foot on a tine, the duck rides along when BZ reverses (smoke 10/27: carried | # standing with a foot on a tine, the duck rides along when BZ reverses (smoke test: carried |
 | archive/manager_env.py:535 | free_t0 = self.t          # fallen onto / against the fork: tines 8 cm up, then reverse (experiment 10/27) | free_t0 = self.t          # fallen onto / against the fork: tines 8 cm up, then reverse (experiment) |
 | archive/manager_env.py:567 | """Take 5's ending: come at the seated duck's right side, fork at 6 cm, tip it, back off.""" | """The push ending: come at the seated duck's right side, fork at 6 cm, tip it, back off.""" |
-| archive/manager_env.py:573 | # the duck (ゆうころ: コースを壊さないようにしなきゃ; the first try from the south shoved up_1 by 9 cm). | # the duck (requirement: the course must not be damaged; the first try from the south shoved up_1 by 9 cm). |
+| archive/manager_env.py:573 | # the duck (ユーザー: コースを壊さないようにしなきゃ; the first try from the south shoved up_1 by 9 cm). | # the duck (requirement: the course must not be damaged; the first try from the south shoved up_1 by 9 cm). |
 | archive/manager_env.py:641 | # work (velstand needs clear floor) - raising the tines 8 cm and then reversing freed it (experiment 10/27) | # work (velstand needs clear floor) - raising the tines 8 cm and then reversing freed it (experiment) |
 
 ### archive/manager_tabq.py
@@ -391,7 +391,7 @@ archive/ のスクリプトは import されない履歴であり、本文の規
 
 | file:行 | 原文 | 置換後 |
 |---|---|---|
-| archive/v7_failures_video.py:1 | """v7 failure footage (physics only) for ゆうころ to inspect: | """v7 failure footage (physics only), recorded for inspection: |
+| archive/v7_failures_video.py:1 | """v7 failure footage (physics only) for ユーザー to inspect: | """v7 failure footage (physics only), recorded for inspection: |
 | archive/v7_failures_video.py:7 | &lt;jumper venv python&gt; v7_failures_video.py   -&gt; out/v7_failures_physics_only.mp4 | python archive/v7_failures_video.py   -&gt; out/v7_failures_physics_only.mp4 |
 
 ### archive/v7_test_fork.py
@@ -399,4 +399,4 @@ archive/ のスクリプトは import されない履歴であり、本文の規
 | file:行 | 原文 | 置換後 |
 |---|---|---|
 | archive/v7_test_fork.py:3 | &lt;jumper venv python&gt; v7_test_fork.py [--dy 0 0.1 0.2] [--lift 0 0.06] | python archive/v7_test_fork.py [--dy 0 0.1 0.2] [--lift 0 0.06] |
-| archive/v7_test_fork.py:36 | mode 'lift': the gentle one (ゆうころ 10/27: lifting the duck is the heart-warming ending) - | mode 'lift': the gentle one (the lift was the first intended ending) - |
+| archive/v7_test_fork.py:36 | mode 'lift': the gentle one (ユーザー 10/27: lifting the duck is the heart-warming ending) - | mode 'lift': the gentle one (the lift was the first intended ending) - |
